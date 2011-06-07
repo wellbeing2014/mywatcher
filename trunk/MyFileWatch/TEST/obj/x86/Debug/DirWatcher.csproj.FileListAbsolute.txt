@@ -1,0 +1,18 @@
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Debug\DirWatcher.exe.config
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Debug\DirWatcher.exe
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Debug\DirWatcher.pdb
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Debug\DirWatcher.exe
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Debug\DirWatcher.pdb
+D:\SharpDevelop\workspace\MyFileWatch\TEST\bin\Debug\DirWatcher.exe.config
+D:\SharpDevelop\workspace\MyFileWatch\TEST\bin\Debug\DirWatcher.exe
+D:\SharpDevelop\workspace\MyFileWatch\TEST\bin\Debug\DirWatcher.pdb
+D:\SharpDevelop\workspace\MyFileWatch\TEST\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\SharpDevelop\workspace\MyFileWatch\TEST\obj\x86\Debug\DirWatcher.exe
+D:\SharpDevelop\workspace\MyFileWatch\TEST\obj\x86\Debug\DirWatcher.pdb
+D:\MyFileWatch\TEST\bin\Debug\DirWatcher.exe.config
+D:\MyFileWatch\TEST\bin\Debug\DirWatcher.exe
+D:\MyFileWatch\TEST\bin\Debug\DirWatcher.pdb
+D:\MyFileWatch\TEST\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\MyFileWatch\TEST\obj\x86\Debug\DirWatcher.exe
+D:\MyFileWatch\TEST\obj\x86\Debug\DirWatcher.pdb

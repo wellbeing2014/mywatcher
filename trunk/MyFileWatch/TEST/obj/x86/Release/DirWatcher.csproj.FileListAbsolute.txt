@@ -1,0 +1,4 @@
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Release\DirWatcher.exe.config
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Release\DirWatcher.exe
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Release\ResolveAssemblyReference.cache
+D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Release\DirWatcher.exe
