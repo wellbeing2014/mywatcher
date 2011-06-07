@@ -1,0 +1,34 @@
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.exe.config
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.exe
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.pdb
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.BussinessForm.resources
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.MainForm.resources
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.MsgForm.resources
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.csproj.GenerateResource.Cache
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.exe
+D:\SharpDevelop\workspace\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.pdb
+D:\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.exe.config
+D:\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.exe
+D:\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.pdb
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.BussinessForm.resources
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.MainForm.resources
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.MsgForm.resources
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.csproj.GenerateResource.Cache
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.exe
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.pdb
+D:\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.TextForCopyForm.resources
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.exe.config
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.exe
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\bin\Debug\WatchCilent.pdb
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.BussinessForm.resources
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.MainForm.resources
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.MsgForm.resources
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.TextForCopyForm.resources
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.csproj.GenerateResource.Cache
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.exe
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.pdb
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.ConfigForm.resources
+D:\wellbeing_work\C sharp\MyFileWatch\WatchCilent\obj\x86\Debug\WatchCilent.Dbconfig.resources
