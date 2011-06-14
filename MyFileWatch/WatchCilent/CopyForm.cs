@@ -98,6 +98,7 @@ namespace WatchCilent
 								break;
 							}
 						}
+						SavePackage();
 					}
 					else MessageBox.Show("没能找到与更新包相关的模块，请手动确认");
 				}
@@ -178,9 +179,16 @@ namespace WatchCilent
 				topath = FunctionUtils.AutoCreateFolder(topath);
 				if(topath!=null)
 				{
-					var fs = new FileStream(frompath, FileMode.Open, FileAccess.Read);
-		            totalSize = (int) fs.Length;
-		            stream = fs;
+					try {
+						var fs = new FileStream(frompath, FileMode.Open, FileAccess.Read);
+		           		totalSize = (int) fs.Length;
+		            	stream = fs;
+					} catch (Exception) {
+						
+						MessageBox.Show("读取文件失败："+frompath,"提示");
+						return ;
+					}
+					
 		            if (File.Exists(topaths[topathnum]+"/"+filename))
 		                File.Delete(topaths[topathnum]+"/"+filename);
 		            if(totalSize<BUFFER_SIZE)
@@ -308,8 +316,13 @@ namespace WatchCilent
 		}
 		void Button5Click(object sender, System.EventArgs e)
 		{
+			SavePackage();
+		}
+		void SavePackage()
+		{
 			packageinfo.Managerid =Int32.Parse(this.comboBox2.SelectedValue.ToString());
 			packageinfo.Moduleid = Int32.Parse(this.comboBox1.SelectedValue.ToString());
+			packageinfo.Packagepath = this.textBox1.Text;
 			if(packageinfo.Id>0)
 			{
 				AccessDBUtil.update(packageinfo);
@@ -386,13 +399,17 @@ namespace WatchCilent
 		{
 			if(MessageBox.Show("删除更新包，不可恢复。确定要删除吗？","提示",MessageBoxButtons.OKCancel,MessageBoxIcon.Asterisk)==DialogResult.OK)
 			{
-				DirectoryInfo packfile = new DirectoryInfo(frompath);
+				try {
+					DirectoryInfo packfile = new DirectoryInfo(frompath);
+					if (packfile.Exists) packfile.Delete();
+					AccessDBUtil.delete(this.packageinfo);
+					MessageBox.Show("更新包删除成功");
+					this.Close();
+					this.Dispose();
+				} catch (Exception) {
+					MessageBox.Show("读取更新包错误，或不存在","提示");
+				}
 				
-				if (packfile.Exists) packfile.Delete();
-				AccessDBUtil.delete(this.packageinfo);
-				MessageBox.Show("更新包删除成功");
-				this.Close();
-				this.Dispose();
 			}
 		}
 		
