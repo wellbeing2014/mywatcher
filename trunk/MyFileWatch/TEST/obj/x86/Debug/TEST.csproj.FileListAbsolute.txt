@@ -1,6 +1,0 @@
-D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Debug\TEST.exe
-D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Debug\TEST.pdb
-D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Debug\TEST.exe
-D:\wellbeing_work\C sharp\MyFileWatch\TEST\obj\x86\Debug\TEST.pdb
-D:\wellbeing_work\C sharp\MyFileWatch\TEST\bin\Debug\TEST.exe.config
