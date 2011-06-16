@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchCilent", "WatchCilent\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchServer", "WatchServer\WatchServer.csproj", "{58F1AE2E-18C7-4368-AC7A-B125C8BD4987}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchService", "WatchService\WatchService.csproj", "{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -26,5 +28,13 @@ Global
 		{58F1AE2E-18C7-4368-AC7A-B125C8BD4987}.Release|x86.ActiveCfg = Release|x86
 		{58F1AE2E-18C7-4368-AC7A-B125C8BD4987}.Release|Any CPU.Build.0 = Release|x86
 		{58F1AE2E-18C7-4368-AC7A-B125C8BD4987}.Release|Any CPU.ActiveCfg = Release|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Debug|x86.Build.0 = Debug|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Debug|x86.ActiveCfg = Debug|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Debug|Any CPU.Build.0 = Debug|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|x86.Build.0 = Release|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|x86.ActiveCfg = Release|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|Any CPU.Build.0 = Release|x86
+		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 EndGlobal
