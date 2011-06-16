@@ -14,14 +14,16 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
-using System.Text;
+using System.Threading;
+using WatchService.pojo;
 
 namespace WatchService
 {
 	public class WatchService : ServiceBase
 	{
 		public const string MyServiceName = "WatchService";
-		static private string  logfile = null;
+		static private string  dbpath = null;
+		static private string  logpath = null;
 		static private string[]  msgip ;
 		static private string[]  watchpaths ;
 		static System.Timers.Timer tt ;
@@ -29,6 +31,11 @@ namespace WatchService
 		public WatchService()
 		{
 			InitializeComponent();
+			dbpath = System.Configuration.ConfigurationSettings.AppSettings["dbpath"];
+			logpath = System.Configuration.ConfigurationSettings.AppSettings["logpath"];
+			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
+			Microsoft.Win32.RegistryKey reg = key.CreateSubKey("software\\WatchService");  
+   			reg.SetValue("dbpath",dbpath ); 
 		}
 		
 		private void InitializeComponent()
@@ -52,13 +59,13 @@ namespace WatchService
 		{
 			// TODO: Add start code here (if required) to start your service.
 			//Console.WriteLine("初始化系统");
+			Thread.Sleep(10000);
 			WriteToLog(System.DateTime.Now.ToLocalTime()+":初始化系统");
 			try
 			{
 				IDictionary watchpath =(IDictionary)System.Configuration.ConfigurationManager.GetSection("watchpath");
 				watchpaths = new string[watchpath.Count];
 				watchpath.Values.CopyTo(watchpaths,0);
-				logfile = System.Configuration.ConfigurationSettings.AppSettings["logfile"];
 				IDictionary temp = (IDictionary)System.Configuration.ConfigurationManager.GetSection("iplist");
 				msgip = new string[temp.Count];
 				temp.Values.CopyTo(msgip,0);
@@ -121,33 +128,45 @@ namespace WatchService
 		protected override void OnStop()
 		{
 			// TODO: Add tear-down code here (if required) to stop your service.
+			WriteToLog(System.DateTime.Now.ToLocalTime()+":系统关闭");
 		}
 		
 		static void OnFileCreated(Object source, FileSystemEventArgs e)
 		{
-			 FileInfo fInfo = new FileInfo(e.FullPath);
-			 if(!fInfo.IsReadOnly)
-			 {
+			//将更新包设成只读
+			FileInfo fInfo = new FileInfo(e.FullPath);
+			if(!fInfo.IsReadOnly)
+			{
 			 	 fInfo.IsReadOnly = true;
-			 }
+			}
 			WriteToLog((DateTime.Now).ToString()+" 创建文件："+e.FullPath);
-			String[] filename = e.Name.Split('\\');
-			String curpath = e.FullPath.Replace(filename[filename.Length-1],"");
-			try 
+			//更新包写入到数据库
+			PackageInfo pack = new PackageInfo();
+			string[] temp= e.FullPath.Split('\\');
+			string temps = temp[temp.Length-1];
+			String curpath = e.FullPath.Replace(temp[temp.Length-1],"");
+			pack.Packagepath = e.FullPath;
+			pack.Packagename = temps.Replace(@".rar","");
+			pack.Packtime=DateTime.Now.ToLocalTime().ToString();
+			pack.State="已接收";
+			AccessDBUtil.insert(pack);
+			
+			
+			//通知客户端watchclient
+			try
 			{
 				Communication.UDPManage.Broadcast(e.FullPath);
 			}
 			catch (Exception) {
 				WriteToLog("通知客户端消息失败！");
 			}
-			
+			//发布飞秋消息
            	try {
-       			String  context =@"更新包提醒："+"\n在目录："+curpath+"\n创建了更新包："+filename[filename.Length-1];
+       			String  context =@"更新包提醒："+"\n在目录："+curpath+"\n创建了更新包："+temps;
        			msgToFQ(context);
            	} catch (Exception ) {
            		WriteToLog("发送飞秋消息失败！");
            	}
-           		
 		}
 
 		
@@ -224,17 +243,17 @@ namespace WatchService
 		} 
 		
 		
-		static private void WriteToLog(string log)
+		static public void WriteToLog(string log)
 		{
-			if(!File.Exists("c:\\bbbirdlog.txt"))  
+			if(!File.Exists(logpath))  
             {  
-                StreamWriter sr = File.CreateText("c:\\bbbirdlog.txt");  
+                StreamWriter sr = File.CreateText(logpath);  
                 sr.WriteLine(log);  
                 sr.Close();  
             }  
             else 
             {  
-                StreamWriter sr = File.AppendText("c:\\bbbirdlog.txt");  
+                StreamWriter sr = File.AppendText(logpath);  
                 sr.WriteLine(log); 
                 sr.Close();  
             }  
