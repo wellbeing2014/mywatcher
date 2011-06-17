@@ -105,7 +105,8 @@ namespace WatchCilent
 			// 
 			// checkBox1
 			// 
-			this.checkBox1.Location = new System.Drawing.Point(495, 426);
+			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.checkBox1.Location = new System.Drawing.Point(417, 426);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(56, 24);
 			this.checkBox1.TabIndex = 21;
@@ -167,7 +168,6 @@ namespace WatchCilent
 			this.button3.Text = "配置";
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.Button3Click);
-			
 			// 
 			// listView1
 			// 
@@ -186,7 +186,6 @@ namespace WatchCilent
 			this.listView1.Location = new System.Drawing.Point(12, 39);
 			this.listView1.Name = "listView1";
 			this.listView1.Size = new System.Drawing.Size(839, 381);
-			this.listView1.SelectedIndexChanged+=new EventHandler(CheckBox1CheckedChanged);
 			this.listView1.TabIndex = 14;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -204,22 +203,22 @@ namespace WatchCilent
 			// columnHeader3
 			// 
 			this.columnHeader3.Text = "打包时间";
-			this.columnHeader3.Width = 110;
+			this.columnHeader3.Width = 125;
 			// 
 			// columnHeader4
 			// 
 			this.columnHeader4.Text = "测试时间";
-			this.columnHeader4.Width = 110;
+			this.columnHeader4.Width = 128;
 			// 
 			// columnHeader5
 			// 
 			this.columnHeader5.Text = "发布时间";
-			this.columnHeader5.Width = 110;
+			this.columnHeader5.Width = 117;
 			// 
 			// columnHeader6
 			// 
 			this.columnHeader6.Text = "状态";
-			this.columnHeader6.Width = 80;
+			this.columnHeader6.Width = 55;
 			// 
 			// comboBox3
 			// 

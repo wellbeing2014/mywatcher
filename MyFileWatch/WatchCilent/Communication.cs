@@ -197,10 +197,14 @@ namespace WatchCilent
         /// </summary>
         public void StopListen()
         {
-            IsListening = false;
-            UdpClient.DropMulticastGroup(GroupIP);
-            thUDPListener.Abort();
-            UdpClient.Close();
+            
+            if(IsListening)
+            {
+            	UdpClient.DropMulticastGroup(GroupIP);
+            	thUDPListener.Abort();
+            	UdpClient.Close();
+            	IsListening = false;
+            }
            
         }
 
