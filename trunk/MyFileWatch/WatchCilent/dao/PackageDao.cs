@@ -53,11 +53,16 @@ namespace WatchCilent
 			return ls;
 		}
 ////////	
-		static public int getPackageInfoCountBypath(string path)
+		static public List<PackageInfo> getPackageInfoBypath(string path)
 		{
 			string sql = "select * from packageinfo where packagepath='"+path+"'";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
-			return  data.Tables["ds"].Rows.Count;
+			List<PackageInfo> ls = new List<PackageInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2PackageInfo(row));
+			}
+			return ls;
 		}
 // /// 
 		
