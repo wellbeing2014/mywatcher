@@ -128,6 +128,7 @@ namespace WatchCilent
 		//监听响应的方法。
 		void printline(String udpstr)
 		{
+			getAllPackInList();
 			MsgForm mf =new MsgForm();
 			mf.ShowInTaskbar=false;
 			mf.msgstr = udpstr;
