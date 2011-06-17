@@ -46,31 +46,12 @@ namespace WatchCilent
 			//select * from PackageInfo where packpath='msgstr'
 			//有记录的提示并返回，没记录就
 			//insert packpath,packtime  into PackageInfo values(msgstr,datetime)
-			int count= PackageDao.getPackageInfoCountBypath(msgstr);
-			if(count>0)
-			{
-				MessageBox.Show("该更新包已经在数据库中，请返回主界面处理！","提示");
-				this.Close();
-				this.Dispose();
-			}
-			else
-			{
-				PackageInfo pack = new PackageInfo();
-				string[] temp= this.msgstr.Split('\\');
-				string temps = temp[temp.Length-1];
-				pack.Packagepath = this.msgstr;
-				pack.Packagename = temps.Replace(@".rar","");
-
-				pack.Packtime=DateTime.Now.ToLocalTime().ToString();
-				pack.State="已接收";
-				pack.Id=AccessDBUtil.insertreturn(pack);
-				BussinessForm bf = new BussinessForm(pack);
-				bf.StartPosition = FormStartPosition.CenterParent;
-				this.Close();
-				this.Dispose();
-				bf.ShowDialog();
-			}
-			
+			PackageInfo pack= PackageDao.getPackageInfoBypath(msgstr)[0];
+			BussinessForm bf = new BussinessForm(pack);
+			bf.StartPosition = FormStartPosition.CenterParent;
+			this.Close();
+			this.Dispose();
+			bf.ShowDialog();
 		}
 		void Button2Click(object sender, System.EventArgs e)
 		{
