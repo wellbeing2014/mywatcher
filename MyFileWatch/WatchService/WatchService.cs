@@ -198,7 +198,7 @@ namespace WatchService
 					{
 						yesterdayDir.Delete();
 						deletedir.Add(yesterdayDir.FullName);
-						WriteToLog("发现路径："+yesterdayDir.FullName+"为空，删除该文件夹成功！");
+						//WriteToLog("发现路径："+yesterdayDir.FullName+"为空，删除该文件夹成功！");
 					}
 					
 					DirectoryInfo todayDir = new DirectoryInfo(watchpaths[i]+"/"+today);
@@ -206,7 +206,7 @@ namespace WatchService
 					{
 						Directory.CreateDirectory(watchpaths[i]+"/"+today);
 						createdir.Add(watchpaths[i]+"/"+today);
-						WriteToLog("在"+watchpaths[i]+"创建今日文件夹"+today+"成功！");
+						//WriteToLog("在"+watchpaths[i]+"创建今日文件夹"+today+"成功！");
 					}
 
 					} catch (Exception) {
