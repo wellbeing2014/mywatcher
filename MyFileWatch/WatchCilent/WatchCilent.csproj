@@ -78,6 +78,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FunctionUtils.cs">
     </Compile>
+    <Compile Include="TestResult.cs" />
+    <Compile Include="TestResult.Designer.cs">
+      <DependentUpon>TestResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextForCopyForm.cs" />
     <Compile Include="TextForCopyForm.Designer.cs">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
@@ -86,6 +90,7 @@
     <Compile Include="pojo\PackageInfo.cs" />
     <Compile Include="pojo\PersonInfo.cs" />
     <Compile Include="pojo\ProjectInfo.cs" />
+    <Compile Include="WebBrowserEX.cs" />
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MsgForm.resx">
       <DependentUpon>MsgForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestResult.resx">
+      <DependentUpon>TestResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextForCopyForm.resx">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
