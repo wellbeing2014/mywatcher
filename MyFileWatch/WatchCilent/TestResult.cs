@@ -23,12 +23,22 @@ namespace WatchCilent
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			webBrowser1.DocumentText = string.Empty;
-			webBrowser1.Document.ExecCommand("EditMode", false, null);
-			
+			InsertImage();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
+		}
+		public   void   InsertImage() 
+		{ 
+			bool   b   =   richTextBox1.ReadOnly; 
+			Image   img   =   Image.FromFile( "C:/a.bmp "); 
+			if (img != null) {
+				Clipboard.SetDataObject(img); 
+				richTextBox1.ReadOnly   =   false; 
+				richTextBox1.Paste(DataFormats.GetFormat(DataFormats.Bitmap)); 
+				richTextBox1.ReadOnly   =   b; 
+			}
+			
 		}
 		
 	}
