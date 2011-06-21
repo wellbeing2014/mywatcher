@@ -23,18 +23,18 @@ namespace WatchCilent
 		}
 		
 		
-		protected   override   void   DefWndProc(ref   Message   m) 
-		{ 
-			
-			IDataObject data = Clipboard.GetDataObject();//从剪贴板中获取数据
-			if(data.GetDataPresent(typeof(Bitmap)))//判断是否是图片类型
-			{
-			    Bitmap map = (Bitmap) data.GetData(typeof(Bitmap));//将图片数据存到位图中
-			    map.Save(@"C:\a.bmp");//保存图片
-			}
-			System.Diagnostics.Trace.WriteLine(m.Msg.ToString());
-			base.DefWndProc   (ref   m); 
-		}	
+//		protected   override   void   DefWndProc(ref   Message   m) 
+//		{ 
+//			
+//			IDataObject data = Clipboard.GetDataObject();//从剪贴板中获取数据
+//			if(data.GetDataPresent(typeof(Bitmap)))//判断是否是图片类型
+//			{
+//			    Bitmap map = (Bitmap) data.GetData(typeof(Bitmap));//将图片数据存到位图中
+//			    map.Save(@"C:\a.bmp");//保存图片
+//			}
+//			System.Diagnostics.Trace.WriteLine(m.Msg.ToString());
+//			base.DefWndProc   (ref   m); 
+//		}	
 		
 	}
 }
