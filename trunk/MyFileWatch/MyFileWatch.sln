@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 4.0.0.7070
+# SharpDevelop 3.2.1.6466
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchCilent", "WatchCilent\WatchCilent.csproj", "{AB7A7B2C-BDBD-4863-91B4-511817E8F959}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchServer", "WatchServer\WatchServer.csproj", "{58F1AE2E-18C7-4368-AC7A-B125C8BD4987}"
@@ -36,5 +36,9 @@ Global
 		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|x86.ActiveCfg = Release|x86
 		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|Any CPU.Build.0 = Release|x86
 		{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}.Release|Any CPU.ActiveCfg = Release|x86
+		{AB7A7B2C-BDBD-4863-91B4-511817E8F959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7A7B2C-BDBD-4863-91B4-511817E8F959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7A7B2C-BDBD-4863-91B4-511817E8F959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7A7B2C-BDBD-4863-91B4-511817E8F959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

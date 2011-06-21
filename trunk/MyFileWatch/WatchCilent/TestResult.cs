@@ -8,7 +8,11 @@
  */
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+
+using WatchCilent.dao;
+using WatchCilent.pojo;
 
 namespace WatchCilent
 {
@@ -23,7 +27,8 @@ namespace WatchCilent
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			InsertImage();
+			//InsertImage();
+			read();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -41,5 +46,22 @@ namespace WatchCilent
 			
 		}
 		
+		void Button1Click(object sender, System.EventArgs e)
+		{
+			MemoryStream stream = new MemoryStream();
+			richTextBox1.SaveFile(stream, RichTextBoxStreamType.RichText);
+			TestUnit tu =new TestUnit();
+			tu.Testcontent=stream.ToArray();
+			if(TestUnitDao.insert(tu))
+			{
+				MessageBox.Show("保存成功");
+			}
+		}
+		void read()
+		{
+			TestUnit tu=TestUnitDao.gettestUnitById(3);
+			MemoryStream stream = new MemoryStream(tu.Testcontent);
+			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+		}
 	}
 }
