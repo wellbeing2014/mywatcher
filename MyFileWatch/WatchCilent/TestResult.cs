@@ -60,8 +60,12 @@ namespace WatchCilent
 		void read()
 		{
 			TestUnit tu=TestUnitDao.gettestUnitById(3);
-			MemoryStream stream = new MemoryStream(tu.Testcontent);
-			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+			if(tu.Testcontent!=null)
+			{
+				MemoryStream stream = new MemoryStream(tu.Testcontent);
+				this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+			}
+			
 		}
 	}
 }

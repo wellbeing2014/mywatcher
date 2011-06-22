@@ -38,9 +38,13 @@ namespace WatchCilent.dao
 		static public TestUnit gettestUnitById(int id)
 		{
 			DataSet data=AccessDBUtil.ExecuteQuery("select top 1 * from testunit where id="+id.ToString());
-			
+			if(data.Tables["ds"].Rows.Count>0)
+			{
 			TestUnit ls=Row2TestUnit(data.Tables["ds"].Rows[0]);
 			return ls;
+			}
+			else
+				return new TestUnit();
 		}
 		private static TestUnit Row2TestUnit(DataRow row)
 		{
