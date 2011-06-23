@@ -74,8 +74,25 @@ namespace WatchCilent
 			this.acceptUDPmi = new System.Windows.Forms.ToolStripMenuItem();
 			this.unacceptUDPmi = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitmi = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.测试报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.缺陷记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.生成测试报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.关于我们ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+			this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
 			this.panel1.SuspendLayout();
 			this.contextMenuStrip1.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
+			this.toolStripContainer1.ContentPanel.SuspendLayout();
+			this.toolStripContainer1.SuspendLayout();
+			this.toolStripContainer2.ContentPanel.SuspendLayout();
+			this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
+			this.toolStripContainer2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -100,13 +117,13 @@ namespace WatchCilent
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(863, 461);
+			this.panel1.Size = new System.Drawing.Size(863, 437);
 			this.panel1.TabIndex = 1;
 			// 
 			// checkBox1
 			// 
 			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.checkBox1.Location = new System.Drawing.Point(417, 426);
+			this.checkBox1.Location = new System.Drawing.Point(417, 402);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(56, 24);
 			this.checkBox1.TabIndex = 21;
@@ -117,7 +134,7 @@ namespace WatchCilent
 			// button9
 			// 
 			this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button9.Location = new System.Drawing.Point(336, 426);
+			this.button9.Location = new System.Drawing.Point(336, 402);
 			this.button9.Name = "button9";
 			this.button9.Size = new System.Drawing.Size(75, 23);
 			this.button9.TabIndex = 20;
@@ -128,7 +145,7 @@ namespace WatchCilent
 			// button8
 			// 
 			this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button8.Location = new System.Drawing.Point(255, 426);
+			this.button8.Location = new System.Drawing.Point(255, 402);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(75, 23);
 			this.button8.TabIndex = 19;
@@ -139,7 +156,7 @@ namespace WatchCilent
 			// button7
 			// 
 			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button7.Location = new System.Drawing.Point(174, 426);
+			this.button7.Location = new System.Drawing.Point(174, 402);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(75, 23);
 			this.button7.TabIndex = 18;
@@ -150,7 +167,7 @@ namespace WatchCilent
 			// button6
 			// 
 			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button6.Location = new System.Drawing.Point(93, 426);
+			this.button6.Location = new System.Drawing.Point(93, 402);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(75, 23);
 			this.button6.TabIndex = 17;
@@ -161,7 +178,7 @@ namespace WatchCilent
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(695, 426);
+			this.button3.Location = new System.Drawing.Point(695, 402);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(75, 23);
 			this.button3.TabIndex = 16;
@@ -185,7 +202,7 @@ namespace WatchCilent
 			this.listView1.GridLines = true;
 			this.listView1.Location = new System.Drawing.Point(12, 39);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(839, 381);
+			this.listView1.Size = new System.Drawing.Size(839, 357);
 			this.listView1.TabIndex = 14;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -297,7 +314,7 @@ namespace WatchCilent
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button4.Location = new System.Drawing.Point(12, 426);
+			this.button4.Location = new System.Drawing.Point(12, 402);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(75, 23);
 			this.button4.TabIndex = 3;
@@ -308,7 +325,7 @@ namespace WatchCilent
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(776, 426);
+			this.button2.Location = new System.Drawing.Point(776, 402);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
 			this.button2.TabIndex = 1;
@@ -354,18 +371,149 @@ namespace WatchCilent
 			this.exitmi.Text = "退出";
 			this.exitmi.Click += new System.EventHandler(this.ExitmiClick);
 			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.文件ToolStripMenuItem,
+									this.测试报告ToolStripMenuItem,
+									this.设置ToolStripMenuItem,
+									this.关于ToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(863, 24);
+			this.menuStrip1.TabIndex = 2;
+			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// 文件ToolStripMenuItem
+			// 
+			this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.打开ToolStripMenuItem});
+			this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
+			this.文件ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+			this.文件ToolStripMenuItem.Text = "文件";
+			// 
+			// 打开ToolStripMenuItem
+			// 
+			this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
+			this.打开ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.打开ToolStripMenuItem.Text = "打开";
+			// 
+			// 测试报告ToolStripMenuItem
+			// 
+			this.测试报告ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.缺陷记录ToolStripMenuItem,
+									this.生成测试报告ToolStripMenuItem});
+			this.测试报告ToolStripMenuItem.Name = "测试报告ToolStripMenuItem";
+			this.测试报告ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+			this.测试报告ToolStripMenuItem.Text = "测试";
+			// 
+			// 缺陷记录ToolStripMenuItem
+			// 
+			this.缺陷记录ToolStripMenuItem.Name = "缺陷记录ToolStripMenuItem";
+			this.缺陷记录ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.缺陷记录ToolStripMenuItem.Text = "缺陷记录";
+			// 
+			// 生成测试报告ToolStripMenuItem
+			// 
+			this.生成测试报告ToolStripMenuItem.Name = "生成测试报告ToolStripMenuItem";
+			this.生成测试报告ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.生成测试报告ToolStripMenuItem.Text = "生成测试报告";
+			// 
+			// 关于ToolStripMenuItem
+			// 
+			this.关于ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.关于我们ToolStripMenuItem});
+			this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
+			this.关于ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+			this.关于ToolStripMenuItem.Text = "帮助";
+			// 
+			// 关于我们ToolStripMenuItem
+			// 
+			this.关于我们ToolStripMenuItem.Name = "关于我们ToolStripMenuItem";
+			this.关于我们ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.关于我们ToolStripMenuItem.Text = "关于我们";
+			// 
+			// 设置ToolStripMenuItem
+			// 
+			this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
+			this.设置ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+			this.设置ToolStripMenuItem.Text = "设置";
+			// 
+			// toolStripContainer1
+			// 
+			this.toolStripContainer1.BottomToolStripPanelVisible = false;
+			// 
+			// toolStripContainer1.ContentPanel
+			// 
+			this.toolStripContainer1.ContentPanel.AutoScroll = true;
+			this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(863, 437);
+			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.toolStripContainer1.LeftToolStripPanelVisible = false;
+			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+			this.toolStripContainer1.Name = "toolStripContainer1";
+			this.toolStripContainer1.RightToolStripPanelVisible = false;
+			this.toolStripContainer1.Size = new System.Drawing.Size(863, 437);
+			this.toolStripContainer1.TabIndex = 3;
+			this.toolStripContainer1.Text = "toolStripContainer1";
+			// 
+			// toolStripContainer2
+			// 
+			this.toolStripContainer2.BottomToolStripPanelVisible = false;
+			// 
+			// toolStripContainer2.ContentPanel
+			// 
+			this.toolStripContainer2.ContentPanel.AutoScroll = true;
+			this.toolStripContainer2.ContentPanel.Controls.Add(this.toolStripContainer1);
+			this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(863, 437);
+			this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.toolStripContainer2.LeftToolStripPanelVisible = false;
+			this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
+			this.toolStripContainer2.Name = "toolStripContainer2";
+			this.toolStripContainer2.RightToolStripPanelVisible = false;
+			this.toolStripContainer2.Size = new System.Drawing.Size(863, 461);
+			this.toolStripContainer2.TabIndex = 4;
+			this.toolStripContainer2.Text = "toolStripContainer2";
+			// 
+			// toolStripContainer2.TopToolStripPanel
+			// 
+			this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.menuStrip1);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(863, 461);
-			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.toolStripContainer2);
+			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "WatchCilent";
 			this.panel1.ResumeLayout(false);
 			this.contextMenuStrip1.ResumeLayout(false);
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
+			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+			this.toolStripContainer1.ResumeLayout(false);
+			this.toolStripContainer1.PerformLayout();
+			this.toolStripContainer2.ContentPanel.ResumeLayout(false);
+			this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
+			this.toolStripContainer2.TopToolStripPanel.PerformLayout();
+			this.toolStripContainer2.ResumeLayout(false);
+			this.toolStripContainer2.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripContainer toolStripContainer2;
+		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+		private System.Windows.Forms.ToolStripMenuItem 关于我们ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 生成测试报告ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 缺陷记录ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 测试报告ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 打开ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.Button button6;
