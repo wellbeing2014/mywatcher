@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{AB7A7B2C-BDBD-4863-91B4-511817E8F959}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -66,6 +67,10 @@
     <Compile Include="Dbconfig.Designer.cs">
       <DependentUpon>Dbconfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -73,6 +78,10 @@
     <Compile Include="MsgForm.cs" />
     <Compile Include="MsgForm.Designer.cs">
       <DependentUpon>MsgForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PackageUI.cs" />
+    <Compile Include="PackageUI.Designer.cs">
+      <DependentUpon>PackageUI.cs</DependentUpon>
     </Compile>
     <Compile Include="pojo\ModuleProject.cs" />
     <Compile Include="pojo\TestUnit.cs" />
@@ -102,11 +111,17 @@
     <EmbeddedResource Include="Dbconfig.resx">
       <DependentUpon>Dbconfig.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MsgForm.resx">
       <DependentUpon>MsgForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PackageUI.resx">
+      <DependentUpon>PackageUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestResult.resx">
       <DependentUpon>TestResult.cs</DependentUpon>
@@ -119,5 +134,11 @@
   <ItemGroup>
     <Folder Include="pojo" />
     <Folder Include="dao" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WatchService\WatchService.csproj">
+      <Project>{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}</Project>
+      <Name>WatchService</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
