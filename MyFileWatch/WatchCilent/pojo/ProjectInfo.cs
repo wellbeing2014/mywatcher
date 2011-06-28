@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace WatchCilent.vo
+namespace WatchCilent.pojo
 {
 	/// <summary>
 	/// Description of ProjectInfo.

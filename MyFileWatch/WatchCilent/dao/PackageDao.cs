@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Windows.Forms;
+using WatchCilent.pojo;
 
 namespace WatchCilent
 {
@@ -27,7 +28,7 @@ namespace WatchCilent
 			string sql = "select * from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部状态'='"+state+"' or state='"+state+"')";
+				+" and ('全部'='"+state+"' or state='"+state+"')";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)

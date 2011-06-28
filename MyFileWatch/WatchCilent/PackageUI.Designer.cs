@@ -60,6 +60,7 @@ namespace WatchCilent
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -89,9 +90,11 @@ namespace WatchCilent
 			// 
 			// treeView1
 			// 
-			this.treeView1.Location = new System.Drawing.Point(13, 39);
+			this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left)));
+			this.treeView1.Location = new System.Drawing.Point(13, 12);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(155, 376);
+			this.treeView1.Size = new System.Drawing.Size(155, 331);
 			this.treeView1.TabIndex = 22;
 			// 
 			// checkBox1
@@ -159,7 +162,9 @@ namespace WatchCilent
 			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.listView1.CheckBoxes = true;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.columnHeader7,
 									this.columnHeader1,
 									this.columnHeader2,
 									this.columnHeader3,
@@ -273,6 +278,11 @@ namespace WatchCilent
 			this.button2.Text = "隐藏";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.DisplayIndex = 0;
+			this.columnHeader7.Text = "选择";
+			// 
 			// PackageUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -283,6 +293,7 @@ namespace WatchCilent
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button4;

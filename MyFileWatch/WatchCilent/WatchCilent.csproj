@@ -89,6 +89,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FunctionUtils.cs">
     </Compile>
+    <Compile Include="TestListUI.cs" />
+    <Compile Include="TestListUI.Designer.cs">
+      <DependentUpon>TestListUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestResult.cs" />
     <Compile Include="TestResult.Designer.cs">
       <DependentUpon>TestResult.cs</DependentUpon>
@@ -122,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PackageUI.resx">
       <DependentUpon>PackageUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestListUI.resx">
+      <DependentUpon>TestListUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestResult.resx">
       <DependentUpon>TestResult.cs</DependentUpon>

@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-using WatchCilent.vo;
+using WatchCilent.pojo;
 
 namespace WatchCilent.dao
 {

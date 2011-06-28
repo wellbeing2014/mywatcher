@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace WatchCilent
+namespace WatchCilent.pojo
 {
 	/// <summary>
 	/// Description of PersonInfo.
