@@ -17,7 +17,7 @@ using System.Xml;
 using System.Runtime.InteropServices;
 
 using WatchCilent.dao;
-using WatchCilent.vo;
+using WatchCilent.pojo;
 
 namespace WatchCilent
 {

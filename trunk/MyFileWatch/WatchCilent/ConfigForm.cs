@@ -13,7 +13,6 @@ using System.Windows.Forms;
 
 using WatchCilent.dao;
 using WatchCilent.pojo;
-using WatchCilent.vo;
 
 namespace WatchCilent
 {

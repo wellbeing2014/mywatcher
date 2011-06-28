@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using WatchCilent.dao;
+using WatchCilent.pojo;
 
 namespace WatchCilent
 {
@@ -32,6 +34,28 @@ namespace WatchCilent
 			tmp.Nodes.Add("已完成");
 			tmp.Nodes.Add("已作废");
 			treeView1.Nodes.Add(tmp);
+			treeView1.ExpandAll();
+			
+			
+			List<PersonInfo> datasource_person = PersonDao.getAllPersonInfo();
+			PersonInfo person = new PersonInfo();
+			person.Fullname = "全部责任人";
+			person.Id = 0;
+			datasource_person.Insert(0,person);
+			this.comboBox2.DataSource = datasource_person;
+			this.comboBox2.DisplayMember = "Fullname";
+			this.comboBox2.ValueMember = "Id";
+			
+			List<ModuleInfo> datasource_module = ModuleDao.getAllModuleInfo();
+			ModuleInfo all = new ModuleInfo();
+			all.Fullname ="全部模块";
+			all.Id=0;
+			datasource_module.Insert(0,all);
+			this.comboBox1.DataSource = datasource_module;
+			this.comboBox1.DisplayMember ="Fullname";
+			this.comboBox1.ValueMember = "Id";
+			getAllPackInList();
+			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -86,7 +110,9 @@ namespace WatchCilent
 		private void ListViewBing(PackageInfo pack)
 		{
 			ListViewItem lvi = new ListViewItem();
-			lvi.Text=pack.Packagename;
+			//lvi.Text=pack.Packagename;
+			lvi.Checked=false;
+			lvi.SubItems.Add(pack.Packagename);
 			lvi.SubItems.Add(pack.Packagepath);
 			lvi.SubItems.Add(pack.Packtime);
 			lvi.SubItems.Add(pack.Testtime);

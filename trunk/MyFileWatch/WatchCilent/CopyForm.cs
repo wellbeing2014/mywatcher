@@ -16,7 +16,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using WatchCilent.dao;
-using WatchCilent.vo;
+using WatchCilent.pojo;
 
 namespace WatchCilent
 {

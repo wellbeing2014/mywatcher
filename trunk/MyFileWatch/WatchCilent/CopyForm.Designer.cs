@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using WatchCilent.dao;
-using WatchCilent.vo;
+using WatchCilent.pojo;
 
 /*
  * Created by SharpDevelop.
