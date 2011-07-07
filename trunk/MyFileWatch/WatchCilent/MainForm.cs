@@ -175,7 +175,7 @@ namespace WatchCilent
 			string moduleid = this.comboBox1.SelectedValue.ToString();
 			string manageid = this.comboBox2.SelectedValue.ToString();
 			string state = this.comboBox3.SelectedItem.ToString();
-			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state);
+			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,null,null);
 			this.listView1.Items.Clear();
 			foreach(PackageInfo pack in ls)
 			{

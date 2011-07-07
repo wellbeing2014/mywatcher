@@ -23,12 +23,15 @@ namespace WatchCilent
 		public PackageDao()
 		{
 		}
-		static public List<PackageInfo> queryPackageInfo(string moduleid,string managerid,string state)
+		static public List<PackageInfo> queryPackageInfo(string moduleid,string managerid,string state,string begintime,string endtime)
 		{
 			string sql = "select * from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部'='"+state+"' or state='"+state+"')";
+				+" and ('全部'='"+state+"' or state='"+state+"')"
+				+" and (''='"+begintime+"' or packtime>='"+begintime+"')"
+				+" and (''='"+endtime+"' or packtime<='"+endtime+"')"
+				+" order by packtime desc";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
