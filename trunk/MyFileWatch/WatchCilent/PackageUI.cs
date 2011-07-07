@@ -41,7 +41,7 @@ namespace WatchCilent
 			treeView1.Nodes.Add(tmp);
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
 			treeView1.ExpandAll();
-			
+			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
 			
 			
 			List<PersonInfo> datasource_person = PersonDao.getAllPersonInfo();
@@ -52,6 +52,7 @@ namespace WatchCilent
 			this.comboBox2.DataSource = datasource_person;
 			this.comboBox2.DisplayMember = "Fullname";
 			this.comboBox2.ValueMember = "Id";
+			this.comboBox2.SelectedIndexChanged+=new EventHandler(conditionChanged);
 			
 			List<ModuleInfo> datasource_module = ModuleDao.getAllModuleInfo();
 			ModuleInfo all = new ModuleInfo();
@@ -61,6 +62,9 @@ namespace WatchCilent
 			this.comboBox1.DataSource = datasource_module;
 			this.comboBox1.DisplayMember ="Fullname";
 			this.comboBox1.ValueMember = "Id";
+			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			this.dateTimePicker1.ValueChanged+=new EventHandler(conditionChanged);
+			this.dateTimePicker2.ValueChanged+=new EventHandler(conditionChanged);
 			getAllPackInList();
 			
 			//
@@ -302,6 +306,16 @@ namespace WatchCilent
 				this.comboBox1.Location=cb1p;
 				this.comboBox2.Location=cb2p;
 			}
+			getAllPackInList();
+		}
+		private void conditionChanged(object sender, EventArgs e)
+		{
+			getAllPackInList();
+		}
+		
+		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
+		{
+			this.treeView1.SelectedNode=e.Node;
 			getAllPackInList();
 		}
 	}
