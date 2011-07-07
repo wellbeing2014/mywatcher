@@ -22,11 +22,30 @@ namespace WatchCilent
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			InitializeComponent();
+			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
+			Microsoft.Win32.RegistryKey dbc = key.OpenSubKey("software\\WisoftWatchClient");  
+			if(dbc==null|| dbc.GetValue("dbpath")==null)
+			{
+				Dbconfig db = new Dbconfig();
+				if(db.ShowDialog()!= DialogResult.OK)
+				{
+					
+					this.Load += new EventHandler(main_Load);
+				}
+				else InitializeComponent();
+			}
+			else InitializeComponent();
+			
+			
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
+		}
+		private void main_Load(object sender, EventArgs e)
+		{
+			this.Close();
+			System.Windows.Forms.Application.Exit();
 		}
 	}
 }

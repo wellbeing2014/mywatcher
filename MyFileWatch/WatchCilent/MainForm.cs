@@ -60,7 +60,7 @@ namespace WatchCilent
 			InitializeComponent();
 			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
 			Microsoft.Win32.RegistryKey dbc = key.OpenSubKey("software\\WisoftWatchClient");  
-			if(dbc==null|| dbc.GetValue("dbpath").ToString()=="")
+			if(dbc==null|| dbc.GetValue("dbpath")==null)
 			{
 				Dbconfig db = new Dbconfig();
 				db.ShowDialog();
