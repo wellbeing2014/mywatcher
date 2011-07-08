@@ -32,6 +32,7 @@ namespace WatchCilent
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.listView1.DoubleClick+= new EventHandler(Button4Click);
 			TreeNode tmp =new TreeNode("全部");
 			tmp.Nodes.Add("已接收");
 			tmp.Nodes.Add("已测试");
@@ -42,6 +43,8 @@ namespace WatchCilent
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
 			treeView1.ExpandAll();
 			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
+			treeView1.Leave+=new EventHandler(treeView1_Leave);
+			treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);
 			
 			
 			List<PersonInfo> datasource_person = PersonDao.getAllPersonInfo();
@@ -62,9 +65,10 @@ namespace WatchCilent
 			this.comboBox1.DataSource = datasource_module;
 			this.comboBox1.DisplayMember ="Fullname";
 			this.comboBox1.ValueMember = "Id";
+			
 			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
-			this.dateTimePicker1.ValueChanged+=new EventHandler(conditionChanged);
-			this.dateTimePicker2.ValueChanged+=new EventHandler(conditionChanged);
+			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
+			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
 			getAllPackInList();
 			
 			//
@@ -129,9 +133,8 @@ namespace WatchCilent
 		private void ListViewBing(PackageInfo pack)
 		{
 			ListViewItem lvi = new ListViewItem();
-			//lvi.Text=pack.Packagename;
+			lvi.Text=pack.Packagename;
 			lvi.Checked=false;
-			lvi.SubItems.Add(pack.Packagename);
 			lvi.SubItems.Add(pack.Packagepath);
 			lvi.SubItems.Add(pack.Packtime);
 			lvi.SubItems.Add(pack.Testtime);
@@ -147,7 +150,7 @@ namespace WatchCilent
 		private PackageInfo  ListViewSelect(ListViewItem lvi)
 		{
 			PackageInfo pack = new PackageInfo();
-			pack.Packagename = lvi.SubItems[0].Text;
+			pack.Packagename = lvi.Text;
 			pack.Packagepath = lvi.SubItems[1].Text;
 			pack.Packtime = lvi.SubItems[2].Text;
 			pack.Publishtime = lvi.SubItems[4].Text;
@@ -316,7 +319,33 @@ namespace WatchCilent
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
 		{
 			this.treeView1.SelectedNode=e.Node;
+			
 			getAllPackInList();
 		}
+		 //将要选中新节点之前发生
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (treeView1.SelectedNode != null)
+            {
+                //将上一个选中的节点背景色还原（原先没有颜色）
+                treeView1.SelectedNode.BackColor = Color.Empty;
+                //还原前景色
+                treeView1.SelectedNode.ForeColor = Color.Black;
+            }
+        }
+        //失去焦点时
+        private void treeView1_Leave(object sender, EventArgs e)
+        {
+            if(treeView1.SelectedNode!=null)
+            {
+                //让选中项背景色呈现红色
+                treeView1.SelectedNode.BackColor = Color.SteelBlue;
+                //前景色为白色
+                treeView1.SelectedNode.ForeColor = Color.White;
+            }
+        }
+
+
+		
 	}
 }

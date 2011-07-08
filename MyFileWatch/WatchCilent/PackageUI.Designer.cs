@@ -48,7 +48,6 @@ namespace WatchCilent
 			this.button6 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.listView1 = new System.Windows.Forms.ListView();
-			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
@@ -59,6 +58,10 @@ namespace WatchCilent
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -77,6 +80,10 @@ namespace WatchCilent
 			this.panel1.Controls.Add(this.comboBox1);
 			this.panel1.Controls.Add(this.button4);
 			this.panel1.Controls.Add(this.button2);
+			this.panel1.Controls.Add(this.dateTimePicker1);
+			this.panel1.Controls.Add(this.dateTimePicker2);
+			this.panel1.Controls.Add(this.label1);
+			this.panel1.Controls.Add(this.label2);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
@@ -85,12 +92,13 @@ namespace WatchCilent
 			// 
 			// checkBox2
 			// 
+			this.checkBox2.Checked = true;
+			this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBox2.Location = new System.Drawing.Point(174, 11);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(60, 24);
 			this.checkBox2.TabIndex = 23;
 			this.checkBox2.Text = "时间段";
-			this.checkBox2.Checked=true;
 			this.checkBox2.UseVisualStyleBackColor = true;
 			this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox2CheckedChanged);
 			// 
@@ -170,7 +178,6 @@ namespace WatchCilent
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.listView1.CheckBoxes = true;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.columnHeader7,
 									this.columnHeader1,
 									this.columnHeader2,
 									this.columnHeader3,
@@ -185,10 +192,6 @@ namespace WatchCilent
 			this.listView1.TabIndex = 14;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader7
-			// 
-			this.columnHeader7.Text = "选择";
 			// 
 			// columnHeader1
 			// 
@@ -247,6 +250,7 @@ namespace WatchCilent
 			this.button4.TabIndex = 3;
 			this.button4.Text = "处理";
 			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Button4Click);
 			// 
 			// button2
 			// 
@@ -257,22 +261,23 @@ namespace WatchCilent
 			this.button2.TabIndex = 1;
 			this.button2.Text = "隐藏";
 			this.button2.UseVisualStyleBackColor = true;
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.panel1.Controls.Add(this.dateTimePicker1);
-			this.panel1.Controls.Add(this.dateTimePicker2);
-			this.panel1.Controls.Add(this.label1);
-			this.panel1.Controls.Add(this.label2);
 			// 
-			// label2
+			// dateTimePicker1
 			// 
-			this.label2.Location = new System.Drawing.Point(360, 17);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(19, 18);
-			this.label2.TabIndex = 10;
-			this.label2.Text = "至";
+			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dateTimePicker1.Location = new System.Drawing.Point(267, 13);
+			this.dateTimePicker1.Name = "dateTimePicker1";
+			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
+			this.dateTimePicker1.TabIndex = 7;
+			this.dateTimePicker1.Value = new System.DateTime(2011, 6, 8, 10, 13, 8, 62);
+			// 
+			// dateTimePicker2
+			// 
+			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dateTimePicker2.Location = new System.Drawing.Point(385, 13);
+			this.dateTimePicker2.Name = "dateTimePicker2";
+			this.dateTimePicker2.Size = new System.Drawing.Size(84, 21);
+			this.dateTimePicker2.TabIndex = 8;
 			// 
 			// label1
 			// 
@@ -281,21 +286,14 @@ namespace WatchCilent
 			this.label1.Size = new System.Drawing.Size(19, 18);
 			this.label1.TabIndex = 9;
 			this.label1.Text = "起";
-				
-			
-			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker1.Location = new System.Drawing.Point(267, 13);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
-			DateTime dt =DateTime.Now; 
-			dateTimePicker1.Value=dt.AddMonths(-1);
-			this.dateTimePicker1.TabIndex = 7;
-			
-			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker2.Location = new System.Drawing.Point(385, 13);
-			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(84, 21);
-			this.dateTimePicker2.TabIndex = 8;
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(360, 17);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(19, 18);
+			this.label2.TabIndex = 10;
+			this.label2.Text = "至";
 			// 
 			// PackageUI
 			// 
@@ -308,7 +306,6 @@ namespace WatchCilent
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.CheckBox checkBox2;
-		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button4;

@@ -124,6 +124,53 @@ namespace WatchCilent
             return unRarPatch;
         }
         
+        static public void openRarFile(string rarPatch)
+        {
+            string the_rar;
+            RegistryKey the_Reg;
+            object the_Obj;
+            string the_Info;
+            try
+            {
+                the_Reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\WinRAR.exe");
+                the_Obj = the_Reg.GetValue("");
+                the_rar = the_Obj.ToString();
+                the_Reg.Close();
+                the_Info = "\""+rarPatch+"\"";
+                ProcessStartInfo the_StartInfo = new ProcessStartInfo();
+                the_StartInfo.FileName = the_rar;
+                the_StartInfo.Arguments = the_Info;
+                
+                Process the_Process = new Process();
+                the_Process.StartInfo = the_StartInfo;
+                the_Process.Start();
+//                the_Process.WaitForExit();
+//                the_Process.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+        static public void openDirectory(string patch)
+        {
+            try
+            {
+                ProcessStartInfo the_StartInfo = new ProcessStartInfo();
+                the_StartInfo.FileName = "explorer.exe";
+                the_StartInfo.Arguments = "\""+patch+"\"";
+                
+                Process the_Process = new Process();
+                the_Process.StartInfo = the_StartInfo;
+                the_Process.Start();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
         //自动创建不存在路径,如果包涵&datetime&则自动创建带
        	static public  String AutoCreateFolder(string filePath)   
 		{   

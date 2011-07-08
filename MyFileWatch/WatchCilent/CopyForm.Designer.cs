@@ -58,14 +58,16 @@ namespace WatchCilent
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.button5 = new System.Windows.Forms.Button();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.button6 = new System.Windows.Forms.Button();
+			this.button7 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(358, 287);
+			this.button1.Location = new System.Drawing.Point(412, 287);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.Size = new System.Drawing.Size(46, 23);
 			this.button1.TabIndex = 0;
 			this.button1.Text = "复制";
 			this.button1.UseVisualStyleBackColor = true;
@@ -74,9 +76,9 @@ namespace WatchCilent
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(439, 287);
+			this.button2.Location = new System.Drawing.Point(464, 287);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.Size = new System.Drawing.Size(48, 23);
 			this.button2.TabIndex = 1;
 			this.button2.Text = "取消";
 			this.button2.UseVisualStyleBackColor = true;
@@ -122,12 +124,12 @@ namespace WatchCilent
 			// 
 			// button3
 			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(439, 4);
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button3.Location = new System.Drawing.Point(69, 287);
 			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.Size = new System.Drawing.Size(37, 23);
 			this.button3.TabIndex = 6;
-			this.button3.Text = "删除更新包";
+			this.button3.Text = "删除";
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
@@ -149,7 +151,6 @@ namespace WatchCilent
 			this.comboBox1.Location = new System.Drawing.Point(82, 31);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(121, 20);
-			this.comboBox1.SelectedIndexChanged+=new EventHandler(comboBox1_SelectedIndexChanged);
 			this.comboBox1.TabIndex = 8;
 			// 
 			// textBox1
@@ -189,9 +190,9 @@ namespace WatchCilent
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(277, 287);
+			this.button5.Location = new System.Drawing.Point(112, 287);
 			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(75, 23);
+			this.button5.Size = new System.Drawing.Size(39, 23);
 			this.button5.TabIndex = 13;
 			this.button5.Text = "保存";
 			this.button5.UseVisualStyleBackColor = true;
@@ -202,11 +203,33 @@ namespace WatchCilent
 			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBox1.Location = new System.Drawing.Point(12, 286);
 			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(104, 24);
+			this.checkBox1.Size = new System.Drawing.Size(51, 24);
 			this.checkBox1.TabIndex = 14;
 			this.checkBox1.Text = "锁定";
 			this.checkBox1.UseVisualStyleBackColor = true;
 			this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
+			// 
+			// button6
+			// 
+			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button6.Location = new System.Drawing.Point(306, 287);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(47, 23);
+			this.button6.TabIndex = 6;
+			this.button6.Text = "打开";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button6Click);
+			// 
+			// button7
+			// 
+			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button7.Location = new System.Drawing.Point(359, 287);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(47, 23);
+			this.button7.TabIndex = 6;
+			this.button7.Text = "目录";
+			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.Button7Click);
 			// 
 			// BussinessForm
 			// 
@@ -221,6 +244,8 @@ namespace WatchCilent
 			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.button4);
+			this.Controls.Add(this.button7);
+			this.Controls.Add(this.button6);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.progressBar1);
@@ -233,6 +258,8 @@ namespace WatchCilent
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.Button button6;
 		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.ComboBox comboBox2;
