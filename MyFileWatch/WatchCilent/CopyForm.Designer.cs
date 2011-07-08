@@ -159,7 +159,7 @@ namespace WatchCilent
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(82, 4);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(351, 21);
+			this.textBox1.Size = new System.Drawing.Size(432, 21);
 			this.textBox1.TabIndex = 9;
 			// 
 			// label3
