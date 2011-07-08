@@ -28,10 +28,16 @@ namespace WatchCilent
 			string sql = "select * from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部'='"+state+"' or state='"+state+"')"
-				+" and (''='"+begintime+"' or packtime>='"+begintime+"')"
-				+" and (''='"+endtime+"' or packtime<='"+endtime+"')"
-				+" order by packtime desc";
+				+" and ('全部'='"+state+"' or state='"+state+"')";
+			if(begintime!=null)
+			{
+				sql+=" and  cdate(packtime)>=cdate('"+begintime+"')";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cdate(packtime)<=cdate('"+endtime+"')";
+			}	
+			sql+=" order by cdate(packtime) desc";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)

@@ -45,12 +45,19 @@ namespace WatchCilent
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
+			//关闭刷新更新包列表
 			this.Closed+=new EventHandler(formClose);
+			//传入更新包
 			this.frompath = packageinfo.Packagepath;
 			this.packageinfo = packageinfo;
+			
+			
 			InitializeComponent();
+			this.textBox1.Text = frompath;
+			
 			String[] temp =frompath.Split('\\');
 			filename = temp[temp.Length-1];
+			/*加载模块选择框*/
 			datasource_module = ModuleDao.getAllModuleInfo();
 			ModuleInfo all = new ModuleInfo();
 			all.Fullname ="选择模块";
@@ -59,6 +66,7 @@ namespace WatchCilent
 			this.comboBox1.DataSource = datasource_module;
 			this.comboBox1.DisplayMember ="Fullname";
 			this.comboBox1.ValueMember = "Id";
+			/*加载责任人选择框*/
 			datasource_person =PersonDao.getAllPersonInfo();
 			PersonInfo person = new PersonInfo();
 			person.Fullname = "选择责任人";
@@ -67,8 +75,10 @@ namespace WatchCilent
 			this.comboBox2.DataSource = datasource_person;
 			this.comboBox2.DisplayMember = "Fullname";
 			this.comboBox2.ValueMember = "Id";
+			
+			/*绑定模块*/
 			int index_module = 0;
-			if(packageinfo.Moduleid!=0)
+			if(packageinfo.Moduleid!=0)//更新包已有模块ID
 			{
 				for (index_module=0;index_module<datasource_module.Count ;index_module++ ) 
 				{
@@ -79,7 +89,7 @@ namespace WatchCilent
 					}
 				}
 			}
-			else
+			else//没有模块ID自动绑定
 			{
 				string[] fi = filename.Split('(');
 				if(fi.Length>=2)
@@ -98,13 +108,14 @@ namespace WatchCilent
 								break;
 							}
 						}
-						SavePackage();
+						SavePackage();//自动绑定成功。。
 					}
 					else MessageBox.Show("没能找到与更新包相关的模块，请手动确认");
 				}
 				else MessageBox.Show("没能找到与更新包相关的模块，请手动确认");
 			}
 			
+			/*绑定责任人*/
 			int index_manager = 0;
 			if(packageinfo.Managerid!=0)
 			{
@@ -120,11 +131,9 @@ namespace WatchCilent
 			if(this.packageinfo.Id!=0)
 			{
 				this.button5.Enabled = false;
+				this.button3.Enabled = false;
 				this.checkBox1.Checked = true;
 			}
-			
-			this.textBox1.Text = frompath;
-			
 			getAllProjectPath();
 			
 			//
@@ -374,10 +383,12 @@ namespace WatchCilent
 			if(this.checkBox1.Checked)
 			{
 				this.button5.Enabled = false;
+				this.button3.Enabled = false;
 			}
 			else
 			{
 				this.button5.Enabled = true;
+				this.button3.Enabled = true;
 			}
 		}
 		void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -412,7 +423,16 @@ namespace WatchCilent
 				
 			}
 		}
-		
+		void Button6Click(object sender, EventArgs e)
+		{
+			FunctionUtils.openRarFile(this.packageinfo.Packagepath);
+		}
+		void Button7Click(object sender, EventArgs e)
+		{
+			String[] filename = this.packageinfo.Packagepath.Split('\\');
+			String curpath = this.packageinfo.Packagepath.Replace(filename[filename.Length-1],"");
+			FunctionUtils.openDirectory(curpath);
+		}
 					
 		void formClose(object sender, EventArgs e)
 		{
