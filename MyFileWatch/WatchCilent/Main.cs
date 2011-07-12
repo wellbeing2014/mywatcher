@@ -47,5 +47,18 @@ namespace WatchCilent
 			this.Close();
 			System.Windows.Forms.Application.Exit();
 		}
+		void 测试列表ToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			TestListUI testlistui = new TestListUI();
+			testlistui.Dock = System.Windows.Forms.DockStyle.Fill;
+			
+			if(this.panel2.Controls.Count>0)
+			{
+				this.panel2.Controls.Clear();
+				this.panel2.Controls.Add(testlistui);
+			}
+			
+			
+		}
 	}
 }
