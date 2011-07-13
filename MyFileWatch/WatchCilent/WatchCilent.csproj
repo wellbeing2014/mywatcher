@@ -34,6 +34,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="MFCComboBox">
+      <HintPath>MFCComboBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -138,16 +141,11 @@
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="MFCComboBox.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MISC" />
     <Folder Include="pojo" />
     <Folder Include="dao" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WatchService\WatchService.csproj">
-      <Project>{676D6C7E-FB85-4F16-BDAB-335F86A86E1A}</Project>
-      <Name>WatchService</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

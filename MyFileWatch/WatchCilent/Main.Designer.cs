@@ -38,6 +38,8 @@ namespace WatchCilent
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.packageUI1 = new WatchCilent.PackageUI();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.测试列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,11 +55,9 @@ namespace WatchCilent
 			this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.packageUI1 = new WatchCilent.PackageUI();
 			this.panel1.SuspendLayout();
-			this.menuStrip1.SuspendLayout();
 			this.panel2.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -70,6 +70,23 @@ namespace WatchCilent
 			this.panel1.Size = new System.Drawing.Size(909, 487);
 			this.panel1.TabIndex = 1;
 			// 
+			// panel2
+			// 
+			this.panel2.Controls.Add(this.packageUI1);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel2.Location = new System.Drawing.Point(0, 24);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(909, 463);
+			this.panel2.TabIndex = 2;
+			// 
+			// packageUI1
+			// 
+			this.packageUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.packageUI1.Location = new System.Drawing.Point(0, 0);
+			this.packageUI1.Name = "packageUI1";
+			this.packageUI1.Size = new System.Drawing.Size(909, 463);
+			this.packageUI1.TabIndex = 0;
+			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -79,7 +96,7 @@ namespace WatchCilent
 									this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(909, 25);
+			this.menuStrip1.Size = new System.Drawing.Size(909, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -90,26 +107,26 @@ namespace WatchCilent
 									this.生成测试报告ToolStripMenuItem,
 									this.测试统计ToolStripMenuItem});
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(44, 21);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(41, 20);
 			this.toolStripMenuItem1.Text = "测试";
 			// 
 			// 测试列表ToolStripMenuItem
 			// 
 			this.测试列表ToolStripMenuItem.Name = "测试列表ToolStripMenuItem";
-			this.测试列表ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.测试列表ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.测试列表ToolStripMenuItem.Text = "测试列表";
 			this.测试列表ToolStripMenuItem.Click += new System.EventHandler(this.测试列表ToolStripMenuItemClick);
 			// 
 			// 生成测试报告ToolStripMenuItem
 			// 
 			this.生成测试报告ToolStripMenuItem.Name = "生成测试报告ToolStripMenuItem";
-			this.生成测试报告ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.生成测试报告ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.生成测试报告ToolStripMenuItem.Text = "生成测试报告";
 			// 
 			// 测试统计ToolStripMenuItem
 			// 
 			this.测试统计ToolStripMenuItem.Name = "测试统计ToolStripMenuItem";
-			this.测试统计ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			this.测试统计ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.测试统计ToolStripMenuItem.Text = "测试统计";
 			// 
 			// 更新包ToolStripMenuItem
@@ -118,26 +135,28 @@ namespace WatchCilent
 									this.更新包列表ToolStripMenuItem,
 									this.更新包统计ToolStripMenuItem});
 			this.更新包ToolStripMenuItem.Name = "更新包ToolStripMenuItem";
-			this.更新包ToolStripMenuItem.Size = new System.Drawing.Size(56, 21);
+			this.更新包ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
 			this.更新包ToolStripMenuItem.Text = "更新包";
 			// 
 			// 更新包列表ToolStripMenuItem
 			// 
 			this.更新包列表ToolStripMenuItem.Name = "更新包列表ToolStripMenuItem";
-			this.更新包列表ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+			this.更新包列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.更新包列表ToolStripMenuItem.Text = "更新包列表";
+			this.更新包列表ToolStripMenuItem.Click += new System.EventHandler(this.更新包列表ToolStripMenuItemClick);
 			// 
 			// 更新包统计ToolStripMenuItem
 			// 
 			this.更新包统计ToolStripMenuItem.Name = "更新包统计ToolStripMenuItem";
-			this.更新包统计ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+			this.更新包统计ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.更新包统计ToolStripMenuItem.Text = "更新包统计";
 			// 
 			// 配置ToolStripMenuItem
 			// 
 			this.配置ToolStripMenuItem.Name = "配置ToolStripMenuItem";
-			this.配置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+			this.配置ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
 			this.配置ToolStripMenuItem.Text = "配置";
+			this.配置ToolStripMenuItem.Click += new System.EventHandler(this.配置ToolStripMenuItemClick);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -148,54 +167,37 @@ namespace WatchCilent
 									this.toolStripSeparator5,
 									this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
 			// 
 			// contentsToolStripMenuItem
 			// 
 			this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-			this.contentsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.contentsToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.contentsToolStripMenuItem.Text = "&Contents";
 			// 
 			// indexToolStripMenuItem
 			// 
 			this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-			this.indexToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.indexToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.indexToolStripMenuItem.Text = "&Index";
 			// 
 			// searchToolStripMenuItem
 			// 
 			this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-			this.searchToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.searchToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.searchToolStripMenuItem.Text = "&Search";
 			// 
 			// toolStripSeparator5
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(124, 6);
+			this.toolStripSeparator5.Size = new System.Drawing.Size(115, 6);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.aboutToolStripMenuItem.Text = "&About...";
-			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.packageUI1);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(0, 25);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(909, 462);
-			this.panel2.TabIndex = 2;
-			// 
-			// packageUI1
-			// 
-			this.packageUI1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.packageUI1.Location = new System.Drawing.Point(0, 0);
-			this.packageUI1.Name = "packageUI1";
-			this.packageUI1.Size = new System.Drawing.Size(909, 462);
-			this.packageUI1.TabIndex = 0;
 			// 
 			// Main
 			// 
@@ -209,9 +211,9 @@ namespace WatchCilent
 			this.Text = "Wisoft测试管理系统";
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.panel2.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.panel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.Panel panel2;
