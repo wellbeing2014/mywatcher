@@ -47,18 +47,38 @@ namespace WatchCilent
 			this.Close();
 			System.Windows.Forms.Application.Exit();
 		}
-		void 测试列表ToolStripMenuItemClick(object sender, System.EventArgs e)
+		
+		
+		/// <summary>
+		/// 切换主界面
+		/// </summary>
+		/// <param name="ctrl"></param>
+		void changeForm(Control ctrl)
 		{
-			TestListUI testlistui = new TestListUI();
-			testlistui.Dock = System.Windows.Forms.DockStyle.Fill;
-			
+			ctrl.Dock = System.Windows.Forms.DockStyle.Fill;
 			if(this.panel2.Controls.Count>0)
 			{
 				this.panel2.Controls.Clear();
-				this.panel2.Controls.Add(testlistui);
+				this.panel2.Controls.Add(ctrl);
 			}
-			
-			
+		}
+		void 测试列表ToolStripMenuItemClick(object sender, System.EventArgs e)
+		{
+			//TestListUI testlistui = new TestListUI();
+			changeForm(new TestListUI());
+		}
+		
+		void 更新包列表ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			changeForm(new PackageUI());
+		}
+		
+		void 配置ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			ConfigForm cm = new ConfigForm();
+			cm.StartPosition = FormStartPosition.CenterParent;
+			cm.ShowDialog();
+			this.panel2.Controls[0].Refresh();
 		}
 	}
 }
