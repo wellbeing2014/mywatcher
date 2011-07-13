@@ -39,7 +39,6 @@ namespace WatchCilent
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
@@ -58,6 +57,7 @@ namespace WatchCilent
 			this.label9 = new System.Windows.Forms.Label();
 			this.textBox9 = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -83,13 +83,6 @@ namespace WatchCilent
 			this.label2.Size = new System.Drawing.Size(58, 18);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "责任主管";
-			// 
-			// textBox2
-			// 
-			this.textBox2.Location = new System.Drawing.Point(64, 36);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(124, 21);
-			this.textBox2.TabIndex = 2;
 			// 
 			// label3
 			// 
@@ -242,10 +235,10 @@ namespace WatchCilent
 			// 
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.comboBox1);
 			this.panel1.Controls.Add(this.label3);
 			this.panel1.Controls.Add(this.textBox3);
 			this.panel1.Controls.Add(this.label2);
-			this.panel1.Controls.Add(this.textBox2);
 			this.panel1.Controls.Add(this.textBox8);
 			this.panel1.Controls.Add(this.label8);
 			this.panel1.Controls.Add(this.label7);
@@ -254,6 +247,14 @@ namespace WatchCilent
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(593, 67);
 			this.panel1.TabIndex = 24;
+			// 
+			// comboBox1
+			// 
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(64, 36);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(124, 20);
+			this.comboBox1.TabIndex = 21;
 			// 
 			// TestResult
 			// 
@@ -281,6 +282,7 @@ namespace WatchCilent
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.TextBox textBox9;
 		private System.Windows.Forms.Label label9;
@@ -299,7 +301,6 @@ namespace WatchCilent
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.TextBox textBox3;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBox1;
