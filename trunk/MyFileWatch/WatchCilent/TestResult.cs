@@ -27,6 +27,7 @@ namespace WatchCilent
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.CenterToParent();
 			//InsertImage();
 			read();
 			//
