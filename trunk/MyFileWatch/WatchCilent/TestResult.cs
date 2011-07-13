@@ -27,6 +27,13 @@ namespace WatchCilent
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.comboBox1.DataSource =PersonDao.getPersonTable();
+			this.comboBox1.DisplayMember = "fullname";
+			this.comboBox1.ValueMember = "id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			
 			this.CenterToParent();
 			//InsertImage();
 			read();

@@ -21,6 +21,14 @@ namespace WatchCilent.dao
 		public PersonDao()
 		{
 		}
+		static public DataTable getPersonTable()
+		{
+			string sql = "select * from PersonInfo";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			List<PersonInfo> ls = new List<PersonInfo>();
+			return	data.Tables["ds"];
+		}
+		
 		static public List<PersonInfo> getAllPersonInfo()
 		{
 			string sql = "select * from PersonInfo";
