@@ -195,6 +195,7 @@ namespace WatchCilent
 			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.listView1.CheckBoxes = true;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 									this.columnHeader1,
 									this.columnHeader2,
@@ -215,37 +216,37 @@ namespace WatchCilent
 			// columnHeader1
 			// 
 			this.columnHeader1.Text = "缺陷编号";
-			this.columnHeader1.Width = 97;
+			this.columnHeader1.Width = 120;
 			// 
 			// columnHeader2
 			// 
 			this.columnHeader2.Text = "测试对象";
-			this.columnHeader2.Width = 112;
+			this.columnHeader2.Width = 200;
 			// 
 			// columnHeader6
 			// 
 			this.columnHeader6.Text = "严重等级";
-			this.columnHeader6.Width = 66;
+			this.columnHeader6.Width = 60;
 			// 
 			// columnHeader3
 			// 
 			this.columnHeader3.Text = "标题";
-			this.columnHeader3.Width = 169;
+			this.columnHeader3.Width = 250;
 			// 
 			// columnHeader4
 			// 
 			this.columnHeader4.Text = "测试时间";
-			this.columnHeader4.Width = 99;
+			this.columnHeader4.Width = 120;
 			// 
 			// columnHeader5
 			// 
 			this.columnHeader5.Text = "责任人";
-			this.columnHeader5.Width = 68;
+			this.columnHeader5.Width = 60;
 			// 
 			// columnHeader7
 			// 
 			this.columnHeader7.Text = "状态";
-			this.columnHeader7.Width = 92;
+			this.columnHeader7.Width = 60;
 			// 
 			// TestListUI
 			// 

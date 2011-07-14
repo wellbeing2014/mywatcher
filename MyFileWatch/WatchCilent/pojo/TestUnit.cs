@@ -120,5 +120,12 @@ namespace WatchCilent.pojo
 			get { return testtitle; }
 			set { testtitle = value; }
 		}
+		
+		private string state;
+		
+		public string State {
+			get { return state; }
+			set { state = value; }
+		}
 	}
 }
