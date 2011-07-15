@@ -72,12 +72,57 @@ namespace WatchCilent
 			tu.Id = Int32.Parse(lvi.SubItems[7].Text);
 			return tu;
 		}
-		
+		/// <summary>
+		/// 新增
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void Button1Click(object sender, EventArgs e)
 		{
 			TestResult tr = new TestResult();
-			
 			tr.ShowDialog();
+			this.listView1.Items.Clear();
+			getAll();
+		}
+		/// <summary>
+		/// 修改
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button2Click(object sender, EventArgs e)
+		{
+			if(this.listView1.CheckedItems.Count==1)
+			{
+				TestUnit tu = ListViewSelect(this.listView1.CheckedItems[0]);
+				TestResult tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id));
+				tr.ShowDialog();
+			}
+			else
+			{
+				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}
+		}
+		/// <summary>
+		/// 删除
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button3Click(object sender, EventArgs e)
+		{
+			if(this.listView1.CheckedItems.Count>0)
+			{
+				foreach (ListViewItem lvi in this.listView1.CheckedItems) {
+					TestUnit tu = ListViewSelect(lvi);
+				    AccessDBUtil.delete(tu);
+				}
+				MessageBox.Show("删除成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+				this.listView1.Items.Clear();
+				getAll();
+			}
+			else
+			{
+				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}
 		}
 	}
 }

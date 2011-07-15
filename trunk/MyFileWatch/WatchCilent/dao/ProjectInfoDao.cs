@@ -22,6 +22,18 @@ namespace WatchCilent.dao
 		public ProjectInfoDao()
 		{
 		}
+		
+		static public DataTable getAllProjectTable()
+		{
+			string sql = "select * from projectinfo";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataRow dr = data.Tables["ds"].NewRow();
+			dr["projectname"] = "全部项目";
+			dr["id"] = 0;
+			data.Tables["ds"].Rows.InsertAt(dr,0);
+			return	data.Tables["ds"];
+			
+		}
 		static public List<ProjectInfo> getAllProjectInfo()
 		{
 			string sql = "select * from projectinfo";

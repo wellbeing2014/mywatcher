@@ -37,10 +37,10 @@ namespace WatchCilent.dao
 		}
 		static public bool insert(TestUnit tu)
 		{
-			OleDbParameter tt = new OleDbParameter();
+			OleDbParameter tt = new OleDbParameter(,);
 			tt.OleDbType=OleDbType.VarBinary;
 			tt.Value=tu.Testcontent;
-			int i=AccessDBUtil.ExecuteInsert("insert into testunit (test_content) values(tt)",new OleDbParameter[]{tt});
+			int i=AccessDBUtil.ExecuteInsert("insert into testunit (testcontent) values(tt)",new OleDbParameter[]{tt});
 			if(i!=0)
 			{
 				return true;
@@ -62,7 +62,7 @@ namespace WatchCilent.dao
 		{
 			TestUnit test = new TestUnit();
 			test.Id = Int32.Parse(row["id"].ToString());
-			test.Testcontent = row["test_content"] as byte[];
+			test.Testcontent = row["testcontent"] as byte[];
 			test.Adminid =Int32.Parse((row["adminid"].Equals(""))?row["adminid"].ToString():"0");
 			test.Moduleid =Int32.Parse((row["moduleid"].Equals(""))?row["moduleid"].ToString():"0");
 			test.Packageid =Int32.Parse((row["packageid"].Equals(""))?row["packageid"].ToString():"0");

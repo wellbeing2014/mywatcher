@@ -23,6 +23,16 @@ namespace WatchCilent.dao
 		{
 		}
 		
+		static public DataTable getAllModuleTable()
+		{
+			string sql = "select * from ModuleInfo";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataRow dr = data.Tables["ds"].NewRow();
+			dr["fullname"] = "全部平台";
+			dr["id"] = 0;
+			data.Tables["ds"].Rows.InsertAt(dr,0);
+			return data.Tables["ds"];
+		}
 		
 		static public List<ModuleInfo> getAllModuleInfo()
 		{

@@ -100,6 +100,7 @@ namespace WatchCilent
 			this.button3.TabIndex = 34;
 			this.button3.Text = "删除";
 			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
 			// button2
 			// 
@@ -110,6 +111,7 @@ namespace WatchCilent
 			this.button2.TabIndex = 33;
 			this.button2.Text = "修改";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// button1
 			// 
@@ -225,8 +227,8 @@ namespace WatchCilent
 			// 
 			// columnHeader6
 			// 
-			this.columnHeader6.Text = "严重等级";
-			this.columnHeader6.Width = 60;
+			this.columnHeader6.Text = "等级";
+			this.columnHeader6.Width = 40;
 			// 
 			// columnHeader3
 			// 
@@ -236,17 +238,17 @@ namespace WatchCilent
 			// columnHeader4
 			// 
 			this.columnHeader4.Text = "测试时间";
-			this.columnHeader4.Width = 120;
+			this.columnHeader4.Width = 140;
 			// 
 			// columnHeader5
 			// 
 			this.columnHeader5.Text = "责任人";
-			this.columnHeader5.Width = 60;
+			this.columnHeader5.Width = 50;
 			// 
 			// columnHeader7
 			// 
 			this.columnHeader7.Text = "状态";
-			this.columnHeader7.Width = 60;
+			this.columnHeader7.Width = 50;
 			// 
 			// TestListUI
 			// 

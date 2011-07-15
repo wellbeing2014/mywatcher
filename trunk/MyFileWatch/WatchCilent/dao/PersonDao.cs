@@ -25,7 +25,10 @@ namespace WatchCilent.dao
 		{
 			string sql = "select * from PersonInfo";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql);
-			List<PersonInfo> ls = new List<PersonInfo>();
+			DataRow dr = data.Tables["ds"].NewRow();
+			dr["fullname"] = "全部责任人";
+			dr["id"] = 0;
+			data.Tables["ds"].Rows.InsertAt(dr,0);
 			return	data.Tables["ds"];
 		}
 		

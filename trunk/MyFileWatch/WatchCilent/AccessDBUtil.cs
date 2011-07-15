@@ -23,6 +23,7 @@ namespace WatchCilent
 		
 		public static bool insert(object obj)
 		{
+			List<OleDbParameter> para = new List<OleDbParameter>();
 			try {
 				//反射出类型
 				Type objclass =obj.GetType();
@@ -55,6 +56,16 @@ namespace WatchCilent
 						{
 							sqltou+=field.Name+",";
 							sqlval+=fvalue.ToString()+"','";
+						}
+						//验证大字段
+						if(field.PropertyType.Name=="Byte[]")
+						{
+							OleDbParameter tt = new OleDbParameter();
+							tt.ParameterName = "@"+field.Name;
+							tt.OleDbType=OleDbType.VarBinary;
+							tt.Value=fvalue;
+							sqltou+=field.Name+",";
+							sqlval=sqlval.Substring(0,sqlval.Length-1)+tt.ParameterName+",'";
 						}
 					}
 				}
@@ -380,6 +391,15 @@ namespace WatchCilent
                 connection.Close();
                 throw e;
             }
+        }
+        static public string CalcBUGNO()
+        {
+        	DateTime dt = System.DateTime.Now;
+        	string dtno = dt.Year.ToString()+
+        		((dt.Month<10)?"0"+dt.Month.ToString():dt.Month.ToString())+
+        		((dt.Day<10)?"0"+dt.Day.ToString():dt.Day.ToString());
+        	dtno="BUG"+dtno;
+        	return dtno;
         }
         
 	}
