@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace WatchCilent
+namespace WatchCilent.Common
 {
 	/// <summary>
 	/// Description of Communication.

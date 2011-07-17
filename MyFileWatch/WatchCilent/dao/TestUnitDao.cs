@@ -11,7 +11,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 
+using WatchCilent.Common;
+using WatchCilent.dao;
 using WatchCilent.pojo;
+
 
 namespace WatchCilent.dao
 {
@@ -37,7 +40,7 @@ namespace WatchCilent.dao
 		}
 		static public bool insert(TestUnit tu)
 		{
-			OleDbParameter tt = new OleDbParameter(,);
+			OleDbParameter tt = new OleDbParameter();
 			tt.OleDbType=OleDbType.VarBinary;
 			tt.Value=tu.Testcontent;
 			int i=AccessDBUtil.ExecuteInsert("insert into testunit (testcontent) values(tt)",new OleDbParameter[]{tt});

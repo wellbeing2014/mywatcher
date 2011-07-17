@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Data;
 using WatchCilent.dao;
 using WatchCilent.pojo;
+using WatchCilent.Common;
 using System.Collections.Generic;
 namespace WatchCilent
 {
@@ -46,6 +47,9 @@ namespace WatchCilent
 			this.comboBox3.ValueMember = "id";
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			this.comboBox5.DataSource = CommonConst.BUGLEVEL;
+			this.comboBox5.DropDownStyle= ComboBoxStyle.DropDownList;
 				
 			this.CenterToParent();
 			//InsertImage();
@@ -63,6 +67,7 @@ namespace WatchCilent
 			InitializeComponent();
 			
 			//this.comboBox1.DataSource = PersonDao.getPersonTable();;
+			this.comboBox1.Text=tu.Adminname;
 			this.comboBox1.Items.Add(tu.Adminname);
 			//this.comboBox1.DisplayMember = "fullname";
 			//this.comboBox1.ValueMember = "id";
@@ -80,6 +85,10 @@ namespace WatchCilent
 			this.comboBox3.ValueMember = "id";
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			this.textBox3.Text = tu.Packagename;
+			this.textBox9.Text = tu.Testtitle;
+			this.comboBox5.Text = tu.Buglevel;
 
 			MemoryStream stream = new MemoryStream(tu.Testcontent);
 			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
@@ -122,9 +131,9 @@ namespace WatchCilent
 			tu.Projectid =0;
 			tu.Testorid =0;
 			
-			tu.Buglevel ="一般" ;
+			tu.Buglevel =this.comboBox5.Text;
 			tu.Packagename =this.textBox3.Text;
-			tu.Projectname =null ;
+			tu.Projectname ="fadsadsfads" ;
 			tu.State = "未修订";
 			tu.Testorname ="朱新培" ;
 			tu.Testtime =DateTime.Now.ToString() ;

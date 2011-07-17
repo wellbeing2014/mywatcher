@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace WatchCilent
+namespace WatchCilent.Common
 {
 	/// <summary>
 	/// Description of DBUtil.
@@ -44,34 +44,44 @@ namespace WatchCilent
 					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
 					{
 						object fvalue=field.GetValue(obj,null);
-						//验证整形，空的整形为0
+						
+						OleDbParameter tt = new OleDbParameter();
+						tt.ParameterName = "@"+field.Name;
+						tt.Value=fvalue;
+						//验证整形
 						if(field.PropertyType.Name=="Int32")
 						{
-							
-							sqltou+=field.Name+",";
-							sqlval=sqlval.Substring(0,sqlval.Length-1)+fvalue.ToString()+",'";
+							tt.OleDbType=OleDbType.Integer;
 						}
-						else
-						if(fvalue!=null&&fvalue.ToString()!=null)
+						if(field.PropertyType.Name=="String")
 						{
-							sqltou+=field.Name+",";
-							sqlval+=fvalue.ToString()+"','";
+							tt.OleDbType=OleDbType.VarChar;
 						}
-						//验证大字段
+						if(field.PropertyType.Name=="Boolean")
+						{
+							tt.OleDbType=OleDbType.Boolean;
+						}
+						if(field.PropertyType.Name=="DateTime")
+						{
+							tt.OleDbType=OleDbType.Date;
+						}
+						//大字段
 						if(field.PropertyType.Name=="Byte[]")
 						{
-							OleDbParameter tt = new OleDbParameter();
-							tt.ParameterName = "@"+field.Name;
 							tt.OleDbType=OleDbType.VarBinary;
-							tt.Value=fvalue;
+						}
+						if(fvalue!=null)
+						{
+							para.Add(tt);
 							sqltou+=field.Name+",";
 							sqlval=sqlval.Substring(0,sqlval.Length-1)+tt.ParameterName+",'";
 						}
+						
 					}
 				}
 				String sql=sqltou.Substring(0,sqltou.Length-1)+")"+sqlval.Substring(0,sqlval.Length-2)+");";
 				//拼SQL结束。
-				ExecuteNonQuery(sql);
+				ExecuteQuery(sql,para.ToArray());
 				return true;
 			} catch (Exception e) {
 				MessageBox.Show(e.ToString());
