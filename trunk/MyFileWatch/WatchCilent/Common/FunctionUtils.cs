@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 
-namespace WatchCilent
+namespace WatchCilent.Common
 {
 	/// <summary>
 	/// Description of RarCtrl.

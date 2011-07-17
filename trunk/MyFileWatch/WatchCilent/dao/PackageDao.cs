@@ -11,9 +11,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Windows.Forms;
+using WatchCilent.Common;
+using WatchCilent.dao;
 using WatchCilent.pojo;
 
-namespace WatchCilent
+
+namespace WatchCilent.dao
 {
 	/// <summary>
 	/// Description of PackageDao.
