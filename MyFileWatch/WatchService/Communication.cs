@@ -77,7 +77,6 @@ namespace WatchService
             UdpClient.Send(buffer, buffer.Length, epGroup);
             UdpClient.Close();
         }
-       	
     }
 	}
 }
