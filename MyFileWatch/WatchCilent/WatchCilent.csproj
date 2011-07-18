@@ -34,6 +34,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="MSWORD">
+      <HintPath>..\MSWORD.OLB</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -70,7 +73,6 @@
     <Compile Include="pojo\PackageInfo.cs" />
     <Compile Include="pojo\PersonInfo.cs" />
     <Compile Include="pojo\ProjectInfo.cs" />
-    <Compile Include="UI\ComboBoxEX.cs" />
     <Compile Include="UI\ConfigForm.cs" />
     <Compile Include="UI\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -94,6 +96,10 @@
     <Compile Include="UI\Pack\PackageUI.cs" />
     <Compile Include="UI\Pack\PackageUI.Designer.cs">
       <DependentUpon>PackageUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pack\SaveView.cs" />
+    <Compile Include="UI\Pack\SaveView.Designer.cs">
+      <DependentUpon>SaveView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pack\TextForCopyForm.cs" />
     <Compile Include="UI\Pack\TextForCopyForm.Designer.cs">
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pack\PackageUI.resx">
       <DependentUpon>PackageUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pack\SaveView.resx">
+      <DependentUpon>SaveView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pack\TextForCopyForm.resx">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>

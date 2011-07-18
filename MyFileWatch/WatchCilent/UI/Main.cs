@@ -9,8 +9,10 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using WatchCilent.UI.Pack;
+using WatchCilent.UI;
 
-namespace WatchCilent
+namespace WatchCilent.UI
 {
 	/// <summary>
 	/// Description of Main.
