@@ -6,7 +6,7 @@
  * 
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
-namespace WatchCilent
+namespace WatchCilent.UI.Pack
 {
 	partial class TestListUI
 	{
@@ -90,6 +90,7 @@ namespace WatchCilent
 			this.button4.TabIndex = 35;
 			this.button4.Text = "生成测试报告";
 			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Button4Click);
 			// 
 			// button3
 			// 

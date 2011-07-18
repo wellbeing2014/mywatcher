@@ -15,7 +15,7 @@ using WatchCilent.pojo;
 using WatchCilent.Common;
 using System.Collections.Generic;
 
-namespace WatchCilent
+namespace WatchCilent.UI.Pack
 {
 	/// <summary>
 	/// Description of TestListUI.
@@ -124,6 +124,12 @@ namespace WatchCilent
 			{
 				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 			}
+		}
+		
+		void Button4Click(object sender, EventArgs e)
+		{
+			SaveView sv = new SaveView();
+			sv.ShowDialog();
 		}
 	}
 }
