@@ -69,12 +69,12 @@ namespace WatchCilent.UI.Pack
 		//	FunctionUtils.WriteIntoDocument("Atitle","权力运行");
 			//FunctionUtils.SaveAndClose(@"E:\SVN目录\MyFileWatch\测试报告2.doc");
 			WordDocumentMerger wm = new WordDocumentMerger();
-			wm.Open(@"E:\SVN目录\MyFileWatch\测试报告模版.doc");
+			wm.Open(@"E:\SVN\mywatcher\MyFileWatch\测试报告模版.doc");
 			
 			wm.WriteIntoMarkBook("Atitle","权力运行2131231231");
 			foreach(TestUnit tu in tulist)
 			{
-				wm.AppendText(tu.Testtitle);
+				wm.AppendText(tu.Testtitle,"标题 2");
 				wm.InsertMerge(new string[]{tempPath+@"\"+tu.Unitno+".doc"});
 			}
 			wm.SaveAs();
