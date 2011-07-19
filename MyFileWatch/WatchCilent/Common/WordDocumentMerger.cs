@@ -31,6 +31,7 @@ namespace WatchCilent.Common
         object oPageBreak = Word.WdBreakType.wdPageBreak;//换页
         object count = 99999999;
         object WdLine = Word.WdUnits.wdParagraph;//;
+        object WdLine1 = Word.WdUnits.wdLine;//;
         public WordDocumentMerger()
         {
             objApp = new ApplicationClass();
@@ -188,7 +189,8 @@ namespace WatchCilent.Common
             {
             	objApp.Selection.MoveDown(ref WdLine, ref count, ref objMissing);//移动焦点
 				Range myRange = objDocLast.Range(ref objMissing, ref objMissing);
-				myRange.InsertAfter("\r");  
+				myRange.InsertAfter("\r是我回车的");
+
 				objApp.Selection.MoveDown(ref WdLine, ref count, ref objMissing);//移动焦点				
             	 //打开模板文件
                // Open(tempDoc);
@@ -238,13 +240,13 @@ namespace WatchCilent.Common
 			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
 			bm.Range.Text = parFillName;//设置域标签的内容  
 		}  
-        public void AppendText(string text)
+        public void AppendText(string text,string heading)
         {
             objApp.Selection.MoveDown(ref WdLine, ref count, ref objMissing);//移动焦点
-        	Range myRange = objDocLast.Range(ref objMissing, ref objMissing);
-			myRange.InsertAfter(text);
-			object oStyleName="标题 2";
-			myRange.set_Style(ref oStyleName);
+			objDocLast.Paragraphs.Last.Range.Text = text;
+			object oStyleName=heading;
+			objDocLast.Paragraphs.Last.Range.set_Style(ref oStyleName);
+			
         }
     }
 }
