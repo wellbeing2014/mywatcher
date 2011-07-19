@@ -14,6 +14,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
+using Word;
 
 namespace WatchCilent.Common
 {
@@ -222,6 +223,85 @@ namespace WatchCilent.Common
 	    	}
 	    
 		}  
+       	
+       	static ApplicationClass app = null;//定义应用程序对象         
+       	static Document doc = null;        //定义word文档对象         
+       	static Object missing = System.Reflection.Missing.Value;//定义空变量         
+       	static Object isReadOnly = false;
+       	
+       	public static  void OpenDocument(string parFilePath)  
+		{  
+			object filePath = parFilePath;//文档路径  
+			app = new ApplicationClass();  
+			//打开文档  
+			doc = app.Documents.Open(ref filePath, ref missing, ref isReadOnly, ref missing, ref missing,  
+			           ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,  
+			           ref missing, ref missing, ref missing, ref missing);  
+			doc.Activate();//激活文档  
+		}  
+       	public static void WriteIntoDocument(string parLableName, string parFillName)  
+		{  
+			object lableName = parLableName;  
+			Bookmark bm = doc.Bookmarks.get_Item(ref lableName);//返回标签  
+			bm.Range.Text = parFillName;//设置域标签的内容  
+			doc.Paragraphs.Last.Range.Text = "Test我的";
+			
+			//object oStyleName="Heading 1″;
+			object oStyleName="标题 2";
+			doc.Paragraphs.Last.Range.set_Style(ref oStyleName);
+			object count = 14;
+            object WdLine = Word.WdUnits.wdLine;//换一行;
+            app.Selection.MoveDown(ref WdLine, ref count, ref missing);//移动焦点
+            app.Selection.TypeParagraph();//插入段落
+            
+            Range myRange = doc.Range(ref missing, ref missing);
+			myRange.InsertAfter("\rT我的fauafdjakj");
+			InsertFile(@"E:\SVN目录\MyFileWatch\我的测试单元1.doc");
+			SaveFileDialog sfd = new SaveFileDialog();  
+			sfd.Filter = "Word Document(*.doc)|*.doc";  
+			sfd.DefaultExt = "Word Document(*.doc)|*.doc";  
+			if (sfd.ShowDialog() == DialogResult.OK)  
+			{  
+				
+			   object filename = sfd.FileName;  
+			   Object saveChanges = app.Options.BackgroundSave;//关闭doc文档不提示保存               
+			   doc.SaveAs(ref filename, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,  
+			                ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing);   
+			   doc.Close(ref saveChanges, ref missing, ref missing);//关闭文档  
+			   app.Quit(ref missing, ref missing, ref missing);     //关闭应用程序  
+			}  
+		}  
+       	public static void SaveAndClose(string parSaveDocPath)  
+		{  
+			object savePath = parSaveDocPath;//文档另存为的路径  
+			Object saveChanges = app.Options.BackgroundSave;//关闭doc文档不提示保存  
+			//文档另存为  
+			doc.SaveAs(ref savePath, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,  
+			                ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing);  
+			doc.Close(ref saveChanges, ref missing, ref missing);//关闭文档  
+			app.Quit(ref missing, ref missing, ref missing);     //关闭应用程序  
+		} 
+		public static  void   InsertFile(string   strFileName) 
+        { 
+			object objTarget = WdMergeTarget.wdMergeTargetSelected;
+  			object objUseFormatFrom = WdUseFormattingFrom.wdFormattingFromSelected;
+			object filePath = strFileName;//文档路径
+			Document ydoc = app.Documents.Open(ref filePath, ref missing, ref isReadOnly, ref missing, ref missing,  
+			           ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,  
+			           ref missing, ref missing, ref missing, ref missing);
+			ydoc.Merge(
+					  strFileName, // 文件名  
+					  ref objTarget, //目标合并
+					  ref missing, //检测格式变化
+					  ref objUseFormatFrom, //使用格式表格
+					  ref missing //添加到最近到文党中
+					  );  
+//            object   missing   =   System.Reflection.Missing.Value; 
+//            object   confirmConversion=   false; 
+//            object   link   =   false; 
+//            object   attachment   =   false; 
+//            app.Selection.InsertFile(strFileName,   ref   missing,   ref   confirmConversion,   ref   link,   ref   attachment);   
+        }       	
     }
 
 	
