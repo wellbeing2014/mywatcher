@@ -15,7 +15,7 @@ using WatchCilent.pojo;
 using WatchCilent.Common;
 using System.Collections.Generic;
 
-namespace WatchCilent.UI.Pack
+namespace WatchCilent.UI.Test
 {
 	/// <summary>
 	/// Description of TestListUI.
