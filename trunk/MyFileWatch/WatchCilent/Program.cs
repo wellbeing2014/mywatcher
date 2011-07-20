@@ -26,7 +26,8 @@ namespace WatchCilent
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new WatchCilent.UI.Pack.SaveView());
+			Application.Run(new WatchCilent.UI.Test.SaveView());
+			//Application.Run(new Main());
 		}
 		
 	}

@@ -9,7 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WatchCilent.UI.Pack;
+using WatchCilent.UI.Test;
 using WatchCilent.UI;
 
 namespace WatchCilent.UI

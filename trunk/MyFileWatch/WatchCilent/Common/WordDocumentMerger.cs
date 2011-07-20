@@ -22,16 +22,15 @@ namespace WatchCilent.Common
 	/// </summary>
 	public class WordDocumentMerger
 	{
-        private ApplicationClass objApp = null;
+        public ApplicationClass objApp = null;
         public Document objDocLast = null;
         private Document objDocBeforeLast = null;
         object objFalse = false;
         object objMissing = System.Reflection.Missing.Value;
         object oCollapseEnd = Word.WdCollapseDirection.wdCollapseEnd;//末尾
         object oPageBreak = Word.WdBreakType.wdPageBreak;//换页
-        object count = 99999999;
-        object WdLine = Word.WdUnits.wdParagraph;//;
-        object WdLine1 = Word.WdUnits.wdLine;//;
+        object WdPara = Word.WdUnits.wdParagraph;//段落;
+        object WdLine = Word.WdUnits.wdLine;//行;
         public WordDocumentMerger()
         {
             objApp = new ApplicationClass();
@@ -39,10 +38,9 @@ namespace WatchCilent.Common
         #region 打开文件
         public void Open(string tempDoc)
         {
-            object objTempDoc = tempDoc;
-            
-
-            objDocLast = objApp.Documents.Open(
+        	try {
+        		 object objTempDoc = tempDoc;
+           		 objDocLast = objApp.Documents.Open(
                  ref objTempDoc,    //FileName
                  ref objMissing,   //ConfirmVersions
                  ref objMissing,   //ReadOnly
@@ -60,54 +58,72 @@ namespace WatchCilent.Common
                  ref objMissing,   //NoEncodingDialog
                  ref objMissing    //XMLTransform
                  );
-
-            objDocLast.Activate();
+            	objDocLast.Activate();
+        	} catch (Exception) {
+        		
+        		throw(new Exception("打开模版："+tempDoc+"出错！"));
+        	}
+           
         }
         #endregion
 
         #region 保存文件到输出模板
         public void SaveAs()
         {
-			SaveFileDialog sfd = new SaveFileDialog();  
-			sfd.Filter = "Word Document(*.doc)|*.doc";  
-			sfd.DefaultExt = "Word Document(*.doc)|*.doc";  
-			if (sfd.ShowDialog() == DialogResult.OK)  
-			{
-	            object objMissing = System.Reflection.Missing.Value;
-	            object objOutDoc = sfd.FileName;
-	            objDocLast.SaveAs(
-	              ref objOutDoc,      //FileName
-	              ref objMissing,     //FileFormat
-	              ref objMissing,     //LockComments
-	              ref objMissing,     //PassWord    
-	              ref objMissing,     //AddToRecentFiles
-	              ref objMissing,     //WritePassword
-	              ref objMissing,     //ReadOnlyRecommended
-	              ref objMissing,     //EmbedTrueTypeFonts
-	              ref objMissing,     //SaveNativePictureFormat
-	              ref objMissing,     //SaveFormsData
-	              ref objMissing,     //SaveAsAOCELetter,
-	              ref objMissing,     //Encoding
-	              ref objMissing,     //InsertLineBreaks
-	              ref objMissing,     //AllowSubstitutions
-	              ref objMissing,     //LineEnding
-	              ref objMissing      //AddBiDiMarks
-	              );
-	            foreach (Document objDocument in objApp.Documents)
-                {
-                    objDocument.Close(
-                      ref objFalse,     //SaveChanges
-                      ref objMissing,   //OriginalFormat
-                      ref objMissing    //RouteDocument
-                      );
-                }
-	            objApp.Quit(
-                  ref objMissing,     //SaveChanges
-                  ref objMissing,     //OriginalFormat
-                  ref objMissing      //RoutDocument
+        	try {
+        		SaveFileDialog sfd = new SaveFileDialog();  
+				sfd.Filter = "Word Document(*.doc)|*.doc";  
+				sfd.DefaultExt = "Word Document(*.doc)|*.doc";  
+				if (sfd.ShowDialog() == DialogResult.OK)  
+				{
+		            object objMissing = System.Reflection.Missing.Value;
+		            object objOutDoc = sfd.FileName;
+		            objDocLast.SaveAs(
+		              ref objOutDoc,      //FileName
+		              ref objMissing,     //FileFormat
+		              ref objMissing,     //LockComments
+		              ref objMissing,     //PassWord    
+		              ref objMissing,     //AddToRecentFiles
+		              ref objMissing,     //WritePassword
+		              ref objMissing,     //ReadOnlyRecommended
+		              ref objMissing,     //EmbedTrueTypeFonts
+		              ref objMissing,     //SaveNativePictureFormat
+		              ref objMissing,     //SaveFormsData
+		              ref objMissing,     //SaveAsAOCELetter,
+		              ref objMissing,     //Encoding
+		              ref objMissing,     //InsertLineBreaks
+		              ref objMissing,     //AllowSubstitutions
+		              ref objMissing,     //LineEnding
+		              ref objMissing      //AddBiDiMarks
+		              );
+				}
+        		
+        	} catch (Exception) {
+        		
+        		throw(new Exception("保存失败！"));
+        	}
+			
+        }
+        
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public void Quit()
+        {
+        	 foreach (Document objDocument in objApp.Documents)
+            {
+                objDocument.Close(
+                  ref objFalse,     //SaveChanges
+                  ref objMissing,   //OriginalFormat
+                  ref objMissing    //RouteDocument
                   );
-                objApp = null;
-			}
+            }
+            objApp.Quit(
+              ref objMissing,     //SaveChanges
+              ref objMissing,     //OriginalFormat
+              ref objMissing      //RoutDocument
+              );
+            objApp = null;
         }
         #endregion
 
@@ -154,7 +170,7 @@ namespace WatchCilent.Common
             }
             catch(Exception)
 			{
-				throw;
+            	throw(new Exception("复制合并出错！"));
 			}
         }
         ///
@@ -187,13 +203,7 @@ namespace WatchCilent.Common
             
             try
             {
-            	objApp.Selection.MoveDown(ref WdLine, ref count, ref objMissing);//移动焦点
-				Range myRange = objDocLast.Range(ref objMissing, ref objMissing);
-				myRange.InsertAfter("\r是我回车的");
-
-				objApp.Selection.MoveDown(ref WdLine, ref count, ref objMissing);//移动焦点				
-            	 //打开模板文件
-               // Open(tempDoc);
+            	objApp.Selection.EndOf(ref WdPara,ref objMissing);
                 foreach (string strCopy in arrCopies)
                 {
                     objApp.Selection.InsertFile(
@@ -203,22 +213,12 @@ namespace WatchCilent.Common
                         ref link,
                         ref attachment
                         );
-
                 }
-//                //保存到输出文件
-//                SaveAs();
-//                foreach (Document objDocument in objApp.Documents)
-//                {
-//                    objDocument.Close(
-//                      ref objFalse,     //SaveChanges
-//                      ref objMissing,   //OriginalFormat
-//                      ref objMissing    //RouteDocument
-//                      );
-//                }
+
             }
-            catch(Exception)
+            catch(Exception e)
 			{
-				throw;
+            	throw(new Exception("生成报告出错！"+e.ToString()));
 			}
         }
         ///
@@ -242,10 +242,11 @@ namespace WatchCilent.Common
 		}  
         public void AppendText(string text,string heading)
         {
-            objApp.Selection.MoveDown(ref WdLine, ref count, ref objMissing);//移动焦点
-			objDocLast.Paragraphs.Last.Range.Text = text;
-			object oStyleName=heading;
-			objDocLast.Paragraphs.Last.Range.set_Style(ref oStyleName);
+            objApp.Selection.EndOf(ref objMissing,ref objMissing);//移动焦点至文档最后
+			Paragraph my  = objDocLast.Content.Paragraphs.Add(ref objMissing);//添加一个段落
+			my.Range.Text = text;//设置文本信息
+			object oStyleName=heading; //新建一个样式
+			my.Range.set_Style(ref oStyleName);//设置段落样式
 			
         }
     }

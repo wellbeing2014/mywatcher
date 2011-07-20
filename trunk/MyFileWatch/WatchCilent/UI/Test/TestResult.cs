@@ -15,7 +15,7 @@ using WatchCilent.dao;
 using WatchCilent.pojo;
 using WatchCilent.Common;
 using System.Collections.Generic;
-namespace WatchCilent
+namespace WatchCilent.UI.Test
 {
 	/// <summary>
 	/// Description of TestResult.
@@ -53,7 +53,7 @@ namespace WatchCilent
 				
 			this.CenterToParent();
 			//InsertImage();
-			read();
+			//read();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//

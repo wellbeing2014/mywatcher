@@ -95,13 +95,13 @@
     <Compile Include="UI\Pack\PackageUI.Designer.cs">
       <DependentUpon>PackageUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pack\SaveView.cs" />
-    <Compile Include="UI\Pack\SaveView.Designer.cs">
-      <DependentUpon>SaveView.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Pack\TextForCopyForm.cs" />
     <Compile Include="UI\Pack\TextForCopyForm.Designer.cs">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Test\SaveView.cs" />
+    <Compile Include="UI\Test\SaveView.Designer.cs">
+      <DependentUpon>SaveView.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Test\TestListUI.cs" />
     <Compile Include="UI\Test\TestListUI.Designer.cs">
@@ -132,11 +132,11 @@
     <EmbeddedResource Include="UI\Pack\PackageUI.resx">
       <DependentUpon>PackageUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Pack\SaveView.resx">
-      <DependentUpon>SaveView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Pack\TextForCopyForm.resx">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Test\SaveView.resx">
+      <DependentUpon>SaveView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\TestListUI.resx">
       <DependentUpon>TestListUI.cs</DependentUpon>

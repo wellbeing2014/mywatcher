@@ -15,7 +15,7 @@ using WatchCilent.Common;
 using System.Collections.Generic;
 using System.IO;
 
-namespace WatchCilent.UI.Pack
+namespace WatchCilent.UI.Test
 {
 	/// <summary>
 	/// Description of SaveView.
@@ -65,19 +65,25 @@ namespace WatchCilent.UI.Pack
 		
 		void Button2Click(object sender, EventArgs e)
 		{
-		//	FunctionUtils.OpenDocument(@"E:\SVN目录\MyFileWatch\测试报告模版.doc");
-		//	FunctionUtils.WriteIntoDocument("Atitle","权力运行");
-			//FunctionUtils.SaveAndClose(@"E:\SVN目录\MyFileWatch\测试报告2.doc");
 			WordDocumentMerger wm = new WordDocumentMerger();
-			wm.Open(@"E:\SVN\mywatcher\MyFileWatch\测试报告模版.doc");
-			
-			wm.WriteIntoMarkBook("Atitle","权力运行2131231231");
-			foreach(TestUnit tu in tulist)
-			{
-				wm.AppendText(tu.Testtitle,"标题 2");
-				wm.InsertMerge(new string[]{tempPath+@"\"+tu.Unitno+".doc"});
+			try {
+				wm.Open(System.Environment.CurrentDirectory+@"\temp\测试报告模版.doc");
+				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
+				foreach(TestUnit tu in tulist)
+				{
+					//wm.AppendText("我的测试标题","标题 2");
+					wm.InsertMerge(new string[]{tempPath+@"\"+tu.Unitno+".doc"});
+				}
+				wm.SaveAs();
+				MessageBox.Show("保存成功","提示");
+			} catch (Exception e1) {
+				
+				MessageBox.Show(e1.ToString(),"提示", MessageBoxButtons.OK,MessageBoxIcon.Error);
 			}
-			wm.SaveAs();
+			finally
+			{
+				wm.Quit();
+			}
 			
 		}
 	}
