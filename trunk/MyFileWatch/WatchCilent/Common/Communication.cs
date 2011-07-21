@@ -45,28 +45,28 @@ namespace WatchCilent.Common
     /// </summary>
     public class TCPManage
     {
-        private Action<string> DgGetMsg;
+        static private Action<string> DgGetMsg;
 
-        private System.Windows.Forms.Control Owner;
+        static private System.Windows.Forms.Control Owner;
 
         /// <summary>
         /// indicate whether the thread should stop listening
         /// </summary>
-        private bool IsListening = true;
+       static private bool IsListening = true;
 
         /// <summary>
         /// 1123 is the birthday of Scott.Yan who is the author of this class
         /// </summary>
-        private const int TCPPort = 1123;
+       private const int TCPPort = 1123;
 
-        private System.Threading.Thread thTCPListener;
+        static private System.Threading.Thread thTCPListener;
 
         /// <summary>
         /// send message to others
         /// </summary>
         /// <param name="destinationIP">the destination ip ,e.g.,192.168.1.1</param>
         /// <param name="msg">message you want to send</param>
-        public void SendMessage(string destinationIP, string msg)
+        public static void SendMessage(string destinationIP, string msg)
         {
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(msg);
             var destIP = System.Net.IPAddress.Parse(destinationIP);
@@ -80,7 +80,6 @@ namespace WatchCilent.Common
             var netStream = tcpClient.GetStream();
             if (netStream.CanWrite)
                 netStream.Write(buffer, 0, buffer.Length);
-
         }
 
         /// <summary>
@@ -88,7 +87,7 @@ namespace WatchCilent.Common
         /// <param name="owner">formally you should pass "this"</param>
         /// <param name="dgGetMsg">a delegate handles when receive a message</param>
         /// </summary>            
-        public void StartListen(System.Windows.Forms.Control owner, Action<string> dgGetMsg)
+        public static void StartListen(System.Windows.Forms.Control owner, Action<string> dgGetMsg)
         {
             IsListening = true;
             Owner = owner;
@@ -100,12 +99,12 @@ namespace WatchCilent.Common
         /// <summary>
         /// call this method to stop listening
         /// </summary>
-        public void StopListen()
+        public static void StopListen()
         {
             IsListening = false;
         }
 
-        private void ListenHandler()
+       	static private void ListenHandler()
         {
             var myIP = Communication.GetLocalIP();
             var epLocal = new System.Net.IPEndPoint(myIP, TCPPort);
