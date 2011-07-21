@@ -30,7 +30,7 @@ namespace WatchCilent.Common
         object oCollapseEnd = Word.WdCollapseDirection.wdCollapseEnd;//末尾
         object oPageBreak = Word.WdBreakType.wdPageBreak;//换页
         object WdPara = Word.WdUnits.wdParagraph;//段落;
-        object WdLine = Word.WdUnits.wdLine;//行;
+        object WdLine = Word.WdUnits.wdCharacter;//行;
         public WordDocumentMerger()
         {
             objApp = new ApplicationClass();
@@ -203,7 +203,8 @@ namespace WatchCilent.Common
             
             try
             {
-            	objApp.Selection.EndOf(ref WdPara,ref objMissing);
+            	int start = objDocLast.Content.End;
+            	objApp.Selection.Start = start;
                 foreach (string strCopy in arrCopies)
                 {
                     objApp.Selection.InsertFile(
@@ -214,6 +215,10 @@ namespace WatchCilent.Common
                         ref attachment
                         );
                 }
+                object restart = start;
+                Range rg = objDocLast.Range(ref restart,ref objMissing);
+                object oStyleName = "正文";
+                rg.set_Style(ref oStyleName);
 
             }
             catch(Exception e)
@@ -242,12 +247,57 @@ namespace WatchCilent.Common
 		}  
         public void AppendText(string text,string heading)
         {
-            objApp.Selection.EndOf(ref objMissing,ref objMissing);//移动焦点至文档最后
+           // objApp.Selection.EndOf(ref objMissing,ref objMissing);//移动焦点至文档最后
 			Paragraph my  = objDocLast.Content.Paragraphs.Add(ref objMissing);//添加一个段落
 			my.Range.Text = text;//设置文本信息
 			object oStyleName=heading; //新建一个样式
 			my.Range.set_Style(ref oStyleName);//设置段落样式
 			
         }
+        //转化
+        public static void WordToHtmlFile(string WordFilePath,string htmlpath)
+        {
+            try
+            {
+                Word.Application newApp = new Word.Application();
+                // 指定原文件和目标文件
+                object Source = WordFilePath;
+                //string SaveHtmlPath = WordFilePath.Substring(0, WordFilePath.Length - 3) + "html";
+                object Target = htmlpath;
+
+                // 缺省参数  
+                object Unknown = Type.Missing;
+
+                //为了保险,只读方式打开
+                object readOnly = true;
+
+                // 打开doc文件
+                Word.Document doc = newApp.Documents.Open(ref Source, ref Unknown,
+                     ref readOnly, ref Unknown, ref Unknown,
+                     ref Unknown, ref Unknown, ref Unknown,
+                     ref Unknown, ref Unknown, ref Unknown,
+                     ref Unknown, ref Unknown, ref Unknown,
+                     ref Unknown, ref Unknown);
+
+                // 指定另存为格式(rtf)
+                object format = Word.WdSaveFormat.wdFormatHTML;
+                // 转换格式
+                doc.SaveAs(ref Target, ref format,
+                        ref Unknown, ref Unknown, ref Unknown,
+                        ref Unknown, ref Unknown, ref Unknown,
+                        ref Unknown, ref Unknown, ref Unknown,
+                        ref Unknown, ref Unknown, ref Unknown,
+                        ref Unknown, ref Unknown);
+
+                // 关闭文档和Word程序
+                doc.Close(ref Unknown, ref Unknown, ref Unknown);
+                newApp.Quit(ref Unknown, ref Unknown, ref Unknown);
+            }
+            catch(Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message); 
+            }
+        }
+
     }
 }

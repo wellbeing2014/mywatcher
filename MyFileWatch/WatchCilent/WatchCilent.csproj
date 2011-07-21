@@ -111,6 +111,10 @@
     <Compile Include="UI\Test\TestResult.Designer.cs">
       <DependentUpon>TestResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Test\TestTest.cs" />
+    <Compile Include="UI\Test\TestTest.Designer.cs">
+      <DependentUpon>TestTest.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -143,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\TestResult.resx">
       <DependentUpon>TestResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Test\TestTest.resx">
+      <DependentUpon>TestTest.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
   </ItemGroup>

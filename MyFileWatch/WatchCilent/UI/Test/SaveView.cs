@@ -23,17 +23,22 @@ namespace WatchCilent.UI.Test
 	public partial class SaveView : Form
 	{
 		private List<TestUnit> tulist = new List<TestUnit>();
-		string tempPath = Path.GetTempPath();
+		//缺陷列表的HTML路径
+		string unitHTMLpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"]);
+		//缺陷列表的DOC路径
+		string unitDOCpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"]);
+		//默认路径
+		string defaultpath =System.Environment.CurrentDirectory;
 		public SaveView()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			this.CenterToScreen();
-			InitializeComponent();
-			tulist = TestUnitDao.getAlltestUnit();
 			
-			RichTextBox rtf = new RichTextBox(); 
+			InitializeComponent();
+			this.CenterToScreen();
+			tulist = TestUnitDao.getAlltestUnit();
+			RichTextBox rtftemp = new RichTextBox(); //临时控件
 			int i=1;
 			foreach(TestUnit tu in tulist)
 			{
@@ -42,21 +47,19 @@ namespace WatchCilent.UI.Test
 				this.richTextBox1.AppendText(title);
 				this.richTextBox1.SelectionStart = startlength;
 				this.richTextBox1.SelectionLength = this.richTextBox1.Text.Length-startlength;
-				
 				this.richTextBox1.SelectionFont = new Font("宋体", 14 ,FontStyle.Bold);
 				this.richTextBox1.SelectionColor = Color.Red;
 				this.richTextBox1.SelectionStart = this.richTextBox1.Rtf.Length;
-				rtf.LoadFile(new MemoryStream(tu.Testcontent),RichTextBoxStreamType.RichText);
-				
-				
-				rtf.SaveFile(tempPath+@"\"+tu.Unitno+".doc");
-				rtf.SelectAll();
-				this.richTextBox1.SelectedRtf = rtf.SelectedRtf;
+				//缓存到临时控件中
+				rtftemp.LoadFile(new MemoryStream(tu.Testcontent),RichTextBoxStreamType.RichText);
+				//rtftemp.SaveFile(unitDOCpath+@"\"+tu.Testtitle+".doc");
+				rtftemp.SelectAll();
+				this.richTextBox1.SelectedRtf = rtftemp.SelectedRtf;
 				this.richTextBox1.SelectionStart = this.richTextBox1.Rtf.Length;
 				this.richTextBox1.AppendText("\n");
 				i++;
 			}
-			rtf.Dispose();
+			rtftemp.Dispose();
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -67,24 +70,30 @@ namespace WatchCilent.UI.Test
 		{
 			WordDocumentMerger wm = new WordDocumentMerger();
 			try {
-				wm.Open(System.Environment.CurrentDirectory+@"\temp\测试报告模版.doc");
+				if(unitDOCpath==null||"".Equals(unitDOCpath))
+				{
+					unitDOCpath = this.defaultpath;
+				}
+				//打开模版
+				wm.Open(defaultpath+@"\temp\测试报告模版.doc");
+				//插入标签
 				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
+				//缺陷循环插入
 				foreach(TestUnit tu in tulist)
 				{
-					//wm.AppendText("我的测试标题","标题 2");
-					wm.InsertMerge(new string[]{tempPath+@"\"+tu.Unitno+".doc"});
+					wm.AppendText(tu.Testtitle,"标题 2");
+					wm.InsertMerge(new string[]{unitDOCpath+@"\"+tu.Unitno+".doc"});
 				}
+				//保存
 				wm.SaveAs();
 				MessageBox.Show("保存成功","提示");
 			} catch (Exception e1) {
-				
 				MessageBox.Show(e1.ToString(),"提示", MessageBoxButtons.OK,MessageBoxIcon.Error);
 			}
 			finally
 			{
 				wm.Quit();
 			}
-			
 		}
 	}
 }

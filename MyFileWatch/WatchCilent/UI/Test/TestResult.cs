@@ -158,6 +158,10 @@ namespace WatchCilent.UI.Test
 		{
 			if(TestuiSave())
 			{
+				if(this.checkBox1.Checked)
+				{
+					Communication.TCPManage.SendMessage("192.10.110.58","test123");
+				}
 				if(AccessDBUtil.insert(tu))
 				{
 					MessageBox.Show("保存成功");
