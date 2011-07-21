@@ -16,6 +16,7 @@ using System.IO;
 using System.ServiceProcess;
 using System.Threading;
 using WatchService.pojo;
+using System.Text.RegularExpressions;
 
 namespace WatchService
 {
@@ -27,6 +28,7 @@ namespace WatchService
 		static private string[]  msgip ;
 		static private string[]  watchpaths ;
 		static System.Timers.Timer tt ;
+		private Communication.TCPManage tcp;
 		
 		public WatchService()
 		{
@@ -110,7 +112,8 @@ namespace WatchService
 					pathcount++;
 				}
 			}
-
+			tcp  = new Communication.TCPManage();
+			tcp.StartListen(listenhandler);
 			DateTime dt =DateTime.Now;
 			int hour = dt.Hour*3600000;
 			int munite=dt.Minute*60000;
@@ -128,6 +131,7 @@ namespace WatchService
 		protected override void OnStop()
 		{
 			// TODO: Add tear-down code here (if required) to stop your service.
+			tcp.StopListen();
 			WriteToLog(System.DateTime.Now.ToLocalTime()+":系统关闭");
 		}
 		
@@ -169,7 +173,12 @@ namespace WatchService
            	}
 		}
 
-		
+		private void listenhandler(string msg)
+		{
+			string[] msgtemp = 
+					Regex.Split(msg,"##",RegexOptions.IgnoreCase);
+			Communication.UDPManage.BroadcastToFQ(msgtemp[0],msgtemp[1]);
+		}
 		
 		static private void msgToFQ(string msg)
 		{

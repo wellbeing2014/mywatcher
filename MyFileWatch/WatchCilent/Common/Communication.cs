@@ -68,18 +68,24 @@ namespace WatchCilent.Common
         /// <param name="msg">message you want to send</param>
         public static void SendMessage(string destinationIP, string msg)
         {
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(msg);
-            var destIP = System.Net.IPAddress.Parse(destinationIP);
+        	System.Net.Sockets.TcpClient tcpClient =null;
+        	System.Net.Sockets.NetworkStream netStream =null;
+        		byte[] buffer = System.Text.Encoding.UTF8.GetBytes(msg);
+            var destIP =Communication.GetLocalIP();//System.Net.IPAddress.Parse("127.0.0.1");
             var myIP = Communication.GetLocalIP();
 
-            var epDest = new System.Net.IPEndPoint(destIP, TCPPort);
+            var epDest = new System.Net.IPEndPoint(destIP, 1124);
             var dpLocal = new System.Net.IPEndPoint(myIP, TCPPort);
-            var tcpClient = new System.Net.Sockets.TcpClient();
+            tcpClient = new System.Net.Sockets.TcpClient(dpLocal);
 
             tcpClient.Connect(epDest);
-            var netStream = tcpClient.GetStream();
+             netStream = tcpClient.GetStream();
             if (netStream.CanWrite)
-                netStream.Write(buffer, 0, buffer.Length);
+            {
+            	netStream.Write(buffer, 0, buffer.Length);
+            }
+        		netStream.Close();
+            	tcpClient.Close();
         }
 
         /// <summary>
