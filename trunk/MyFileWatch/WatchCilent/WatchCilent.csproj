@@ -34,6 +34,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Interop.Word">
+      <HintPath>..\Interop.Word.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -161,15 +164,5 @@
     <Folder Include="Common" />
     <Folder Include="UI\Pack" />
     <Folder Include="UI\Test" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="Word">
-      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>8</VersionMajor>
-      <VersionMinor>3</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
   </ItemGroup>
 </Project>

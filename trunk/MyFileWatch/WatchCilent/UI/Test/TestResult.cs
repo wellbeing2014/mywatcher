@@ -160,7 +160,7 @@ namespace WatchCilent.UI.Test
 			{
 				if(this.checkBox1.Checked)
 				{
-					Communication.TCPManage.SendMessage("192.10.110.58","test123");
+					Communication.TCPManage.SendMessage("127.0.0.1","afsjfasjfa##127.0.0.1");
 				}
 				if(AccessDBUtil.insert(tu))
 				{
