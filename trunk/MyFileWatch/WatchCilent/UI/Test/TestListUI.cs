@@ -62,7 +62,6 @@ namespace WatchCilent.UI.Test
 		private TestUnit  ListViewSelect(ListViewItem lvi)
 		{
 			TestUnit tu = new TestUnit();
-			
 			tu.Unitno = lvi.Text;
 			tu.Packagename = lvi.SubItems[1].Text;
 			tu.Buglevel = lvi.SubItems[2].Text;

@@ -11,6 +11,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using WatchCilent.UI.Test;
 using WatchCilent.UI;
+using System.ComponentModel;
+
 
 namespace WatchCilent.UI
 {
@@ -37,6 +39,10 @@ namespace WatchCilent.UI
 				else InitializeComponent();
 			}
 			else InitializeComponent();
+			this.notifyIcon1.Visible=true;
+			this.notifyIcon1.MouseClick+= new MouseEventHandler(notifyIcon1_Click);
+			this.SizeChanged+= new EventHandler(Main_MinimumSizeChanged);
+			this.Closing+= new CancelEventHandler(Main_Closing);
 			
 			
 			
@@ -81,6 +87,39 @@ namespace WatchCilent.UI
 			cm.StartPosition = FormStartPosition.CenterParent;
 			cm.ShowDialog();
 			this.panel2.Controls[0].Refresh();
+		}
+		//最小化隐藏窗口到通知图标
+		private void Main_MinimumSizeChanged( object sender,EventArgs e)
+		{
+			if(this.WindowState == FormWindowState.Minimized)
+			{
+				this.WindowState =  FormWindowState.Minimized;
+				this.Visible = false;
+				this.notifyIcon1.BalloonTipText="正在监控中……";
+				this.notifyIcon1.ShowBalloonTip(0);
+			}
+		}
+		//通知图标点击还原窗口
+		private void notifyIcon1_Click(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Left)
+			{
+				this.Visible = true;
+				this.WindowState = FormWindowState.Normal;
+			}
+		}		
+		private void Main_Closing(object sender, CancelEventArgs e)
+		{
+			var close =MessageBox.Show("您真的要退出系统吗？","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+			
+			if(close==DialogResult.Yes)
+			{
+				Application.Exit();
+			}
+			else
+			{
+				e.Cancel=true;
+			}
 		}
 	}
 }

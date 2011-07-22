@@ -268,8 +268,9 @@ namespace WatchCilent
 			this.dateTimePicker1.Location = new System.Drawing.Point(267, 13);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
+			DateTime dt =DateTime.Now; 
+				dateTimePicker1.Value=dt.AddDays(-7);
 			this.dateTimePicker1.TabIndex = 7;
-			this.dateTimePicker1.Value = new System.DateTime(2011, 6, 8, 10, 13, 8, 62);
 			// 
 			// dateTimePicker2
 			// 

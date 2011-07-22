@@ -223,6 +223,37 @@ namespace WatchCilent.Common
 	    	}
 	    
 		}  
+       	
+       	public static bool checkPort(string port)
+		{
+            Process p = new Process();
+            p.StartInfo = new ProcessStartInfo("netstat", "-aon");
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.Start();
+            string result = p.StandardOutput.ReadToEnd().ToLower();
+            string name =Environment.MachineName.ToLower()+ ":"+port;
+            string ip1 = Communication.GetLocalIP().ToString()+ ":"+port;
+            string ip2 = "0.0.0.0"+ ":"+port;
+            string ip3 = "127.0.0.1"+ ":"+port;
+            if (result.IndexOf(name) >= 0||
+                result.IndexOf(ip1) >= 0||
+                result.IndexOf(ip2) >= 0||
+                result.IndexOf(ip3) >= 0
+               	)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }  
+
+		}
+
+
     }
 
 	

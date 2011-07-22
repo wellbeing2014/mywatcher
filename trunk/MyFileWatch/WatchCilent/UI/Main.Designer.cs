@@ -36,6 +36,7 @@ namespace WatchCilent.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
@@ -55,6 +56,7 @@ namespace WatchCilent.UI
 			this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -141,14 +143,14 @@ namespace WatchCilent.UI
 			// 更新包列表ToolStripMenuItem
 			// 
 			this.更新包列表ToolStripMenuItem.Name = "更新包列表ToolStripMenuItem";
-			this.更新包列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.更新包列表ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
 			this.更新包列表ToolStripMenuItem.Text = "更新包列表";
 			this.更新包列表ToolStripMenuItem.Click += new System.EventHandler(this.更新包列表ToolStripMenuItemClick);
 			// 
 			// 更新包统计ToolStripMenuItem
 			// 
 			this.更新包统计ToolStripMenuItem.Name = "更新包统计ToolStripMenuItem";
-			this.更新包统计ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.更新包统计ToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
 			this.更新包统计ToolStripMenuItem.Text = "更新包统计";
 			// 
 			// 配置ToolStripMenuItem
@@ -199,6 +201,12 @@ namespace WatchCilent.UI
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.aboutToolStripMenuItem.Text = "&About...";
 			// 
+			// notifyIcon1
+			// 
+			this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+			this.notifyIcon1.Text = "notifyIcon1";
+			this.notifyIcon1.Visible = true;
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -216,6 +224,7 @@ namespace WatchCilent.UI
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.NotifyIcon notifyIcon1;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
