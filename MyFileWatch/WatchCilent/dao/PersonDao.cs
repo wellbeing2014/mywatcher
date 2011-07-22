@@ -58,6 +58,18 @@ namespace WatchCilent.dao
 			}
 			return ls;
 		}
+		static public PersonInfo getPersonInfoByid(int id)
+		{
+			string sql = "select PersonInfo.* from PersonInfo where PersonInfo.id = "+id.ToString();
+			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			PersonInfo ls = new PersonInfo();
+			if(data.Tables["ds"].Rows.Count>0)
+			{
+				ls=Row2PersonInfo(data.Tables["ds"].Rows[0]);
+			}
+			return ls;
+		}
+		
 		private static PersonInfo Row2PersonInfo(DataRow row)
 		{
 			PersonInfo person = new PersonInfo();

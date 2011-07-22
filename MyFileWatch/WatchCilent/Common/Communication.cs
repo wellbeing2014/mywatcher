@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WatchCilent.Common
 {
@@ -71,21 +72,34 @@ namespace WatchCilent.Common
         	System.Net.Sockets.TcpClient tcpClient =null;
         	System.Net.Sockets.NetworkStream netStream =null;
         		byte[] buffer = System.Text.Encoding.UTF8.GetBytes(msg);
-            var destIP =Communication.GetLocalIP();//System.Net.IPAddress.Parse("127.0.0.1");
+            var destIP =System.Net.IPAddress.Parse(destinationIP);
             var myIP = Communication.GetLocalIP();
 
             var epDest = new System.Net.IPEndPoint(destIP, 1124);
-            var dpLocal = new System.Net.IPEndPoint(myIP, TCPPort);
+            
+            Random ro = new Random(); 
+			int up = 1150;
+			int down = 1123;
+			var sendport = 1123;
+            while(!FunctionUtils.checkPort(sendport.ToString()))//检查端口占用
+            {
+            	sendport = ro.Next(down,up);
+            }
+            var dpLocal = new System.Net.IPEndPoint(myIP, sendport);
             tcpClient = new System.Net.Sockets.TcpClient(dpLocal);
-
-            tcpClient.Connect(epDest);
-             netStream = tcpClient.GetStream();
+        	tcpClient.Connect(epDest);
+        	
+            netStream = tcpClient.GetStream();
             if (netStream.CanWrite)
             {
             	netStream.Write(buffer, 0, buffer.Length);
             }
-        		netStream.Close();
-            	tcpClient.Close();
+            tcpClient.GetStream().Close();
+        	tcpClient.Client.Close();
+        	tcpClient.Close();
+           // tcpClient.GetStream().Close();
+           // tcpClient.Client.Disconnect(false); 
+        	//tcpClient.Close();
         }
 
         /// <summary>

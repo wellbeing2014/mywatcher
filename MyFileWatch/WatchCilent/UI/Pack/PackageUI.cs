@@ -297,7 +297,7 @@ namespace WatchCilent
 				this.dateTimePicker1.Name = "dateTimePicker1";
 				this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
 				DateTime dt =DateTime.Now; 
-				dateTimePicker1.Value=dt.AddMonths(-1);
+				dateTimePicker1.Value=dt.AddDays(-7);
 				this.dateTimePicker1.TabIndex = 7;
 				
 				this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -339,7 +339,7 @@ namespace WatchCilent
         {
             if(treeView1.SelectedNode!=null)
             {
-                //让选中项背景色呈现红色
+                //让选中项背景色呈现蓝色
                 treeView1.SelectedNode.BackColor = Color.SteelBlue;
                 //前景色为白色
                 treeView1.SelectedNode.ForeColor = Color.White;

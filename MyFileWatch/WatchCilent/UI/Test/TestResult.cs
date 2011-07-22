@@ -23,6 +23,16 @@ namespace WatchCilent.UI.Test
 	public partial class TestResult : Form
 	{
 		private TestUnit tu = new TestUnit();
+		//缺陷列表的HTML路径
+		string unitHTMLpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"]);
+		//浏览缺陷地址
+		string HtmlUrl = System.Configuration.ConfigurationManager.AppSettings["HtmlUrl"];
+		//监控系统主机IP
+		string WisofServiceHost = System.Configuration.ConfigurationManager.AppSettings["WisofServiceHost"];
+		//缺陷列表的DOC路径
+		string unitDOCpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"]);
+		//默认路径
+		string defaultpath =System.Environment.CurrentDirectory;
 		public TestResult()
 		{
 			//
@@ -143,14 +153,14 @@ namespace WatchCilent.UI.Test
 		}
 		public   void   InsertImage() 
 		{ 
-			bool   b   =   richTextBox1.ReadOnly; 
-			Image   img   =   Image.FromFile( "C:/a.bmp "); 
-			if (img != null) {
-				Clipboard.SetDataObject(img); 
-				richTextBox1.ReadOnly   =   false; 
-				richTextBox1.Paste(DataFormats.GetFormat(DataFormats.Bitmap)); 
-				richTextBox1.ReadOnly   =   b; 
-			}
+//			bool   b   =   richTextBox1.ReadOnly; 
+//			Image   img   =   Image.FromFile( "C:/a.bmp "); 
+//			if (img != null) {
+//				Clipboard.SetDataObject(img); 
+//				richTextBox1.ReadOnly   =   false; 
+//				richTextBox1.Paste(DataFormats.GetFormat(DataFormats.Bitmap)); 
+//				richTextBox1.ReadOnly   =   b; 
+//			}
 			
 		}
 		
@@ -158,14 +168,39 @@ namespace WatchCilent.UI.Test
 		{
 			if(TestuiSave())
 			{
-				if(this.checkBox1.Checked)
-				{
-					Communication.TCPManage.SendMessage("127.0.0.1","afsjfasjfa##127.0.0.1");
-				}
 				if(AccessDBUtil.insert(tu))
 				{
+					try {
+						if(unitDOCpath==null)
+						{
+							unitDOCpath = this.defaultpath;
+						}
+						this.richTextBox1.SaveFile(unitDOCpath+@"\"+tu.Unitno+".doc");
+						if(unitHTMLpath!=null)
+						{
+							var fullHtmlPath =unitHTMLpath+@"\"+tu.Unitno+".html";
+							WordDocumentMerger.WordToHtmlFile(unitDOCpath+@"\"+tu.Unitno+".doc",fullHtmlPath);
+							if(this.checkBox1.Checked)
+							{
+								string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
+									"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+"查看详细并确认。";
+								PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
+								string[] iplist = person.Ip.Split(';');
+								foreach(string ip in iplist)
+								{
+									Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+								}
+							}
+						}
+					} catch (Exception) {
+						
+						MessageBox.Show("通知主管失败！");
+					}
+					
+					
 					MessageBox.Show("保存成功");
 				}
+				
 			}
 		}
 		void read()

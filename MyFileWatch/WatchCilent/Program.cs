@@ -29,6 +29,7 @@ namespace WatchCilent
 			//Application.Run(new WatchCilent.UI.Test.SaveView());
 			//Application.Run(new Main());
 			Application.Run(new WatchCilent.UI.Test.TestResult());
+			//Application.Run(new WatchCilent.UI.Test.TestListUI());
 		}
 		
 	}

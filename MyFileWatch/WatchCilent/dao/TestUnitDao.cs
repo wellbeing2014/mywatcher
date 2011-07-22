@@ -30,11 +30,11 @@ namespace WatchCilent.dao
 		
 		static public List<TestUnit> getAlltestUnit()
 		{
-			DataSet data=AccessDBUtil.ExecuteQuery("select * from testunit");
+			DataSet data=AccessDBUtil.ExecuteQuery("select Unitno,Packagename,Buglevel,Testtitle,Testtime,Adminname,State,Id from testunit");
 			List<TestUnit> ls = new List<TestUnit>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
-				ls.Add(Row2TestUnit(row));
+				ls.Add(Row2Tu(row));
 			}
 			return ls;
 		}
@@ -80,6 +80,20 @@ namespace WatchCilent.dao
 			test.Testorname = row["testorname"].ToString();
 			test.Testtime = row["testtime"].ToString();
 			test.Testtitle = row["testtitle"].ToString();
+			test.Unitno = row["unitno"].ToString();
+			return test;
+		}
+		
+		private static TestUnit Row2Tu(DataRow row)
+		{
+			TestUnit test = new TestUnit();
+			test.Id = Int32.Parse(row["id"].ToString());
+			test.Adminname = row["adminname"].ToString();
+			test.Buglevel = row["buglevel"].ToString();
+			test.Packagename = row["packagename"].ToString();
+			test.State = row["state"].ToString();
+			test.Testtitle = row["testtitle"].ToString();
+			test.Testtime = row["testtime"].ToString();
 			test.Unitno = row["unitno"].ToString();
 			return test;
 		}
