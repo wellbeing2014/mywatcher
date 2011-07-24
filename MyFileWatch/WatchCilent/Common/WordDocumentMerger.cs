@@ -105,6 +105,37 @@ namespace WatchCilent.Common
 			
         }
         
+        #region 保存到指定路径
+        public void Save(string path)
+        {
+        	try {
+	            object objOutDoc = path;
+	            objDocLast.SaveAs(
+	              ref objOutDoc,      //FileName
+	              ref objMissing,     //FileFormat
+	              ref objMissing,     //LockComments
+	              ref objMissing,     //PassWord    
+	              ref objMissing,     //AddToRecentFiles
+	              ref objMissing,     //WritePassword
+	              ref objMissing,     //ReadOnlyRecommended
+	              ref objMissing,     //EmbedTrueTypeFonts
+	              ref objMissing,     //SaveNativePictureFormat
+	              ref objMissing,     //SaveFormsData
+	              ref objMissing,     //SaveAsAOCELetter,
+	              ref objMissing,     //Encoding
+	              ref objMissing,     //InsertLineBreaks
+	              ref objMissing,     //AllowSubstitutions
+	              ref objMissing,     //LineEnding
+	              ref objMissing      //AddBiDiMarks
+	              );
+        		
+        	} catch (Exception) {
+        		
+        		throw(new Exception("保存失败！"));
+        	}
+			
+        }
+         #endregion
         /// <summary>
         /// 退出
         /// </summary>
@@ -193,9 +224,16 @@ namespace WatchCilent.Common
         /// 模板文件
         /// 需要合并的文件
         /// 合并后的输出文件
-        public void InsertMerge(string[] arrCopies)
+        public void InsertMerge(string[] arrCopies,string parLableName)
         {
-            //object objMissing = Missing.Value;
+        	object lableName = parLableName; 
+        	int start = objDocLast.Content.End;
+        	if(lableName!=null)
+        	{
+				Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签
+        		start = bm.Start;
+        	}
+			//object objMissing = Missing.Value;
             object objFalse = false;
             object confirmConversion = false;
             object link = false;
@@ -203,7 +241,7 @@ namespace WatchCilent.Common
             
             try
             {
-            	int start = objDocLast.Content.End;
+            	
             	objApp.Selection.Start = start;
                 foreach (string strCopy in arrCopies)
                 {
@@ -235,7 +273,7 @@ namespace WatchCilent.Common
         public void InsertMerge(string strCopyFolder)
         {
             string[] arrFiles = Directory.GetFiles(strCopyFolder);
-            InsertMerge(arrFiles);
+            InsertMerge(arrFiles,null);
         }
         #endregion
         
@@ -243,7 +281,7 @@ namespace WatchCilent.Common
 		{  
 			object lableName = parLableName;  
 			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
-			bm.Range.Text = parFillName;//设置域标签的内容  
+			bm.Range.Text = parFillName;//设置域标签的内容			
 		}  
         public void AppendText(string text,string heading)
         {
