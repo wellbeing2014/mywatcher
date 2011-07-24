@@ -75,14 +75,14 @@ namespace WatchCilent.UI.Test
 					unitDOCpath = this.defaultpath;
 				}
 				//打开模版
-				wm.Open(defaultpath+@"\temp\测试报告模版.doc");
+				wm.Open(defaultpath+@"\temp\TestReport.doc");
 				//插入标签
 				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
 				//缺陷循环插入
 				foreach(TestUnit tu in tulist)
 				{
 					wm.AppendText(tu.Testtitle,"标题 2");
-					wm.InsertMerge(new string[]{unitDOCpath+@"\"+tu.Unitno+".doc"});
+					wm.InsertMerge(new string[]{unitDOCpath+@"\"+tu.Unitno+".doc"},null);
 				}
 				//保存
 				wm.SaveAs();

@@ -15,6 +15,7 @@ using WatchCilent.dao;
 using WatchCilent.pojo;
 using WatchCilent.Common;
 using System.Collections.Generic;
+using MFCComboBox;
 namespace WatchCilent.UI.Test
 {
 	/// <summary>
@@ -33,6 +34,8 @@ namespace WatchCilent.UI.Test
 		string unitDOCpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"]);
 		//默认路径
 		string defaultpath =System.Environment.CurrentDirectory;
+		//临时文件路径
+		string temppath =System.IO.Path.GetTempPath();
 		public TestResult()
 		{
 			//
@@ -60,6 +63,13 @@ namespace WatchCilent.UI.Test
 			
 			this.comboBox5.DataSource = CommonConst.BUGLEVEL;
 			this.comboBox5.DropDownStyle= ComboBoxStyle.DropDownList;
+			
+			this.multiColumnFilterComboBox1.DataSource = PackageDao.getAllUnTestPack();
+			
+			this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packagename",200,true));
+            this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packtime", 60, true));
+            this.multiColumnFilterComboBox1.DisplayMember = "packagename";
+            this.multiColumnFilterComboBox1.ValueMember = "id";
 				
 			this.CenterToParent();
 			//InsertImage();
@@ -96,7 +106,6 @@ namespace WatchCilent.UI.Test
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			
-			this.textBox3.Text = tu.Packagename;
 			this.textBox9.Text = tu.Testtitle;
 			this.comboBox5.Text = tu.Buglevel;
 
@@ -142,7 +151,11 @@ namespace WatchCilent.UI.Test
 			tu.Testorid =0;
 			
 			tu.Buglevel =this.comboBox5.Text;
-			tu.Packagename =this.textBox3.Text;
+			tu.Packagename =this.multiColumnFilterComboBox1.Text;//his.textBox3.Text;
+			if(this.multiColumnFilterComboBox1.SelectedValue!=null)
+			{
+				tu.Packageid = (int)this.multiColumnFilterComboBox1.SelectedValue;
+			}
 			tu.Projectname ="fadsadsfads" ;
 			tu.State = "未修订";
 			tu.Testorname ="朱新培" ;
@@ -170,26 +183,27 @@ namespace WatchCilent.UI.Test
 			{
 				if(AccessDBUtil.insert(tu))
 				{
+					if(unitDOCpath==null)
+					{
+						unitDOCpath = this.defaultpath;
+					}
+					this.richTextBox1.SaveFile(temppath+@"\"+tu.Unitno+".doc");
+					CreateTestUnit(defaultpath+@"\temp\TestUnit.doc",temppath+@"\"+tu.Unitno+".doc",unitDOCpath+@"\"+tu.Unitno+".doc");
+					if(unitHTMLpath!=null)
+					{
+						var fullHtmlPath =unitHTMLpath+@"\"+tu.Unitno+".html";
+						WordDocumentMerger.WordToHtmlFile(unitDOCpath+@"\"+tu.Unitno+".doc",fullHtmlPath);
+					}
 					try {
-						if(unitDOCpath==null)
+						if(this.checkBox1.Checked)
 						{
-							unitDOCpath = this.defaultpath;
-						}
-						this.richTextBox1.SaveFile(unitDOCpath+@"\"+tu.Unitno+".doc");
-						if(unitHTMLpath!=null)
-						{
-							var fullHtmlPath =unitHTMLpath+@"\"+tu.Unitno+".html";
-							WordDocumentMerger.WordToHtmlFile(unitDOCpath+@"\"+tu.Unitno+".doc",fullHtmlPath);
-							if(this.checkBox1.Checked)
+							string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
+								"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+"查看详细并确认。";
+							PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
+							string[] iplist = person.Ip.Split(';');
+							foreach(string ip in iplist)
 							{
-								string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-									"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+"查看详细并确认。";
-								PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
-								string[] iplist = person.Ip.Split(';');
-								foreach(string ip in iplist)
-								{
-									Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
-								}
+								Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
 							}
 						}
 					} catch (Exception) {
@@ -203,16 +217,34 @@ namespace WatchCilent.UI.Test
 				
 			}
 		}
-		void read()
+		
+		void CreateTestUnit(string unitdocTpl,string tempdocpath,string unitdocpath)
 		{
-			TestUnit tu=TestUnitDao.gettestUnitById(3);
-			if(tu.Testcontent!=null)
-			{
-				MemoryStream stream = new MemoryStream(tu.Testcontent);
-				this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+			WordDocumentMerger wm = new WordDocumentMerger();
+			try {
+				
+				wm.Open(unitdocTpl);
+				wm.WriteIntoMarkBook("AdminName",tu.Adminname);
+				wm.WriteIntoMarkBook("BUGLevel",tu.Buglevel);
+				wm.WriteIntoMarkBook("UnitNO",tu.Unitno);
+				wm.WriteIntoMarkBook("ModuleName",tu.Modulename);
+				wm.WriteIntoMarkBook("NO",tu.Unitno);
+				wm.WriteIntoMarkBook("PackageName",tu.Packagename);
+				wm.WriteIntoMarkBook("ProjectName",tu.Projectname);
+				wm.WriteIntoMarkBook("TestTime",tu.Testtime);
+				wm.WriteIntoMarkBook("Title",tu.Testtitle);
+				wm.InsertMerge(new string[]{tempdocpath},"Content");
+				wm.Save(unitdocpath);
+			} catch (Exception) {
+				
+				MessageBox.Show("生成测试单元文档失败！");
 			}
-			
+			finally
+			{
+				wm.Quit();
+			}
 		}
+		
 		
 		
 	}

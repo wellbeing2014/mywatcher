@@ -40,7 +40,6 @@ namespace WatchCilent.UI.Test
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
@@ -53,11 +52,12 @@ namespace WatchCilent.UI.Test
 			this.label9 = new System.Windows.Forms.Label();
 			this.textBox9 = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.comboBox4 = new System.Windows.Forms.ComboBox();
 			this.comboBox5 = new System.Windows.Forms.ComboBox();
+			this.multiColumnFilterComboBox1 = new MFCComboBox.MultiColumnFilterComboBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -91,15 +91,6 @@ namespace WatchCilent.UI.Test
 			this.label3.Size = new System.Drawing.Size(58, 18);
 			this.label3.TabIndex = 5;
 			this.label3.Text = "测试对象";
-			// 
-			// textBox3
-			// 
-			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox3.Location = new System.Drawing.Point(64, 9);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(526, 21);
-			this.textBox3.TabIndex = 4;
 			// 
 			// label5
 			// 
@@ -207,11 +198,11 @@ namespace WatchCilent.UI.Test
 			// 
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.multiColumnFilterComboBox1);
 			this.panel1.Controls.Add(this.comboBox3);
 			this.panel1.Controls.Add(this.comboBox2);
 			this.panel1.Controls.Add(this.comboBox1);
 			this.panel1.Controls.Add(this.label3);
-			this.panel1.Controls.Add(this.textBox3);
 			this.panel1.Controls.Add(this.label2);
 			this.panel1.Controls.Add(this.label8);
 			this.panel1.Controls.Add(this.label7);
@@ -219,6 +210,14 @@ namespace WatchCilent.UI.Test
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(593, 67);
 			this.panel1.TabIndex = 24;
+			// 
+			// comboBox3
+			// 
+			this.comboBox3.FormattingEnabled = true;
+			this.comboBox3.Location = new System.Drawing.Point(456, 37);
+			this.comboBox3.Name = "comboBox3";
+			this.comboBox3.Size = new System.Drawing.Size(134, 20);
+			this.comboBox3.TabIndex = 22;
 			// 
 			// comboBox2
 			// 
@@ -236,14 +235,6 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.Size = new System.Drawing.Size(108, 20);
 			this.comboBox1.TabIndex = 21;
 			// 
-			// comboBox3
-			// 
-			this.comboBox3.FormattingEnabled = true;
-			this.comboBox3.Location = new System.Drawing.Point(456, 37);
-			this.comboBox3.Name = "comboBox3";
-			this.comboBox3.Size = new System.Drawing.Size(134, 20);
-			this.comboBox3.TabIndex = 22;
-			// 
 			// comboBox4
 			// 
 			this.comboBox4.FormattingEnabled = true;
@@ -259,6 +250,15 @@ namespace WatchCilent.UI.Test
 			this.comboBox5.Name = "comboBox5";
 			this.comboBox5.Size = new System.Drawing.Size(134, 20);
 			this.comboBox5.TabIndex = 26;
+			// 
+			// multiColumnFilterComboBox1
+			// 
+			this.multiColumnFilterComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+			this.multiColumnFilterComboBox1.FormattingEnabled = true;
+			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(64, 9);
+			this.multiColumnFilterComboBox1.Name = "multiColumnFilterComboBox1";
+			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(526, 22);
+			this.multiColumnFilterComboBox1.TabIndex = 23;
 			// 
 			// TestResult
 			// 
@@ -282,10 +282,10 @@ namespace WatchCilent.UI.Test
 			this.Name = "TestResult";
 			this.Text = "缺陷编辑";
 			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private MFCComboBox.MultiColumnFilterComboBox multiColumnFilterComboBox1;
 		private System.Windows.Forms.ComboBox comboBox5;
 		private System.Windows.Forms.ComboBox comboBox4;
 		private System.Windows.Forms.ComboBox comboBox3;
@@ -303,7 +303,6 @@ namespace WatchCilent.UI.Test
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox textBox3;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;

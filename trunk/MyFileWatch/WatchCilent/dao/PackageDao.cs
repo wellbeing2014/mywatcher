@@ -26,6 +26,18 @@ namespace WatchCilent.dao
 		public PackageDao()
 		{
 		}
+		
+		/// <summary>
+		/// 所有没有测试的更新包除了已发布，已废止的。
+		/// </summary>
+		/// <returns></returns>
+		static public DataTable getAllUnTestPack()
+		{
+			string sql = "select * from packageinfo where state <>'已测试' and state<>'已发布' and state <> '已废止'";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			return data.Tables["ds"];
+		}
+		
 		static public List<PackageInfo> queryPackageInfo(string moduleid,string managerid,string state,string begintime,string endtime)
 		{
 			string sql = "select * from packageinfo where "
