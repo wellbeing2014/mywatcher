@@ -28,6 +28,39 @@ namespace WatchCilent.dao
 		}
 		
 		
+		
+		static public string getNewUnitNO()
+		{
+			string returnstring ="";
+			DateTime dt = System.DateTime.Now;
+        	string dtno = dt.Year.ToString()+
+        		((dt.Month<10)?"0"+dt.Month.ToString():dt.Month.ToString())+
+        		((dt.Day<10)?"0"+dt.Day.ToString():dt.Day.ToString());
+        	dtno="BUG"+dtno;
+        	returnstring = dtno;
+        	int no;
+			DataSet data=AccessDBUtil.ExecuteQuery("SELECT top 1 unitno from testunit where unitno like '"+dtno+"%' order by unitno desc");
+			if(data.Tables["ds"].Rows.Count!=0)
+			{
+				
+				try {
+					no = Int32.Parse(data.Tables["ds"].Rows[0]["unitno"].ToString().Replace(dtno,""));
+					no++;
+				} catch (Exception) {
+					
+					no=1;
+				}
+			}
+			else
+				no=1;
+			if(no<10)
+			{
+				returnstring=returnstring+"0"+no;
+			}
+			else returnstring =returnstring+no;
+			return returnstring;
+		}	
+			
 		static public List<TestUnit> getAlltestUnit()
 		{
 			DataSet data=AccessDBUtil.ExecuteQuery("select Unitno,Packagename,Buglevel,Testtitle,Testtime,Adminname,State,Id from testunit");
@@ -38,18 +71,7 @@ namespace WatchCilent.dao
 			}
 			return ls;
 		}
-		static public bool insert(TestUnit tu)
-		{
-			OleDbParameter tt = new OleDbParameter();
-			tt.OleDbType=OleDbType.VarBinary;
-			tt.Value=tu.Testcontent;
-			int i=AccessDBUtil.ExecuteInsert("insert into testunit (testcontent) values(tt)",new OleDbParameter[]{tt});
-			if(i!=0)
-			{
-				return true;
-			}
-			else return false;
-		}
+		
 		static public TestUnit gettestUnitById(int id)
 		{
 			DataSet data=AccessDBUtil.ExecuteQuery("select top 1 * from testunit where id="+id.ToString());

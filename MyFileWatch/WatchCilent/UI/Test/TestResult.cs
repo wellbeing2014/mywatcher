@@ -47,7 +47,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.ValueMember = "id";
 			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-			this.textBox1.Text = AccessDBUtil.CalcBUGNO();
+			this.textBox1.Text =TestUnitDao.getNewUnitNO();
 			
 			this.comboBox2.DataSource = ModuleDao.getAllModuleTable();;
 			this.comboBox2.DisplayMember = "fullname";
@@ -94,7 +94,7 @@ namespace WatchCilent.UI.Test
 			
 			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-			this.textBox1.Text = AccessDBUtil.CalcBUGNO();
+			this.textBox1.Text = TestUnitDao.getNewUnitNO();
 			
 			this.comboBox2.Items.Add(tu.Modulename);
 			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
@@ -156,25 +156,18 @@ namespace WatchCilent.UI.Test
 			{
 				tu.Packageid = (int)this.multiColumnFilterComboBox1.SelectedValue;
 			}
-			tu.Projectname ="fadsadsfads" ;
+			tu.Projectname =this.comboBox3.Text ;
 			tu.State = "未修订";
 			tu.Testorname ="朱新培" ;
 			tu.Testtime =DateTime.Now.ToString() ;
+			if(!TestUnitDao.getNewUnitNO().Equals(this.textBox1.Text))
+			{
+				tu.Unitno = TestUnitDao.getNewUnitNO();
+				MessageBox.Show("缺陷编号被占用，系统重新分配的编号为："+tu.Unitno,"提示");
+			}
+			else tu.Unitno =this.textBox1.Text;
 			tu.Testtitle =this.textBox9.Text ;
-			tu.Unitno =AccessDBUtil.CalcBUGNO();
 			return true;
-		}
-		public   void   InsertImage() 
-		{ 
-//			bool   b   =   richTextBox1.ReadOnly; 
-//			Image   img   =   Image.FromFile( "C:/a.bmp "); 
-//			if (img != null) {
-//				Clipboard.SetDataObject(img); 
-//				richTextBox1.ReadOnly   =   false; 
-//				richTextBox1.Paste(DataFormats.GetFormat(DataFormats.Bitmap)); 
-//				richTextBox1.ReadOnly   =   b; 
-//			}
-			
 		}
 		
 		void Button1Click(object sender, System.EventArgs e)
@@ -198,7 +191,7 @@ namespace WatchCilent.UI.Test
 						if(this.checkBox1.Checked)
 						{
 							string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-								"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+"查看详细并确认。";
+								"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+@"\"+tu.Unitno+".html"+"查看详细并确认。";
 							PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
 							string[] iplist = person.Ip.Split(';');
 							foreach(string ip in iplist)
