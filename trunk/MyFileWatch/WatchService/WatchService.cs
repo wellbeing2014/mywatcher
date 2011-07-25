@@ -178,6 +178,7 @@ namespace WatchService
 			string[] msgtemp = 
 					Regex.Split(msg,"##",RegexOptions.IgnoreCase);
 			Communication.UDPManage.BroadcastToFQ(msgtemp[0],msgtemp[1]);
+			
 		}
 		
 		static private void msgToFQ(string msg)
