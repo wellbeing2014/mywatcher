@@ -402,15 +402,7 @@ namespace WatchCilent.Common
                 throw e;
             }
         }
-        static public string CalcBUGNO()
-        {
-        	DateTime dt = System.DateTime.Now;
-        	string dtno = dt.Year.ToString()+
-        		((dt.Month<10)?"0"+dt.Month.ToString():dt.Month.ToString())+
-        		((dt.Day<10)?"0"+dt.Day.ToString():dt.Day.ToString());
-        	dtno="BUG"+dtno;
-        	return dtno;
-        }
+       
         
 	}
 }
