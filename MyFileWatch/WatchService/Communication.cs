@@ -99,6 +99,7 @@ namespace WatchService
         public  void StopListen()
         {
             IsListening = false;
+            
         }
 
        	 private void ListenHandler()
