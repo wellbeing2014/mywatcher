@@ -41,12 +41,10 @@ namespace WatchCilent
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.treeView1 = new System.Windows.Forms.TreeView();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.button9 = new System.Windows.Forms.Button();
 			this.button8 = new System.Windows.Forms.Button();
 			this.button7 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -57,7 +55,6 @@ namespace WatchCilent
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.button4 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
 			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
 			this.label1 = new System.Windows.Forms.Label();
@@ -69,17 +66,14 @@ namespace WatchCilent
 			// 
 			this.panel1.Controls.Add(this.checkBox2);
 			this.panel1.Controls.Add(this.treeView1);
-			this.panel1.Controls.Add(this.checkBox1);
 			this.panel1.Controls.Add(this.button9);
 			this.panel1.Controls.Add(this.button8);
 			this.panel1.Controls.Add(this.button7);
 			this.panel1.Controls.Add(this.button6);
-			this.panel1.Controls.Add(this.button3);
 			this.panel1.Controls.Add(this.listView1);
 			this.panel1.Controls.Add(this.comboBox2);
 			this.panel1.Controls.Add(this.comboBox1);
 			this.panel1.Controls.Add(this.button4);
-			this.panel1.Controls.Add(this.button2);
 			this.panel1.Controls.Add(this.dateTimePicker1);
 			this.panel1.Controls.Add(this.dateTimePicker2);
 			this.panel1.Controls.Add(this.label1);
@@ -111,16 +105,6 @@ namespace WatchCilent
 			this.treeView1.Size = new System.Drawing.Size(155, 335);
 			this.treeView1.TabIndex = 22;
 			// 
-			// checkBox1
-			// 
-			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.checkBox1.Location = new System.Drawing.Point(417, 353);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(56, 24);
-			this.checkBox1.TabIndex = 21;
-			this.checkBox1.Text = "锁定";
-			this.checkBox1.UseVisualStyleBackColor = true;
-			// 
 			// button9
 			// 
 			this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -130,6 +114,7 @@ namespace WatchCilent
 			this.button9.TabIndex = 20;
 			this.button9.Text = "已发布";
 			this.button9.UseVisualStyleBackColor = true;
+			this.button9.Click += new System.EventHandler(this.Button9Click);
 			// 
 			// button8
 			// 
@@ -140,6 +125,7 @@ namespace WatchCilent
 			this.button8.TabIndex = 19;
 			this.button8.Text = "已作废";
 			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.Button8Click);
 			// 
 			// button7
 			// 
@@ -160,16 +146,6 @@ namespace WatchCilent
 			this.button6.TabIndex = 17;
 			this.button6.Text = "删除";
 			this.button6.UseVisualStyleBackColor = true;
-			// 
-			// button3
-			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(542, 353);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 16;
-			this.button3.Text = "配置";
-			this.button3.UseVisualStyleBackColor = true;
 			// 
 			// listView1
 			// 
@@ -252,25 +228,14 @@ namespace WatchCilent
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.Button4Click);
 			// 
-			// button2
-			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(623, 353);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "隐藏";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
 			// dateTimePicker1
 			// 
 			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
 			this.dateTimePicker1.Location = new System.Drawing.Point(267, 13);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
-			DateTime dt =DateTime.Now; 
-				dateTimePicker1.Value=dt.AddDays(-7);
 			this.dateTimePicker1.TabIndex = 7;
+			this.dateTimePicker1.Value = new System.DateTime(2011, 7, 19, 9, 4, 29, 781);
 			// 
 			// dateTimePicker2
 			// 
@@ -308,7 +273,6 @@ namespace WatchCilent
 		}
 		private System.Windows.Forms.CheckBox checkBox2;
 		private System.Windows.Forms.TreeView treeView1;
-		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.ComboBox comboBox2;
@@ -319,12 +283,10 @@ namespace WatchCilent
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ListView listView1;
-		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button6;
 		private System.Windows.Forms.Button button7;
 		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Button button9;
-		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Panel panel1;
 		
 	}
