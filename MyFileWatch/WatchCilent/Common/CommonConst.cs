@@ -15,12 +15,13 @@ namespace WatchCilent.Common
 	/// </summary>
 	public static class CommonConst
 	{
-		static public string[] BUGLEVEL = new string[]
-		{
-			"一般",
-			"严重",
-			"轻微",
-			"紧急",
-		};
+		public static readonly  string[] BUGLEVEL ={"一般","严重","轻微","紧急"};
+		
+		public static readonly string[] PACKSTATE ={"全部","已接收","已测试","已发布","已废止"};
+		
+		public const string PACKSTATE_YiJieShou = "已接收";
+		public const string PACKSTATE_YiCeShi = "已测试";
+		public const string PACKSTATE_YiFaBu = "已发布";
+		public const string PACKSTATE_YiFeiZhi = "已废止";
 	}
 }

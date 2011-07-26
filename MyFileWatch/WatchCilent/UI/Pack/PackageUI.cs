@@ -40,6 +40,7 @@ namespace WatchCilent
 			tmp.Nodes.Add("已发布");
 			tmp.Nodes.Add("已完成");
 			tmp.Nodes.Add("已作废");
+			
 			treeView1.Nodes.Add(tmp);
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
 			treeView1.ExpandAll();
@@ -101,16 +102,7 @@ namespace WatchCilent
 			
 		}
 		
-		//隐藏按钮的方法
-		
-//		void Button2Click(object sender, EventArgs e)
-//		{
-//			this.WindowState =  FormWindowState.Minimized;
-//			this.Visible = false;
-//			this.notifyIcon1.BalloonTipText="正在监控中……";
-//			this.notifyIcon1.ShowBalloonTip(1);
-//		}
-//		
+
 		private void getAllPackInList()
 		{
 			string moduleid = this.comboBox1.SelectedValue.ToString();
@@ -188,34 +180,13 @@ namespace WatchCilent
 			getAllPackInList();
 		}
 		
-		
-		void CheckBox1CheckedChanged(object sender, EventArgs e)
-		{
-			if(listView1.SelectedItems.Count!=0&&!this.checkBox1.Checked)
-			{
-				this.button6.Enabled=true;
-				this.button7.Enabled=true;
-				this.button8.Enabled = true;
-				this.button9.Enabled = true;
-			}
-			else 
-			{
-				this.button6.Enabled=false;
-				this.button7.Enabled=false;
-				this.button8.Enabled = false;
-				this.button9.Enabled = false;
-			}
-			
-			
-		}
-		
 		void Button7Click(object sender, EventArgs e)
 		{
 			if(listView1.SelectedItems.Count!=0)
 			{
 				PackageInfo pack = new PackageInfo();
 				pack = ListViewSelect(listView1.SelectedItems[0]);
-				pack.State="已测试";
+				pack.State=CommonConst.PACKSTATE_YiCeShi;
 				pack.Testtime=System.DateTime.Now.ToLocalTime().ToString();
 				AccessDBUtil.update(pack);
 			}
@@ -227,7 +198,7 @@ namespace WatchCilent
 			{
 				PackageInfo pack = new PackageInfo();
 				pack = ListViewSelect(listView1.SelectedItems[0]);
-				pack.State="已作废";
+				pack.State=CommonConst.PACKSTATE_YiFeiZhi;
 				AccessDBUtil.update(pack);
 			}
 			getAllPackInList();
@@ -238,7 +209,7 @@ namespace WatchCilent
 			{
 				PackageInfo pack = new PackageInfo();
 				pack = ListViewSelect(listView1.SelectedItems[0]);
-				pack.State="已发布";
+				pack.State=CommonConst.PACKSTATE_YiFaBu;
 				pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
 				AccessDBUtil.update(pack);
 			}
@@ -296,7 +267,7 @@ namespace WatchCilent
 				this.dateTimePicker1.Location = new System.Drawing.Point(267, 13);
 				this.dateTimePicker1.Name = "dateTimePicker1";
 				this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
-				DateTime dt =DateTime.Now; 
+				System.DateTime dt =System.DateTime.Now; 
 				dateTimePicker1.Value=dt.AddDays(-7);
 				this.dateTimePicker1.TabIndex = 7;
 				
