@@ -239,6 +239,48 @@ namespace WatchCilent.UI.Test
 		}
 		
 		
+		/// <summary>
+		/// 关闭按钮
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		
+		void Button2Click(object sender, EventArgs e)
+		{
+			this.Close();
+			this.Dispose();
+		}
+		
+		/// <summary>
+		/// 继续新建按钮
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button3Click(object sender, EventArgs e)
+		{
+			//标题置空
+			this.textBox9.Text ="";
+			//详细信息置空
+			this.richTextBox1.Clear();
+			//重新设置BUG编号
+			this.textBox1.Text = TestUnitDao.getNewUnitNO();
+		}
+		
+		void Button4Click(object sender, EventArgs e)
+		{
+			try {
+				string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
+					"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+@"\"+tu.Unitno+".html"+"查看详细并确认。";
+				PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
+				string[] iplist = person.Ip.Split(';');
+				foreach(string ip in iplist)
+				{
+					Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+				}
+			} catch (Exception) {
+				
+				MessageBox.Show("通知主管失败！");
+			}
+		}
 	}
 }

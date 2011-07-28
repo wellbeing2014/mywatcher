@@ -175,9 +175,16 @@ namespace WatchService
 
 		private void listenhandler(string msg)
 		{
-			string[] msgtemp = 
+			try {
+				
+				string[] msgtemp = 
 					Regex.Split(msg,"##",RegexOptions.IgnoreCase);
-			Communication.UDPManage.BroadcastToFQ(msgtemp[0],msgtemp[1]);
+				Communication.UDPManage.BroadcastToFQ(msgtemp[0],msgtemp[1]);
+			} catch (Exception e2) {
+				
+				WriteToLog(DateTime.Now.ToLocalTime()+":用飞秋转发来自客户端的信息失败。（"+msg+"）"+e2.ToString());
+			}
+			
 			
 		}
 		
