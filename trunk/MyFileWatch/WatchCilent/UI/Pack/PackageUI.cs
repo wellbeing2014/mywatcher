@@ -161,11 +161,12 @@ namespace WatchCilent
 			cm.ShowDialog();
 		}
 		
+		//按钮    已删除
 		void Button6Click(object sender, EventArgs e)
 		{
-			if(listView1.SelectedItems.Count!=0)
+			if(listView1.CheckedItems.Count!=0)
 			{
-				foreach(ListViewItem lt in listView1.SelectedItems)
+				foreach(ListViewItem lt in listView1.CheckedItems)
 				{
 					PackageInfo pack = new PackageInfo();
 					pack = ListViewSelect(lt);
@@ -179,42 +180,63 @@ namespace WatchCilent
 			getAllPackInList();
 		}
 		
+		//按钮     已测试
 		void Button7Click(object sender, EventArgs e)
 		{
-			if(listView1.SelectedItems.Count!=0)
+			if(listView1.CheckedItems.Count!=0)
 			{
-				PackageInfo pack = new PackageInfo();
-				pack = ListViewSelect(listView1.SelectedItems[0]);
-				pack.State=CommonConst.PACKSTATE_YiCeShi;
-				pack.Testtime=System.DateTime.Now.ToLocalTime().ToString();
-				AccessDBUtil.update(pack);
-			}
-			getAllPackInList();
-		}
-		void Button8Click(object sender, EventArgs e)
-		{
-			if(listView1.SelectedItems.Count!=0)
-			{
-				PackageInfo pack = new PackageInfo();
-				pack = ListViewSelect(listView1.SelectedItems[0]);
-				pack.State=CommonConst.PACKSTATE_YiFeiZhi;
-				AccessDBUtil.update(pack);
-			}
-			getAllPackInList();
-		}
-		void Button9Click(object sender, EventArgs e)
-		{
-			if(listView1.SelectedItems.Count!=0)
-			{
-				PackageInfo pack = new PackageInfo();
-				pack = ListViewSelect(listView1.SelectedItems[0]);
-				pack.State=CommonConst.PACKSTATE_YiFaBu;
-				pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
-				AccessDBUtil.update(pack);
+				foreach(ListViewItem lt in listView1.CheckedItems)
+				{
+					PackageInfo pack = new PackageInfo();
+					pack = ListViewSelect(lt);
+					pack.State=CommonConst.PACKSTATE_YiCeShi;
+					pack.Testtime=System.DateTime.Now.ToLocalTime().ToString();
+					AccessDBUtil.update(pack);
+				}
 			}
 			getAllPackInList();
 		}
 		
+		//按钮     已废止
+		void Button8Click(object sender, EventArgs e)
+		{
+			if(listView1.CheckedItems.Count!=0)
+			{
+				foreach(ListViewItem lt in listView1.CheckedItems)
+				{
+					PackageInfo pack = new PackageInfo();
+					pack = ListViewSelect(lt);
+					pack.State=CommonConst.PACKSTATE_YiFeiZhi;
+					//pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
+					AccessDBUtil.update(pack);
+				}
+			}
+			getAllPackInList();
+		}
+		
+		//按钮     已发布
+		void Button9Click(object sender, EventArgs e)
+		{
+			if(listView1.CheckedItems.Count!=0)
+			{
+				foreach(ListViewItem lt in listView1.CheckedItems)
+				{
+					PackageInfo pack = new PackageInfo();
+					pack = ListViewSelect(lt);
+					pack.State=CommonConst.PACKSTATE_YiFaBu;
+					pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
+					AccessDBUtil.update(pack);
+				}
+			}
+			getAllPackInList();
+		}
+		
+		
+		/// <summary>
+		/// 时间段显示
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void CheckBox2CheckedChanged(object sender, EventArgs e)
 		{
 			Point cb1p=new Point();
@@ -260,8 +282,6 @@ namespace WatchCilent
 				this.label1.TabIndex = 9;
 				this.label1.Text = "起";
 				
-				
-				
 				this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
 				this.dateTimePicker1.Location = new System.Drawing.Point(267, 13);
 				this.dateTimePicker1.Name = "dateTimePicker1";
@@ -282,6 +302,12 @@ namespace WatchCilent
 			}
 			getAllPackInList();
 		}
+		
+		/// <summary>
+		/// 所有条件变化
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void conditionChanged(object sender, EventArgs e)
 		{
 			getAllPackInList();
@@ -290,10 +316,10 @@ namespace WatchCilent
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
 		{
 			this.treeView1.SelectedNode=e.Node;
-			
 			getAllPackInList();
 		}
-		 //将要选中新节点之前发生
+		 
+		//将要选中新节点之前发生
         private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
             if (treeView1.SelectedNode != null)
@@ -304,6 +330,7 @@ namespace WatchCilent
                 treeView1.SelectedNode.ForeColor = Color.Black;
             }
         }
+        
         //失去焦点时
         private void treeView1_Leave(object sender, EventArgs e)
         {
