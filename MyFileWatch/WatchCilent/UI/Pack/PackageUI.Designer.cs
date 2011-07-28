@@ -147,6 +147,7 @@ namespace WatchCilent
 			this.button6.TabIndex = 17;
 			this.button6.Text = "删除";
 			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button6Click);
 			// 
 			// listView1
 			// 
