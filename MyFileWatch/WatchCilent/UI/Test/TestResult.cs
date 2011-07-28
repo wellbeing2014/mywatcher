@@ -70,6 +70,7 @@ namespace WatchCilent.UI.Test
             this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packtime", 60, true));
             this.multiColumnFilterComboBox1.DisplayMember = "packagename";
             this.multiColumnFilterComboBox1.ValueMember = "id";
+            this.multiColumnFilterComboBox1.Validated+= new EventHandler(Package_SelectedValueChanged);
 				
 			this.CenterToParent();
 			//InsertImage();
@@ -266,21 +267,40 @@ namespace WatchCilent.UI.Test
 			this.textBox1.Text = TestUnitDao.getNewUnitNO();
 		}
 		
+		/// <summary>
+		/// 通知主管按钮
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void Button4Click(object sender, EventArgs e)
 		{
-			try {
-				string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-					"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+@"\"+tu.Unitno+".html"+"查看详细并确认。";
-				PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
-				string[] iplist = person.Ip.Split(';');
-				foreach(string ip in iplist)
-				{
-					Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+			if(TestuiSave())
+			{
+				try {
+					string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
+						"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+@"\"+tu.Unitno+".html"+"查看详细并确认。";
+					PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
+					string[] iplist = person.Ip.Split(';');
+					foreach(string ip in iplist)
+					{
+						Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+					}
+				} catch (Exception) {
+					
+					MessageBox.Show("通知主管失败！");
 				}
-			} catch (Exception) {
-				
-				MessageBox.Show("通知主管失败！");
 			}
 		}
+		
+		/// <summary>
+		/// 选择更新包时自动绑定其他信息
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Package_SelectedValueChanged(object sender, EventArgs e)
+		{
+			MessageBox.Show("aaaa");
+		}
+		
 	}
 }
