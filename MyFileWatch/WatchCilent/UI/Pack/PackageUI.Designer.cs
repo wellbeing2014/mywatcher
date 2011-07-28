@@ -136,6 +136,7 @@ namespace WatchCilent
 			this.button7.TabIndex = 18;
 			this.button7.Text = "已测试";
 			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.Button7Click);
 			// 
 			// button6
 			// 

@@ -35,13 +35,12 @@ namespace WatchCilent
 			InitializeComponent();
 			this.listView1.DoubleClick+= new EventHandler(Button4Click);
 			TreeNode tmp =new TreeNode("全部");
-			tmp.Nodes.Add("已接收");
-			tmp.Nodes.Add("已测试");
-			tmp.Nodes.Add("已发布");
-			tmp.Nodes.Add("已完成");
-			tmp.Nodes.Add("已作废");
-			
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiJieShou);//已接收
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiCeShi);//已测试
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiFaBu);//已发布
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiFeiZhi);//已废止
 			treeView1.Nodes.Add(tmp);
+			
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
 			treeView1.ExpandAll();
 			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
