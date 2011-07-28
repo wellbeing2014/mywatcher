@@ -52,12 +52,13 @@ namespace WatchCilent.UI.Test
 			this.label9 = new System.Windows.Forms.Label();
 			this.textBox9 = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.multiColumnFilterComboBox1 = new MFCComboBox.MultiColumnFilterComboBox();
 			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.comboBox4 = new System.Windows.Forms.ComboBox();
 			this.comboBox5 = new System.Windows.Forms.ComboBox();
-			this.multiColumnFilterComboBox1 = new MFCComboBox.MultiColumnFilterComboBox();
+			this.button4 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -103,9 +104,9 @@ namespace WatchCilent.UI.Test
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(437, 406);
+			this.button1.Location = new System.Drawing.Point(477, 406);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.Size = new System.Drawing.Size(62, 23);
 			this.button1.TabIndex = 11;
 			this.button1.Text = "保存";
 			this.button1.UseVisualStyleBackColor = true;
@@ -114,31 +115,33 @@ namespace WatchCilent.UI.Test
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(532, 406);
+			this.button2.Location = new System.Drawing.Point(545, 406);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.Size = new System.Drawing.Size(62, 23);
 			this.button2.TabIndex = 12;
 			this.button2.Text = "取消";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(344, 406);
+			this.button3.Location = new System.Drawing.Point(409, 407);
 			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.Size = new System.Drawing.Size(62, 23);
 			this.button3.TabIndex = 13;
 			this.button3.Text = "继续新建";
 			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
 			// checkBox1
 			// 
 			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.checkBox1.Location = new System.Drawing.Point(12, 406);
 			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(151, 24);
+			this.checkBox1.Size = new System.Drawing.Size(133, 24);
 			this.checkBox1.TabIndex = 14;
-			this.checkBox1.Text = "飞秋通知主管";
+			this.checkBox1.Text = "保存后自动通知主管";
 			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
 			// label6
@@ -211,6 +214,15 @@ namespace WatchCilent.UI.Test
 			this.panel1.Size = new System.Drawing.Size(593, 67);
 			this.panel1.TabIndex = 24;
 			// 
+			// multiColumnFilterComboBox1
+			// 
+			this.multiColumnFilterComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+			this.multiColumnFilterComboBox1.FormattingEnabled = true;
+			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(64, 9);
+			this.multiColumnFilterComboBox1.Name = "multiColumnFilterComboBox1";
+			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(526, 22);
+			this.multiColumnFilterComboBox1.TabIndex = 23;
+			// 
 			// comboBox3
 			// 
 			this.comboBox3.FormattingEnabled = true;
@@ -251,20 +263,23 @@ namespace WatchCilent.UI.Test
 			this.comboBox5.Size = new System.Drawing.Size(134, 20);
 			this.comboBox5.TabIndex = 26;
 			// 
-			// multiColumnFilterComboBox1
+			// button4
 			// 
-			this.multiColumnFilterComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-			this.multiColumnFilterComboBox1.FormattingEnabled = true;
-			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(64, 9);
-			this.multiColumnFilterComboBox1.Name = "multiColumnFilterComboBox1";
-			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(526, 22);
-			this.multiColumnFilterComboBox1.TabIndex = 23;
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Location = new System.Drawing.Point(341, 407);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(62, 23);
+			this.button4.TabIndex = 27;
+			this.button4.Text = "飞秋通知";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Button4Click);
 			// 
 			// TestResult
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(619, 441);
+			this.Controls.Add(this.button4);
 			this.Controls.Add(this.comboBox5);
 			this.Controls.Add(this.comboBox4);
 			this.Controls.Add(this.panel1);
@@ -285,6 +300,7 @@ namespace WatchCilent.UI.Test
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button button4;
 		private MFCComboBox.MultiColumnFilterComboBox multiColumnFilterComboBox1;
 		private System.Windows.Forms.ComboBox comboBox5;
 		private System.Windows.Forms.ComboBox comboBox4;

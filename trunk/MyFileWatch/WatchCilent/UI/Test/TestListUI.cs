@@ -35,6 +35,9 @@ namespace WatchCilent.UI.Test
 			//
 		}
 		
+		/// <summary>
+		/// 获取所有缺陷单元
+		/// </summary>
 		void getAll()
 		{
 			List<TestUnit>alltu=TestUnitDao.getAlltestUnit();
@@ -43,6 +46,10 @@ namespace WatchCilent.UI.Test
 			}
 		}
 		
+		/// <summary>
+		/// LIstVieW 绑定数据。
+		/// </summary>
+		/// <param name="tu"></param>
 		private void ListViewBing(TestUnit tu)
 		{
 			ListViewItem lvi = new ListViewItem();
