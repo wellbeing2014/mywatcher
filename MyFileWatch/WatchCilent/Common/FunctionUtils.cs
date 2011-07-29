@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Data;
 
 using Microsoft.Win32;
 using Word;
@@ -223,7 +224,11 @@ namespace WatchCilent.Common
 	    	}
 	    
 		}  
-       	
+       	/// <summary>
+       	/// 检查端口是否被占用。
+       	/// </summary>
+       	/// <param name="port"></param>
+       	/// <returns></returns>
        	public static bool checkPort(string port)
 		{
             Process p = new Process();
@@ -253,7 +258,31 @@ namespace WatchCilent.Common
 
 		}
 
-
+ 		/// <summary>  
+        /// 反一个M行N列的二维数组转换为DataTable  
+        /// </summary>  
+        /// <param name="Arrays">M行N列的二维数组</param>  
+        /// <returns>返回DataTable</returns>  
+        /// <remarks>柳永法 http://www.yongfa365.com/ </remarks>  
+        public static DataTable Convert(string[,] Arrays)  
+        {  
+            DataTable dt = new DataTable();  
+            int a = Arrays.GetLength(0);  
+            for (int i = 0; i < Arrays.GetLength(1); i++)  
+            {  
+                dt.Columns.Add("col" + i.ToString(), typeof(string));  
+            }  
+            for (int i1 = 0; i1 < Arrays.GetLength(0); i1++)  
+            {  
+                DataRow dr = dt.NewRow();  
+                for (int i = 0; i < Arrays.GetLength(1); i++)  
+                {  
+                    dr[i] = Arrays[i1, i].ToString();  
+                }  
+                dt.Rows.Add(dr);  
+            }  
+            return dt;  
+        }
     }
 
 	

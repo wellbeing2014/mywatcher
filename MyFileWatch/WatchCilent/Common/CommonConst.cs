@@ -17,11 +17,26 @@ namespace WatchCilent.Common
 	{
 		public static readonly  string[] BUGLEVEL ={"一般","严重","轻微","紧急"};
 		
-		public static readonly string[] PACKSTATE ={"全部","已接收","已测试","已发布","已废止"};
+		public static readonly string[] PACKSTATE ={"全部","已接收","已处理","已测试","已发布","已废止"};
 		
+		//更新包状态
 		public const string PACKSTATE_YiJieShou = "已接收";
+		public const string PACKSTATE_YiChuLi = "已处理";
 		public const string PACKSTATE_YiCeShi = "已测试";
 		public const string PACKSTATE_YiFaBu = "已发布";
 		public const string PACKSTATE_YiFeiZhi = "已废止";
+		 
+		//测试数量级
+		public static readonly string[,] TestRate = {
+			{"舒畅","100"},
+		 {"微恙","80"},
+		 {"难受","60"},
+		 {"纠结","40"},
+		 {"蛋疼","20"}
+		};
+		
+		
+		
+		
 	}
 }

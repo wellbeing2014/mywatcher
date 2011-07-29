@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using WatchCilent.dao;
 using WatchCilent.pojo;
 using WatchCilent.Common;
+using System.ComponentModel;
 
 namespace WatchCilent
 {
@@ -36,20 +37,22 @@ namespace WatchCilent
         private String topath =  null;
         private String filename = null;
         private int topathnum=0;
+        private bool isChange = false;
         private PackageInfo packageinfo = new PackageInfo();
         List<ProjectInfo> projects;
         List<PersonInfo> datasource_person;
         List<ModuleInfo> datasource_module;
+        
+       
 		public BussinessForm(PackageInfo packageinfo)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			//关闭刷新更新包列表
-			this.Closed+=new EventHandler(formClose);
 			//传入更新包
 			this.frompath = packageinfo.Packagepath;
 			this.packageinfo = packageinfo;
+			this.Closing+=new CancelEventHandler(Form_Closing);
 			
 			
 			InitializeComponent();
@@ -66,6 +69,10 @@ namespace WatchCilent
 			this.comboBox1.DataSource = datasource_module;
 			this.comboBox1.DisplayMember ="Fullname";
 			this.comboBox1.ValueMember = "Id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			this.comboBox1.SelectedIndexChanged += new EventHandler(comboBox1_SelectedIndexChanged);
+			
 			/*加载责任人选择框*/
 			datasource_person =PersonDao.getAllPersonInfo();
 			PersonInfo person = new PersonInfo();
@@ -75,6 +82,12 @@ namespace WatchCilent
 			this.comboBox2.DataSource = datasource_person;
 			this.comboBox2.DisplayMember = "Fullname";
 			this.comboBox2.ValueMember = "Id";
+			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			//测试复杂度
+			this.comboBox3.DataSource =FunctionUtils.Convert(CommonConst.TestRate);
+			this.comboBox3.DisplayMember = "col0";
+			this.comboBox3.ValueMember = "col1";
 			
 			/*绑定模块*/
 			int index_module = 0;
@@ -85,6 +98,7 @@ namespace WatchCilent
 					if(packageinfo.Moduleid==datasource_module[index_module].Id)
 					{
 						this.comboBox1.SelectedItem=this.comboBox1.Items[index_module];
+						isChange = false;
 						break;
 					}
 				}
@@ -105,10 +119,13 @@ namespace WatchCilent
 							if(list[0].Id==datasource_module[index_module].Id)
 							{
 								this.comboBox1.SelectedItem=this.comboBox1.Items[index_module];
+								//this.packageinfo.Managerid = list[0].Managerid;
 								break;
 							}
 						}
-						SavePackage();//自动绑定成功。。
+						//SavePackage();//自动绑定成功。。
+						isChange=true;
+						
 					}
 					else MessageBox.Show("没能找到与更新包相关的模块，请手动确认");
 				}
@@ -128,12 +145,23 @@ namespace WatchCilent
 					}
 				}
 			}
-			if(this.packageinfo.Id!=0)
+			
+			if(packageinfo.TestRate!=0)
 			{
-				this.button5.Enabled = false;
-				this.button3.Enabled = false;
-				this.checkBox1.Checked = true;
+				int rate_index;
+				int rate_lenth =CommonConst.TestRate.GetLength(0);
+				for(rate_index=0;rate_index<rate_lenth;rate_index++)
+				{
+					string sel_rate = CommonConst.TestRate[rate_index,1];
+					if(packageinfo.TestRate == Int32.Parse(sel_rate))
+					{
+						this.comboBox3.SelectedIndex=rate_index;
+						break;
+					}
+				}
 			}
+				
+			
 			getAllProjectPath();
 			
 			//
@@ -176,7 +204,8 @@ namespace WatchCilent
 				copycircle();
 			}
 		}
-				
+		
+		//拷贝循环		
 		private void copycircle()
 		{
 			
@@ -309,6 +338,11 @@ namespace WatchCilent
          }
         private delegate void SetStatus();
 		
+       /// <summary>
+       /// 取消按钮
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
 		void Button2Click(object sender, EventArgs e)
 		{
 			//stream.CanRead = false;
@@ -320,18 +354,54 @@ namespace WatchCilent
 			{topathnum=topaths.Length;
 			label2.Text="取消复制";
 			}
+			if(isChange)
+			{
+				DialogResult result=MessageBox.Show("内容有改动是否保存？","提示",MessageBoxButtons.YesNo);
+				if(DialogResult.Yes ==result)
+				{
+					isChange=false;
+			
+					SavePackage();
+					MessageBox.Show("已保存","提示");
+				}
+				
+			}
 			this.Close();
 			this.Dispose();
+			
 		}
+		/// <summary>
+		/// 保存按钮
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void Button5Click(object sender, System.EventArgs e)
 		{
+			isChange=false;
+			
 			SavePackage();
+			MessageBox.Show("已保存","提示");
 		}
+		/// <summary>
+		/// 保存方法
+		/// </summary>
 		void SavePackage()
 		{
-			packageinfo.Managerid =Int32.Parse(this.comboBox2.SelectedValue.ToString());
-			packageinfo.Moduleid = Int32.Parse(this.comboBox1.SelectedValue.ToString());
+			if(this.comboBox1.SelectedIndex!=0||
+			   this.comboBox2.SelectedIndex!=0)
+			{
+				packageinfo.Managerid =Int32.Parse(this.comboBox2.SelectedValue.ToString());
+				packageinfo.Moduleid = Int32.Parse(this.comboBox1.SelectedValue.ToString());
+				packageinfo.TestRate = Int32.Parse(this.comboBox3.SelectedValue.ToString());
+			}
+			else
+			{
+				MessageBox.Show("请关联责任人和平台","提示");
+				return ;
+			}
+			
 			packageinfo.Packagepath = this.textBox1.Text;
+			packageinfo.State=CommonConst.PACKSTATE_YiChuLi;
 			if(packageinfo.Id>0)
 			{
 				AccessDBUtil.update(packageinfo);
@@ -340,7 +410,6 @@ namespace WatchCilent
 			{
 				AccessDBUtil.insert(packageinfo);
 			}
-			this.checkBox1.Checked = true;
 		}
 		void getAllProjectPath()
 		{
@@ -378,21 +447,10 @@ namespace WatchCilent
 			
 		}
 		
-		void CheckBox1CheckedChanged(object sender, EventArgs e)
-		{
-			if(this.checkBox1.Checked)
-			{
-				this.button5.Enabled = false;
-				this.button3.Enabled = false;
-			}
-			else
-			{
-				this.button5.Enabled = true;
-				this.button3.Enabled = true;
-			}
-		}
+
 		void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			isChange=true;
 			getAllProjectPath();
 			PersonInfo selPerson =PersonDao.getPersonInfoByModuleid(Int32.Parse(this.comboBox1.SelectedValue.ToString()));
 			for (int index_manager=0;index_manager<datasource_person.Count ;index_manager++ ) 
@@ -411,7 +469,7 @@ namespace WatchCilent
 			if(MessageBox.Show("删除更新包，不可恢复。确定要删除吗？","提示",MessageBoxButtons.OKCancel,MessageBoxIcon.Asterisk)==DialogResult.OK)
 			{
 				try {
-					DirectoryInfo packfile = new DirectoryInfo(frompath);
+					FileInfo packfile = new FileInfo(frompath);
 					if (packfile.Exists) packfile.Delete();
 					AccessDBUtil.delete(this.packageinfo);
 					MessageBox.Show("更新包删除成功");
@@ -433,9 +491,22 @@ namespace WatchCilent
 			String curpath = this.packageinfo.Packagepath.Replace(filename[filename.Length-1],"");
 			FunctionUtils.openDirectory(curpath);
 		}
-					
-		void formClose(object sender, EventArgs e)
+		void Form_Closing(object sender,CancelEventArgs e)
 		{
+			if(isChange)
+			{
+				DialogResult result=MessageBox.Show("内容有改动是否保存？","提示",MessageBoxButtons.YesNo);
+				if(DialogResult.Yes ==result)
+				{
+					isChange=false;
+			
+					SavePackage();
+					MessageBox.Show("已保存","提示");
+				}
+				
+			}
+			e.Cancel = false;
 		}
+		
 	}
 }
