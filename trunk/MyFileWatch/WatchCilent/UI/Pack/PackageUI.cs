@@ -36,6 +36,7 @@ namespace WatchCilent
 			this.listView1.DoubleClick+= new EventHandler(Button4Click);
 			TreeNode tmp =new TreeNode("全部");
 			tmp.Nodes.Add(CommonConst.PACKSTATE_YiJieShou);//已接收
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiChuLi);//已处理
 			tmp.Nodes.Add(CommonConst.PACKSTATE_YiCeShi);//已测试
 			tmp.Nodes.Add(CommonConst.PACKSTATE_YiFaBu);//已发布
 			tmp.Nodes.Add(CommonConst.PACKSTATE_YiFeiZhi);//已废止
@@ -68,6 +69,9 @@ namespace WatchCilent
 			this.comboBox1.ValueMember = "Id";
 			
 			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			
+			System.DateTime dt =System.DateTime.Now; 
+				dateTimePicker1.Value=dt.AddDays(-7);
 			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
 			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
 			getAllPackInList();
@@ -135,7 +139,7 @@ namespace WatchCilent
 			lvi.SubItems.Add(pack.Moduleid.ToString());
 			lvi.SubItems.Add(pack.Managerid.ToString());
 			lvi.SubItems.Add(pack.Id.ToString());
-			//lvi.SubItems.Add();
+			lvi.SubItems.Add(pack.TestRate.ToString());
 			this.listView1.Items.Add(lvi);
 		}
 		
@@ -151,17 +155,13 @@ namespace WatchCilent
 			pack.Moduleid = Int32.Parse(lvi.SubItems[6].Text);
 			pack.Managerid =Int32.Parse(lvi.SubItems[7].Text);
 			pack.Id = Int32.Parse(lvi.SubItems[8].Text);
+			pack.TestRate = Int32.Parse(lvi.SubItems[9].Text);
 			return pack;
 		}
 		
-		void Button3Click(object sender, EventArgs e)
-		{
-			ConfigForm cm = new ConfigForm();
-			cm.StartPosition = FormStartPosition.CenterParent;
-			cm.ShowDialog();
-		}
 		
-		//按钮    已删除
+		
+		//按钮     已删除
 		void Button6Click(object sender, EventArgs e)
 		{
 			if(listView1.CheckedItems.Count!=0)

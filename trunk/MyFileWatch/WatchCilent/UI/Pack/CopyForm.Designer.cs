@@ -57,15 +57,16 @@ namespace WatchCilent
 			this.label4 = new System.Windows.Forms.Label();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.button5 = new System.Windows.Forms.Button();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button7 = new System.Windows.Forms.Button();
+			this.comboBox3 = new System.Windows.Forms.ComboBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(412, 287);
+			this.button1.Location = new System.Drawing.Point(524, 301);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(46, 23);
 			this.button1.TabIndex = 0;
@@ -76,7 +77,7 @@ namespace WatchCilent
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(464, 287);
+			this.button2.Location = new System.Drawing.Point(576, 301);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(48, 23);
 			this.button2.TabIndex = 1;
@@ -92,7 +93,7 @@ namespace WatchCilent
 			this.treeView1.CheckBoxes = true;
 			this.treeView1.Location = new System.Drawing.Point(12, 57);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(502, 140);
+			this.treeView1.Size = new System.Drawing.Size(614, 154);
 			this.treeView1.TabIndex = 2;
 			// 
 			// label1
@@ -107,9 +108,9 @@ namespace WatchCilent
 			// 
 			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar1.Location = new System.Drawing.Point(12, 231);
+			this.progressBar1.Location = new System.Drawing.Point(12, 245);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(502, 23);
+			this.progressBar1.Size = new System.Drawing.Size(614, 23);
 			this.progressBar1.TabIndex = 4;
 			this.progressBar1.Tag = "";
 			// 
@@ -117,15 +118,15 @@ namespace WatchCilent
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.Location = new System.Drawing.Point(12, 261);
+			this.label2.Location = new System.Drawing.Point(12, 275);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(502, 23);
+			this.label2.Size = new System.Drawing.Size(614, 23);
 			this.label2.TabIndex = 5;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button3.Location = new System.Drawing.Point(69, 287);
+			this.button3.Location = new System.Drawing.Point(12, 301);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(37, 23);
 			this.button3.TabIndex = 6;
@@ -136,7 +137,7 @@ namespace WatchCilent
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button4.Location = new System.Drawing.Point(12, 203);
+			this.button4.Location = new System.Drawing.Point(12, 217);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(75, 23);
 			this.button4.TabIndex = 7;
@@ -146,7 +147,6 @@ namespace WatchCilent
 			// 
 			// comboBox1
 			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBox1.FormattingEnabled = true;
 			this.comboBox1.Location = new System.Drawing.Point(82, 31);
 			this.comboBox1.Name = "comboBox1";
@@ -159,7 +159,7 @@ namespace WatchCilent
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(82, 4);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(432, 21);
+			this.textBox1.Size = new System.Drawing.Size(544, 21);
 			this.textBox1.TabIndex = 9;
 			// 
 			// label3
@@ -180,17 +180,16 @@ namespace WatchCilent
 			// 
 			// comboBox2
 			// 
-			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBox2.FormattingEnabled = true;
 			this.comboBox2.Location = new System.Drawing.Point(299, 31);
 			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(121, 20);
+			this.comboBox2.Size = new System.Drawing.Size(107, 20);
 			this.comboBox2.TabIndex = 12;
 			// 
 			// button5
 			// 
-			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(112, 287);
+			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button5.Location = new System.Drawing.Point(55, 301);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(39, 23);
 			this.button5.TabIndex = 13;
@@ -198,21 +197,10 @@ namespace WatchCilent
 			this.button5.UseVisualStyleBackColor = true;
 			this.button5.Click += new System.EventHandler(this.Button5Click);
 			// 
-			// checkBox1
-			// 
-			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.checkBox1.Location = new System.Drawing.Point(12, 286);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(51, 24);
-			this.checkBox1.TabIndex = 14;
-			this.checkBox1.Text = "锁定";
-			this.checkBox1.UseVisualStyleBackColor = true;
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
-			// 
 			// button6
 			// 
-			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button6.Location = new System.Drawing.Point(306, 287);
+			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button6.Location = new System.Drawing.Point(418, 301);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(47, 23);
 			this.button6.TabIndex = 6;
@@ -222,8 +210,8 @@ namespace WatchCilent
 			// 
 			// button7
 			// 
-			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button7.Location = new System.Drawing.Point(359, 287);
+			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button7.Location = new System.Drawing.Point(471, 301);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(47, 23);
 			this.button7.TabIndex = 6;
@@ -231,12 +219,29 @@ namespace WatchCilent
 			this.button7.UseVisualStyleBackColor = true;
 			this.button7.Click += new System.EventHandler(this.Button7Click);
 			// 
+			// comboBox3
+			// 
+			this.comboBox3.FormattingEnabled = true;
+			this.comboBox3.Location = new System.Drawing.Point(505, 31);
+			this.comboBox3.Name = "comboBox3";
+			this.comboBox3.Size = new System.Drawing.Size(121, 20);
+			this.comboBox3.TabIndex = 14;
+			// 
+			// label5
+			// 
+			this.label5.Location = new System.Drawing.Point(423, 34);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(76, 17);
+			this.label5.TabIndex = 15;
+			this.label5.Text = "测试复杂度:";
+			// 
 			// BussinessForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(526, 322);
-			this.Controls.Add(this.checkBox1);
+			this.ClientSize = new System.Drawing.Size(638, 336);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.comboBox3);
 			this.Controls.Add(this.button5);
 			this.Controls.Add(this.comboBox2);
 			this.Controls.Add(this.label4);
@@ -258,9 +263,10 @@ namespace WatchCilent
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.ComboBox comboBox3;
 		private System.Windows.Forms.Button button7;
 		private System.Windows.Forms.Button button6;
-		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.ComboBox comboBox2;
 		private System.Windows.Forms.Label label4;

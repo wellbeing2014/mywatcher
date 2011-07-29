@@ -104,6 +104,7 @@ namespace WatchCilent.dao
 			page.Managerid =Int32.Parse(row["managerid"].ToString());
 			//page.Managerid = null;
 			page.State = row["state"].ToString();
+			page.TestRate =Int32.Parse(row["testrate"].ToString());
 			return page;
 		}
 	}

@@ -22,12 +22,27 @@ namespace WatchCilent.UI.Test
 	/// </summary>
 	public partial class TestListUI : UserControl
 	{
+		private System.Windows.Forms.DateTimePicker dateTimePicker1;
+		private System.Windows.Forms.DateTimePicker dateTimePicker2;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
 		public TestListUI()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
+			
+			
+			
 			InitializeComponent();
+			
+			TreeNode tmp =new TreeNode("全部");
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiJieShou);//已接收
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiChuLi);//已处理
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiCeShi);//已测试
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiFaBu);//已发布
+			tmp.Nodes.Add(CommonConst.PACKSTATE_YiFeiZhi);//已废止
+			treeView1.Nodes.Add(tmp);
 			getAll();
 			
 			//
@@ -137,5 +152,92 @@ namespace WatchCilent.UI.Test
 			SaveView sv = new SaveView();
 			sv.ShowDialog();
 		}
+		
+		/// <summary>
+		/// 所有条件变化
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void conditionChanged(object sender, EventArgs e)
+		{
+			getAll();
+		}
+		
+		/// <summary>
+		/// 时间段是否显示
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void CheckBox2CheckedChanged(object sender, EventArgs e)
+		{
+			
+			Point cb1p=new Point();
+			cb1p=this.comboBox1.Location;
+			Point cb2p=new Point();
+			cb2p=this.comboBox2.Location;
+			if(!this.checkBox2.Checked)
+			{
+				this.dateTimePicker1.Dispose();
+				this.dateTimePicker2.Dispose();
+				
+				this.label1.Dispose();
+				this.label2.Dispose();
+				cb1p.X=cb1p.X-234;
+				cb2p.X=cb2p.X-234;
+				this.comboBox1.Location=cb1p;
+				this.comboBox2.Location=cb2p;
+			}
+			else
+			{
+			// 
+			// dateTimePicker1
+			// 
+			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			
+			this.panel1.Controls.Add(this.dateTimePicker1);
+			this.panel1.Controls.Add(this.dateTimePicker2);
+			this.panel1.Controls.Add(this.label1);
+			this.panel1.Controls.Add(this.label2);
+			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dateTimePicker1.Location = new System.Drawing.Point(98, 16);
+			this.dateTimePicker1.Name = "dateTimePicker1";
+			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
+			this.dateTimePicker1.TabIndex = 24;
+			this.dateTimePicker1.Value = new System.DateTime(2011, 6, 8, 10, 13, 8, 62);
+			// 
+			// dateTimePicker2
+			// 
+			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dateTimePicker2.Location = new System.Drawing.Point(216, 16);
+			this.dateTimePicker2.Name = "dateTimePicker2";
+			this.dateTimePicker2.Size = new System.Drawing.Size(84, 21);
+			this.dateTimePicker2.TabIndex = 25;
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(73, 20);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(19, 18);
+			this.label1.TabIndex = 26;
+			this.label1.Text = "起";
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(191, 20);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(19, 18);
+			this.label2.TabIndex = 27;
+			this.label2.Text = "至";
+			cb1p.X=cb1p.X+234;
+			cb2p.X=cb2p.X+234;
+			this.comboBox1.Location=cb1p;
+			this.comboBox2.Location=cb2p;
+			}
+		}
+		
+	
 	}
 }

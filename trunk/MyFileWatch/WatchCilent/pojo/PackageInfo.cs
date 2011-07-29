@@ -76,6 +76,12 @@ namespace WatchCilent.pojo
 			get { return managerid; }
 			set { managerid = value; }
 		}
+		private int testRate;
+		
+		public int TestRate {
+			get { return testRate; }
+			set { testRate = value; }
+		}
 		public PackageInfo()
 		{
 		}
