@@ -87,6 +87,11 @@ namespace WatchCilent.UI.Test
 			//
 			InitializeComponent();
 			
+			
+			this.multiColumnFilterComboBox1.Text = this.tu.Packagename;
+			
+			this.multiColumnFilterComboBox1.Enabled = false;
+			
 			//this.comboBox1.DataSource = PersonDao.getPersonTable();;
 			this.comboBox1.Text=tu.Adminname;
 			this.comboBox1.Items.Add(tu.Adminname);
@@ -175,6 +180,11 @@ namespace WatchCilent.UI.Test
 		{
 			if(TestuiSave())
 			{
+				if(tu.Id!=0&&tu.Id!=null)
+				{
+					
+				}
+				else
 				if(AccessDBUtil.insert(tu))
 				{
 					if(unitDOCpath==null)
