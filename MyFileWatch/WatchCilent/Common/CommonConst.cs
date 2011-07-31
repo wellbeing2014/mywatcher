@@ -35,6 +35,14 @@ namespace WatchCilent.Common
 		 {"蛋疼","20"}
 		};
 		
+		public enum TestState
+		{
+			已确认,
+			已废止,
+			已修订
+		}
+		
+		
 		
 		
 		

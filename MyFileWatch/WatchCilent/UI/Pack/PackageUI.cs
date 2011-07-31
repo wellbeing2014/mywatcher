@@ -67,6 +67,8 @@ namespace WatchCilent
 			this.comboBox1.DataSource = datasource_module;
 			this.comboBox1.DisplayMember ="Fullname";
 			this.comboBox1.ValueMember = "Id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			
 			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
 			

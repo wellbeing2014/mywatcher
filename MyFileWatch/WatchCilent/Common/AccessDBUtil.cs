@@ -159,25 +159,69 @@ namespace WatchCilent.Common
 				//获取所有属性
 				PropertyInfo[] fields = objclass.GetProperties();
 				string tempsql ="";
+//				foreach(PropertyInfo field in fields)
+//				{
+//					//去掉验证属性及主键
+//					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
+//					{
+//						object fvalue=field.GetValue(obj,null);
+//						//验证整形，空的整形为0
+//						if(field.PropertyType.Name=="Int32")
+//						{
+//							tempsql+=field.Name+"=" +fvalue.ToString()+",";
+//							
+//						}
+//						else
+//						if(fvalue!=null&&fvalue.ToString()!=null)
+//						{
+//							tempsql+=field.Name+"='" +fvalue.ToString()+"',";
+//						}
+//					}
+//				}
+				
 				foreach(PropertyInfo field in fields)
 				{
 					//去掉验证属性及主键
 					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
 					{
 						object fvalue=field.GetValue(obj,null);
-						//验证整形，空的整形为0
+						
+						OleDbParameter tt = new OleDbParameter();
+						tt.ParameterName = "@"+field.Name;
+						tt.Value=fvalue;
+						//验证整形
 						if(field.PropertyType.Name=="Int32")
 						{
-							tempsql+=field.Name+"=" +fvalue.ToString()+",";
-							
+							tt.OleDbType=OleDbType.Integer;
 						}
-						else
-						if(fvalue!=null&&fvalue.ToString()!=null)
+						if(field.PropertyType.Name=="String")
 						{
-							tempsql+=field.Name+"='" +fvalue.ToString()+"',";
+							tt.OleDbType=OleDbType.VarChar;
 						}
+						if(field.PropertyType.Name=="Boolean")
+						{
+							tt.OleDbType=OleDbType.Boolean;
+						}
+						if(field.PropertyType.Name=="DateTime")
+						{
+							tt.OleDbType=OleDbType.Date;
+						}
+						//大字段
+						if(field.PropertyType.Name=="Byte[]")
+						{
+							tt.OleDbType=OleDbType.VarBinary;
+						}
+						if(fvalue!=null)
+						{
+							para.Add(tt);
+							sqltou+=field.Name+",";
+							sqlval=sqlval.Substring(0,sqlval.Length-1)+tt.ParameterName+",'";
+						}
+						
 					}
 				}
+				
+				
 				String sql=sqltou+tempsql.Substring(0,tempsql.Length-1)+" where "+px.Name+"="+px.GetValue(obj,null).ToString()+";";
 				//拼SQL结束。
 				ExecuteNonQuery(sql);

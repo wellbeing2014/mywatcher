@@ -212,7 +212,6 @@ namespace WatchCilent
 			// 
 			// comboBox1
 			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBox1.FormattingEnabled = true;
 			this.comboBox1.Location = new System.Drawing.Point(475, 12);
 			this.comboBox1.Name = "comboBox1";
@@ -237,7 +236,6 @@ namespace WatchCilent
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
 			this.dateTimePicker1.TabIndex = 7;
-			//this.dateTimePicker1.Value = new System.DateTime(2011, 7, 19, 9, 4, 29, 781);
 			// 
 			// dateTimePicker2
 			// 

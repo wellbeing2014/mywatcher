@@ -84,7 +84,7 @@ namespace WatchCilent.UI.Test
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(695, 388);
+			this.panel1.Size = new System.Drawing.Size(710, 388);
 			this.panel1.TabIndex = 0;
 			// 
 			// treeView1
@@ -99,7 +99,7 @@ namespace WatchCilent.UI.Test
 			// button8
 			// 
 			this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button8.Location = new System.Drawing.Point(480, 362);
+			this.button8.Location = new System.Drawing.Point(495, 362);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(52, 23);
 			this.button8.TabIndex = 36;
@@ -109,7 +109,7 @@ namespace WatchCilent.UI.Test
 			// button6
 			// 
 			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button6.Location = new System.Drawing.Point(538, 362);
+			this.button6.Location = new System.Drawing.Point(553, 362);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(52, 23);
 			this.button6.TabIndex = 36;
@@ -119,7 +119,7 @@ namespace WatchCilent.UI.Test
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(422, 362);
+			this.button5.Location = new System.Drawing.Point(437, 362);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(52, 23);
 			this.button5.TabIndex = 36;
@@ -129,7 +129,7 @@ namespace WatchCilent.UI.Test
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(601, 362);
+			this.button4.Location = new System.Drawing.Point(616, 362);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(91, 23);
 			this.button4.TabIndex = 35;
@@ -173,15 +173,15 @@ namespace WatchCilent.UI.Test
 			// comboBox2
 			// 
 			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(569, 17);
+			this.comboBox2.Location = new System.Drawing.Point(606, 17);
 			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(121, 20);
+			this.comboBox2.Size = new System.Drawing.Size(101, 20);
 			this.comboBox2.TabIndex = 30;
 			// 
 			// comboBox1
 			// 
 			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(442, 17);
+			this.comboBox1.Location = new System.Drawing.Point(479, 17);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(121, 20);
 			this.comboBox1.TabIndex = 29;
@@ -190,9 +190,9 @@ namespace WatchCilent.UI.Test
 			// 
 			this.checkBox2.Checked = true;
 			this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBox2.Location = new System.Drawing.Point(141, 14);
+			this.checkBox2.Location = new System.Drawing.Point(138, 15);
 			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(60, 24);
+			this.checkBox2.Size = new System.Drawing.Size(61, 24);
 			this.checkBox2.TabIndex = 28;
 			this.checkBox2.Text = "时间段";
 			this.checkBox2.UseVisualStyleBackColor = true;
@@ -200,36 +200,33 @@ namespace WatchCilent.UI.Test
 			// 
 			// dateTimePicker1
 			// 
-			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker1.Location = new System.Drawing.Point(234, 16);
+			this.dateTimePicker1.Location = new System.Drawing.Point(224, 17);
 			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(87, 21);
-			this.dateTimePicker1.TabIndex = 24;
-			this.dateTimePicker1.Value = new System.DateTime(2011, 6, 8, 10, 13, 8, 62);
+			this.dateTimePicker1.Size = new System.Drawing.Size(103, 21);
+			this.dateTimePicker1.TabIndex = 38;
 			// 
 			// dateTimePicker2
 			// 
-			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker2.Location = new System.Drawing.Point(352, 16);
+			this.dateTimePicker2.Location = new System.Drawing.Point(356, 17);
 			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(84, 21);
-			this.dateTimePicker2.TabIndex = 25;
+			this.dateTimePicker2.Size = new System.Drawing.Size(103, 21);
+			this.dateTimePicker2.TabIndex = 39;
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(209, 20);
+			this.label1.Location = new System.Drawing.Point(199, 20);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(19, 18);
-			this.label1.TabIndex = 26;
+			this.label1.TabIndex = 40;
 			this.label1.Text = "起";
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(327, 20);
+			this.label2.Location = new System.Drawing.Point(333, 20);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(19, 18);
-			this.label2.TabIndex = 27;
-			this.label2.Text = "至";
+			this.label2.Size = new System.Drawing.Size(17, 18);
+			this.label2.TabIndex = 41;
+			this.label2.Text = "止";
 			// 
 			// listView1
 			// 
@@ -249,7 +246,7 @@ namespace WatchCilent.UI.Test
 			this.listView1.GridLines = true;
 			this.listView1.Location = new System.Drawing.Point(138, 41);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(557, 315);
+			this.listView1.Size = new System.Drawing.Size(572, 315);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -295,7 +292,7 @@ namespace WatchCilent.UI.Test
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
 			this.Name = "TestListUI";
-			this.Size = new System.Drawing.Size(695, 388);
+			this.Size = new System.Drawing.Size(710, 388);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
