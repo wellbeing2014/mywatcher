@@ -31,9 +31,6 @@ namespace WatchCilent.UI.Test
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			
-			
-			
 			InitializeComponent();
 			
 			TreeNode tmp =new TreeNode("全部");
@@ -41,18 +38,72 @@ namespace WatchCilent.UI.Test
 				tmp.Nodes.Add(element);
 			}
 			treeView1.Nodes.Add(tmp);
+			treeView1.ExpandAll();
+			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
+			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
+			treeView1.Leave+=new EventHandler(treeView1_Leave);
+			treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);
+			System.DateTime dt =System.DateTime.Now; 
+				dateTimePicker1.Value=dt.AddDays(-7);
+				
+			List<PersonInfo> datasource_person = PersonDao.getAllPersonInfo();
+			PersonInfo person = new PersonInfo();
+			person.Fullname = "全部责任人";
+			person.Id = 0;
+			datasource_person.Insert(0,person);
+			this.comboBox2.DataSource = datasource_person;
+			this.comboBox2.DisplayMember = "Fullname";
+			this.comboBox2.ValueMember = "Id";
+			this.comboBox2.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			
+			List<ModuleInfo> datasource_module = ModuleDao.getAllModuleInfo();
+			ModuleInfo all = new ModuleInfo();
+			all.Fullname ="全部模块";
+			all.Id=0;
+			datasource_module.Insert(0,all);
+			this.comboBox1.DataSource = datasource_module;
+			this.comboBox1.DisplayMember ="Fullname";
+			this.comboBox1.ValueMember = "Id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			
+			
+			this.comboBox3.Items.Add("全部");
+			this.comboBox3.Items.AddRange(CommonConst.BUGLEVEL);
+			
+			
+				
 			getAll();
+			this.listView1.DoubleClick += new EventHandler(ListVew_DoubleClick); 
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
 		
+		#region 通用方法
 		/// <summary>
 		/// 获取所有缺陷单元
 		/// </summary>
 		void getAll()
 		{
+			string moduleid = this.comboBox1.SelectedValue.ToString();
+			string manageid = this.comboBox2.SelectedValue.ToString();
+			string state = this.treeView1.SelectedNode.Text;
+			
+			string begin=this.dateTimePicker1.Value.ToShortDateString()+" 00:00:00";
+			string end =this.dateTimePicker2.Value.ToShortDateString()+" 23:59:59";
+			if(this.dateTimePicker1.IsDisposed&&this.dateTimePicker2.IsDisposed)
+			{
+				begin=null;
+				end =null;
+			}
+			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,begin,end);
+			this.listView1.Items.Clear();
+			
+			
+			
 			List<TestUnit>alltu=TestUnitDao.getAlltestUnit();
 			foreach (TestUnit tu in alltu) {
 				ListViewBing(tu);
@@ -93,6 +144,21 @@ namespace WatchCilent.UI.Test
 			return tu;
 		}
 		/// <summary>
+		/// 所有条件变化
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void conditionChanged(object sender, EventArgs e)
+		{
+			getAll();
+		}
+		
+		
+		
+		#endregion 
+		
+		#region 按钮等 响应方法
+		/// <summary>
 		/// 新增
 		/// </summary>
 		/// <param name="sender"></param>
@@ -111,6 +177,7 @@ namespace WatchCilent.UI.Test
 		/// <param name="e"></param>
 		void Button2Click(object sender, EventArgs e)
 		{
+			
 			if(this.listView1.CheckedItems.Count==1)
 			{
 				TestUnit tu = ListViewSelect(this.listView1.CheckedItems[0]);
@@ -121,6 +188,23 @@ namespace WatchCilent.UI.Test
 			{
 				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 			}
+			getAll();
+		}
+		
+		void ListVew_DoubleClick(object sender, EventArgs e)
+		{
+			if(this.listView1.SelectedItems.Count==1)
+			{
+				TestUnit tu = ListViewSelect(this.listView1.SelectedItems[0]);
+				TestResult tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id));
+				tr.ShowDialog();
+			}
+			else
+			{
+				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}
+			getAll();
+			
 		}
 		/// <summary>
 		/// 删除
@@ -151,15 +235,7 @@ namespace WatchCilent.UI.Test
 			sv.ShowDialog();
 		}
 		
-		/// <summary>
-		/// 所有条件变化
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void conditionChanged(object sender, EventArgs e)
-		{
-			getAll();
-		}
+		
 		
 		/// <summary>
 		/// 时间段是否显示
@@ -173,17 +249,20 @@ namespace WatchCilent.UI.Test
 			cb1p=this.comboBox1.Location;
 			Point cb2p=new Point();
 			cb2p=this.comboBox2.Location;
+			Point cb3p=new Point();
+			cb3p=this.comboBox3.Location;
 			if(!this.checkBox2.Checked)
 			{
 				this.dateTimePicker1.Dispose();
 				this.dateTimePicker2.Dispose();
-				
 				this.label1.Dispose();
 				this.label2.Dispose();
-				cb1p.X=cb1p.X-234;
-				cb2p.X=cb2p.X-234;
+				cb1p.X=cb1p.X-250;
+				cb2p.X=cb2p.X-250;
+				cb3p.X=cb3p.X-250;
 				this.comboBox1.Location=cb1p;
 				this.comboBox2.Location=cb2p;
+				this.comboBox3.Location=cb3p;
 			}
 			else
 			{
@@ -227,13 +306,46 @@ namespace WatchCilent.UI.Test
 			this.label2.Size = new System.Drawing.Size(17, 18);
 			this.label2.TabIndex = 41;
 			this.label2.Text = "止";
-			cb1p.X=cb1p.X+234;
-			cb2p.X=cb2p.X+234;
+			cb1p.X=cb1p.X+250;
+			cb2p.X=cb2p.X+250;
+			cb3p.X=cb3p.X+250;
 			this.comboBox1.Location=cb1p;
 			this.comboBox2.Location=cb2p;
+			this.comboBox3.Location=cb3p;
 			}
 		}
+		#endregion
 		
-	
+		#region 状态树的事件
+		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
+		{
+			this.treeView1.SelectedNode=e.Node;
+			getAll();
+		}
+		 
+		//将要选中新节点之前发生
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (treeView1.SelectedNode != null)
+            {
+                //将上一个选中的节点背景色还原（原先没有颜色）
+                treeView1.SelectedNode.BackColor = Color.Empty;
+                //还原前景色
+                treeView1.SelectedNode.ForeColor = Color.Black;
+            }
+        }
+        
+        //失去焦点时
+        private void treeView1_Leave(object sender, EventArgs e)
+        {
+            if(treeView1.SelectedNode!=null)
+            {
+                //让选中项背景色呈现蓝色
+                treeView1.SelectedNode.BackColor = Color.SteelBlue;
+                //前景色为白色
+                treeView1.SelectedNode.ForeColor = Color.White;
+            }
+        }
+		#endregion 
 	}
 }

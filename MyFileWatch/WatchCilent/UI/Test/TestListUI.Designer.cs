@@ -60,6 +60,7 @@ namespace WatchCilent.UI.Test
 			this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -73,6 +74,7 @@ namespace WatchCilent.UI.Test
 			this.panel1.Controls.Add(this.button3);
 			this.panel1.Controls.Add(this.button2);
 			this.panel1.Controls.Add(this.button1);
+			this.panel1.Controls.Add(this.comboBox3);
 			this.panel1.Controls.Add(this.comboBox2);
 			this.panel1.Controls.Add(this.comboBox1);
 			this.panel1.Controls.Add(this.checkBox2);
@@ -84,7 +86,7 @@ namespace WatchCilent.UI.Test
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(710, 388);
+			this.panel1.Size = new System.Drawing.Size(800, 388);
 			this.panel1.TabIndex = 0;
 			// 
 			// treeView1
@@ -99,7 +101,7 @@ namespace WatchCilent.UI.Test
 			// button8
 			// 
 			this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button8.Location = new System.Drawing.Point(495, 362);
+			this.button8.Location = new System.Drawing.Point(585, 362);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(52, 23);
 			this.button8.TabIndex = 36;
@@ -109,7 +111,7 @@ namespace WatchCilent.UI.Test
 			// button6
 			// 
 			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button6.Location = new System.Drawing.Point(553, 362);
+			this.button6.Location = new System.Drawing.Point(643, 362);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(52, 23);
 			this.button6.TabIndex = 36;
@@ -119,7 +121,7 @@ namespace WatchCilent.UI.Test
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(437, 362);
+			this.button5.Location = new System.Drawing.Point(527, 362);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(52, 23);
 			this.button5.TabIndex = 36;
@@ -129,7 +131,7 @@ namespace WatchCilent.UI.Test
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(616, 362);
+			this.button4.Location = new System.Drawing.Point(706, 362);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(91, 23);
 			this.button4.TabIndex = 35;
@@ -175,7 +177,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox2.FormattingEnabled = true;
 			this.comboBox2.Location = new System.Drawing.Point(606, 17);
 			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(101, 20);
+			this.comboBox2.Size = new System.Drawing.Size(89, 20);
 			this.comboBox2.TabIndex = 30;
 			// 
 			// comboBox1
@@ -200,21 +202,21 @@ namespace WatchCilent.UI.Test
 			// 
 			// dateTimePicker1
 			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(224, 17);
+			this.dateTimePicker1.Location = new System.Drawing.Point(221, 17);
 			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(103, 21);
+			this.dateTimePicker1.Size = new System.Drawing.Size(106, 21);
 			this.dateTimePicker1.TabIndex = 38;
 			// 
 			// dateTimePicker2
 			// 
 			this.dateTimePicker2.Location = new System.Drawing.Point(356, 17);
 			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(103, 21);
+			this.dateTimePicker2.Size = new System.Drawing.Size(107, 21);
 			this.dateTimePicker2.TabIndex = 39;
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(199, 20);
+			this.label1.Location = new System.Drawing.Point(196, 20);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(19, 18);
 			this.label1.TabIndex = 40;
@@ -246,7 +248,7 @@ namespace WatchCilent.UI.Test
 			this.listView1.GridLines = true;
 			this.listView1.Location = new System.Drawing.Point(138, 41);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(572, 315);
+			this.listView1.Size = new System.Drawing.Size(662, 315);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -286,16 +288,25 @@ namespace WatchCilent.UI.Test
 			this.columnHeader7.Text = "状态";
 			this.columnHeader7.Width = 50;
 			// 
+			// comboBox3
+			// 
+			this.comboBox3.FormattingEnabled = true;
+			this.comboBox3.Location = new System.Drawing.Point(701, 17);
+			this.comboBox3.Name = "comboBox3";
+			this.comboBox3.Size = new System.Drawing.Size(84, 20);
+			this.comboBox3.TabIndex = 30;
+			// 
 			// TestListUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
 			this.Name = "TestListUI";
-			this.Size = new System.Drawing.Size(710, 388);
+			this.Size = new System.Drawing.Size(800, 388);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ComboBox comboBox3;
 		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.Button button6;

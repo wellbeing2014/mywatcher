@@ -36,26 +36,34 @@ namespace WatchCilent.UI.Test
 		string defaultpath =System.Environment.CurrentDirectory;
 		//临时文件路径
 		string temppath =System.IO.Path.GetTempPath();
+		
+		DataTable Source_Person = PersonDao.getPersonTable();
+		DataTable Source_Module = ModuleDao.getAllModuleTable();
+		DataTable Source_Project = ProjectInfoDao.getAllProjectTable();
+		
+		/// <summary>
+		/// 新建窗口
+		/// </summary>
 		public TestResult()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			this.comboBox1.DataSource = PersonDao.getPersonTable();;
+			this.comboBox1.DataSource = Source_Person;
 			this.comboBox1.DisplayMember = "fullname";
 			this.comboBox1.ValueMember = "id";
 			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			this.textBox1.Text =TestUnitDao.getNewUnitNO();
 			
-			this.comboBox2.DataSource = ModuleDao.getAllModuleTable();;
+			this.comboBox2.DataSource = Source_Module;
 			this.comboBox2.DisplayMember = "fullname";
 			this.comboBox2.ValueMember = "id";
 			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			
-			this.comboBox3.DataSource = ProjectInfoDao.getAllProjectTable();;
+			this.comboBox3.DataSource =Source_Project;
 			this.comboBox3.DisplayMember = "projectname";
 			this.comboBox3.ValueMember = "id";
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
@@ -79,41 +87,83 @@ namespace WatchCilent.UI.Test
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
-		public TestResult(TestUnit tu)
+		
+		/// <summary>
+		/// 编辑窗口
+		/// </summary>
+		/// <param name="tuint"></param>
+		public TestResult(TestUnit tuint)
 		{
-			this.tu=tu;
+			this.tu=tuint;
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 			
 			
-			this.multiColumnFilterComboBox1.Text = this.tu.Packagename;
-			
+			this.multiColumnFilterComboBox1.Items.Add(this.tu);
+			this.multiColumnFilterComboBox1.DisplayMember = "Packagename";
+            this.multiColumnFilterComboBox1.ValueMember = "Packageid";
+			this.multiColumnFilterComboBox1.SelectedIndex = 0;
 			this.multiColumnFilterComboBox1.Enabled = false;
 			
-			//this.comboBox1.DataSource = PersonDao.getPersonTable();;
-			this.comboBox1.Text=tu.Adminname;
-			this.comboBox1.Items.Add(tu.Adminname);
-			//this.comboBox1.DisplayMember = "fullname";
-			//this.comboBox1.ValueMember = "id";
-			
+			//绑定主管
+			this.comboBox1.DataSource = this.Source_Person;
+			this.comboBox1.DisplayMember = "fullname";
+			this.comboBox1.ValueMember = "id";
 			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-			this.textBox1.Text = TestUnitDao.getNewUnitNO();
+			foreach (DataRow element in this.Source_Person.Rows) {
+				string tempid = element["id"].ToString();
+				if(Int32.Parse(tempid)== tu.Adminid)
+				{
+					int sel = this.Source_Person.Rows.IndexOf(element);
+					this.comboBox1.SelectedIndex = sel;
+					break;
+				}
+			}
 			
-			this.comboBox2.Items.Add(tu.Modulename);
+			//绑定模块（平台）
+			this.comboBox2.DataSource = this.Source_Module;
+			this.comboBox2.DisplayMember = "fullname";
+			this.comboBox2.ValueMember = "id";
 			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			foreach (DataRow element in this.Source_Module.Rows) {
+				string tempid = element["id"].ToString();
+				if(Int32.Parse(tempid)== tu.Moduleid)
+				{
+					int sel = this.Source_Module.Rows.IndexOf(element);
+					this.comboBox2.SelectedIndex = sel;
+					break;
+				}
+			}
 			
-			this.comboBox3.DataSource = ProjectInfoDao.getAllProjectTable();;
+			//绑定项目
+			this.comboBox3.DataSource = this.Source_Project;
 			this.comboBox3.DisplayMember = "projectname";
 			this.comboBox3.ValueMember = "id";
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			foreach (DataRow element in this.Source_Project.Rows) {
+				string tempid = element["id"].ToString();
+				if(Int32.Parse(tempid)== tu.Projectid)
+				{
+					int sel = this.Source_Project.Rows.IndexOf(element);
+					this.comboBox3.SelectedIndex = sel;
+					break;
+				}
+			}
+			
+			
 			
 			this.textBox9.Text = tu.Testtitle;
+			this.textBox1.Text = tu.Unitno;
+			this.textBox1.ReadOnly = true;
+			
 			this.comboBox5.Text = tu.Buglevel;
+			
+			this.button3.Enabled = false;
 
 			MemoryStream stream = new MemoryStream(tu.Testcontent);
 			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
@@ -152,10 +202,7 @@ namespace WatchCilent.UI.Test
 				MessageBox.Show("请选择责任人","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
 				return false;
 			}
-			tu.Packageid =0;
-			tu.Projectid =0;
-			tu.Testorid =0;
-			
+					
 			tu.Buglevel =this.comboBox5.Text;
 			tu.Packagename =this.multiColumnFilterComboBox1.Text;//his.textBox3.Text;
 			if(this.multiColumnFilterComboBox1.SelectedValue!=null)
@@ -163,61 +210,74 @@ namespace WatchCilent.UI.Test
 				tu.Packageid = (int)this.multiColumnFilterComboBox1.SelectedValue;
 			}
 			tu.Projectname =this.comboBox3.Text ;
-			tu.State = "未修订";
-			tu.Testorname ="朱新培" ;
+			tu.State = Enum.GetName(typeof(CommonConst.TestState),CommonConst.TestState.已确认);
+			//Enum.GetNames(typeof(CommonConst.TestState)))
+			tu.Testorname = comboBox4.Text;
 			tu.Testtime =DateTime.Now.ToString() ;
-			if(!TestUnitDao.getNewUnitNO().Equals(this.textBox1.Text))
+			if(tu.Id==0)
 			{
-				tu.Unitno = TestUnitDao.getNewUnitNO();
-				MessageBox.Show("缺陷编号被占用，系统重新分配的编号为："+tu.Unitno,"提示");
+				if(!TestUnitDao.getNewUnitNO().Equals(this.textBox1.Text))
+				{
+					tu.Unitno = TestUnitDao.getNewUnitNO();
+					MessageBox.Show("缺陷编号被占用，系统重新分配的编号为："+tu.Unitno,"提示");
+				}
 			}
 			else tu.Unitno =this.textBox1.Text;
 			tu.Testtitle =this.textBox9.Text ;
 			return true;
 		}
-		
+		/// <summary>
+		/// 给主管发送飞秋消息。
+		/// </summary>
+		void SendMessageToManager()
+		{
+			try {
+				string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
+					"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+tu.Unitno+".html"+"查看详细并确认。";
+				PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
+				string[] iplist = person.Ip.Split(';');
+				foreach(string ip in iplist)
+				{
+					Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+				}
+			} catch (Exception) {
+				MessageBox.Show("通知主管失败！");
+			}
+		}
 		void Button1Click(object sender, System.EventArgs e)
 		{
 			if(TestuiSave())
 			{
-				if(tu.Id!=0&&tu.Id!=null)
-				{
-					
-				}
+				bool isSave = false;
+				if(tu.Id!=0)
+					isSave = AccessDBUtil.update(tu);
 				else
-				if(AccessDBUtil.insert(tu))
+					isSave = AccessDBUtil.insert(tu);
+				if(isSave)
 				{
+					//创建文档
 					if(unitDOCpath==null)
 					{
 						unitDOCpath = this.defaultpath;
 					}
 					this.richTextBox1.SaveFile(temppath+@"\"+tu.Unitno+".doc");
 					CreateTestUnit(defaultpath+@"\temp\TestUnit.doc",temppath+@"\"+tu.Unitno+".doc",unitDOCpath+@"\"+tu.Unitno+".doc");
+					//创建HTML
 					if(unitHTMLpath!=null)
 					{
 						var fullHtmlPath =unitHTMLpath+@"\"+tu.Unitno+".html";
 						WordDocumentMerger.WordToHtmlFile(unitDOCpath+@"\"+tu.Unitno+".doc",fullHtmlPath);
 					}
-					try {
-						if(this.checkBox1.Checked)
-						{
-							string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-								"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+@"\"+tu.Unitno+".html"+"查看详细并确认。";
-							PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
-							string[] iplist = person.Ip.Split(';');
-							foreach(string ip in iplist)
-							{
-								Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
-							}
-						}
-					} catch (Exception) {
-						
-						MessageBox.Show("通知主管失败！");
+					//勾选自动发送
+					if(this.checkBox1.Checked)
+					{
+						SendMessageToManager();
 					}
-					
-					
-					MessageBox.Show("保存成功");
+				
+					MessageBox.Show("保存成功！");
 				}
+				else
+					MessageBox.Show("保存失败！");	
 				
 			}
 		}
@@ -286,19 +346,7 @@ namespace WatchCilent.UI.Test
 		{
 			if(TestuiSave())
 			{
-				try {
-					string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-						"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+@"\"+tu.Unitno+".html"+"查看详细并确认。";
-					PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
-					string[] iplist = person.Ip.Split(';');
-					foreach(string ip in iplist)
-					{
-						Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
-					}
-				} catch (Exception) {
-					
-					MessageBox.Show("通知主管失败！");
-				}
+				SendMessageToManager();
 			}
 		}
 		

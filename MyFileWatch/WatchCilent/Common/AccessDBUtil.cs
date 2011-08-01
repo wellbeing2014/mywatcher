@@ -139,6 +139,7 @@ namespace WatchCilent.Common
 		
 		public static bool update(object obj)
 		{
+			List<OleDbParameter> para = new List<OleDbParameter>();
 			try {
 				//反射出类型
 				Type objclass =obj.GetType();
@@ -211,12 +212,8 @@ namespace WatchCilent.Common
 						{
 							tt.OleDbType=OleDbType.VarBinary;
 						}
-						if(fvalue!=null)
-						{
-							para.Add(tt);
-							sqltou+=field.Name+",";
-							sqlval=sqlval.Substring(0,sqlval.Length-1)+tt.ParameterName+",'";
-						}
+						para.Add(tt);
+						tempsql=tempsql+field.Name+"="+tt.ParameterName+",";
 						
 					}
 				}
@@ -224,7 +221,7 @@ namespace WatchCilent.Common
 				
 				String sql=sqltou+tempsql.Substring(0,tempsql.Length-1)+" where "+px.Name+"="+px.GetValue(obj,null).ToString()+";";
 				//拼SQL结束。
-				ExecuteNonQuery(sql);
+				ExecuteQuery(sql,para.ToArray());
 				return true;
 			} catch (Exception e) {
 				MessageBox.Show(e.ToString());
