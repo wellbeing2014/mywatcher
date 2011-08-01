@@ -69,8 +69,9 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
 			
 			
-			this.comboBox3.Items.Add("全部");
+			this.comboBox3.Items.Add("全部等级");
 			this.comboBox3.Items.AddRange(CommonConst.BUGLEVEL);
+			this.comboBox3.SelectedIndex = 0;
 			
 			
 				
