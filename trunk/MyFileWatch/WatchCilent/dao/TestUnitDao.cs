@@ -77,7 +77,7 @@ namespace WatchCilent.dao
 			string sql = "select Unitno,Packagename,Buglevel,Testtitle,Testtime,Adminname,State,Id from testunit where "
 			+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or adminid="+managerid+")"
-				+" and ('全部'='"+level+"' or buglevel='"+level+"')"
+				+" and ('全部等级'='"+level+"' or buglevel='"+level+"')"
 				+" and ('全部'='"+state+"' or state='"+state+"')";
 			if(begintime!=null)
 			{
@@ -96,6 +96,20 @@ namespace WatchCilent.dao
 				ls.Add(Row2Tu(row));
 			}
 			return ls;
+		}
+		
+		static public bool UpdateState(string state,string id)
+		{
+			bool isSuccess = false;
+			string sql = "update testunit set state='"+state+"' where id="+id;
+			try {
+				AccessDBUtil.ExecuteNonQuery(sql);
+				isSuccess = true;
+			} catch (Exception) {
+				
+				isSuccess = false;
+			}
+			return isSuccess;
 		}
 		
 		static public TestUnit gettestUnitById(int id)

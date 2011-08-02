@@ -45,6 +45,7 @@ namespace WatchCilent.UI.Test
 			this.button3 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
+			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -60,7 +61,6 @@ namespace WatchCilent.UI.Test
 			this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
-			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -107,6 +107,7 @@ namespace WatchCilent.UI.Test
 			this.button8.TabIndex = 36;
 			this.button8.Text = "已废止";
 			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.Button8Click);
 			// 
 			// button6
 			// 
@@ -117,6 +118,7 @@ namespace WatchCilent.UI.Test
 			this.button6.TabIndex = 36;
 			this.button6.Text = "已修订";
 			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button6Click);
 			// 
 			// button5
 			// 
@@ -127,6 +129,7 @@ namespace WatchCilent.UI.Test
 			this.button5.TabIndex = 36;
 			this.button5.Text = "已确认";
 			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// button4
 			// 
@@ -171,6 +174,14 @@ namespace WatchCilent.UI.Test
 			this.button1.Text = "新增";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.Button1Click);
+			// 
+			// comboBox3
+			// 
+			this.comboBox3.FormattingEnabled = true;
+			this.comboBox3.Location = new System.Drawing.Point(701, 17);
+			this.comboBox3.Name = "comboBox3";
+			this.comboBox3.Size = new System.Drawing.Size(84, 20);
+			this.comboBox3.TabIndex = 30;
 			// 
 			// comboBox2
 			// 
@@ -287,14 +298,6 @@ namespace WatchCilent.UI.Test
 			// 
 			this.columnHeader7.Text = "状态";
 			this.columnHeader7.Width = 50;
-			// 
-			// comboBox3
-			// 
-			this.comboBox3.FormattingEnabled = true;
-			this.comboBox3.Location = new System.Drawing.Point(701, 17);
-			this.comboBox3.Name = "comboBox3";
-			this.comboBox3.Size = new System.Drawing.Size(84, 20);
-			this.comboBox3.TabIndex = 30;
 			// 
 			// TestListUI
 			// 

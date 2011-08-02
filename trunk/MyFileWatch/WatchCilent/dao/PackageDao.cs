@@ -33,7 +33,7 @@ namespace WatchCilent.dao
 		/// <returns></returns>
 		static public DataTable getAllUnTestPack()
 		{
-			string sql = "select * from packageinfo where state <>'已测试' and state<>'已发布' and state <> '已废止'";
+			string sql = "SELECT packageInfo.*,moduleInfo.id as realmoduleid, moduleInfo.code FROM moduleInfo right JOIN packageInfo ON moduleInfo.ID = packageInfo.moduleid  order by cdate(packageInfo.packtime) desc";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}

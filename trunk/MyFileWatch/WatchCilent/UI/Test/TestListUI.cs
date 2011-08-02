@@ -40,9 +40,7 @@ namespace WatchCilent.UI.Test
 			treeView1.Nodes.Add(tmp);
 			treeView1.ExpandAll();
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
-			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
-			treeView1.Leave+=new EventHandler(treeView1_Leave);
-			treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);
+			
 			System.DateTime dt =System.DateTime.Now; 
 				dateTimePicker1.Value=dt.AddDays(-7);
 				
@@ -54,7 +52,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox2.DataSource = datasource_person;
 			this.comboBox2.DisplayMember = "Fullname";
 			this.comboBox2.ValueMember = "Id";
-			this.comboBox2.SelectedIndexChanged+=new EventHandler(conditionChanged);
+		
 			
 			List<ModuleInfo> datasource_module = ModuleDao.getAllModuleInfo();
 			ModuleInfo all = new ModuleInfo();
@@ -66,18 +64,23 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.ValueMember = "Id";
 			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			
 			
 			
 			this.comboBox3.Items.Add("全部等级");
 			this.comboBox3.Items.AddRange(CommonConst.BUGLEVEL);
 			this.comboBox3.SelectedIndex = 0;
 			
+			this.comboBox3.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			this.comboBox2.SelectedIndexChanged+=new EventHandler(conditionChanged);
 			
-				
-			getAll();
+			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
+			treeView1.Leave+=new EventHandler(treeView1_Leave);
+			treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);			
+			
 			this.listView1.DoubleClick += new EventHandler(ListVew_DoubleClick); 
-			
+			getTestUnitList();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -87,10 +90,11 @@ namespace WatchCilent.UI.Test
 		/// <summary>
 		/// 获取所有缺陷单元
 		/// </summary>
-		void getAll()
+		void getTestUnitList()
 		{
 			string moduleid = this.comboBox1.SelectedValue.ToString();
 			string manageid = this.comboBox2.SelectedValue.ToString();
+			string level = this.comboBox3.Text;
 			string state = this.treeView1.SelectedNode.Text;
 			
 			string begin=this.dateTimePicker1.Value.ToShortDateString()+" 00:00:00";
@@ -100,12 +104,8 @@ namespace WatchCilent.UI.Test
 				begin=null;
 				end =null;
 			}
-			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,begin,end);
 			this.listView1.Items.Clear();
-			
-			
-			
-			List<TestUnit>alltu=TestUnitDao.getAlltestUnit();
+			List<TestUnit>alltu=TestUnitDao.QueryTestUnit(moduleid,manageid,level,state,begin,end);
 			foreach (TestUnit tu in alltu) {
 				ListViewBing(tu);
 			}
@@ -151,7 +151,7 @@ namespace WatchCilent.UI.Test
 		/// <param name="e"></param>
 		private void conditionChanged(object sender, EventArgs e)
 		{
-			getAll();
+			getTestUnitList();
 		}
 		
 		
@@ -169,7 +169,7 @@ namespace WatchCilent.UI.Test
 			TestResult tr = new TestResult();
 			tr.ShowDialog();
 			this.listView1.Items.Clear();
-			getAll();
+			getTestUnitList();
 		}
 		/// <summary>
 		/// 修改
@@ -189,7 +189,7 @@ namespace WatchCilent.UI.Test
 			{
 				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 			}
-			getAll();
+			getTestUnitList();
 		}
 		
 		void ListVew_DoubleClick(object sender, EventArgs e)
@@ -204,7 +204,7 @@ namespace WatchCilent.UI.Test
 			{
 				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 			}
-			getAll();
+			getTestUnitList();
 			
 		}
 		/// <summary>
@@ -222,21 +222,87 @@ namespace WatchCilent.UI.Test
 				}
 				MessageBox.Show("删除成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 				this.listView1.Items.Clear();
-				getAll();
+				getTestUnitList();
 			}
 			else
 			{
 				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 			}
 		}
-		
+		/// <summary>
+		/// 生成测试报告
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void Button4Click(object sender, EventArgs e)
 		{
 			SaveView sv = new SaveView();
 			sv.ShowDialog();
 		}
-		
-		
+		/// <summary>
+		/// 已确认
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button5Click(object sender, EventArgs e)
+		{
+			if(this.listView1.CheckedItems.Count>0)
+			{
+				foreach (ListViewItem lvi in this.listView1.CheckedItems) {
+					string id =lvi.SubItems[7].Text;
+					string state=Enum.GetName(typeof(CommonConst.TestState),CommonConst.TestState.已确认);
+					TestUnitDao.UpdateState(state,id);
+				}
+				getTestUnitList();
+			}
+			else
+			{
+				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}
+		}
+		/// <summary>
+		/// 已废止
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button8Click(object sender, EventArgs e)
+		{
+			if(this.listView1.CheckedItems.Count>0)
+			{
+				foreach (ListViewItem lvi in this.listView1.CheckedItems) {
+					string id =lvi.SubItems[7].Text;
+					string state=Enum.GetName(typeof(CommonConst.TestState),CommonConst.TestState.已废止);
+					TestUnitDao.UpdateState(state,id);
+				}
+				getTestUnitList();
+			}
+			else
+			{
+				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}
+		}
+		/// <summary>
+		/// 已修订
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button6Click(object sender, EventArgs e)
+		{
+			if(this.listView1.CheckedItems.Count>0)
+			{
+				foreach (ListViewItem lvi in this.listView1.CheckedItems) {
+					//TestUnit oldtu = ListViewSelect(lvi);
+					string id =lvi.SubItems[7].Text;
+					string state=Enum.GetName(typeof(CommonConst.TestState),CommonConst.TestState.已修订);
+					TestUnitDao.UpdateState(state,id);
+				}
+				getTestUnitList();
+			}
+			else
+			{
+				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}
+		}
 		
 		/// <summary>
 		/// 时间段是否显示
@@ -283,6 +349,8 @@ namespace WatchCilent.UI.Test
 			this.dateTimePicker1.Location = new System.Drawing.Point(224, 17);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(103, 21);
+			System.DateTime dt =System.DateTime.Now; 
+				dateTimePicker1.Value=dt.AddDays(-7);
 			this.dateTimePicker1.TabIndex = 38;
 			// 
 			// dateTimePicker2
@@ -314,6 +382,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox2.Location=cb2p;
 			this.comboBox3.Location=cb3p;
 			}
+			getTestUnitList();
 		}
 		#endregion
 		
@@ -321,7 +390,7 @@ namespace WatchCilent.UI.Test
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
 		{
 			this.treeView1.SelectedNode=e.Node;
-			getAll();
+			getTestUnitList();
 		}
 		 
 		//将要选中新节点之前发生
@@ -348,5 +417,7 @@ namespace WatchCilent.UI.Test
             }
         }
 		#endregion 
+		
+		
 	}
 }
