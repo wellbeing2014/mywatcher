@@ -76,6 +76,7 @@ namespace WatchCilent.UI.Test
 			
 			this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packagename",200,true));
             this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packtime", 60, true));
+            this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("code", 60, true));
             this.multiColumnFilterComboBox1.DisplayMember = "packagename";
             this.multiColumnFilterComboBox1.ValueMember = "id";
             this.multiColumnFilterComboBox1.Validated+= new EventHandler(Package_SelectedValueChanged);
@@ -154,14 +155,19 @@ namespace WatchCilent.UI.Test
 					break;
 				}
 			}
-			
-			
+			//绑定BUG等级
+			this.comboBox5.Items.AddRange(CommonConst.BUGLEVEL);
+			foreach (var element in CommonConst.BUGLEVEL) {
+				if(element.Equals(tu.Buglevel))
+				{
+					this.comboBox5.SelectedItem = element;
+					break;
+				}
+			}
 			
 			this.textBox9.Text = tu.Testtitle;
 			this.textBox1.Text = tu.Unitno;
 			this.textBox1.ReadOnly = true;
-			
-			this.comboBox5.Text = tu.Buglevel;
 			
 			this.button3.Enabled = false;
 
@@ -221,6 +227,8 @@ namespace WatchCilent.UI.Test
 					tu.Unitno = TestUnitDao.getNewUnitNO();
 					MessageBox.Show("缺陷编号被占用，系统重新分配的编号为："+tu.Unitno,"提示");
 				}
+				else tu.Unitno =this.textBox1.Text;
+					
 			}
 			else tu.Unitno =this.textBox1.Text;
 			tu.Testtitle =this.textBox9.Text ;
@@ -357,7 +365,30 @@ namespace WatchCilent.UI.Test
 		/// <param name="e"></param>
 		void Package_SelectedValueChanged(object sender, EventArgs e)
 		{
-			MessageBox.Show("aaaa");
+			DataRowView package =(DataRowView) this.multiColumnFilterComboBox1.SelectedItem;
+			string  moduleid =  package["realmoduleid"].ToString();
+			string  managerid =  package["managerid"].ToString();
+			//绑定主管
+			foreach (DataRow element in this.Source_Person.Rows) {
+				string tempid = element["id"].ToString();
+				if(tempid.Equals(managerid))
+				{
+					int sel = this.Source_Person.Rows.IndexOf(element);
+					this.comboBox1.SelectedIndex = sel;
+					break;
+				}
+			}
+			
+			//绑定模块（平台）
+			foreach (DataRow element in this.Source_Module.Rows) {
+				string tempid = element["id"].ToString();
+				if(tempid.Equals(moduleid))
+				{
+					int sel = this.Source_Module.Rows.IndexOf(element);
+					this.comboBox2.SelectedIndex = sel;
+					break;
+				}
+			}
 		}
 		
 	}

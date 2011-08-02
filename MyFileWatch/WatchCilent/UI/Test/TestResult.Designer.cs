@@ -67,7 +67,7 @@ namespace WatchCilent.UI.Test
 			this.textBox1.Location = new System.Drawing.Point(76, 69);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(108, 21);
-			this.textBox1.TabIndex = 0;
+			this.textBox1.TabIndex = 5;
 			// 
 			// label1
 			// 
@@ -107,7 +107,7 @@ namespace WatchCilent.UI.Test
 			this.button1.Location = new System.Drawing.Point(477, 406);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(62, 23);
-			this.button1.TabIndex = 11;
+			this.button1.TabIndex = 13;
 			this.button1.Text = "保存";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.Button1Click);
@@ -118,7 +118,7 @@ namespace WatchCilent.UI.Test
 			this.button2.Location = new System.Drawing.Point(545, 406);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(62, 23);
-			this.button2.TabIndex = 12;
+			this.button2.TabIndex = 14;
 			this.button2.Text = "取消";
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.Button2Click);
@@ -129,7 +129,7 @@ namespace WatchCilent.UI.Test
 			this.button3.Location = new System.Drawing.Point(409, 407);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(62, 23);
-			this.button3.TabIndex = 13;
+			this.button3.TabIndex = 12;
 			this.button3.Text = "继续新建";
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.Button3Click);
@@ -140,7 +140,7 @@ namespace WatchCilent.UI.Test
 			this.checkBox1.Location = new System.Drawing.Point(12, 406);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(133, 24);
-			this.checkBox1.TabIndex = 14;
+			this.checkBox1.TabIndex = 10;
 			this.checkBox1.Text = "保存后自动通知主管";
 			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
@@ -176,7 +176,7 @@ namespace WatchCilent.UI.Test
 			this.richTextBox1.Location = new System.Drawing.Point(12, 123);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.Size = new System.Drawing.Size(595, 277);
-			this.richTextBox1.TabIndex = 21;
+			this.richTextBox1.TabIndex = 9;
 			this.richTextBox1.Text = "";
 			// 
 			// label9
@@ -195,7 +195,7 @@ namespace WatchCilent.UI.Test
 			this.textBox9.Location = new System.Drawing.Point(76, 96);
 			this.textBox9.Name = "textBox9";
 			this.textBox9.Size = new System.Drawing.Size(528, 21);
-			this.textBox9.TabIndex = 22;
+			this.textBox9.TabIndex = 8;
 			// 
 			// panel1
 			// 
@@ -221,7 +221,7 @@ namespace WatchCilent.UI.Test
 			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(64, 9);
 			this.multiColumnFilterComboBox1.Name = "multiColumnFilterComboBox1";
 			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(526, 22);
-			this.multiColumnFilterComboBox1.TabIndex = 23;
+			this.multiColumnFilterComboBox1.TabIndex = 1;
 			// 
 			// comboBox3
 			// 
@@ -229,7 +229,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox3.Location = new System.Drawing.Point(456, 37);
 			this.comboBox3.Name = "comboBox3";
 			this.comboBox3.Size = new System.Drawing.Size(134, 20);
-			this.comboBox3.TabIndex = 22;
+			this.comboBox3.TabIndex = 4;
 			// 
 			// comboBox2
 			// 
@@ -237,7 +237,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox2.Location = new System.Drawing.Point(238, 37);
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(152, 20);
-			this.comboBox2.TabIndex = 21;
+			this.comboBox2.TabIndex = 3;
 			// 
 			// comboBox1
 			// 
@@ -245,7 +245,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.Location = new System.Drawing.Point(64, 36);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(108, 20);
-			this.comboBox1.TabIndex = 21;
+			this.comboBox1.TabIndex = 2;
 			// 
 			// comboBox4
 			// 
@@ -253,7 +253,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox4.Location = new System.Drawing.Point(250, 69);
 			this.comboBox4.Name = "comboBox4";
 			this.comboBox4.Size = new System.Drawing.Size(152, 20);
-			this.comboBox4.TabIndex = 25;
+			this.comboBox4.TabIndex = 6;
 			// 
 			// comboBox5
 			// 
@@ -261,7 +261,7 @@ namespace WatchCilent.UI.Test
 			this.comboBox5.Location = new System.Drawing.Point(468, 69);
 			this.comboBox5.Name = "comboBox5";
 			this.comboBox5.Size = new System.Drawing.Size(134, 20);
-			this.comboBox5.TabIndex = 26;
+			this.comboBox5.TabIndex = 7;
 			// 
 			// button4
 			// 
@@ -269,7 +269,7 @@ namespace WatchCilent.UI.Test
 			this.button4.Location = new System.Drawing.Point(341, 407);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(62, 23);
-			this.button4.TabIndex = 27;
+			this.button4.TabIndex = 11;
 			this.button4.Text = "飞秋通知";
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.Button4Click);
