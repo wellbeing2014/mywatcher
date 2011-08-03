@@ -15,6 +15,14 @@ namespace WatchCilent.Common
 	/// </summary>
 	public static class CommonConst
 	{
+//		static Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
+//		static Microsoft.Win32.RegistryKey dbc = key.OpenSubKey("software\\WisoftWatchClient");  
+//		public static string dbpath =@dbc.GetValue("dbpath").ToString();
+//		public static string UnitHtmlPath =@dbc.GetValue("UnitHtmlPath").ToString();
+//		public static string UnitDocPath =@dbc.GetValue("UnitDocPath").ToString();
+//		public static string HtmlUrl =@dbc.GetValue("HtmlUrl").ToString();
+//		public static string WisofServiceHost =@dbc.GetValue("WisofServiceHost").ToString();
+		
 		public static readonly  string[] BUGLEVEL ={"一般","严重","轻微","紧急"};
 		
 		public static readonly string[] PACKSTATE ={"全部","已接收","已处理","已测试","已发布","已废止"};

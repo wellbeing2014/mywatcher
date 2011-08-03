@@ -25,6 +25,35 @@ namespace WatchCilent.Common
 	public partial class FunctionUtils 
 	{
 		
+		static public bool ConfigRight()
+        {
+			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
+			Microsoft.Win32.RegistryKey dbc = key.OpenSubKey("software\\WisoftWatchClient");
+			string[] names = dbc.GetValueNames();
+			//names.ToString();
+			var dbpath =@dbc.GetValue("dbpath");
+		 	var UnitHtmlPath =@dbc.GetValue("UnitHtmlPath");
+		 	var UnitDocPath =@dbc.GetValue("UnitDocPath");
+		 	var HtmlUrl =@dbc.GetValue("HtmlUrl");
+		 	var WisofServiceHost =@dbc.GetValue("WisofServiceHost");
+		 	if(dbpath==null||
+		 	  	UnitHtmlPath==null||
+		 	 	UnitDocPath==null||
+		 		HtmlUrl==null||
+		 		WisofServiceHost==null)
+		 	{
+		 		return false;
+		 	}
+		 	if(string.IsNullOrEmpty(dbpath.ToString())||
+		 	  	string.IsNullOrEmpty(UnitHtmlPath.ToString())||
+		 	 	string.IsNullOrEmpty(UnitDocPath.ToString())||
+		 		string.IsNullOrEmpty(HtmlUrl.ToString())||
+		 		string.IsNullOrEmpty(WisofServiceHost.ToString()))
+		 	{
+		 		return false;
+		 	}
+			else return true;
+        }
 		
 		 /// <summary>
         /// 是否安装了Winrar

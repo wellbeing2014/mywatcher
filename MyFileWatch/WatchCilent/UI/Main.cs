@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WatchCilent.UI.Test;
 using WatchCilent.UI;
+using WatchCilent.Common;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
@@ -24,7 +25,7 @@ namespace WatchCilent.UI
 	{
 		//注册热键的api 
 		[DllImport("user32")]    
-    	public static extern bool RegisterHotKey(IntPtr hWnd,int id,uint control,Keys vk );   
+    		public static extern bool RegisterHotKey(IntPtr hWnd,int id,uint control,Keys vk );   
 	       
 	    [DllImport("user32")]    
 	    public static extern bool UnregisterHotKey(IntPtr hWnd,    int id); 
@@ -49,6 +50,7 @@ namespace WatchCilent.UI
 			RegisterHotKey(this.Handle,999, ((int)KeyModifiers.Ctrl+(int)KeyModifiers.Shift), Keys.A);
         	
 			if(dbc==null|| dbc.GetValue("dbpath")==null)
+			//if(!FunctionUtils.ConfigRight())
 			{
 				Dbconfig db = new Dbconfig();
 				if(db.ShowDialog()!= DialogResult.OK)
@@ -63,7 +65,6 @@ namespace WatchCilent.UI
 			this.notifyIcon1.MouseClick+= new MouseEventHandler(notifyIcon1_Click);
 			this.SizeChanged+= new EventHandler(Main_MinimumSizeChanged);
 			this.Closing+= new CancelEventHandler(Main_Closing);
-			
 			
 			
 			//
