@@ -58,6 +58,7 @@
     <Compile Include="Common\CommonConst.cs" />
     <Compile Include="Common\Communication.cs" />
     <Compile Include="Common\FunctionUtils.cs" />
+    <Compile Include="Common\DirectoryListParser.cs" />
     <Compile Include="Common\WordDocumentMerger.cs" />
     <Compile Include="dao\ModuleDao.cs" />
     <Compile Include="dao\ModuleProjectDao.cs" />
@@ -105,6 +106,10 @@
     <Compile Include="UI\Pack\TextForCopyForm.Designer.cs">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pub\UploadFTP.cs" />
+    <Compile Include="UI\Pub\UploadFTP.Designer.cs">
+      <DependentUpon>UploadFTP.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Test\SaveView.cs" />
     <Compile Include="UI\Test\SaveView.Designer.cs">
       <DependentUpon>SaveView.cs</DependentUpon>
@@ -141,6 +146,9 @@
     <EmbeddedResource Include="UI\Pack\TextForCopyForm.resx">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pub\UploadFTP.resx">
+      <DependentUpon>UploadFTP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\SaveView.resx">
       <DependentUpon>SaveView.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,5 +168,6 @@
     <Folder Include="Common" />
     <Folder Include="UI\Pack" />
     <Folder Include="UI\Test" />
+    <Folder Include="UI\Pub" />
   </ItemGroup>
 </Project>
