@@ -106,6 +106,13 @@
     <Compile Include="UI\Pack\TextForCopyForm.Designer.cs">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pub\EXComboBox.cs" />
+    <Compile Include="UI\Pub\EXListView.cs" />
+    <Compile Include="UI\Pub\MyForms.cs" />
+    <Compile Include="UI\Pub\SelectPath.cs" />
+    <Compile Include="UI\Pub\SelectPath.Designer.cs">
+      <DependentUpon>SelectPath.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pub\UploadFTP.cs" />
     <Compile Include="UI\Pub\UploadFTP.Designer.cs">
       <DependentUpon>UploadFTP.cs</DependentUpon>
@@ -146,6 +153,9 @@
     <EmbeddedResource Include="UI\Pack\TextForCopyForm.resx">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pub\SelectPath.resx">
+      <DependentUpon>SelectPath.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\UploadFTP.resx">
       <DependentUpon>UploadFTP.cs</DependentUpon>
     </EmbeddedResource>
@@ -159,6 +169,9 @@
       <DependentUpon>TestResult.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="down.png" />
+    <None Include="SpecialControl.dll" />
+    <None Include="up.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MISC" />

@@ -27,6 +27,7 @@ namespace WatchCilent
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			//Application.Run(new Main());
 			//Application.Run(new WatchCilent.UI.Test.SaveView());
 			Application.Run(new UploadFTP());
 			//Application.Run(new WatchCilent.UI.Test.TestResult());
