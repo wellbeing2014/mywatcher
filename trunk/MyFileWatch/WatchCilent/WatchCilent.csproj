@@ -169,9 +169,6 @@
       <DependentUpon>TestResult.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="down.png" />
-    <None Include="SpecialControl.dll" />
-    <None Include="up.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MISC" />
