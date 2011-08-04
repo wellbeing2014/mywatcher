@@ -85,14 +85,19 @@ namespace WatchCilent.UI.Pub
 			//
 		}
 		private void llbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-			LinkLabel l = (LinkLabel) sender;
-			if (l.Text == "正在上传") return;
-			EXControlListViewSubItem subitem = l.Tag as EXControlListViewSubItem;
-			ProgressBar p = subitem.MyControl as ProgressBar;
-			Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
-			th.IsBackground = true;
-			th.Start(p);
-			((LinkLabel) sender).Text = "正在上传";
+
+			SelectPath sp = new SelectPath();
+			sp.ShowDialog();
+//			LinkLabel l = (LinkLabel) sender;
+//			if (l.Text == "正在上传") return;
+//			EXControlListViewSubItem subitem = l.Tag as EXControlListViewSubItem;
+//			ProgressBar p = subitem.MyControl as ProgressBar;
+//			Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
+//			th.IsBackground = true;
+//			th.Start(p);
+//			((LinkLabel) sender).Text = "正在上传";
+			
+			
 		}
 		
 		private delegate void del_do_update(ProgressBar pb,int pvalue,int pmax);
@@ -102,10 +107,7 @@ namespace WatchCilent.UI.Pub
 			string localfile =@"D:\111.txt";
 			string serverpath="qlyg/";
 			this.Upload1(localfile,serverpath,pp);
-			ListViewItem item = (ListViewItem) pp.Tag;
-			LinkLabel l = ((LinkLabel) ((EXControlListViewSubItem) item.SubItems[3]).MyControl);
-			del_do_changetxt delchangetxt = new del_do_changetxt(ChangeTextMethod);
-			l.BeginInvoke(delchangetxt, new object[] {l, "上传完成"});
+			
 		}
 	
 		private void do_update(ProgressBar p,int pvalue,int pmax) {
@@ -131,6 +133,11 @@ namespace WatchCilent.UI.Pub
 			FileStream fs = null;
 		    FileInfo fileInf = new FileInfo(filename);
 		    string uri = this.ftphost+serverpath+fileInf.Name;
+		    
+		    ListViewItem item = (ListViewItem) pp.Tag;
+			LinkLabel l = ((LinkLabel) ((EXControlListViewSubItem) item.SubItems[3]).MyControl);
+			del_do_changetxt delchangetxt = new del_do_changetxt(ChangeTextMethod);
+			
 			try {
 				// 根据uri创建FtpWebRequest对象 
 			    reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri)); 
@@ -166,8 +173,9 @@ namespace WatchCilent.UI.Pub
 				fs.Close();
 				strm.Close();
 				uploadResponse = (FtpWebResponse)reqFTP.GetResponse(); 
+				l.BeginInvoke(delchangetxt, new object[] {l, "上传完成"});
 			} catch (Exception) {
-				MessageBox.Show("上传出错！");
+				l.BeginInvoke(delchangetxt, new object[] {l, "上传出错"});
 			}
 		    finally
 		    {
