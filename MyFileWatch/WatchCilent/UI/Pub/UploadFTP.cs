@@ -99,7 +99,7 @@ namespace WatchCilent.UI.Pub
 		private delegate void del_do_changetxt(LinkLabel l, string text);
 		private void UpdateProgressBarMethod(object pb) {
 			ProgressBar pp = (ProgressBar) pb;
-			string localfile =@"C:\Documents and Settings\Administrator\桌面\EXListView_src.zip";
+			string localfile =@"D:\111.txt";
 			string serverpath="qlyg/";
 			this.Upload1(localfile,serverpath,pp);
 			ListViewItem item = (ListViewItem) pp.Tag;
