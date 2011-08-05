@@ -21,9 +21,11 @@ namespace WatchCilent.UI.Pub
 	/// </summary>
 	public partial class SelectPath : Form
 	{
+		public string selpath;
 		private string ftphost = System.Configuration.ConfigurationManager.AppSettings["FTPHOST"];
 		private string username = System.Configuration.ConfigurationManager.AppSettings["FTPID"];
 		private string password = System.Configuration.ConfigurationManager.AppSettings["FTPPWD"];
+		
 		
 		public SelectPath()
 		{
@@ -32,7 +34,7 @@ namespace WatchCilent.UI.Pub
 			//
 			InitializeComponent();
 			TreeNode root = new TreeNode();
-			root.Text = "服务器根";
+			root.Text = "服务器根目录";
 			
 			string[] list=this.ListDirectory("");
 			if(list!=null)
@@ -52,23 +54,15 @@ namespace WatchCilent.UI.Pub
 			//
 		}
 		
-		private string  getfullpath(TreeNode tn)
-		{
-			string path = tn.Text;
-			if(tn.Parent!=null&&!tn.Parent.Text.Equals("服务器根"))
-			{
-				path=getfullpath(tn.Parent)+@"/"+path;
-			}
-			return path;
-		}
+		
 		private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
 		{
 			TreeNode atn =e.Node;
-			
+			string fullpath = System.Text.RegularExpressions.Regex.Replace(atn.FullPath,"服务器根目录","");
 			if(atn.Nodes.Count==1&&string.IsNullOrEmpty(atn.Nodes[0].Text))
 			{
 				atn.Nodes.RemoveAt(0);
-				string[] list=this.ListDirectory( getfullpath(atn));
+				string[] list=this.ListDirectory(fullpath);
 				if(list!=null)
 				{
 					foreach (var element in list) {
@@ -76,32 +70,16 @@ namespace WatchCilent.UI.Pub
 					temp.Nodes.Add(new TreeNode());
 					atn.Nodes.Add(temp);
 					}
+				}else{
 				}
 			}
-		}
-		TreeNode[] Createtree(string path)
-		{
-			List<TreeNode> tn = new List<TreeNode>();
-			string[] list=this.ListDirectory(path);
-			if(list!=null)
-			{
-				foreach (var element in list) {
-				TreeNode temp = new TreeNode(element);
-				foreach (var element1 in Createtree(path+"/"+element)) {
-					temp.Nodes.Add(element1);
-				}
-				tn.Add(temp);
-			}
-			}
-			
-			return tn.ToArray();
 		}
 		
 		//新建目录
 		private bool MakeDirectory(string uristring)
 		{
 			try {
-				Uri uri = new Uri ( ftphost+uristring );
+				Uri uri = new Uri ( uristring );
 				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
 				listRequest.Credentials = new NetworkCredential ( username , password );
 				listRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
@@ -125,33 +103,76 @@ namespace WatchCilent.UI.Pub
 		//列出目录
 		private string[] ListDirectory(string uristring)
 		{
-			Uri uri = new Uri ( ftphost+uristring );
-			FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
-			listRequest.Credentials = new NetworkCredential ( username , password );
-			listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-			FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
-			Stream responseStream = listResponse.GetResponseStream ( );
-			StreamReader readStream = new StreamReader ( responseStream , System.Text.Encoding.Default );
-			if ( readStream != null )
-			{
-    			DirectoryListParser parser = new DirectoryListParser ( readStream.ReadToEnd() );
-				FileStruct[] fs = parser.FullListing;
-				List<string> returns = new List<string>();
-				foreach (FileStruct element in fs) {
-					if(element.IsDirectory){
-						returns.Add(element.Name);
-					}
-				}
-				if(returns.Count>0)
+			try {
+				Uri uri = new Uri ( ftphost+uristring );
+				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
+				listRequest.Credentials = new NetworkCredential ( username , password );
+				listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
+				Stream responseStream = listResponse.GetResponseStream ( );
+				StreamReader readStream = new StreamReader ( responseStream , System.Text.Encoding.Default );
+				if ( readStream != null )
 				{
-					return returns.ToArray();
+	    			DirectoryListParser parser = new DirectoryListParser ( readStream.ReadToEnd() );
+					FileStruct[] fs = parser.FullListing;
+					List<string> returns = new List<string>();
+					foreach (FileStruct element in fs) {
+						if(element.IsDirectory){
+							returns.Add(element.Name);
+						}
+					}
+					listResponse.Close();
+					responseStream.Close();
+					readStream.Close();
+					if(returns.Count>0)
+					{
+						return returns.ToArray();
+					}
+					else return null;
 				}
-				else return null;
+				listResponse.Close();
+				responseStream.Close();
+				readStream.Close();
+				return null;
+			} catch (Exception) {
+				
+				return new string[]{""};
 			}
-			listResponse.Close();
-			responseStream.Close();
-			readStream.Close();
-			return null;
+			
+			
 		}
+		//新建
+		void Button3Click(object sender, EventArgs e)
+		{
+			string temp =this.treeView1.SelectedNode.FullPath.Replace('\\','/');
+			string newpath = System.Text.RegularExpressions.Regex.Replace(
+				temp,"服务器根目录",ftphost);
+			CreateNameForm cn = new CreateNameForm();
+			cn.StartPosition=FormStartPosition.CenterParent;
+			if(cn.ShowDialog()== DialogResult.OK)
+			{
+				newpath=newpath+"/"+cn.name;
+				if(this.MakeDirectory(newpath))
+				{
+					TreeNode tn = new TreeNode();
+					tn.Text = cn.name;
+					this.treeView1.SelectedNode.Nodes.Add(tn);
+					MessageBox.Show("创建文件夹成功！");
+				}
+				else
+					MessageBox.Show("创建文件夹失败！");
+			}
+			else
+				return;
+			
+		}
+		//选中
+		void Button1Click(object sender, EventArgs e)
+		{
+			string temp =this.treeView1.SelectedNode.FullPath.Replace('\\','/');
+			selpath = System.Text.RegularExpressions.Regex.Replace(
+				temp,"服务器根目录",ftphost);
+		}
+		
 	}
 }

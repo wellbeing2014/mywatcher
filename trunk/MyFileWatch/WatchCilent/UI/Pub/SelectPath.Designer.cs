@@ -55,16 +55,19 @@ namespace WatchCilent.UI.Pub
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.button1.Location = new System.Drawing.Point(377, 297);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(60, 22);
 			this.button1.TabIndex = 1;
 			this.button1.Text = "选择";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.button2.Location = new System.Drawing.Point(443, 297);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(60, 22);
@@ -81,6 +84,7 @@ namespace WatchCilent.UI.Pub
 			this.button3.TabIndex = 1;
 			this.button3.Text = "新建";
 			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
 			// SelectPath
 			// 
