@@ -106,6 +106,10 @@
     <Compile Include="UI\Pack\TextForCopyForm.Designer.cs">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pub\CreateNameForm.cs" />
+    <Compile Include="UI\Pub\CreateNameForm.Designer.cs">
+      <DependentUpon>CreateNameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pub\EXComboBox.cs" />
     <Compile Include="UI\Pub\EXListView.cs" />
     <Compile Include="UI\Pub\MyForms.cs" />
@@ -152,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pack\TextForCopyForm.resx">
       <DependentUpon>TextForCopyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pub\CreateNameForm.resx">
+      <DependentUpon>CreateNameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\SelectPath.resx">
       <DependentUpon>SelectPath.cs</DependentUpon>

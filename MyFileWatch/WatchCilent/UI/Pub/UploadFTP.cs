@@ -51,17 +51,15 @@ namespace WatchCilent.UI.Pub
 			this.exListView1.Columns.Add(new EXColumnHeader("状态", 80));
 			
 			this.exListView1.BeginUpdate();
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i <50; i++) {
 				//movie
 				EXListViewItem item = new EXListViewItem(i.ToString());
 				//添加第二列控件    上传路径
-				item.SubItems.Add(new EXControls.EXListViewSubItem("服务器路径"+i.ToString()));
+				EXControls.EXListViewSubItem serverpath=new EXControls.EXListViewSubItem();
+				item.SubItems.Add(serverpath);
 				EXControlListViewSubItem cs = new EXControlListViewSubItem();
 				ProgressBar b = new ProgressBar();
 				b.Tag = item;
-//				b.Minimum = 0;
-//				b.Maximum = 1000;
-//				b.Step = 1;
 				//添加第三列控件   进度
 				item.SubItems.Add(cs);
 				this.exListView1.AddControlToSubItem(b, cs);
@@ -73,8 +71,9 @@ namespace WatchCilent.UI.Pub
 				llbl.LinkClicked += new LinkLabelLinkClickedEventHandler(llbl_LinkClicked);
 				item.SubItems.Add(cs1);
 				this.exListView1.AddControlToSubItem(llbl, cs1);
+			
 				//conclusion
-				item.SubItems.Add(new EXBoolListViewSubItem(true));
+				//item.SubItems.Add(new EXBoolListViewSubItem(true));
 				this.exListView1.Items.Add(item);
 			}
 			this.exListView1.EndUpdate();
@@ -85,28 +84,50 @@ namespace WatchCilent.UI.Pub
 			//
 		}
 		private void llbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-
-			SelectPath sp = new SelectPath();
-			sp.ShowDialog();
-//			LinkLabel l = (LinkLabel) sender;
-//			if (l.Text == "正在上传") return;
-//			EXControlListViewSubItem subitem = l.Tag as EXControlListViewSubItem;
-//			ProgressBar p = subitem.MyControl as ProgressBar;
-//			Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
-//			th.IsBackground = true;
-//			th.Start(p);
-//			((LinkLabel) sender).Text = "正在上传";
 			
+			LinkLabel l = (LinkLabel) sender;
+			EXControlListViewSubItem subitem = l.Tag as EXControlListViewSubItem;
+			ProgressBar p = subitem.MyControl as ProgressBar;
+			ListViewItem item = (ListViewItem) p.Tag;
+			string serverpath =item.SubItems[1].Text;
+			if(string.IsNullOrEmpty(serverpath))
+			{
+				SelectPath sp = new SelectPath();
+				sp.StartPosition=FormStartPosition.CenterParent;
+				if(sp.ShowDialog()==DialogResult.OK)
+				{
+					serverpath =sp.selpath;
+					
+					item.SubItems[1].Text =serverpath;
+					sp.Dispose();
+				}
+				else
+				{
+					sp.Dispose();
+					return ;
+				}
+			}
 			
+			if (l.Text == "正在上传") return;
+			Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
+			th.IsBackground = true;
+			UploadParam up =new UploadParam();
+			up.PackPath=@"D:\111.txt";
+			up.Bar= p;
+			up.ServerPath=serverpath;
+			th.Start(up);
+			((LinkLabel) sender).Text = "正在上传";
 		}
 		
 		private delegate void del_do_update(ProgressBar pb,int pvalue,int pmax);
 		private delegate void del_do_changetxt(LinkLabel l, string text);
-		private void UpdateProgressBarMethod(object pb) {
-			ProgressBar pp = (ProgressBar) pb;
-			string localfile =@"D:\111.txt";
-			string serverpath="qlyg/";
-			this.Upload1(localfile,serverpath,pp);
+		private void UpdateProgressBarMethod(object param) {
+			UploadParam up =(UploadParam)param ;
+			
+			ProgressBar pp =  (ProgressBar)up.Bar;
+			string packfile = up.PackPath;
+			string serverpath = up.ServerPath+"/";
+			this.Upload1(packfile,serverpath,pp);
 			
 		}
 	
@@ -116,7 +137,7 @@ namespace WatchCilent.UI.Pub
 			p.Value=pvalue;
 		}
 		private void ChangeTextMethod(LinkLabel l, string text) {
-		l.Text = text;
+			l.Text = text;
 		}
 		
 		private void Upload1(string filename,string serverpath,ProgressBar pp)
@@ -132,7 +153,7 @@ namespace WatchCilent.UI.Pub
 			//本地文件流
 			FileStream fs = null;
 		    FileInfo fileInf = new FileInfo(filename);
-		    string uri = this.ftphost+serverpath+fileInf.Name;
+		    string uri = serverpath+fileInf.Name;
 		    
 		    ListViewItem item = (ListViewItem) pp.Tag;
 			LinkLabel l = ((LinkLabel) ((EXControlListViewSubItem) item.SubItems[3]).MyControl);
@@ -265,4 +286,23 @@ namespace WatchCilent.UI.Pub
 			this.Dispose();
 		}
 	}
+	class UploadParam{
+		private ProgressBar bar;
+		public ProgressBar Bar {
+			get { return bar; }
+			set { bar = value; }
+		}
+		private string serverPath; 
+		public string ServerPath {
+			get { return serverPath; }
+			set { serverPath = value; }
+		}
+		private string packPath;
+		public string PackPath {
+			get { return packPath; }
+			set { packPath = value; }
+		}
+	}
+
+
 }
