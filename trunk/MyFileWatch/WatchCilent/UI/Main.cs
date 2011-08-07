@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WatchCilent.UI.Test;
 using WatchCilent.UI;
+using WatchCilent.UI.Pub;
 using WatchCilent.Common;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -200,6 +201,11 @@ namespace WatchCilent.UI
 		{
 			TestResult tr = new TestResult();
 			tr.ShowDialog();
+		}
+		
+		void 发布ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			changeForm(new PublishUI());
 		}
 	}
 }

@@ -1,38 +1,34 @@
 ﻿/*
  * 由SharpDevelop创建。
- * 用户： ZhuXinPei
- * 日期: 2011-8-3
- * 时间: 10:16
+ * 用户： wellbeing
+ * 日期: 2011-8-7
+ * 时间: 21:54
  * 
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
 using System;
-using System.IO;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Net;
-using WatchCilent.Common;
-using System.Collections.Generic;
-using EXControls;
-using System.Threading;
-using System.Diagnostics; 
 using WatchCilent.pojo;
 using WatchCilent.dao;
+using EXControls;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net;
+using System.IO;
 
 namespace WatchCilent.UI.Pub
 {
 	/// <summary>
-	/// Description of UploadFTP.
+	/// Description of PublishUI.
 	/// </summary>
-	public partial class UploadFTP : Form
+	public partial class PublishUI : UserControl
 	{
-		
-		
 		private string ftphost = System.Configuration.ConfigurationManager.AppSettings["FTPHOST"];
 		private string username = System.Configuration.ConfigurationManager.AppSettings["FTPID"];
 		private string password = System.Configuration.ConfigurationManager.AppSettings["FTPPWD"];
-		
-		public UploadFTP()
+		public PublishUI()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
@@ -63,8 +59,6 @@ namespace WatchCilent.UI.Pub
 				ListViewBing(pack);
 			}
 			this.exListView1.EndUpdate();
-			
-			//ListDirectory("aaaabbb");
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -96,7 +90,6 @@ namespace WatchCilent.UI.Pub
 				llbl.LinkClicked += new LinkLabelLinkClickedEventHandler(llbl_LinkClicked);
 				item.SubItems.Add(cs1);
 				this.exListView1.AddControlToSubItem(llbl, cs1);
-				
 			
 				//conclusion
 				//item.SubItems.Add(new EXBoolListViewSubItem(true));
@@ -144,6 +137,7 @@ namespace WatchCilent.UI.Pub
 		private delegate void del_do_changetxt(LinkLabel l, string text);
 		private void UpdateProgressBarMethod(object param) {
 			UploadParam up =(UploadParam)param ;
+			
 			ProgressBar pp =  (ProgressBar)up.Bar;
 			string packfile = up.PackPath;
 			string serverpath = up.ServerPath+"/";
@@ -231,71 +225,22 @@ namespace WatchCilent.UI.Pub
 		    }
 		}
 		
-		
-		#region 操作FTP
-		//新建目录
-		private bool MakeDirectory(string uristring)
-		{
-			try {
-				Uri uri = new Uri ( ftphost+uristring );
-				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
-				listRequest.Credentials = new NetworkCredential ( username , password );
-				listRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
-				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
-				if(listResponse.StatusCode== FtpStatusCode.PathnameCreated)
-				{
-					listResponse.Close();
-					return true;
-				}
-				else
-				{
-					listResponse.Close();
-					return false;
-				}
-			} catch (Exception) {
-				
-				return false;
-			}
-			
-		}
-		//列出目录
-		private string[] ListDirectory(string uristring)
-		{
-			Uri uri = new Uri ( ftphost+uristring );
-			FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
-			listRequest.Credentials = new NetworkCredential ( username , password );
-			listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-			FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
-			Stream responseStream = listResponse.GetResponseStream ( );
-			StreamReader readStream = new StreamReader ( responseStream , System.Text.Encoding.Default );
-			if ( readStream != null )
-			{
-    			DirectoryListParser parser = new DirectoryListParser ( readStream.ReadToEnd() );
-				FileStruct[] fs = parser.FullListing;
-				List<string> returns = new List<string>();
-				foreach (FileStruct element in fs) {
-					if(element.IsDirectory){
-						returns.Add(element.Name);
-					}
-				}
-				if(returns.Count>0)
-				{
-					return returns.ToArray();
-				}
-				else return null;
-			}
-			listResponse.Close();
-			responseStream.Close();
-			readStream.Close();
-			return null;
-		}
-		
-
-		#endregion 操作FTP
-		
-	
 	}
-
-
-
+	class UploadParam{
+	private ProgressBar bar;
+	public ProgressBar Bar {
+		get { return bar; }
+		set { bar = value; }
+	}
+	private string serverPath; 
+	public string ServerPath {
+		get { return serverPath; }
+		set { serverPath = value; }
+	}
+	private string packPath;
+	public string PackPath {
+		get { return packPath; }
+		set { packPath = value; }
+	}
+	}
 }

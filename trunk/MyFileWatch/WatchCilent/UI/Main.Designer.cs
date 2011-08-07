@@ -62,6 +62,7 @@ namespace WatchCilent.UI
 			this.接收自动处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.接收不自动处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.发布ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -100,6 +101,7 @@ namespace WatchCilent.UI
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStripMenuItem1,
 									this.更新包ToolStripMenuItem,
+									this.发布ToolStripMenuItem,
 									this.配置ToolStripMenuItem,
 									this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -149,14 +151,14 @@ namespace WatchCilent.UI
 			// 更新包列表ToolStripMenuItem
 			// 
 			this.更新包列表ToolStripMenuItem.Name = "更新包列表ToolStripMenuItem";
-			this.更新包列表ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+			this.更新包列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.更新包列表ToolStripMenuItem.Text = "更新包列表";
 			this.更新包列表ToolStripMenuItem.Click += new System.EventHandler(this.更新包列表ToolStripMenuItemClick);
 			// 
 			// 更新包统计ToolStripMenuItem
 			// 
 			this.更新包统计ToolStripMenuItem.Name = "更新包统计ToolStripMenuItem";
-			this.更新包统计ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+			this.更新包统计ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.更新包统计ToolStripMenuItem.Text = "更新包统计";
 			// 
 			// 配置ToolStripMenuItem
@@ -250,6 +252,13 @@ namespace WatchCilent.UI
 			this.退出ToolStripMenuItem.Text = "退出";
 			this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItemClick);
 			// 
+			// 发布ToolStripMenuItem
+			// 
+			this.发布ToolStripMenuItem.Name = "发布ToolStripMenuItem";
+			this.发布ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+			this.发布ToolStripMenuItem.Text = "发布";
+			this.发布ToolStripMenuItem.Click += new System.EventHandler(this.发布ToolStripMenuItemClick);
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -268,6 +277,7 @@ namespace WatchCilent.UI
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem 发布ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 接收不自动处理ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 接收自动处理ToolStripMenuItem;

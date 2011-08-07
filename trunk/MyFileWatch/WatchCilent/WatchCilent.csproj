@@ -113,6 +113,10 @@
     <Compile Include="UI\Pub\EXComboBox.cs" />
     <Compile Include="UI\Pub\EXListView.cs" />
     <Compile Include="UI\Pub\MyForms.cs" />
+    <Compile Include="UI\Pub\PublishUI.cs" />
+    <Compile Include="UI\Pub\PublishUI.Designer.cs">
+      <DependentUpon>PublishUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pub\SelectPath.cs" />
     <Compile Include="UI\Pub\SelectPath.Designer.cs">
       <DependentUpon>SelectPath.cs</DependentUpon>
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\CreateNameForm.resx">
       <DependentUpon>CreateNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pub\PublishUI.resx">
+      <DependentUpon>PublishUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\SelectPath.resx">
       <DependentUpon>SelectPath.cs</DependentUpon>
