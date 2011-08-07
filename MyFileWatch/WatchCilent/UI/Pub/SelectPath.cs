@@ -34,9 +34,9 @@ namespace WatchCilent.UI.Pub
 			//
 			InitializeComponent();
 			TreeNode root = new TreeNode();
-			root.Text = "服务器根目录";
+			root.Text = ftphost;
 			
-			string[] list=this.ListDirectory("");
+			string[] list=this.ListDirectory("/");
 			if(list!=null)
 			{
 				foreach (var element in list) {
@@ -58,7 +58,7 @@ namespace WatchCilent.UI.Pub
 		private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
 		{
 			TreeNode atn =e.Node;
-			string fullpath = System.Text.RegularExpressions.Regex.Replace(atn.FullPath,"服务器根目录","");
+			string fullpath = System.Text.RegularExpressions.Regex.Replace(atn.FullPath,ftphost,"");
 			if(atn.Nodes.Count==1&&string.IsNullOrEmpty(atn.Nodes[0].Text))
 			{
 				atn.Nodes.RemoveAt(0);
@@ -85,6 +85,32 @@ namespace WatchCilent.UI.Pub
 				listRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
 				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
 				if(listResponse.StatusCode== FtpStatusCode.PathnameCreated)
+				{
+					listResponse.Close();
+					return true;
+				}
+				else
+				{
+					listResponse.Close();
+					return false;
+				}
+			} catch (Exception) {
+				
+				return false;
+			}
+			
+		}
+		
+		//新建目录
+		private bool DeleteDirectory(string uristring)
+		{
+			try {
+				Uri uri = new Uri ( uristring );
+				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
+				listRequest.Credentials = new NetworkCredential ( username , password );
+				listRequest.Method = WebRequestMethods.Ftp.RemoveDirectory;
+				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
+				if(listResponse.StatusCode== FtpStatusCode.DirectoryStatus)
 				{
 					listResponse.Close();
 					return true;
