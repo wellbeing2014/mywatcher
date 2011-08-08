@@ -101,7 +101,7 @@ namespace WatchCilent.UI.Pub
 			
 		}
 		
-		//新建目录
+		//删除目录
 		private bool DeleteDirectory(string uristring)
 		{
 			try {

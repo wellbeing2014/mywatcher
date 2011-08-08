@@ -44,6 +44,15 @@ namespace WatchCilent.UI.Pub
 			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// exListView1
@@ -53,10 +62,10 @@ namespace WatchCilent.UI.Pub
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.exListView1.ControlPadding = 4;
 			this.exListView1.FullRowSelect = true;
-			this.exListView1.Location = new System.Drawing.Point(8, 30);
+			this.exListView1.Location = new System.Drawing.Point(203, 30);
 			this.exListView1.Name = "exListView1";
 			this.exListView1.OwnerDraw = true;
-			this.exListView1.Size = new System.Drawing.Size(669, 311);
+			this.exListView1.Size = new System.Drawing.Size(531, 271);
 			this.exListView1.TabIndex = 0;
 			this.exListView1.UseCompatibleStateImageBehavior = false;
 			this.exListView1.View = System.Windows.Forms.View.Details;
@@ -118,10 +127,110 @@ namespace WatchCilent.UI.Pub
 			this.label2.TabIndex = 48;
 			this.label2.Text = "止";
 			// 
+			// treeView1
+			// 
+			this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left)));
+			this.treeView1.Location = new System.Drawing.Point(9, 31);
+			this.treeView1.Name = "treeView1";
+			this.treeView1.Size = new System.Drawing.Size(188, 293);
+			this.treeView1.TabIndex = 49;
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.Location = new System.Drawing.Point(349, 304);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(88, 20);
+			this.label4.TabIndex = 50;
+			this.label4.Text = "共几页/共几条";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label5.Location = new System.Drawing.Point(282, 304);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(61, 20);
+			this.label5.TabIndex = 50;
+			this.label5.Text = "每页20条";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label3
+			// 
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label3.Location = new System.Drawing.Point(206, 304);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(70, 20);
+			this.label3.TabIndex = 50;
+			this.label3.Text = "当前第几页";
+			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// linkLabel1
+			// 
+			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel1.Location = new System.Drawing.Point(625, 304);
+			this.linkLabel1.Name = "linkLabel1";
+			this.linkLabel1.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel1.TabIndex = 51;
+			this.linkLabel1.TabStop = true;
+			this.linkLabel1.Text = "上一页";
+			this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// linkLabel2
+			// 
+			this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel2.Location = new System.Drawing.Point(680, 304);
+			this.linkLabel2.Name = "linkLabel2";
+			this.linkLabel2.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel2.TabIndex = 51;
+			this.linkLabel2.TabStop = true;
+			this.linkLabel2.Text = "下一页";
+			this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// button1
+			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button1.Location = new System.Drawing.Point(9, 330);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(65, 26);
+			this.button1.TabIndex = 52;
+			this.button1.Text = "新建目录";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
+			// 
+			// button2
+			// 
+			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.button2.Location = new System.Drawing.Point(91, 330);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(65, 26);
+			this.button2.TabIndex = 52;
+			this.button2.Text = "删除目录";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(574, 4);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(160, 21);
+			this.textBox1.TabIndex = 53;
+			this.textBox1.Text = "请输入关键字...";
+			// 
 			// PublishUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.button2);
+			this.Controls.Add(this.button1);
+			this.Controls.Add(this.linkLabel2);
+			this.Controls.Add(this.linkLabel1);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.treeView1);
 			this.Controls.Add(this.comboBox2);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.checkBox2);
@@ -131,9 +240,19 @@ namespace WatchCilent.UI.Pub
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.exListView1);
 			this.Name = "PublishUI";
-			this.Size = new System.Drawing.Size(680, 344);
+			this.Size = new System.Drawing.Size(737, 359);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.LinkLabel linkLabel2;
+		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.DateTimePicker dateTimePicker2;

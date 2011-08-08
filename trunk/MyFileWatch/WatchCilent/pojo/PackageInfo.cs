@@ -82,6 +82,12 @@ namespace WatchCilent.pojo
 			get { return testRate; }
 			set { testRate = value; }
 		}
+		private string pubPath;
+		
+		public string PubPath {
+			get { return pubPath; }
+			set { pubPath = value; }
+		}
 		public PackageInfo()
 		{
 		}
