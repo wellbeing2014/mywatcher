@@ -40,6 +40,7 @@ namespace WatchCilent.UI.Test
 		DataTable Source_Person = PersonDao.getPersonTable();
 		DataTable Source_Module = ModuleDao.getAllModuleTable();
 		DataTable Source_Project = ProjectInfoDao.getAllProjectTable();
+		bool isSaved = false;
 		
 		/// <summary>
 		/// 新建窗口
@@ -220,7 +221,7 @@ namespace WatchCilent.UI.Test
 			//Enum.GetNames(typeof(CommonConst.TestState)))
 			tu.Testorname = comboBox4.Text;
 			tu.Testtime =DateTime.Now.ToString() ;
-			if(tu.Id==0)
+			if(tu.Id==0&&!isSaved)
 			{
 				if(!TestUnitDao.getNewUnitNO().Equals(this.textBox1.Text))
 				{
@@ -257,12 +258,17 @@ namespace WatchCilent.UI.Test
 			if(TestuiSave())
 			{
 				bool isSave = false;
+				
 				if(tu.Id!=0)
 					isSave = AccessDBUtil.update(tu);
 				else
-					isSave = AccessDBUtil.insert(tu);
+				{
+					tu.Id = AccessDBUtil.insertReturnID(tu);
+					isSave = true;
+				}
 				if(isSave)
 				{
+					
 					//创建文档
 					if(unitDOCpath==null)
 					{

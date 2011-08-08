@@ -10,6 +10,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using WatchCilent.Common;
 using WatchCilent.pojo;
 using WatchCilent.dao;
 using EXControls;
@@ -34,6 +35,28 @@ namespace WatchCilent.UI.Pub
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			TreeNode root1 = new TreeNode();
+			root1.Text = "未发布";
+			TreeNode root = new TreeNode();
+			root.Text = ftphost;
+			string[] list=this.ListDirectory("/");
+			if(list!=null)
+			{
+				foreach (var element in list) {
+					TreeNode temp = new TreeNode(element);
+					temp.Nodes.Add(new TreeNode());
+					root.Nodes.Add(temp);
+				}
+			}
+			this.treeView1.Nodes.Add(root1);
+			this.treeView1.Nodes.Add(root);
+			this.treeView1.Nodes[1].Expand();
+			this.treeView1.AfterExpand+=new TreeViewEventHandler(treeView1_AfterExpand);
+			this.treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
+			this.treeView1.Leave+=new EventHandler(treeView1_Leave);
+			this.treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);
+			
+			
 			this.exListView1.MySortBrush = SystemBrushes.ControlLight;
 			this.exListView1.MyHighlightBrush = Brushes.Goldenrod;
 			this.exListView1.GridLines = true;
@@ -48,7 +71,7 @@ namespace WatchCilent.UI.Pub
 			this.exListView1.Columns.Add(new EXColumnHeader("进度", 120));
 			this.exListView1.Columns.Add(new EXColumnHeader("状态", 60));
 			this.exListView1.Columns.Add(new EXColumnHeader("操作", 80));
-			
+			//this.exListView1.CheckBoxes = true;
 			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null);
 			
 			
@@ -66,62 +89,67 @@ namespace WatchCilent.UI.Pub
 		
 		private void ListViewBing(PackageInfo packinfo)
 		{
-			//movie
-				EXListViewItem item = new EXListViewItem(packinfo.Packagename);
-				//添加第二列控件    上传路径
-				EXControls.EXListViewSubItem serverpath=new EXControls.EXListViewSubItem();
-				item.SubItems.Add(serverpath);
-				//添加第三列控件   进度
-				EXControlListViewSubItem cs = new EXControlListViewSubItem();
-				ProgressBar b = new ProgressBar();
-				b.Tag = item;
+			//添加第二列控件    更新包名称     item[0]
+			EXListViewItem item = new EXListViewItem(packinfo.Packagename);
+			//添加第二列控件    上传路径       item[1]
+			EXControls.EXListViewSubItem serverpath=new EXControls.EXListViewSubItem();
+			//添加第三列控件   进度            item[2]
+			EXControlListViewSubItem cs = new EXControlListViewSubItem();
+			ProgressBar b = new ProgressBar();
+			b.Tag = item;
+			//添加第四列控件   状态            item[3]
+			EXControls.EXListViewSubItem status=new EXControls.EXListViewSubItem();
+			//添加第五列控件   操作             item[4]
+			EXControlListViewSubItem cs1 = new EXControlListViewSubItem();
+			LinkLabel llbl = new LinkLabel();
+			llbl.Tag = cs;
+			llbl.LinkClicked += new LinkLabelLinkClickedEventHandler(llbl_LinkClicked);
+			
+			if(!string.IsNullOrEmpty(packinfo.PubPath)&&CommonConst.PACKSTATE_YiFaBu.Equals(packinfo.State))
+			{
+				serverpath.Text=packinfo.PubPath;
+				status.Text="已上传";
 				b.Maximum =100;
 				b.Value =100;
-				item.SubItems.Add(cs);
-				this.exListView1.AddControlToSubItem(b, cs);
-				//添加第四列控件   状态
-				EXControls.EXListViewSubItem status=new EXControls.EXListViewSubItem();
-				item.SubItems.Add(status);
-				//添加第五列控件   操作
-				EXControlListViewSubItem cs1 = new EXControlListViewSubItem();
-				LinkLabel llbl = new LinkLabel();
+				llbl.Text = "重传";
+			}
+			else
+			{
+				status.Text="未上传";
 				llbl.Text = "上传";
-				llbl.Tag = cs;
-				llbl.LinkClicked += new LinkLabelLinkClickedEventHandler(llbl_LinkClicked);
-				item.SubItems.Add(cs1);
-				this.exListView1.AddControlToSubItem(llbl, cs1);
-			
-				//conclusion
-				//item.SubItems.Add(new EXBoolListViewSubItem(true));
-				this.exListView1.Items.Add(item);
+			}
+			item.SubItems.Add(serverpath);
+			item.SubItems.Add(cs);
+			item.SubItems.Add(status);
+			item.SubItems.Add(cs1);
+			item.SubItems.Add(packinfo.Id.ToString());
+			this.exListView1.AddControlToSubItem(b, cs);
+			this.exListView1.AddControlToSubItem(llbl, cs1);
+			this.exListView1.Items.Add(item);
 		}
 		
 		private void llbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
 			
 			LinkLabel l = (LinkLabel) sender;
+			if (!l.Enabled) return;
 			EXControlListViewSubItem subitem = l.Tag as EXControlListViewSubItem;
 			ProgressBar p = subitem.MyControl as ProgressBar;
 			ListViewItem item = (ListViewItem) p.Tag;
 			string serverpath =item.SubItems[1].Text;
 			if(string.IsNullOrEmpty(serverpath))
 			{
-				SelectPath sp = new SelectPath();
-				sp.StartPosition=FormStartPosition.CenterParent;
-				if(sp.ShowDialog()==DialogResult.OK)
+				if(this.treeView1.SelectedNode!=null&&this.treeView1.SelectedNode!=this.treeView1.Nodes[0])
 				{
-					serverpath =sp.selpath;
-					
+					serverpath = this.treeView1.SelectedNode.FullPath.Replace('\\','/');
 					item.SubItems[1].Text =serverpath;
-					sp.Dispose();
 				}
 				else
 				{
-					sp.Dispose();
-					return ;
+					MessageBox.Show("请选择服务器路径","提示");
+					return;
 				}
 			}
 			
-			if (l.Text == "正在上传") return;
 			Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
 			th.IsBackground = true;
 			
@@ -130,7 +158,7 @@ namespace WatchCilent.UI.Pub
 			up.Bar= p;
 			up.ServerPath=serverpath;
 			th.Start(up);
-			((LinkLabel) sender).Text = "正在上传";
+			l.Enabled = false;
 		}
 		
 		private delegate void del_do_update(ProgressBar pb,int pvalue,int pmax);
@@ -150,9 +178,25 @@ namespace WatchCilent.UI.Pub
 			p.Maximum=pmax;
 			p.Value=pvalue;
 			 ListViewItem item = (ListViewItem) p.Tag;
-			 item.SubItems[3].Text=pvalue+"/"+pmax;
+			 if(pvalue!=pmax)
+			 {
+			 	item.SubItems[3].Text = "正在上传";
+			 }
+			 else{
+			 	item.SubItems[3].Text="上传完成";
+			 	
+			 }
 		}
+		private void SaveInList(ListViewItem item)
+		{
+			item.SubItems[1]
+		}
+		
 		private void ChangeTextMethod(LinkLabel l, string text) {
+			if(text.Equals("重传"))
+			{
+				l.Enabled=true;
+			}
 			l.Text = text;
 		}
 		
@@ -225,6 +269,195 @@ namespace WatchCilent.UI.Pub
 		    }
 		}
 		
+		private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
+		{
+			TreeNode atn =e.Node;
+			string fullpath = System.Text.RegularExpressions.Regex.Replace(atn.FullPath,ftphost,"");
+			if(atn.Nodes.Count==1&&string.IsNullOrEmpty(atn.Nodes[0].Text))
+			{
+				atn.Nodes.RemoveAt(0);
+				string[] list=this.ListDirectory(fullpath);
+				if(list!=null)
+				{
+					foreach (var element in list) {
+					TreeNode temp = new TreeNode(element);
+					temp.Nodes.Add(new TreeNode());
+					atn.Nodes.Add(temp);
+					}
+				}else{
+				}
+			}
+		}
+		
+		//新建目录
+		private bool MakeDirectory(string uristring)
+		{
+			try {
+				Uri uri = new Uri ( uristring );
+				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
+				listRequest.Credentials = new NetworkCredential ( username , password );
+				listRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
+				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
+				if(listResponse.StatusCode== FtpStatusCode.PathnameCreated)
+				{
+					listResponse.Close();
+					return true;
+				}
+				else
+				{
+					listResponse.Close();
+					return false;
+				}
+			} catch (Exception) {
+				
+				return false;
+			}
+			
+		}
+		
+		//删除目录
+		private bool DeleteDirectory(string uristring)
+		{
+			try {
+				Uri uri = new Uri ( uristring );
+				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
+				listRequest.Credentials = new NetworkCredential ( username , password );
+				listRequest.Method = WebRequestMethods.Ftp.RemoveDirectory;
+				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
+				if(listResponse.StatusCode== FtpStatusCode.FileActionOK)
+				{
+					listResponse.Close();
+					return true;
+				}
+				else
+				{
+					listResponse.Close();
+					return false;
+				}
+			} catch (Exception) {
+				
+				return false;
+			}
+			
+		}
+		//列出目录
+		private string[] ListDirectory(string uristring)
+		{
+			try {
+				Uri uri = new Uri ( ftphost+uristring );
+				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
+				listRequest.Credentials = new NetworkCredential ( username , password );
+				listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
+				Stream responseStream = listResponse.GetResponseStream ( );
+				StreamReader readStream = new StreamReader ( responseStream , System.Text.Encoding.Default );
+				if ( readStream != null )
+				{
+	    			DirectoryListParser parser = new DirectoryListParser ( readStream.ReadToEnd() );
+					FileStruct[] fs = parser.FullListing;
+					List<string> returns = new List<string>();
+					foreach (FileStruct element in fs) {
+						if(element.IsDirectory){
+							returns.Add(element.Name);
+						}
+					}
+					listResponse.Close();
+					responseStream.Close();
+					readStream.Close();
+					if(returns.Count>0)
+					{
+						return returns.ToArray();
+					}
+					else return null;
+				}
+				listResponse.Close();
+				responseStream.Close();
+				readStream.Close();
+				return null;
+			} catch (Exception) {
+				
+				return new string[]{""};
+			}
+			
+			
+		}
+		
+		
+		//将要选中新节点之前发生
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (treeView1.SelectedNode != null)
+            {
+                //将上一个选中的节点背景色还原（原先没有颜色）
+                treeView1.SelectedNode.BackColor = Color.Empty;
+                //还原前景色
+                treeView1.SelectedNode.ForeColor = Color.Black;
+            }
+        }
+        
+        //失去焦点时
+        private void treeView1_Leave(object sender, EventArgs e)
+        {
+            if(treeView1.SelectedNode!=null)
+            {
+                //让选中项背景色呈现蓝色
+                treeView1.SelectedNode.BackColor = Color.SteelBlue;
+                //前景色为白色
+                treeView1.SelectedNode.ForeColor = Color.White;
+            }
+        }
+		
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
+		{
+			
+		}
+		 
+        
+		void Button1Click(object sender, EventArgs e)
+		{
+			if(this.treeView1.SelectedNode==null)
+			{
+				MessageBox.Show("请选择FTP目录");
+				return;
+			}
+			string newpath =this.treeView1.SelectedNode.FullPath.Replace('\\','/');
+			
+			CreateNameForm cn = new CreateNameForm();
+			cn.StartPosition=FormStartPosition.CenterParent;
+			if(cn.ShowDialog()== DialogResult.OK)
+			{
+				newpath=newpath+"/"+cn.name;
+				if(this.MakeDirectory(newpath))
+				{
+					TreeNode tn = new TreeNode();
+					tn.Text = cn.name;
+					this.treeView1.SelectedNode.Nodes.Add(tn);
+					MessageBox.Show("创建文件夹成功！");
+				}
+				else
+					MessageBox.Show("创建文件夹失败！");
+			}
+			else
+				return;
+		}
+		
+		void Button2Click(object sender, EventArgs e)
+		{
+			if(this.treeView1.SelectedNode==null)
+			{
+				MessageBox.Show("请选择FTP目录");
+				return;
+			}
+			string newpath =this.treeView1.SelectedNode.FullPath.Replace('\\','/');
+			if(this.DeleteDirectory(newpath))
+			{
+				this.treeView1.SelectedNode.Remove();
+				MessageBox.Show("删除文件夹成功！");
+			}
+			else
+				MessageBox.Show("删除文件夹失败！");
+			
+		}
 	}
 	class UploadParam{
 	private ProgressBar bar;

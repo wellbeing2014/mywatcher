@@ -44,7 +44,6 @@ namespace WatchCilent.Common
 					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
 					{
 						object fvalue=field.GetValue(obj,null);
-						
 						OleDbParameter tt = new OleDbParameter();
 						tt.ParameterName = "@"+field.Name;
 						tt.Value=fvalue;
@@ -87,6 +86,72 @@ namespace WatchCilent.Common
 				MessageBox.Show(e.ToString());
 				return false;
 			}
+		}
+		/// <summary>
+		/// 返回id的insert方法
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static int insertReturnID(object obj)
+		{
+			List<OleDbParameter> para = new List<OleDbParameter>();
+			//反射出类型
+			Type objclass =obj.GetType();
+			//拼SQL开始
+			string sqltou = "insert into "+objclass.Name+"(";
+			string sqlval="values('";
+			//验证是否为pojo类。
+			PropertyInfo ispojo = objclass.GetProperty("Px");
+			if(ispojo==null)
+			{
+				throw new Exception("验证pojo类失败！");
+			}
+			//获取所有属性
+			PropertyInfo[] fields = objclass.GetProperties();
+			foreach(PropertyInfo field in fields)
+			{
+				//去掉验证属性及主键
+				if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
+				{
+					object fvalue=field.GetValue(obj,null);
+					OleDbParameter tt = new OleDbParameter();
+					tt.ParameterName = "@"+field.Name;
+					tt.Value=fvalue;
+					//验证整形
+					if(field.PropertyType.Name=="Int32")
+					{
+						tt.OleDbType=OleDbType.Integer;
+					}
+					if(field.PropertyType.Name=="String")
+					{
+						tt.OleDbType=OleDbType.VarChar;
+					}
+					if(field.PropertyType.Name=="Boolean")
+					{
+						tt.OleDbType=OleDbType.Boolean;
+					}
+					if(field.PropertyType.Name=="DateTime")
+					{
+						tt.OleDbType=OleDbType.Date;
+					}
+					//大字段
+					if(field.PropertyType.Name=="Byte[]")
+					{
+						tt.OleDbType=OleDbType.VarBinary;
+					}
+					if(fvalue!=null)
+					{
+						para.Add(tt);
+						sqltou+=field.Name+",";
+						sqlval=sqlval.Substring(0,sqlval.Length-1)+tt.ParameterName+",'";
+					}
+					
+				}
+			}
+			String sql=sqltou.Substring(0,sqltou.Length-1)+")"+sqlval.Substring(0,sqlval.Length-2)+");";
+			//拼SQL结束。
+			return ExecuteInsert(sql,para.ToArray());
+				
 		}
 		
 		public static  int insertreturn(object obj)
