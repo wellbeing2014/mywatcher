@@ -184,12 +184,14 @@ namespace WatchCilent.UI.Pub
 			 }
 			 else{
 			 	item.SubItems[3].Text="上传完成";
-			 	
+			 	SaveInList(item);
 			 }
 		}
 		private void SaveInList(ListViewItem item)
 		{
-			item.SubItems[1]
+			string id = item.SubItems[5].Text.ToString();
+			string path = item.SubItems[1].Text.ToString();
+			PackageDao.updateForPub(id,path);
 		}
 		
 		private void ChangeTextMethod(LinkLabel l, string text) {
