@@ -62,7 +62,20 @@ namespace WatchCilent.dao
 			return ls;
 		}
 		
-		
+		public static bool updateForPub(string id,string pubpath)
+		{
+			string sql = "update packageinfo set pubpath = '"+pubpath+"' where id="+id;
+			try {
+				int i = AccessDBUtil.ExecuteNonQuery(sql);
+				if(i!=0)
+					return true;
+				else
+					return false;
+			} catch (Exception) {
+				
+				return false;
+			}
+		}
 		
 		
 		
@@ -105,6 +118,7 @@ namespace WatchCilent.dao
 			//page.Managerid = null;
 			page.State = row["state"].ToString();
 			page.TestRate =Int32.Parse(row["testrate"].ToString());
+			page.PubPath = row["pubpath"].ToString();
 			return page;
 		}
 	}
