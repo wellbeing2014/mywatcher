@@ -95,6 +95,7 @@ namespace WatchCilent
 			{
 				PackageInfo pack = new PackageInfo();
 				pack = ListViewSelect(listView1.SelectedItems[0]);
+				pack.PubPath="";
 				BussinessForm bf = new BussinessForm(pack);
 			 	bf.StartPosition = FormStartPosition.CenterParent;
 				bf.ShowDialog();

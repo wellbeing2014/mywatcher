@@ -225,26 +225,6 @@ namespace WatchCilent.Common
 				//获取所有属性
 				PropertyInfo[] fields = objclass.GetProperties();
 				string tempsql ="";
-//				foreach(PropertyInfo field in fields)
-//				{
-//					//去掉验证属性及主键
-//					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
-//					{
-//						object fvalue=field.GetValue(obj,null);
-//						//验证整形，空的整形为0
-//						if(field.PropertyType.Name=="Int32")
-//						{
-//							tempsql+=field.Name+"=" +fvalue.ToString()+",";
-//							
-//						}
-//						else
-//						if(fvalue!=null&&fvalue.ToString()!=null)
-//						{
-//							tempsql+=field.Name+"='" +fvalue.ToString()+"',";
-//						}
-//					}
-//				}
-				
 				foreach(PropertyInfo field in fields)
 				{
 					//去掉验证属性及主键
@@ -254,7 +234,11 @@ namespace WatchCilent.Common
 						
 						OleDbParameter tt = new OleDbParameter();
 						tt.ParameterName = "@"+field.Name;
-						tt.Value=fvalue;
+						tt.IsNullable =true;
+						if(fvalue!=null)
+							tt.Value=fvalue;
+						else 
+							tt.Value =DBNull.Value;
 						//验证整形
 						if(field.PropertyType.Name=="Int32")
 						{
@@ -286,7 +270,7 @@ namespace WatchCilent.Common
 				
 				String sql=sqltou+tempsql.Substring(0,tempsql.Length-1)+" where "+px.Name+"="+px.GetValue(obj,null).ToString()+";";
 				//拼SQL结束。
-				ExecuteQuery(sql,para.ToArray());
+				ExecuteNonQuery(sql,para.ToArray());
 				return true;
 			} catch (Exception e) {
 				MessageBox.Show(e.ToString());

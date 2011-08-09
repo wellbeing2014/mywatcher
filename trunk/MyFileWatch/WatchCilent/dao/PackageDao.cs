@@ -64,7 +64,8 @@ namespace WatchCilent.dao
 		
 		public static bool updateForPub(string id,string pubpath)
 		{
-			string sql = "update packageinfo set pubpath = '"+pubpath+"' where id="+id;
+			string time = System.DateTime.Now.ToLocalTime().ToString();
+			string sql = "update packageinfo set pubpath = '"+pubpath+"',publishtime ='"+time+"',state ='已发布' where id="+id;
 			try {
 				int i = AccessDBUtil.ExecuteNonQuery(sql);
 				if(i!=0)
