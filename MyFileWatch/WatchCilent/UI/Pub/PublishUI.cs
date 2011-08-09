@@ -71,7 +71,6 @@ namespace WatchCilent.UI.Pub
 			this.exListView1.Columns.Add(new EXColumnHeader("进度", 120));
 			this.exListView1.Columns.Add(new EXColumnHeader("状态", 60));
 			this.exListView1.Columns.Add(new EXColumnHeader("操作", 80));
-			//this.exListView1.CheckBoxes = true;
 			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null);
 			
 			
@@ -123,6 +122,7 @@ namespace WatchCilent.UI.Pub
 			item.SubItems.Add(status);
 			item.SubItems.Add(cs1);
 			item.SubItems.Add(packinfo.Id.ToString());
+			item.SubItems.Add(packinfo.Packagepath);
 			this.exListView1.AddControlToSubItem(b, cs);
 			this.exListView1.AddControlToSubItem(llbl, cs1);
 			this.exListView1.Items.Add(item);
@@ -154,7 +154,7 @@ namespace WatchCilent.UI.Pub
 			th.IsBackground = true;
 			
 			UploadParam up =new UploadParam();
-			up.PackPath=@"D:\111.txt";
+			up.PackPath=item.SubItems[6].Text;//@"D:\111.txt";
 			up.Bar= p;
 			up.ServerPath=serverpath;
 			th.Start(up);
