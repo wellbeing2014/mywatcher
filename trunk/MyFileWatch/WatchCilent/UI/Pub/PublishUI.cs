@@ -29,6 +29,7 @@ namespace WatchCilent.UI.Pub
 		private string ftphost = System.Configuration.ConfigurationManager.AppSettings["FTPHOST"];
 		private string username = System.Configuration.ConfigurationManager.AppSettings["FTPID"];
 		private string password = System.Configuration.ConfigurationManager.AppSettings["FTPPWD"];
+		string WisofServiceHost = System.Configuration.ConfigurationManager.AppSettings["WisofServiceHost"];
 		public PublishUI()
 		{
 			//
@@ -458,6 +459,27 @@ namespace WatchCilent.UI.Pub
 			}
 			else
 				MessageBox.Show("删除文件夹失败！");
+			
+		}
+		
+		void Button3Click(object sender, EventArgs e)
+		{
+			IPHostEntry MyEntry=Dns.GetHostByName(Dns.GetHostName());
+           	IPAddress MyAddress=new IPAddress(MyEntry.AddressList[0].Address);
+           	string ip = MyAddress.ToString();
+			string msg ="今日发布\n";
+			if(this.exListView1.SelectedItems.Count>0)
+			{
+				for (int i = 0; i < this.exListView1.SelectedItems.Count; i++) {
+					string name = this.exListView1.SelectedItems[i].SubItems[0].Text;
+					string path = this.exListView1.SelectedItems[i].SubItems[1].Text;
+					msg+=(i+1).ToString()+"、";
+					msg+=name+"\n";
+					msg+="下载地址："+path.Insert(6,username+":"+password+"@")+"/"+name+".rar\n";
+				}
+				Communication.TCPManage.SendMessage(WisofServiceHost,msg+"##"+ip);
+			}
+			
 			
 		}
 	}
