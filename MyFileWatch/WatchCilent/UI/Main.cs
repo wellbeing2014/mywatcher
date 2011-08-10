@@ -92,16 +92,8 @@ namespace WatchCilent.UI
 				this.panel2.Controls.Add(ctrl);
 			}
 		}
-		void 测试列表ToolStripMenuItemClick(object sender, System.EventArgs e)
-		{
-			//TestListUI testlistui = new TestListUI();
-			changeForm(new TestListUI());
-		}
-		
-		void 更新包列表ToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			changeForm(new PackageUI());
-		}
+	
+	
 		
 		void 配置ToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -206,6 +198,16 @@ namespace WatchCilent.UI
 		void 发布ToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			changeForm(new PublishUI());
+		}
+		
+		void 更新包ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			changeForm(new PackageUI());
+		}
+		
+		void ToolStripMenuItem1Click(object sender, EventArgs e)
+		{
+			changeForm(new TestListUI());
 		}
 	}
 }

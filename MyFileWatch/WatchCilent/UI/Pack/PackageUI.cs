@@ -43,6 +43,10 @@ namespace WatchCilent
 			treeView1.Nodes.Add(tmp);
 			
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
+		  	//让选中项背景色呈现蓝色
+            treeView1.SelectedNode.BackColor = Color.SteelBlue;
+            //前景色为白色
+            treeView1.SelectedNode.ForeColor = Color.White;
 			treeView1.ExpandAll();
 			treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
 			treeView1.Leave+=new EventHandler(treeView1_Leave);
@@ -302,6 +306,9 @@ namespace WatchCilent
 				cb2p.X=cb2p.X+234;
 				this.comboBox1.Location=cb1p;
 				this.comboBox2.Location=cb2p;
+				
+				this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
+				this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
 			}
 			getAllPackInList();
 		}

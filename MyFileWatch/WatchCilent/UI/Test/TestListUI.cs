@@ -40,7 +40,10 @@ namespace WatchCilent.UI.Test
 			treeView1.Nodes.Add(tmp);
 			treeView1.ExpandAll();
 			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
-			
+			//让选中项背景色呈现蓝色
+            treeView1.SelectedNode.BackColor = Color.SteelBlue;
+            //前景色为白色
+            treeView1.SelectedNode.ForeColor = Color.White;
 			System.DateTime dt =System.DateTime.Now; 
 				dateTimePicker1.Value=dt.AddDays(-7);
 				
@@ -80,6 +83,8 @@ namespace WatchCilent.UI.Test
 			treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);			
 			
 			this.listView1.DoubleClick += new EventHandler(ListVew_DoubleClick); 
+			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
+			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
 			getTestUnitList();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -381,6 +386,8 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.Location=cb1p;
 			this.comboBox2.Location=cb2p;
 			this.comboBox3.Location=cb3p;
+			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
+			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
 			}
 			getTestUnitList();
 		}
