@@ -27,6 +27,13 @@ namespace WatchCilent.dao
 		{
 		}
 		
+		static public DataTable getRePortTest(string begintime,string endtime)
+		{
+			string sql = "SELECT unitno,buglevel,packagename,testtitle FROM testunit " +
+"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') order by unitno asc";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			return data.Tables["ds"];
+		}
 		
 		
 		static public string getNewUnitNO()

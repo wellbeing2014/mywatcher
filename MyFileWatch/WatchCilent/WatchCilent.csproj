@@ -52,6 +52,12 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph">
+      <HintPath>ZedGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph.Web">
+      <HintPath>ZedGraph.Web.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AccessDBUtil.cs" />
@@ -125,6 +131,14 @@
     <Compile Include="UI\Pub\UploadFTP.Designer.cs">
       <DependentUpon>UploadFTP.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Test\ReportListUI.cs" />
+    <Compile Include="UI\Test\ReportListUI.Designer.cs">
+      <DependentUpon>ReportListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Test\ReportXX.cs" />
+    <Compile Include="UI\Test\ReportXX.Designer.cs">
+      <DependentUpon>ReportXX.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Test\SaveView.cs" />
     <Compile Include="UI\Test\SaveView.Designer.cs">
       <DependentUpon>SaveView.cs</DependentUpon>
@@ -173,6 +187,9 @@
     <EmbeddedResource Include="UI\Pub\UploadFTP.resx">
       <DependentUpon>UploadFTP.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Test\ReportXX.resx">
+      <DependentUpon>ReportXX.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\SaveView.resx">
       <DependentUpon>SaveView.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +200,8 @@
       <DependentUpon>TestResult.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="ZedGraph.dll" />
+    <None Include="ZedGraph.Web.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MISC" />
