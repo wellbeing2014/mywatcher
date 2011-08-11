@@ -14,6 +14,8 @@ using WatchCilent.pojo;
 using WatchCilent.Common;
 using System.Collections.Generic;
 using System.IO;
+using System.Data;
+using System.Threading;
 
 namespace WatchCilent.UI.Test
 {
@@ -22,7 +24,6 @@ namespace WatchCilent.UI.Test
 	/// </summary>
 	public partial class SaveView : Form
 	{
-		private List<TestUnit> tulist = new List<TestUnit>();
 		//缺陷列表的HTML路径
 		string unitHTMLpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"]);
 		//缺陷列表的DOC路径
@@ -37,37 +38,29 @@ namespace WatchCilent.UI.Test
 			
 			InitializeComponent();
 			this.CenterToScreen();
-			tulist = TestUnitDao.getAlltestUnit();
-			RichTextBox rtftemp = new RichTextBox(); //临时控件
-			int i=1;
-			foreach(TestUnit tu in tulist)
-			{
-				int startlength =this.richTextBox1.Text.Length;
-				string title = i.ToString()+"、"+tu.Testtitle+"\n";
-				this.richTextBox1.AppendText(title);
-				this.richTextBox1.SelectionStart = startlength;
-				this.richTextBox1.SelectionLength = this.richTextBox1.Text.Length-startlength;
-				this.richTextBox1.SelectionFont = new Font("宋体", 14 ,FontStyle.Bold);
-				this.richTextBox1.SelectionColor = Color.Red;
-				this.richTextBox1.SelectionStart = this.richTextBox1.Rtf.Length;
-				//缓存到临时控件中
-				rtftemp.LoadFile(new MemoryStream(tu.Testcontent),RichTextBoxStreamType.RichText);
-				//rtftemp.SaveFile(unitDOCpath+@"\"+tu.Testtitle+".doc");
-				rtftemp.SelectAll();
-				this.richTextBox1.SelectedRtf = rtftemp.SelectedRtf;
-				this.richTextBox1.SelectionStart = this.richTextBox1.Rtf.Length;
-				this.richTextBox1.AppendText("\n");
-				i++;
-			}
-			rtftemp.Dispose();
 			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
 		
 		void Button2Click(object sender, EventArgs e)
 		{
+			Thread th = new Thread(new ParameterizedThreadStart(ThreadFunc));
+			th.Start(this.label3);
+			
+		}
+		private delegate void del_do_changetxt(Label lab,string text);
+		
+		void do_changetxt(Label lab,string text)
+		{
+			lab.Text = text;
+		}
+		
+		void ThreadFunc(object label1)
+		{
+			Label label =(Label)label1;
+			del_do_changetxt delchangetxt = new del_do_changetxt(do_changetxt);
+			string msg = "正在启动";
+			label.BeginInvoke(delchangetxt,new object[]{label,msg});
 			WordDocumentMerger wm = new WordDocumentMerger();
 			try {
 				if(unitDOCpath==null||"".Equals(unitDOCpath))
@@ -76,15 +69,20 @@ namespace WatchCilent.UI.Test
 				}
 				//打开模版
 				wm.Open(defaultpath+@"\temp\TestReport.doc");
+				
+				label.BeginInvoke(delchangetxt,new object[]{label,"打开模版"});
 				//插入标签
 				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
-				//缺陷循环插入
-				foreach(TestUnit tu in tulist)
-				{
-					wm.AppendText(tu.Testtitle,"标题 2");
-					wm.InsertMerge(new string[]{unitDOCpath+@"\"+tu.Unitno+".doc"},null);
-				}
-				//保存
+				string begintime = "2011-06-01";
+				string endtime = "2011-08-31";
+				label.BeginInvoke(delchangetxt,new object[]{label,"正在导入更新包"});
+				DataTable table1 =PackageDao.getRePortPack();
+				wm.insertTableForPack(1,table1);
+				label.BeginInvoke(delchangetxt,new object[]{label,"正在导入测试单元"});
+				DataTable table2 =TestUnitDao.getRePortTest(begintime,endtime);
+				wm.insertTableForTest(2,table2);
+				label.BeginInvoke(delchangetxt,new object[]{label,"完成"});
+				
 				wm.SaveAs();
 				MessageBox.Show("保存成功","提示");
 			} catch (Exception e1) {

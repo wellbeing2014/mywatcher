@@ -27,6 +27,13 @@ namespace WatchCilent.dao
 		{
 		}
 		
+		static public DataTable getRePortPack()
+		{
+			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid  order by cdate(packageInfo.packtime) asc";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			return data.Tables["ds"];
+		}
+		
 		/// <summary>
 		/// 所有没有测试的更新包除了已发布，已废止的。
 		/// </summary>

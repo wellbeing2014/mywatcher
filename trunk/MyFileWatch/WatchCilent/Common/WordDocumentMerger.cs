@@ -7,6 +7,7 @@
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using Word;
@@ -22,6 +23,9 @@ namespace WatchCilent.Common
 	/// </summary>
 	public class WordDocumentMerger
 	{
+		//缺陷列表的DOC路径
+		string unitDOCpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"]);
+		
         public ApplicationClass objApp = null;
         public Document objDocLast = null;
         private Document objDocBeforeLast = null;
@@ -98,9 +102,9 @@ namespace WatchCilent.Common
 		              );
 				}
         		
-        	} catch (Exception) {
+        	} catch (Exception e) {
         		
-        		throw(new Exception("保存失败！"));
+        		throw(new Exception("保存失败！"+e.ToString()));
         	}
 			
         }
@@ -337,5 +341,46 @@ namespace WatchCilent.Common
             }
         }
 
+        public void insertTableForPack(int tableindex,DataTable dtable)
+        {
+        	Word.Table wtable = objDocLast.Content.Tables[tableindex];
+        	object wrow = wtable.Rows.Last;
+        	wtable.Rows.Last.Select();
+        	object rownum =dtable.Rows.Count;
+        	objApp.Selection.InsertRowsBelow(ref rownum);
+        	
+        	for (int i = 0; i < dtable.Rows.Count; i++) {
+        		wtable.Cell(i+2, 1).Range.Text = (i+1).ToString();
+        		wtable.Cell(i+2, 2).Range.Text = dtable.Rows[i][0].ToString();
+        		wtable.Cell(i+2, 3).Range.Text = dtable.Rows[i][1].ToString();
+        		wtable.Cell(i+2, 4).Range.Text = dtable.Rows[i][2].ToString();
+//        		object range =wtable.Cell(i+2, 2).Range;
+//        		object adr = @"\\192.10.110.206\e\测试文档\DOC\BUG2011080901.doc";
+//				object adr1 = @"\\192.10.110.206\";        		
+//        		objApp.Selection.Hyperlinks.Add(range,ref adr,ref objMissing,ref objMissing,
+//        		                               	ref adr1,ref objMissing	);
+        	}
+    	}
+    	public void insertTableForTest(int tableindex,DataTable dtable)
+        {
+        	Word.Table wtable = objDocLast.Content.Tables[tableindex];
+        	object wrow = wtable.Rows.Last;
+        	wtable.Rows.Last.Select();
+        	object rownum =dtable.Rows.Count;
+        	objApp.Selection.InsertRowsBelow(ref rownum);
+        	
+        	for (int i = 0; i < dtable.Rows.Count; i++) {
+        		//超链接(编号)
+        		object range =wtable.Cell(i+2, 1).Range;
+        		object unitno = dtable.Rows[i][0].ToString();     
+        		object address = unitDOCpath+"\\"+unitno+".doc";
+        		objApp.Selection.Hyperlinks.Add(range,ref address,ref objMissing,ref objMissing,
+        		                               	ref unitno,ref objMissing	);
+        		wtable.Cell(i+2, 2).Range.Text = dtable.Rows[i][1].ToString();//等级
+        		wtable.Cell(i+2, 3).Range.Text = dtable.Rows[i][2].ToString();//名称
+        		wtable.Cell(i+2, 4).Range.Text = dtable.Rows[i][3].ToString();//title
+        	}
+        	
+        }
     }
 }
