@@ -72,35 +72,29 @@ namespace WatchCilent.Common
         #endregion
 
         #region 保存文件到输出模板
-        public void SaveAs()
+        public void SaveAs(string reportPath)
         {
         	try {
-        		SaveFileDialog sfd = new SaveFileDialog();  
-				sfd.Filter = "Word Document(*.doc)|*.doc";  
-				sfd.DefaultExt = "Word Document(*.doc)|*.doc";  
-				if (sfd.ShowDialog() == DialogResult.OK)  
-				{
-		            object objMissing = System.Reflection.Missing.Value;
-		            object objOutDoc = sfd.FileName;
-		            objDocLast.SaveAs(
-		              ref objOutDoc,      //FileName
-		              ref objMissing,     //FileFormat
-		              ref objMissing,     //LockComments
-		              ref objMissing,     //PassWord    
-		              ref objMissing,     //AddToRecentFiles
-		              ref objMissing,     //WritePassword
-		              ref objMissing,     //ReadOnlyRecommended
-		              ref objMissing,     //EmbedTrueTypeFonts
-		              ref objMissing,     //SaveNativePictureFormat
-		              ref objMissing,     //SaveFormsData
-		              ref objMissing,     //SaveAsAOCELetter,
-		              ref objMissing,     //Encoding
-		              ref objMissing,     //InsertLineBreaks
-		              ref objMissing,     //AllowSubstitutions
-		              ref objMissing,     //LineEnding
-		              ref objMissing      //AddBiDiMarks
-		              );
-				}
+	            object objMissing = System.Reflection.Missing.Value;
+	            object objOutDoc =reportPath;
+	            objDocLast.SaveAs(
+	              ref objOutDoc,      //FileName
+	              ref objMissing,     //FileFormat
+	              ref objMissing,     //LockComments
+	              ref objMissing,     //PassWord    
+	              ref objMissing,     //AddToRecentFiles
+	              ref objMissing,     //WritePassword
+	              ref objMissing,     //ReadOnlyRecommended
+	              ref objMissing,     //EmbedTrueTypeFonts
+	              ref objMissing,     //SaveNativePictureFormat
+	              ref objMissing,     //SaveFormsData
+	              ref objMissing,     //SaveAsAOCELetter,
+	              ref objMissing,     //Encoding
+	              ref objMissing,     //InsertLineBreaks
+	              ref objMissing,     //AllowSubstitutions
+	              ref objMissing,     //LineEnding
+	              ref objMissing      //AddBiDiMarks
+	              );
         		
         	} catch (Exception e) {
         		
@@ -380,7 +374,36 @@ namespace WatchCilent.Common
         		wtable.Cell(i+2, 3).Range.Text = dtable.Rows[i][2].ToString();//名称
         		wtable.Cell(i+2, 4).Range.Text = dtable.Rows[i][3].ToString();//title
         	}
-        	
         }
+    	
+    	public void WriteChartFromBK(string parLableName)  
+		{  
+    		
+			object lableName = parLableName;  
+			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
+			Word.InlineShape oShape =objDocLast.InlineShapes[0];
+			oShape.OLEFormat.Open();
+			
+			
+			Graph.Chart _testChart =   
+               (Graph.Chart)(oShape.OLEFormat.Object);  
+           	Graph.Application _testApp =  
+               _testChart.Application;  
+           	_testApp.Visible=false;
+           object[] Values = new object[] { 10, 30, 20, 25, 15 };  
+           for (int i = 0, j = System.Convert.ToInt32('A'); i < Values.Length; i++)  
+           {  
+               //这里的行列式为循环下来填写的是A2,B2,C2,D2.... OK?  
+               _testChart.Application.DataSheet.Cells.set_Item(2, System.Convert.ToString(  
+                   (char)( j+ i)),  
+                   Values[0]);  
+           }  
+           _testApp.Quit();
+			
+			
+			
+			
+			
+    	}
     }
 }

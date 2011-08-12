@@ -37,6 +37,7 @@ namespace WatchCilent.UI.Test
 			//
 			
 			InitializeComponent();
+			this.textBox1.ReadOnly=true;
 			this.CenterToScreen();
 			
 			//
@@ -44,46 +45,54 @@ namespace WatchCilent.UI.Test
 		
 		void Button2Click(object sender, EventArgs e)
 		{
+			if(this.textBox1.Text==null||this.textBox1.Text.Equals(""))
+			{
+				MessageBox.Show("请选择保存路径","提示");
+				return ;
+			}
 			Thread th = new Thread(new ParameterizedThreadStart(ThreadFunc));
-			th.Start(this.label3);
+			th.Start(this.textBox1.Text);
 			
 		}
-		private delegate void del_do_changetxt(Label lab,string text);
+		private delegate void del_do_changetxt(string text,int pgbvalue);
 		
-		void do_changetxt(Label lab,string text)
+		void do_changetxt(string text,int pgbvalue)
 		{
-			lab.Text = text;
+			this.label3.Text = text;
+			for (int i = this.progressBar1.Value; i < pgbvalue; i++) {
+				this.progressBar1.Value=i;
+			}
+			
 		}
 		
-		void ThreadFunc(object label1)
+		void ThreadFunc(object path)
 		{
-			Label label =(Label)label1;
 			del_do_changetxt delchangetxt = new del_do_changetxt(do_changetxt);
-			string msg = "正在启动";
-			label.BeginInvoke(delchangetxt,new object[]{label,msg});
+			this.BeginInvoke(delchangetxt,new object[]{"正在启动WORD",10});
 			WordDocumentMerger wm = new WordDocumentMerger();
 			try {
 				if(unitDOCpath==null||"".Equals(unitDOCpath))
 				{
 					unitDOCpath = this.defaultpath;
 				}
+				this.BeginInvoke(delchangetxt,new object[]{"正在打开模版",20});
 				//打开模版
 				wm.Open(defaultpath+@"\temp\TestReport.doc");
-				
-				label.BeginInvoke(delchangetxt,new object[]{label,"打开模版"});
 				//插入标签
 				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
 				string begintime = "2011-06-01";
 				string endtime = "2011-08-31";
-				label.BeginInvoke(delchangetxt,new object[]{label,"正在导入更新包"});
-				DataTable table1 =PackageDao.getRePortPack();
-				wm.insertTableForPack(1,table1);
-				label.BeginInvoke(delchangetxt,new object[]{label,"正在导入测试单元"});
-				DataTable table2 =TestUnitDao.getRePortTest(begintime,endtime);
-				wm.insertTableForTest(2,table2);
-				label.BeginInvoke(delchangetxt,new object[]{label,"完成"});
-				
-				wm.SaveAs();
+				wm.WriteChartFromBK("BUGLevel");
+//				this.BeginInvoke(delchangetxt,new object[]{"正在导入更新包数据",30});
+//				DataTable table1 =PackageDao.getRePortPack();
+//				this.BeginInvoke(delchangetxt,new object[]{"正在分析更新包数据",40});
+//				wm.insertTableForPack(1,table1);
+//				this.BeginInvoke(delchangetxt,new object[]{"正在导入测试数据",60});
+//				DataTable table2 =TestUnitDao.getRePortTest(begintime,endtime);
+//				this.BeginInvoke(delchangetxt,new object[]{"正在分析测试数据",80});
+//				wm.insertTableForTest(2,table2);
+				this.BeginInvoke(delchangetxt,new object[]{"完成",100});
+				wm.SaveAs(path.ToString());
 				MessageBox.Show("保存成功","提示");
 			} catch (Exception e1) {
 				MessageBox.Show(e1.ToString(),"提示", MessageBoxButtons.OK,MessageBoxIcon.Error);
@@ -91,6 +100,16 @@ namespace WatchCilent.UI.Test
 			finally
 			{
 				wm.Quit();
+			}
+		}
+		
+		void Button1Click(object sender, EventArgs e)
+		{
+			saveFileDialog1.Filter = "Word Document(*.doc)|*.doc";  
+			saveFileDialog1.DefaultExt = "Word Document(*.doc)|*.doc";  
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				this.textBox1.Text=this.saveFileDialog1.FileName;
 			}
 		}
 	}
