@@ -45,13 +45,22 @@ namespace WatchCilent.UI.Test
 		
 		void Button2Click(object sender, EventArgs e)
 		{
+			int i = 0;
+			string a = "";
+			
 			if(this.textBox1.Text==null||this.textBox1.Text.Equals(""))
 			{
 				MessageBox.Show("请选择保存路径","提示");
 				return ;
 			}
+			string begin=this.dateTimePicker1.Value.ToShortDateString()+" 00:00:00";
+			string end =this.dateTimePicker2.Value.ToShortDateString()+" 23:59:59";
 			Thread th = new Thread(new ParameterizedThreadStart(ThreadFunc));
-			th.Start(this.textBox1.Text);
+			ReportPara  rp=  new ReportPara();
+			rp.Path = this.textBox1.Text;
+			rp.Begintime = begin;
+			rp.Endtime = end;
+			th.Start(rp);
 			
 		}
 		private delegate void del_do_changetxt(string text,int pgbvalue);
@@ -59,14 +68,15 @@ namespace WatchCilent.UI.Test
 		void do_changetxt(string text,int pgbvalue)
 		{
 			this.label3.Text = text;
-			for (int i = this.progressBar1.Value; i < pgbvalue; i++) {
-				this.progressBar1.Value=i;
-			}
-			
+			this.progressBar1.Value=pgbvalue;
 		}
 		
-		void ThreadFunc(object path)
+		void ThreadFunc(object obj)
 		{
+			ReportPara rp = (ReportPara)obj;
+			string begin = rp.Begintime;
+			string end = rp.Endtime;
+			string path = rp.Path;
 			del_do_changetxt delchangetxt = new del_do_changetxt(do_changetxt);
 			this.BeginInvoke(delchangetxt,new object[]{"正在启动WORD",10});
 			WordDocumentMerger wm = new WordDocumentMerger();
@@ -80,10 +90,12 @@ namespace WatchCilent.UI.Test
 				wm.Open(defaultpath+@"\temp\TestReport.doc");
 				//插入标签
 				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
-				string begintime = "2011-06-01";
-				string endtime = "2011-08-31";
-				wm.WriteChartFromBK("BUGLevel");
-//				this.BeginInvoke(delchangetxt,new object[]{"正在导入更新包数据",30});
+				
+				DataTable packdt = PackageDao.getRePortPack(begin,end);
+				
+				wm.insertTableForSucc("成功率",packdt);
+				wm.WriteChartFromBK("BUGLevel",packdt);
+				this.BeginInvoke(delchangetxt,new object[]{"正在导入更新包数据",30});
 //				DataTable table1 =PackageDao.getRePortPack();
 //				this.BeginInvoke(delchangetxt,new object[]{"正在分析更新包数据",40});
 //				wm.insertTableForPack(1,table1);
@@ -111,6 +123,27 @@ namespace WatchCilent.UI.Test
 			{
 				this.textBox1.Text=this.saveFileDialog1.FileName;
 			}
+		}
+	}
+	class ReportPara
+	{
+		private string path;
+		
+		public string Path {
+			get { return path; }
+			set { path = value; }
+		}
+		private string begintime;
+		
+		public string Begintime {
+			get { return begintime; }
+			set { begintime = value; }
+		}
+		private string endtime;
+		
+		public string Endtime {
+			get { return endtime; }
+			set { endtime = value; }
 		}
 	}
 }
