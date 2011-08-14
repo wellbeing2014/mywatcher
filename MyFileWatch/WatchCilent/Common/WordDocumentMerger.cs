@@ -15,6 +15,8 @@ using System.Reflection;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Graph;
+
 
 namespace WatchCilent.Common
 {
@@ -252,7 +254,7 @@ namespace WatchCilent.Common
                         );
                 }
                 object restart = start;
-                Range rg = objDocLast.Range(ref restart,ref objMissing);
+                Word.Range rg = objDocLast.Range(ref restart,ref objMissing);
                 object oStyleName = "正文";
                 rg.set_Style(ref oStyleName);
 
@@ -334,8 +336,12 @@ namespace WatchCilent.Common
                 System.Windows.Forms.MessageBox.Show(e.Message); 
             }
         }
-
-        public void insertTableForPack(int tableindex,DataTable dtable)
+		/// <summary>
+		/// 插入更新包列表的方法
+		/// </summary>
+		/// <param name="tableindex"></param>
+		/// <param name="dtable"></param>
+        public void insertTableForPack(int tableindex,System.Data.DataTable dtable)
         {
         	Word.Table wtable = objDocLast.Content.Tables[tableindex];
         	object wrow = wtable.Rows.Last;
@@ -355,10 +361,15 @@ namespace WatchCilent.Common
 //        		                               	ref adr1,ref objMissing	);
         	}
     	}
-    	public void insertTableForTest(int tableindex,DataTable dtable)
+        /// <summary>
+        /// 插入测试列表的方法。
+        /// </summary>
+        /// <param name="tableindex"></param>
+        /// <param name="dtable"></param>
+    	public void insertTableForTest(int tableindex,System.Data.DataTable dtable)
         {
         	Word.Table wtable = objDocLast.Content.Tables[tableindex];
-        	object wrow = wtable.Rows.Last;
+        //	object wrow = wtable.Rows.Last;
         	wtable.Rows.Last.Select();
         	object rownum =dtable.Rows.Count;
         	objApp.Selection.InsertRowsBelow(ref rownum);
@@ -375,35 +386,69 @@ namespace WatchCilent.Common
         		wtable.Cell(i+2, 4).Range.Text = dtable.Rows[i][3].ToString();//title
         	}
         }
-    	
-    	public void WriteChartFromBK(string parLableName)  
+    	/// <summary>
+    	/// 插入图表数据的方法。
+    	/// </summary>
+    	/// <param name="parLableName"></param>
+    	/// <param name="dt"></param>
+    	public void WriteChartFromBK(string parLableName,System.Data.DataTable dt)  
 		{  
     		
 			object lableName = parLableName;  
 			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
-			Word.InlineShape oShape =objDocLast.InlineShapes[0];
-			oShape.OLEFormat.Open();
+			bm.Select();
+			Word.InlineShape oShape =objDocLast.InlineShapes[1];
+			oShape.OLEFormat.Activate();
 			
-			
-			Graph.Chart _testChart =   
-               (Graph.Chart)(oShape.OLEFormat.Object);  
-           	Graph.Application _testApp =  
+			Chart _testChart =   
+               (Chart)(oShape.OLEFormat.Object);  
+           	Microsoft.Office.Interop.Graph.Application _testApp =  
                _testChart.Application;  
-           	_testApp.Visible=false;
+//           	_testApp.Visible=false;
            object[] Values = new object[] { 10, 30, 20, 25, 15 };  
            for (int i = 0, j = System.Convert.ToInt32('A'); i < Values.Length; i++)  
            {  
                //这里的行列式为循环下来填写的是A2,B2,C2,D2.... OK?  
                _testChart.Application.DataSheet.Cells.set_Item(2, System.Convert.ToString(  
                    (char)( j+ i)),  
-                   Values[0]);  
-           }  
+                   Values[i]);  
+           }
+	 
+           _testApp.Update();
            _testApp.Quit();
-			
-			
-			
-			
-			
     	}
+    	
+    	/// <summary>
+    	/// 插入更新包成功率的方法。
+    	/// </summary>
+    	/// <param name="parLableName"></param>
+    	/// <param name="dt"></param>
+    	public void insertTableForSucc(string parLableName,System.Data.DataTable dt)  
+		{  
+    		
+			object lableName = parLableName;  
+			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
+			Table table =bm.Range.Tables[0];
+			table.Rows.Last.Select();
+        	object rownum =dt.Rows.Count;
+        	objApp.Selection.InsertRowsBelow(ref rownum);
+        	
+        	int pubnum = 0;
+        	int fznum = 0;
+        	
+        	for (int i = 0; i < dt.Rows.Count; i++) {
+        		pubnum += (int)dt.Rows[i][1];
+        		fznum +=(int)dt.Rows[i][2];
+        		table.Cell(i+2, 1).Range.Text = dt.Rows[i][0].ToString();//姓名
+        		table.Cell(i+2, 2).Range.Text = dt.Rows[i][1].ToString();//发布数
+        		table.Cell(i+2, 3).Range.Text = dt.Rows[i][2].ToString();//废止数
+        		table.Cell(i+2, 4).Range.Text = dt.Rows[i][3].ToString();//成功率
+        	}
+        	table.Rows.Last.Cells[0].Range.Text="合计";
+        	table.Rows.Last.Cells[0].Range.Text=pubnum.ToString();//发布总数
+        	table.Rows.Last.Cells[0].Range.Text=fznum.ToString();//废止总数
+        //	table.Rows.Last.Cells[0].Range.Text="合计";//总成功率
+    	}
+    	
     }
 }

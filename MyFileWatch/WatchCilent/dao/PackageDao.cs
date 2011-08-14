@@ -27,9 +27,34 @@ namespace WatchCilent.dao
 		{
 		}
 		
-		static public DataTable getRePortPack()
+		static public DataTable getRePortPack(string begintime ,string endtime)
 		{
-			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid  order by cdate(packageInfo.packtime) asc";
+			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid " +
+						"where cdate(packageInfo.packtime) >=cdate("+begintime+	")"+
+						" and cdate(packageInfo.packtime) <=cdate("+endtime+")"+" order by cdate(packageInfo.packtime) asc";
+			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			return data.Tables["ds"];
+		}
+		
+		static public DataTable getRePortPackNUM(string begintime ,string endtime)
+		{
+			DataTable numtable = new DataTable("numdt");
+			numtable.Columns.Add("pubnum",Type.GetType("System.Int32"));
+			numtable.Columns.Add("fznum",Type.GetType("System.String"));
+			numtable.Columns.Add("personname",Type.GetType("System.String"));
+			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
+			string sql="SELECT count(*) from packageinfo a where "+
+"a.managerid =(select id from personinfo where fullname = '') "+
+				"and cdate(packtime)>=cdate('"+begintime+"') "+
+				"and cdate(packtime)<=cdate('"+endtime+"') "
+and state='已发布'
+			foreach (PersonInfo ps in personlist) {
+			
+			}
+			
+			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid " +
+						"where cdate(packageInfo.packtime) >=cdate("+begintime+	")"+
+						" and cdate(packageInfo.packtime) <=cdate("+endtime+")"+" order by cdate(packageInfo.packtime) asc";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
