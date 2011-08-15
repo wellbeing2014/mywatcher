@@ -45,9 +45,6 @@ namespace WatchCilent.UI.Test
 		
 		void Button2Click(object sender, EventArgs e)
 		{
-			int i = 0;
-			string a = "";
-			
 			if(this.textBox1.Text==null||this.textBox1.Text.Equals(""))
 			{
 				MessageBox.Show("请选择保存路径","提示");
@@ -90,12 +87,11 @@ namespace WatchCilent.UI.Test
 				wm.Open(defaultpath+@"\temp\TestReport.doc");
 				//插入标签
 				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
+				DataTable packdt = PackageDao.getRePortPackNUM(begin,end);
 				
-				DataTable packdt = PackageDao.getRePortPack(begin,end);
-				
-				wm.insertTableForSucc("成功率",packdt);
-				wm.WriteChartFromBK("BUGLevel",packdt);
-				this.BeginInvoke(delchangetxt,new object[]{"正在导入更新包数据",30});
+				wm.insertTable("成功率",packdt);
+				//wm.WriteChartFromBK("BUGLevel",packdt);
+				//this.BeginInvoke(delchangetxt,new object[]{"正在导入更新包数据",30});
 //				DataTable table1 =PackageDao.getRePortPack();
 //				this.BeginInvoke(delchangetxt,new object[]{"正在分析更新包数据",40});
 //				wm.insertTableForPack(1,table1);

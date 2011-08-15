@@ -15,7 +15,7 @@ using System.Reflection;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
-using Microsoft.Office.Interop.Graph;
+using Graph;
 
 
 namespace WatchCilent.Common
@@ -402,7 +402,7 @@ namespace WatchCilent.Common
 			
 			Chart _testChart =   
                (Chart)(oShape.OLEFormat.Object);  
-           	Microsoft.Office.Interop.Graph.Application _testApp =  
+           	Graph.Application _testApp =  
                _testChart.Application;  
 //           	_testApp.Visible=false;
            object[] Values = new object[] { 10, 30, 20, 25, 15 };  
@@ -419,35 +419,30 @@ namespace WatchCilent.Common
     	}
     	
     	/// <summary>
-    	/// 插入更新包成功率的方法。
+    	/// 插入一般表格的方法。
     	/// </summary>
     	/// <param name="parLableName"></param>
     	/// <param name="dt"></param>
-    	public void insertTableForSucc(string parLableName,System.Data.DataTable dt)  
+    	public void insertTable(string parLableName,System.Data.DataTable dt)  
 		{  
-    		
 			object lableName = parLableName;  
 			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
-			Table table =bm.Range.Tables[0];
+			Table table =bm.Range.Tables[1];
 			table.Rows.Last.Select();
-        	object rownum =dt.Rows.Count;
+        	object rownum =dt.Rows.Count-1;
         	objApp.Selection.InsertRowsBelow(ref rownum);
         	
-        	int pubnum = 0;
-        	int fznum = 0;
-        	
-        	for (int i = 0; i < dt.Rows.Count; i++) {
-        		pubnum += (int)dt.Rows[i][1];
-        		fznum +=(int)dt.Rows[i][2];
-        		table.Cell(i+2, 1).Range.Text = dt.Rows[i][0].ToString();//姓名
-        		table.Cell(i+2, 2).Range.Text = dt.Rows[i][1].ToString();//发布数
-        		table.Cell(i+2, 3).Range.Text = dt.Rows[i][2].ToString();//废止数
-        		table.Cell(i+2, 4).Range.Text = dt.Rows[i][3].ToString();//成功率
-        	}
-        	table.Rows.Last.Cells[0].Range.Text="合计";
-        	table.Rows.Last.Cells[0].Range.Text=pubnum.ToString();//发布总数
-        	table.Rows.Last.Cells[0].Range.Text=fznum.ToString();//废止总数
-        //	table.Rows.Last.Cells[0].Range.Text="合计";//总成功率
+        	for (int i = 0; i < dt.Rows.Count; i++)//填充数据
+           	{
+	            for (int j = 0; j < table.Columns.Count; j++)
+	            {
+	            	table.Cell(i + 2, j + 1).Range.Text = dt.Rows[i][j].ToString();
+	            }
+            }
+        	//table.Rows.Last.Cells[1].Range.Text="合计";
+        	//table.Rows.Last.Cells[0].Range.Text=pubnum.ToString();//发布总数
+        	//table.Rows.Last.Cells[0].Range.Text=fznum.ToString();//废止总数
+      
     	}
     	
     }

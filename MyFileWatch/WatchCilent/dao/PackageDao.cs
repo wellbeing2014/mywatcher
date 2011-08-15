@@ -39,24 +39,42 @@ namespace WatchCilent.dao
 		static public DataTable getRePortPackNUM(string begintime ,string endtime)
 		{
 			DataTable numtable = new DataTable("numdt");
-			numtable.Columns.Add("pubnum",Type.GetType("System.Int32"));
-			numtable.Columns.Add("fznum",Type.GetType("System.String"));
 			numtable.Columns.Add("personname",Type.GetType("System.String"));
+			numtable.Columns.Add("pubnum",Type.GetType("System.Int32"));
+			numtable.Columns.Add("fznum",Type.GetType("System.Int32"));
+			numtable.Columns.Add("totalnum",Type.GetType("System.Int32"));
+			numtable.Columns.Add("rate",Type.GetType("System.String"));
 			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
 			string sql="SELECT count(*) from packageinfo a where "+
-"a.managerid =(select id from personinfo where fullname = '') "+
+				"a.managerid ={0} "+
 				"and cdate(packtime)>=cdate('"+begintime+"') "+
-				"and cdate(packtime)<=cdate('"+endtime+"') "
-and state='已发布'
+				"and cdate(packtime)<=cdate('"+endtime+"') "+"and state='{1}'";
+			string totalsql="SELECT count(*) from packageinfo a where "+
+				"a.managerid ={0} "+
+				"and cdate(packtime)>=cdate('"+begintime+"') "+
+				"and cdate(packtime)<=cdate('"+endtime+"') ";
+			System.Globalization.NumberFormatInfo provider = new System.Globalization.NumberFormatInfo();
+			provider.PercentDecimalDigits = 2;//小数点保留几位数. 
+			provider.PercentPositivePattern = 1;//百分号出现在何处. 
+			int pub = 0;
+			int fz = 0;
+			int total =0;
 			foreach (PersonInfo ps in personlist) {
-			
+				string sqltemp = string.Format(sql,ps.Id,CommonConst.PACKSTATE_YiFaBu);
+				int pubnum =AccessDBUtil.ExecuteScalar(sqltemp);
+				pub+=pubnum;//合计数
+				sqltemp = string.Format(sql,ps.Id,CommonConst.PACKSTATE_YiFeiZhi);
+				int fznum =AccessDBUtil.ExecuteScalar(sqltemp);
+				fz+=fznum;//合计数
+				sqltemp = string.Format(totalsql,ps.Id);
+				int totalnum =AccessDBUtil.ExecuteScalar(sqltemp);
+				total+=totalnum;//合计数
+				double rate = (double)pubnum/(fznum+pubnum);//一定要用double类型.
+				numtable.Rows.Add(ps.Fullname,pubnum,fznum,totalnum,rate.ToString("P", provider));
 			}
-			
-			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid " +
-						"where cdate(packageInfo.packtime) >=cdate("+begintime+	")"+
-						" and cdate(packageInfo.packtime) <=cdate("+endtime+")"+" order by cdate(packageInfo.packtime) asc";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
-			return data.Tables["ds"];
+			double totalrate = (double)pub/(fz+pub);//一定要用double类型.
+				numtable.Rows.Add("合计",pub,fz,total,totalrate.ToString("P", provider));
+			return numtable;
 		}
 		
 		/// <summary>
