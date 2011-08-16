@@ -341,9 +341,11 @@ namespace WatchCilent.Common
 		/// </summary>
 		/// <param name="tableindex"></param>
 		/// <param name="dtable"></param>
-        public void insertTableForPack(int tableindex,System.Data.DataTable dtable)
+        public void insertTableForPack(string parLableName,System.Data.DataTable dtable)
         {
-        	Word.Table wtable = objDocLast.Content.Tables[tableindex];
+        	object lableName = parLableName;  
+			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
+			Word.Table wtable = bm.Range.Tables[1];
         	object wrow = wtable.Rows.Last;
         	wtable.Rows.Last.Select();
         	object rownum =dtable.Rows.Count;
@@ -366,9 +368,11 @@ namespace WatchCilent.Common
         /// </summary>
         /// <param name="tableindex"></param>
         /// <param name="dtable"></param>
-    	public void insertTableForTest(int tableindex,System.Data.DataTable dtable)
+    	public void insertTableForTest(string parLableName,System.Data.DataTable dtable)
         {
-        	Word.Table wtable = objDocLast.Content.Tables[tableindex];
+    		object lableName = parLableName;  
+			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
+			Word.Table wtable = bm.Range.Tables[1];
         //	object wrow = wtable.Rows.Last;
         	wtable.Rows.Last.Select();
         	object rownum =dtable.Rows.Count;
@@ -398,22 +402,22 @@ namespace WatchCilent.Common
 			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
 			bm.Select();
 			Word.InlineShape oShape =objDocLast.InlineShapes[1];
+			oShape.OLEFormat.Application.Visible = false;
 			oShape.OLEFormat.Activate();
-			
-			Chart _testChart =   
-               (Chart)(oShape.OLEFormat.Object);  
-           	Graph.Application _testApp =  
-               _testChart.Application;  
-//           	_testApp.Visible=false;
-           object[] Values = new object[] { 10, 30, 20, 25, 15 };  
-           for (int i = 0, j = System.Convert.ToInt32('A'); i < Values.Length; i++)  
-           {  
-               //这里的行列式为循环下来填写的是A2,B2,C2,D2.... OK?  
-               _testChart.Application.DataSheet.Cells.set_Item(2, System.Convert.ToString(  
-                   (char)( j+ i)),  
-                   Values[i]);  
-           }
-	 
+			Chart _testChart =(Chart)oShape.OLEFormat.Object;
+           	Graph.Application _testApp = _testChart.Application; 
+			_testApp.DataSheet.Cells.Clear();//清空表格的初始数据           	
+           	for (int a = 0; a < dt.Columns.Count; a++)//初始化列名
+            {
+                _testApp.DataSheet.Cells[1, a + 1] = dt.Columns[a].ColumnName;
+            }
+            for (int i = 0; i < dt.Rows.Count; i++)//填充数据
+           	{
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    _testApp.DataSheet.Cells[i + 2, j + 1] = dt.Rows[i][j].ToString();
+                }
+            }
            _testApp.Update();
            _testApp.Quit();
     	}

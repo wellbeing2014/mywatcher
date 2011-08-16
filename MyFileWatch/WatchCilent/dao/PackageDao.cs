@@ -26,12 +26,13 @@ namespace WatchCilent.dao
 		public PackageDao()
 		{
 		}
+	
 		
 		static public DataTable getRePortPack(string begintime ,string endtime)
 		{
 			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid " +
-						"where cdate(packageInfo.packtime) >=cdate("+begintime+	")"+
-						" and cdate(packageInfo.packtime) <=cdate("+endtime+")"+" order by cdate(packageInfo.packtime) asc";
+						"where cdate(packageInfo.packtime) >=cdate('"+begintime+"')"+
+						" and cdate(packageInfo.packtime) <=cdate('"+endtime+"')"+" order by cdate(packageInfo.packtime) asc";
 			DataSet data = AccessDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}

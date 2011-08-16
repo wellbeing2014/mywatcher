@@ -24,6 +24,10 @@ namespace WatchCilent.Common
 //		public static string WisofServiceHost =@dbc.GetValue("WisofServiceHost").ToString();
 		
 		public static readonly  string[] BUGLEVEL ={"一般","严重","轻微","紧急"};
+		public const string BUGLEVEL_YiBan = "一般";
+		public const string BUGLEVEL_YanZhong = "严重";
+		public const string BUGLEVEL_QinWei = "轻微";
+		public const string BUGLEVEL_JinJI = "紧急";
 		
 		public static readonly string[] PACKSTATE ={"全部","已接收","已处理","已测试","已发布","已废止"};
 		

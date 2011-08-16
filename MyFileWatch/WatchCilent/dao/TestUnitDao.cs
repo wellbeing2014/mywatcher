@@ -26,6 +26,76 @@ namespace WatchCilent.dao
 		public TestUnitDao()
 		{
 		}
+		static public DataTable getRePortBugLevelAll(string begintime ,string endtime)
+		{
+			DataTable numtable = new DataTable("numdt");
+			numtable.Columns.Add("",Type.GetType("System.String"));
+			numtable.Columns.Add("轻微",Type.GetType("System.Int32"));
+			numtable.Columns.Add("一般",Type.GetType("System.Int32"));
+			numtable.Columns.Add("紧急",Type.GetType("System.Int32"));
+			numtable.Columns.Add("严重",Type.GetType("System.Int32"));
+			
+			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
+			string sql="SELECT count(*) from testunit where "+
+				"cdate(testtime)>=cdate('"+begintime+"') "+
+				"and cdate(testtime)<=cdate('"+endtime+"') "+"and buglevel='{0}'";
+			
+				string sqltemp = string.Format(sql,CommonConst.BUGLEVEL_QinWei);
+				int qinwei =AccessDBUtil.ExecuteScalar(sqltemp);
+				
+				sqltemp = string.Format(sql,CommonConst.BUGLEVEL_YiBan);
+				int yiban =AccessDBUtil.ExecuteScalar(sqltemp);
+				
+				sqltemp = string.Format(sql,CommonConst.BUGLEVEL_YanZhong);
+				int yanzhong =AccessDBUtil.ExecuteScalar(sqltemp);
+				
+				sqltemp = string.Format(sql,CommonConst.BUGLEVEL_JinJI);
+				int jinji =AccessDBUtil.ExecuteScalar(sqltemp);
+			
+				numtable.Rows.Add(null,qinwei,yiban,jinji,yanzhong);
+		
+			return numtable;
+		}
+		static public DataTable getRePortBugLevel(string begintime ,string endtime)
+		{
+			DataTable numtable = new DataTable("numdt");
+			numtable.Columns.Add("personname",Type.GetType("System.String"));
+			numtable.Columns.Add("轻微",Type.GetType("System.Int32"));
+			numtable.Columns.Add("一般",Type.GetType("System.Int32"));
+			numtable.Columns.Add("紧急",Type.GetType("System.Int32"));
+			numtable.Columns.Add("严重",Type.GetType("System.Int32"));
+			numtable.Columns.Add("总计",Type.GetType("System.Int32"));
+			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
+			string sql="SELECT count(*) from testunit where adminid={0} "+
+				"and cdate(testtime)>=cdate('"+begintime+"') "+
+				"and cdate(testtime)<=cdate('"+endtime+"') "+"and buglevel='{1}'";
+			
+			
+			int 轻微 = 0;
+			int 一般 = 0;
+			int 紧急 = 0;
+			int 严重 = 0;
+			
+			foreach (PersonInfo ps in personlist) {
+				string sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_QinWei);
+				int qinwei =AccessDBUtil.ExecuteScalar(sqltemp);
+				轻微+=qinwei;//合计数
+				sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_YiBan);
+				int yiban =AccessDBUtil.ExecuteScalar(sqltemp);
+				一般+=yiban;//合计数
+				sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_YanZhong);
+				int yanzhong =AccessDBUtil.ExecuteScalar(sqltemp);
+				严重+=yanzhong;//合计数
+				sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_JinJI);
+				int jinji =AccessDBUtil.ExecuteScalar(sqltemp);
+				紧急+=jinji;//合计数
+				int zongji=jinji+yanzhong+yiban+qinwei;
+				numtable.Rows.Add(ps.Fullname,qinwei,yiban,jinji,yanzhong,zongji);
+			}
+				int 总计=紧急+严重+一般+轻微;
+				numtable.Rows.Add("合计",轻微,一般,紧急,严重,总计);
+			return numtable;
+		}
 		
 		static public DataTable getRePortTest(string begintime,string endtime)
 		{

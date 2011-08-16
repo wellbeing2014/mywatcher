@@ -85,20 +85,26 @@ namespace WatchCilent.UI.Test
 				this.BeginInvoke(delchangetxt,new object[]{"正在打开模版",20});
 				//打开模版
 				wm.Open(defaultpath+@"\temp\TestReport.doc");
-				//插入标签
-				wm.WriteIntoMarkBook("Atitle","权力运行许可平台");
+				//查询数据库
+				this.BeginInvoke(delchangetxt,new object[]{"正在查询数据库",30});
+				DataTable table1 =PackageDao.getRePortPack(begin,end);
+				DataTable table2 =TestUnitDao.getRePortTest(begin,end);
 				DataTable packdt = PackageDao.getRePortPackNUM(begin,end);
-				
-				wm.insertTable("成功率",packdt);
-				//wm.WriteChartFromBK("BUGLevel",packdt);
-				//this.BeginInvoke(delchangetxt,new object[]{"正在导入更新包数据",30});
-//				DataTable table1 =PackageDao.getRePortPack();
-//				this.BeginInvoke(delchangetxt,new object[]{"正在分析更新包数据",40});
-//				wm.insertTableForPack(1,table1);
-//				this.BeginInvoke(delchangetxt,new object[]{"正在导入测试数据",60});
-//				DataTable table2 =TestUnitDao.getRePortTest(begintime,endtime);
-//				this.BeginInvoke(delchangetxt,new object[]{"正在分析测试数据",80});
-//				wm.insertTableForTest(2,table2);
+				DataTable testdt =TestUnitDao.getRePortBugLevel(begin,end);
+				//插入标签
+				this.BeginInvoke(delchangetxt,new object[]{"正在插入数据",60});
+				wm.WriteIntoMarkBook("测试报告名称","权力运行许可平台");
+				wm.WriteIntoMarkBook("测试时间起",begin);
+				wm.WriteIntoMarkBook("测试时间至",end);
+				wm.WriteIntoMarkBook("更新包个数",table1.Rows.Count.ToString());
+				wm.insertTable("成功率表格",packdt);
+				wm.WriteIntoMarkBook("BUG个数",table2.Rows.Count.ToString());
+				DataTable testAllBug = TestUnitDao.getRePortBugLevelAll(begin,end);
+				this.BeginInvoke(delchangetxt,new object[]{"正在绘制图表和表格",80});
+				wm.WriteChartFromBK("BUG等级饼图",testAllBug);
+				wm.insertTable("BUG等级表格",testdt);
+				wm.insertTableForPack("测试对象表格",table1);
+				wm.insertTableForTest("测试缺陷表格",table2);
 				this.BeginInvoke(delchangetxt,new object[]{"完成",100});
 				wm.SaveAs(path.ToString());
 				MessageBox.Show("保存成功","提示");
