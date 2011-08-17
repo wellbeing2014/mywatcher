@@ -395,13 +395,13 @@ namespace WatchCilent.Common
     	/// </summary>
     	/// <param name="parLableName"></param>
     	/// <param name="dt"></param>
-    	public void WriteChartFromBK(string parLableName,System.Data.DataTable dt)  
+    	public void InsertChartFromBK(string parLableName,System.Data.DataTable dt)  
 		{  
     		
 			object lableName = parLableName;  
 			Bookmark bm = objDocLast.Bookmarks.get_Item(ref lableName);//返回标签  
 			bm.Select();
-			Word.InlineShape oShape =objDocLast.InlineShapes[1];
+			Word.InlineShape oShape =bm.Range.InlineShapes[1];
 			oShape.OLEFormat.Application.Visible = false;
 			oShape.OLEFormat.Activate();
 			Chart _testChart =(Chart)oShape.OLEFormat.Object;
