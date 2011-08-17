@@ -26,6 +26,67 @@ namespace WatchCilent.dao
 		public TestUnitDao()
 		{
 		}
+		
+		/// <summary>
+		///	统计BUG概率
+		/// </summary>
+		/// <param name="begintime"></param>
+		/// <param name="endtime"></param>
+		/// <returns></returns>
+		static public DataTable getRePortBugRate(string begintime ,string endtime)
+		{
+			DataTable numtable = new DataTable("numdt");
+			
+			return numtable;
+		}
+		/// <summary>
+		/// 统计BUG趋势图
+		/// </summary>
+		/// <param name="begintime"></param>
+		/// <param name="endtime"></param>
+		/// <returns></returns>
+		static public DataTable getRePortBugNum(string begintime ,string endtime)
+		{
+			DataTable numtable = new DataTable("numdt");
+			numtable.Columns.Add("name",Type.GetType("System.String"));
+			//------------------查时间点--------------------------------
+			string sqlcol ="SELECT distinct(Format(testtime,'yyyy-mm-dd') ) FROM testunit "+
+					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') "+
+					"order by Format(testtime,'yyyy-mm-dd') asc";
+			DataSet datacol = AccessDBUtil.ExecuteQuery(sqlcol);
+			DataRowCollection drs = datacol.Tables["ds"].Rows;
+			List<string> timecol = new List<string>();
+			for (int i = 0; i < drs.Count; i++) {
+				timecol.Add(drs[i][0].ToString());
+				numtable.Columns.Add(drs[i][0].ToString(),Type.GetType("System.Int32"));
+			}
+			//------------------查姓名--------------------------------------------
+			string sqlname ="SELECT distinct(adminname) FROM testunit "+
+					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') ";
+			DataSet dataname = AccessDBUtil.ExecuteQuery(sqlname);
+			DataRowCollection drsname = dataname.Tables["ds"].Rows;
+			List<string> adminname = new List<string>();
+			for (int j = 0; j < drsname.Count; j++) {
+				adminname.Add(drsname[j][0].ToString());
+			}
+			
+			string sql="SELECT count(*) FROM testunit where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') and adminname='{0}' and Format(testtime,'yyyy-mm-dd') =Format('{1}','yyyy-mm-dd')";
+			string sqlv ="";
+			for (int a = 0; a < adminname.Count; a++) {
+				DataRow dr = numtable.NewRow();
+				dr[0]=adminname[a];
+				for(int b = 0;b<timecol.Count;b++)
+				{
+					sqlv = string.Format(sql,adminname[a],timecol[b]);
+					int num = AccessDBUtil.ExecuteScalar(sqlv);
+					dr[b+1] = num;
+				}
+				numtable.Rows.Add(dr);
+			}
+		
+			return numtable;
+		}
+		
 		static public DataTable getRePortBugLevelAll(string begintime ,string endtime)
 		{
 			DataTable numtable = new DataTable("numdt");
