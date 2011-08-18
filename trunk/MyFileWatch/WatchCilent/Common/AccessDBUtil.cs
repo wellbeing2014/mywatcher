@@ -361,7 +361,33 @@ namespace WatchCilent.Common
         {
 			return ExecuteNonQuery(sql,null);
         }
-		
+		//执行计算如sum等返回第一行第一列 
+		public static double ExecuteSUM(string sql,OleDbParameter[] parameters)
+        {
+        	//Debug.WriteLine(sql);
+            using (OleDbConnection connection = new OleDbConnection(connectionString))
+            {
+            	double d=0.00;
+                OleDbCommand cmd = new OleDbCommand(sql, connection);
+                try
+                {
+                    connection.Open();
+                    if(parameters!=null) cmd.Parameters.AddRange(parameters);
+                    string restr = cmd.ExecuteScalar().ToString();
+                    if(string.IsNullOrEmpty(restr))
+                    	return d;
+                    else 
+                    {
+                    	d=Convert.ToDouble(restr);
+                    	return d;
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
 		//执行单条语句返回第一行第一列,可以用来返回count(*)
 		public static int ExecuteScalar(string sql,OleDbParameter[] parameters)
         {
@@ -373,8 +399,20 @@ namespace WatchCilent.Common
                 {
                     connection.Open();
                     if(parameters!=null) cmd.Parameters.AddRange(parameters);
-                    int value = Int32.Parse(cmd.ExecuteScalar().ToString());
-                    return value;
+                    string restr = cmd.ExecuteScalar().ToString();
+                    if(string.IsNullOrEmpty(restr))
+                    	return 0;
+                    else if(restr.IndexOf('.')<0)
+                    {
+                    	int value = Int32.Parse(restr);
+                    	return value;
+                    }	
+                    else
+                    {
+                    	double d=0.0;
+                    	d=Convert.ToDouble(restr);
+                    	return (int)d;
+                    }
                 }
                 catch (Exception e)
                 {
