@@ -93,6 +93,7 @@ namespace WatchCilent.UI.Test
 				DataTable testbugleveldt =TestUnitDao.getRePortBugLevel(begin,end);
 				DataTable testAllBug = TestUnitDao.getRePortBugLevelAll(begin,end);
 				DataTable testbugnumdt = TestUnitDao.getRePortBugNum(begin,end);
+				DataTable testbugrate = TestUnitDao.getRePortBugRate(begin,end);
 				//插入标签
 				this.BeginInvoke(delchangetxt,new object[]{"正在插入数据",60});
 				wm.WriteIntoMarkBook("测试报告名称","权力运行许可平台");
@@ -105,6 +106,7 @@ namespace WatchCilent.UI.Test
 				this.BeginInvoke(delchangetxt,new object[]{"正在绘制图表和表格",80});
 				wm.InsertChartFromBK("BUG等级饼图",testAllBug);
 				wm.InsertChartFromBK("BUG趋势折线图",testbugnumdt);
+				wm.InsertChartFromBK("BUG概率估算柱状图",testbugrate);
 				wm.insertTable("BUG等级表格",testbugleveldt);
 				wm.insertTableForPack("测试对象表格",table1);
 				wm.insertTableForTest("测试缺陷表格",table2);

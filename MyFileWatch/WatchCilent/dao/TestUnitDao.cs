@@ -36,7 +36,34 @@ namespace WatchCilent.dao
 		static public DataTable getRePortBugRate(string begintime ,string endtime)
 		{
 			DataTable numtable = new DataTable("numdt");
-			
+			numtable.Columns.Add("");
+			//------------------查姓名--------------------------------------------
+			string sqlname ="SELECT distinct adminname FROM testunit "+
+					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') ";
+			DataSet dataname = AccessDBUtil.ExecuteQuery(sqlname);
+			DataRowCollection drsname = dataname.Tables["ds"].Rows;
+			List<string> adminname = new List<string>();
+			for (int j = 0; j < drsname.Count; j++) {
+				adminname.Add(drsname[j][0].ToString());
+				numtable.Columns.Add(drsname[j][0].ToString(),Type.GetType("System.Double"));
+			}
+			string sql ="SELECT sum(packageInfo.testrate/100) FROM testunit INNER JOIN packageInfo ON testunit.packageid = packageInfo.ID "+
+						"where cdate(testunit.testtime)>=cdate('"+begintime+"') and  cdate(testunit.testtime)<=cdate('"+endtime+"') and testunit.adminname='{0}'";
+			string sqlnum ="select count(*) from (select distinct testunit.packageid FROM testunit INNER JOIN packageInfo ON testunit.packageid = packageInfo.ID "+
+						"where cdate(testunit.testtime)>=cdate('"+begintime+"') and  cdate(testunit.testtime)<=cdate('"+endtime+"') and testunit.adminname='{0}')";
+			string sqlv="";
+			DataRow dr = numtable.NewRow();
+			for (int i = 0; i < adminname.Count; i++) {
+				sqlv = string.Format(sql,adminname[i]);
+				double num1 = AccessDBUtil.ExecuteSUM(sqlv,null);
+				sqlv = string.Format(sqlnum,adminname[i]);
+				double num2 = AccessDBUtil.ExecuteSUM(sqlv,null);
+				if(num2==0.00)
+					dr[i+1]=0;
+				else
+					dr[i+1]=num1/num2;
+			}
+			numtable.Rows.Add(dr);
 			return numtable;
 		}
 		/// <summary>
