@@ -50,13 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessDBUtil.cs" />
     <Compile Include="Communication.cs" />
-    <Compile Include="pojo\ModuleInfo.cs" />
-    <Compile Include="pojo\ModuleProject.cs" />
-    <Compile Include="pojo\PackageInfo.cs" />
-    <Compile Include="pojo\PersonInfo.cs" />
-    <Compile Include="pojo\ProjectInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +58,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="pojo" />
+    <ProjectReference Include="..\WatchCore\WatchCore.csproj">
+      <Project>{FFB3B2FE-B623-42AA-9FDB-FFE4807D7F14}</Project>
+      <Name>WatchCore</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
+using WatchCore.Common;
 
 
 namespace WatchTest
@@ -20,7 +21,7 @@ namespace WatchTest
 	/// </summary>
 	public partial class MainForm : Form
 	{
-		private Communication.UDPManage udp = new Communication.UDPManage();
+		private FeiQIM feiq = new FeiQIM(2425);
 		public MainForm()
 		{
 			//
@@ -28,7 +29,7 @@ namespace WatchTest
 			//
 			InitializeComponent();
 			
-			udp.StartListen(this,printline);
+			feiq.StartListen(this,printline);
 			this.Closing+= new CancelEventHandler(MainForm_Closing);
 			
 			
@@ -37,36 +38,30 @@ namespace WatchTest
 			//
 		}
 		
-		private void printline(string msg)
+		private void printline(string ip,string msg)
 		{
-			string[] msgtou = msg.Split(':');
-			string feiqtou = msgtou[0];
-			string feiqtou = msgtou[0];
-			string feiqtou = msgtou[0];
 			
-			string msgbody = msg.Substring(string.);
-			
-			MessageBox.Show(msgbody);
+			MessageBox.Show(ip+"say:"+msg);
 		}
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			Communication.UDPManage.BroadcastToFQ("ahahhaha","192.10.110.206");
+			feiq.SendMsgToSomeIP("ahahhaha","192.10.110.206");
 		}
 		
 		void Button2Click(object sender, EventArgs e)
 		{
-			udp.StopListen();
+			feiq.StopListen();
 		}
 		
 		void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			
-			udp.StopListen();
+			feiq.StopListen();
 		}
 		void Button3Click(object sender, EventArgs e)
 		{
-			udp.StartListen(this,printline);
+			feiq.StartListen(this,printline);
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace WatchTest
 	/// </summary>
 	public partial class Communication 
 	{
-		 public static System.Net.IPAddress GetLocalIP()
+	public static System.Net.IPAddress GetLocalIP()
     {
         var host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
         if (host.AddressList.Length < 1)
@@ -172,7 +172,7 @@ namespace WatchTest
         /// <summary>
         /// the birthday of Scott.Yan in Chinese lunar calendar
         /// </summary>
-        private const int UDPPort = 2425;
+        private const int UDPPort = 2426;
 
         static private System.Net.Sockets.UdpClient UdpClient;
 
@@ -182,7 +182,7 @@ namespace WatchTest
 
         private System.Windows.Forms.Control Owner;
 
-        private Action<string> DgGetMsg;
+        private Action<string,string> DgGetMsg;
 
         /// <summary>
         /// broadcast a message to others
@@ -198,7 +198,16 @@ namespace WatchTest
          static	public void BroadcastToFQ(string msg,string ip)
         {
             var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), 2425);
-            msg = "1_lbt4_09#65664#205服务器#0#0#0:1289671407:205飞秋1号小月月:更新包监控:209:"+msg;
+            msg = "1_lbt4_09#65664#205服务器#0#0#0:1289671407:205飞秋1号小月月:更新包监控:288:"+msg;
+            var buffer = System.Text.Encoding.Default.GetBytes(msg);
+            UdpClient.Send(buffer, buffer.Length, epGroup);
+            //UdpClient.Close();
+        }
+         
+         static	public void responeToFQ(string msgid,string ip)
+        {
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), 2425);
+            string msg = "1_lbt4_09#65664#205服务器#0#0#0:1289671407:205飞秋1号小月月:更新包监控:33:"+msgid;
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, epGroup);
             //UdpClient.Close();
@@ -209,7 +218,7 @@ namespace WatchTest
         /// </summary>
         /// <param name="owner">"this" in most case</param>
         /// <param name="dgGetMsg">handles message arriving</param>
-        public void StartListen(System.Windows.Forms.Control owner, Action<string> dgGetMsg)
+        public void StartListen(System.Windows.Forms.Control owner, Action<string,string> dgGetMsg)
         {
             Owner = owner;
             DgGetMsg = dgGetMsg;
@@ -238,7 +247,7 @@ namespace WatchTest
 
         private void ListenHandler()
         {
-        	var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), 2425);
+        	var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Any, 2425);
             byte[] buffer = null;
             while (IsListening)
             {
@@ -249,7 +258,7 @@ namespace WatchTest
                     continue;
                 var msg = System.Text.Encoding.Default.GetString(buffer);
                 if (msg.Length > 0)
-                    Owner.Invoke(DgGetMsg, msg);
+                	Owner.Invoke(DgGetMsg,epGroup.Address.ToString(),msg);
             }
         }
 
