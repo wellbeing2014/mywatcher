@@ -63,5 +63,11 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WatchCore\WatchCore.csproj">
+      <Project>{FFB3B2FE-B623-42AA-9FDB-FFE4807D7F14}</Project>
+      <Name>WatchCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

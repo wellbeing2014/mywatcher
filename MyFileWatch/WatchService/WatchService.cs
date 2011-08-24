@@ -15,8 +15,9 @@ using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
 using System.Threading;
-using WatchService.pojo;
+using WatchCore.pojo;
 using System.Text.RegularExpressions;
+using WatchCore.Common;
 
 namespace WatchService
 {
