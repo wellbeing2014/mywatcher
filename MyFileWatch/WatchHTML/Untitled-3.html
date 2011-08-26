@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>天涯顶部置顶工具条</title>
+<style type="text/css">
+*
+{
+	margin: 0px;
+	padding: 0px;
+}
+#topNavWrapper {
+	width: 980px;
+	text-align: left;
+	height: 31px;
+	margin: 0px auto;
+	z-index:100;
+	_position: relative ;
+	_top:0px;
+}
+#topNav {
+	width: 980px;
+	float: left;
+	display: block;
+	z-index: 100;
+	overflow: visible;
+	position: fixed;
+	top: 0px; /* position fixed for IE6 */
+	_position: absolute;
+	_top: expression(documentElement.scrollTop + "px");
+	background-image: url(http://www.codefans.net/jscss/demoimg/201106/top_r.gif);
+	background-repeat: no-repeat;
+	background-position: right;
+	height: 31px;
+}
+</style>
+
+</head>
+<body>
+<div id="topNavWrapper">
+
+<table width="20%" border="0" cellpadding="0" cellspacing="0" id="topNav">
+  	<tr>  
+    <td width="117" class="class1"><em><strong>当前BUG单号:</strong></em></td>
+    <td width="194" id="bugno" >BUG2011080801</td>
+    <td width="281" rowspan="2" align="right"><textarea name="textarea1" cols="28" rows="3">请解释原由</textarea>      <input name="Submit2" type="button"  value="提交" /></td>  
+    <td width="388" align="right"><input name="Submit" type="button"  value="上一个" />
+<input name="Submit" type="button"  value="下一个" /></td>
+	</tr>
+    <tr>  
+    <td width="117" class="class1"><em><strong>BUG状态:</strong></em></td>
+    <td id="bugstat" ><select size="1" >
+      <option selected="selected">未确认</option>
+      <option>已确认 </option>
+  <option> 已废止 </option>
+</select></td>
+    <td align="right"><input type="text" name="textfield" value="请输入BUG单号" />
+      <input name="Submit3" type="button" class="bt" value="查询" /></td>
+	</tr>
+</table>
+</div>   
+</body>
+</html>
