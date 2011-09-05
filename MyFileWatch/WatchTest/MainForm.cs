@@ -46,7 +46,7 @@ namespace WatchTest
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			feiq.SendMsgToSomeIP("ahahhaha","192.10.110.206");
+			feiq.SendMsgToSomeIP("ahahhaha","192.10.110.58");
 		}
 		
 		void Button2Click(object sender, EventArgs e)

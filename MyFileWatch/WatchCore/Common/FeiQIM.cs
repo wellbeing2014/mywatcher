@@ -59,8 +59,7 @@ namespace WatchCore.Common
 		private string HostName ="Wicrosoft206";
 		private string msgtype = MsgType.OnLine.ToString("D") ;
 		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";
-		//Key为MSGid,Value为MSGTONTENT
-		private Dictionary<string , string> msgtable = new Dictionary<string, string>();
+		
 		
 		
 		
@@ -111,7 +110,6 @@ namespace WatchCore.Common
 			msg=String.Format(MsgHeader,FeiQHead,msgid.ToString(),UserName,HostName, FeiQIM.MsgType.Msg.ToString("D"))+msg;
             var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), 2425);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
-            msgtable.Add(msgid.ToString(),msg);
             UdpClient.Send(buffer, buffer.Length, epGroup);
             return msgid.ToString();
         }
@@ -159,15 +157,9 @@ namespace WatchCore.Common
            
         }
         
-        /// <summary>
-        /// 检查消息是否已经发送。
-        /// </summary>
-        /// <param name="msgid"></param>
-        /// <returns></returns>
-        public bool CheckMsgIsReceived(string msgid)
-        {
-        	return msgtable.ContainsKey(msgid);
-        }
+      
+        
+     
 		
         /// <summary>
         /// 监听方法
@@ -223,7 +215,7 @@ namespace WatchCore.Common
                 		
                 		break;
                 	case FeiQIM.MsgType.ResponeMsg:
-                		msgtable.Remove(msgbody);
+                		
                 		break;
                 	default:
                 		break;
