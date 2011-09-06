@@ -29,7 +29,10 @@ namespace WatchTest
 			//
 			InitializeComponent();
 			
-			feiq.StartListen(this,printline);
+			feiq.StartListen();
+			feiq.LISTENED_MSG=printline;
+			feiq.LISTENED_WRITING = printline1;
+			feiq.LISTENED_ONLINE = printline2;
 			this.Closing+= new CancelEventHandler(MainForm_Closing);
 			
 			
@@ -43,10 +46,20 @@ namespace WatchTest
 			
 			MessageBox.Show(ip+"say:"+msg);
 		}
+		private void printline1(string ip)
+		{
+			
+			MessageBox.Show(ip+"正在输入日日日");
+		}
+		private void printline2(string ip)
+		{
+			
+			feiq.SendMsgToSomeIP("你小子终于上线了。",ip);
+		}
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			feiq.SendMsgToSomeIP("ahahhaha","192.10.110.58");
+			feiq.SendMsgToSomeIP("ahahhaha","192.10.110.206");
 		}
 		
 		void Button2Click(object sender, EventArgs e)
@@ -61,7 +74,7 @@ namespace WatchTest
 		}
 		void Button3Click(object sender, EventArgs e)
 		{
-			feiq.StartListen(this,printline);
+			feiq.StartListen();
 		}
 	}
 }

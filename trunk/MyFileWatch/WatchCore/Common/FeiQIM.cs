@@ -24,7 +24,9 @@ namespace WatchCore.Common
 			OffLine = 6291458,//下线
 			ResponeMsg = 33,//消息应答
 			ShakeHand = 114, //消息前握手信息
-			ResponeShakeHand = 115//应答握手
+			ResponeShakeHand = 115,//应答握手
+			Writing = 121,//正在输入
+			Writed = 122 //输入停止
 		}
 		public FeiQIM(int Port)
 		{
@@ -50,8 +52,19 @@ namespace WatchCore.Common
         private System.Net.Sockets.UdpClient UdpClient;
         private System.Threading.Thread thUDPListener;
         private bool IsListening = true;
-        private System.Windows.Forms.Control Owner;
-        private Action<string,string> DgGetMsg;
+        
+        //收到消息的接口方法
+        public delegate void ListenedMsg(string ip,string msg);
+        public ListenedMsg LISTENED_MSG;
+        //收到闪屏的接口方法
+        public delegate void ListenedSrceenShake(string ip);
+        public ListenedSrceenShake LISTENED_SRCEENSHAKE;
+        //收到上线信息的接口方法
+        public delegate void ListenedOnLine(string ip);
+        public ListenedOnLine LISTENED_ONLINE;
+        //收到输入状态的接口方法
+        public delegate void ListenedWriting(string ip);
+        public ListenedWriting LISTENED_WRITING;
         
        	private string FeiQHead = "1_lbt4_09#65664#MACADDR#0#0#0";
 		private string MsgId ="1000000000" ;
@@ -131,13 +144,9 @@ namespace WatchCore.Common
         /// </summary>
         /// <param name="owner">"this" in most case</param>
         /// <param name="dgGetMsg">handles message arriving</param>
-        public void StartListen(System.Windows.Forms.Control owner, Action<string,string> dgGetMsg)
+        public void StartListen()
         {
-            Owner = owner;
-            DgGetMsg = dgGetMsg;
             IsListening = true;
-            //UdpClient = new System.Net.Sockets.UdpClient(uDPPort);
-            //UdpClient.JoinMulticastGroup(GroupIP);
             thUDPListener = new System.Threading.Thread(ListenHandler);
             thUDPListener.Start();
         }
@@ -147,7 +156,6 @@ namespace WatchCore.Common
         /// </summary>
         public void StopListen()
         {
-            
             if(IsListening)
             {
             	//UdpClient.DropMulticastGroup(GroupIP);
@@ -156,11 +164,7 @@ namespace WatchCore.Common
             }
            
         }
-        
-      
-        
-     
-		
+
         /// <summary>
         /// 监听方法
         /// </summary>
@@ -199,23 +203,38 @@ namespace WatchCore.Common
                 switch (revmsgtype) {
                 	case FeiQIM.MsgType.ShakeHand:
                 		SendResponeShakeHandToSomeIP(epGroup.Address.ToString(),msgbody);
-                		//Owner.Invoke(DgGetMsg,epGroup.Address.ToString(),msgbody);
                 		break;
                 	case FeiQIM.MsgType.Msg:
                 		SendResponeToSomeIP(msgid,epGroup.Address.ToString());
-                		Owner.Invoke(DgGetMsg,epGroup.Address.ToString(),msgbody);
+                		if(this.LISTENED_MSG!=null)
+                		{
+                			LISTENED_MSG(epGroup.Address.ToString(),msgbody);
+                		}
                 		break;
                 	case FeiQIM.MsgType.SrceenShake:
-                		SendMsgToSomeIP("抖你妹啊~~~",epGroup.Address.ToString());
+                		
+                		if(this.LISTENED_SRCEENSHAKE!=null)
+                		{
+                			LISTENED_SRCEENSHAKE(epGroup.Address.ToString());
+                		}
                 		break;
                 	case FeiQIM.MsgType.OnLine:
-                		
+                		if(this.LISTENED_ONLINE!=null)
+                		{
+                			LISTENED_ONLINE(epGroup.Address.ToString());
+                		}
                 		break;
                 	case FeiQIM.MsgType.OffLine:
                 		
                 		break;
                 	case FeiQIM.MsgType.ResponeMsg:
                 		
+                		break;
+                	case FeiQIM.MsgType.Writing:
+                		if(this.LISTENED_WRITING!=null)
+                		{
+                			LISTENED_WRITING(epGroup.Address.ToString());
+                		}
                 		break;
                 	default:
                 		break;

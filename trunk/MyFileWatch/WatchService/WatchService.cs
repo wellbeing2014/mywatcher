@@ -30,6 +30,7 @@ namespace WatchService
 		static private string[]  watchpaths ;
 		static System.Timers.Timer tt ;
 		private Communication.TCPManage tcp;
+		static private FeiQIM feiq = new FeiQIM(2425);
 		
 		public WatchService()
 		{
@@ -115,6 +116,12 @@ namespace WatchService
 			}
 			tcp  = new Communication.TCPManage();
 			tcp.StartListen(listenhandler);
+			feiq.StartListen();
+			feiq.LISTENED_SRCEENSHAKE = LISTENED_SRCEENSHAKE;
+			feiq.LISTENED_MSG = LISTENED_MSG;
+			feiq.LISTENED_ONLINE = LISTENED_ONLINE;
+			feiq.LISTENED_WRITING = LISTENED_WRITING;
+			
 			DateTime dt =DateTime.Now;
 			int hour = dt.Hour*3600000;
 			int munite=dt.Minute*60000;
@@ -125,6 +132,25 @@ namespace WatchService
 			tt.AutoReset = false;//设置是执行一次（false）还是一直执行(true)； 
 			tt.Start();
 		}
+		
+		private void LISTENED_SRCEENSHAKE(string ip)
+		{
+			feiq.SendMsgToSomeIP("请不要开玩笑，测试是严肃的事情，我要发彪的。",ip);
+		}
+		
+		private void LISTENED_MSG(string ip,string msg)
+		{
+			feiq.SendMsgToSomeIP("请不要开玩笑，测试是严肃的事情，我要发彪的1。",ip);
+		}
+		private void LISTENED_ONLINE(string ip)
+		{
+			feiq.SendMsgToSomeIP("你上线啦哈哈哈···2。",ip);
+		}
+		private void LISTENED_WRITING(string ip)
+		{
+			feiq.SendMsgToSomeIP("你想和我聊什么~~。",ip);
+		}
+		
 		
 		/// <summary>
 		/// Stop this service.
@@ -155,12 +181,10 @@ namespace WatchService
 			pack.Packtime=DateTime.Now.ToLocalTime().ToString();
 			pack.State="已接收";
 			AccessDBUtil.insert(pack);
-			
-			
 			//通知客户端watchclient
 			try
 			{
-				Communication.UDPManage.Broadcast(e.FullPath);
+				WatchCore.Common.Communication.UDPManage.Broadcast(e.FullPath,1020);
 			}
 			catch (Exception) {
 				WriteToLog("通知客户端消息失败！");
@@ -180,20 +204,18 @@ namespace WatchService
 				
 				string[] msgtemp = 
 					Regex.Split(msg,"##",RegexOptions.IgnoreCase);
-				Communication.UDPManage.BroadcastToFQ(msgtemp[0],msgtemp[1]);
+				feiq.SendMsgToSomeIP(msgtemp[0],msgtemp[1]);
 			} catch (Exception e2) {
 				
 				WriteToLog(DateTime.Now.ToLocalTime()+":用飞秋转发来自客户端的信息失败。（"+msg+"）"+e2.ToString());
-			}
-			
-			
+			}	
 		}
 		
 		static private void msgToFQ(string msg)
 		{
 			int i = 0;
 			while (i<msgip.Length) {
-				Communication.UDPManage.BroadcastToFQ(msg,msgip[i]);
+				feiq.SendMsgToSomeIP(msg,msgip[i]);
 				i++;
 			}
 		}
