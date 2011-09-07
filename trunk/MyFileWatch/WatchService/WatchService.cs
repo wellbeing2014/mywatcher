@@ -30,7 +30,8 @@ namespace WatchService
 		static private string[]  watchpaths ;
 		static System.Timers.Timer tt ;
 		private Communication.TCPManage tcp;
-		static private FeiQIM feiq = new FeiQIM(2425);
+		static private FeiQIM feiq = new FeiQIM(2426);
+		
 		
 		public WatchService()
 		{
@@ -116,6 +117,8 @@ namespace WatchService
 			}
 			tcp  = new Communication.TCPManage();
 			tcp.StartListen(listenhandler);
+			feiq.HostName="WISOFT";
+			feiq.UserName= "WisofT";
 			feiq.StartListen();
 			feiq.LISTENED_SRCEENSHAKE = LISTENED_SRCEENSHAKE;
 			feiq.LISTENED_MSG = LISTENED_MSG;
@@ -135,20 +138,21 @@ namespace WatchService
 		
 		private void LISTENED_SRCEENSHAKE(string ip)
 		{
-			feiq.SendMsgToSomeIP("请不要开玩笑，测试是严肃的事情，我要发彪的。",ip);
+			feiq.SendMsgToSomeIP("你抖我，我也抖你",ip);
+			feiq.SendScreenShakeToSomeIP(ip);
 		}
 		
 		private void LISTENED_MSG(string ip,string msg)
 		{
-			feiq.SendMsgToSomeIP("请不要开玩笑，测试是严肃的事情，我要发彪的1。",ip);
+			feiq.SendMsgToSomeIP("请你按照规矩回复内容",ip);
 		}
 		private void LISTENED_ONLINE(string ip)
 		{
-			feiq.SendMsgToSomeIP("你上线啦哈哈哈···2。",ip);
+			//feiq.SendMsgToSomeIP("你上来啦，我们开始吧",ip);
 		}
 		private void LISTENED_WRITING(string ip)
 		{
-			feiq.SendMsgToSomeIP("你想和我聊什么~~。",ip);
+			feiq.SendMsgToSomeIP("你在写什么呀，不要太肉麻哦。",ip);
 		}
 		
 		
@@ -159,6 +163,8 @@ namespace WatchService
 		{
 			// TODO: Add tear-down code here (if required) to stop your service.
 			tcp.StopListen();
+			feiq.StopListen();
+			Thread.Sleep(10000);
 			WriteToLog(System.DateTime.Now.ToLocalTime()+":系统关闭");
 		}
 		
