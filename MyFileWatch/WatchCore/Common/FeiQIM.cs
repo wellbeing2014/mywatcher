@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Data;
 
 namespace WatchCore.Common
 {
@@ -30,18 +31,7 @@ namespace WatchCore.Common
 			Writing = 121,//正在输入
 			Writed = 122 //输入停止
 		}
-		public FeiQIM(int Port)
-		{
-			
-			if(!FunctionUtils.checkPort(Port.ToString()))
-				throw new Exception("端口被占用");
-			else 
-			{
-				UdpClient = new System.Net.Sockets.UdpClient(Port);
-				UdpClient.JoinMulticastGroup(GroupIP);
-				BroadcastOnLine();
-			}
-		}
+		
 		//与FEIQ通信端口号
 		private int uDPPort = 2425;
 		public int UDPPort {
@@ -89,7 +79,23 @@ namespace WatchCore.Common
 		}
 		private string msgtype = MsgType.OnLine.ToString("D") ;
 		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";
+		//消息表
+		public DataTable msgdt = new DataTable("dt");
 		
+		public FeiQIM(int Port)
+		{
+			msgdt.Columns.Add(new DataColumn("ip", System.Type.GetType("System.String")));
+			msgdt.Columns.Add(new DataColumn("msg", System.Type.GetType("System.String")));
+			msgdt.Columns.Add(new DataColumn("msgid", System.Type.GetType("System.String")));
+			if(!FunctionUtils.checkPort(Port.ToString()))
+				throw new Exception("端口被占用");
+			else 
+			{
+				UdpClient = new System.Net.Sockets.UdpClient(Port);
+				UdpClient.JoinMulticastGroup(GroupIP);
+				BroadcastOnLine();
+			}
+		}
 		
 		
 		
@@ -271,7 +277,9 @@ namespace WatchCore.Common
             		
             		break;
             	case FeiQIM.MsgType.ResponeMsg:
-            		
+            		DataRow[] dr = msgdt.Select("id="+msgbody);
+            		if(dr.Length>0)
+            			msgdt.Rows.Remove(dr[0]);
             		break;
             	case FeiQIM.MsgType.Writing:
             		if(this.LISTENED_WRITING!=null)
