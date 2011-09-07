@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace WatchCore.Common
 {
@@ -22,6 +23,7 @@ namespace WatchCore.Common
 			SrceenShake=209,//闪屏
 			OnLine = 6291457,//上线
 			OffLine = 6291458,//下线
+			JoinIN = 6291459,
 			ResponeMsg = 33,//消息应答
 			ShakeHand = 114, //消息前握手信息
 			ResponeShakeHand = 115,//应答握手
@@ -35,8 +37,7 @@ namespace WatchCore.Common
 				throw new Exception("端口被占用");
 			else 
 			{
-				uDPPort = Port;
-				UdpClient = new System.Net.Sockets.UdpClient(uDPPort);
+				UdpClient = new System.Net.Sockets.UdpClient(Port);
 				UdpClient.JoinMulticastGroup(GroupIP);
 				BroadcastOnLine();
 			}
@@ -49,8 +50,9 @@ namespace WatchCore.Common
 		}
 		//广播段 子网上的所有系统
         private System.Net.IPAddress GroupIP = System.Net.IPAddress.Parse("224.0.0.1");
+      
         private System.Net.Sockets.UdpClient UdpClient;
-        private System.Threading.Thread thUDPListener;
+        private Thread thUDPListener;
         private bool IsListening = true;
         
         //收到消息的接口方法
@@ -66,10 +68,25 @@ namespace WatchCore.Common
         public delegate void ListenedWriting(string ip);
         public ListenedWriting LISTENED_WRITING;
         
-       	private string FeiQHead = "1_lbt4_09#65664#MACADDR#0#0#0";
+       	private string feiQHead = "1_lbt4_09#65664#MACADDR#0#0#0";
+       	
+		public string FeiQHead {
+			get { return feiQHead; }
+			set { feiQHead = value; }
+		}
 		private string MsgId ="1000000000" ;
-		private string UserName ="测试服务ROBOT" ;
-		private string HostName ="Wicrosoft206";
+		private string userName ="测试服务ROBOT" ;
+		
+		public string UserName {
+			get { return userName; }
+			set { userName = value; }
+		}
+		private string hostName ="Wicrosoft206";
+		
+		public string HostName {
+			get { return hostName; }
+			set { hostName = value; }
+		}
 		private string msgtype = MsgType.OnLine.ToString("D") ;
 		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";
 		
@@ -82,7 +99,7 @@ namespace WatchCore.Common
         public void SendResponeShakeHandToSomeIP(string ip,string msgbody)
         {
         	//this.msgtype = FeiQIM.MsgType.OnLine.ToString();
-        	string msg=String.Format(MsgHeader,FeiQHead,MsgId,UserName,HostName,MsgType.ResponeShakeHand.ToString("D"))+msgbody;
+        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.ResponeShakeHand.ToString("D"))+msgbody;
         	var SendIp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, SendIp);
@@ -93,7 +110,7 @@ namespace WatchCore.Common
         public void BroadcastOnLine()
         {
         	//this.msgtype = FeiQIM.MsgType.OnLine.ToString();
-        	string msg=String.Format(MsgHeader,FeiQHead,MsgId,UserName,HostName,MsgType.OnLine.ToString("D"));
+        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.JoinIN.ToString("D"))+userName+"..";
             var SendIp = new System.Net.IPEndPoint(GroupIP, uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, SendIp);
@@ -105,7 +122,7 @@ namespace WatchCore.Common
         /// <param name="msg"></param>
         public void BroadcastMsg(string msg)
         {
-        	msg=String.Format(MsgHeader,FeiQHead,MsgId,UserName,HostName, FeiQIM.MsgType.Msg.ToString("D"))+msg;
+        	msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName, FeiQIM.MsgType.Msg.ToString("D"))+msg;
             var SendIp = new System.Net.IPEndPoint(GroupIP, uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, SendIp);
@@ -120,8 +137,8 @@ namespace WatchCore.Common
         {
         	Random ro = new Random(); 
 			int msgid = ro.Next(1000000000,1999999999);
-			msg=String.Format(MsgHeader,FeiQHead,msgid.ToString(),UserName,HostName, FeiQIM.MsgType.Msg.ToString("D"))+msg;
-            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), 2425);
+			msg=String.Format(MsgHeader,feiQHead,msgid.ToString(),userName,hostName, FeiQIM.MsgType.Msg.ToString("D"))+msg;
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, epGroup);
             return msgid.ToString();
@@ -133,8 +150,18 @@ namespace WatchCore.Common
         /// <param name="ip"></param>
         public void SendResponeToSomeIP(string msgid,string ip)
         {
-			string msg=String.Format(MsgHeader,FeiQHead,msgid.ToString(),UserName,HostName, FeiQIM.MsgType.ResponeMsg.ToString("D"))+msgid;
-            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), 2425);
+			string msg=String.Format(MsgHeader,feiQHead,msgid.ToString(),userName,hostName, FeiQIM.MsgType.ResponeMsg.ToString("D"))+msgid;
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
+            var buffer = System.Text.Encoding.Default.GetBytes(msg);
+            UdpClient.Send(buffer, buffer.Length, epGroup);
+        }
+        
+        public void SendScreenShakeToSomeIP(string ip)
+        {
+        	Random ro = new Random(); 
+			int msgid = ro.Next(1000000000,1999999999);
+        	string msg=String.Format(MsgHeader,feiQHead,msgid.ToString(),userName,hostName, FeiQIM.MsgType.SrceenShake.ToString("D"));
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, epGroup);
         }
@@ -147,7 +174,7 @@ namespace WatchCore.Common
         public void StartListen()
         {
             IsListening = true;
-            thUDPListener = new System.Threading.Thread(ListenHandler);
+            thUDPListener = new Thread(ListenHandler);
             thUDPListener.Start();
         }
 
@@ -172,7 +199,28 @@ namespace WatchCore.Common
         {
         	var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Any, 2425);
             byte[] buffer = null;
-            string[] msgtou = null;
+            
+            while (IsListening)
+            {
+                System.Threading.Thread.Sleep(200);
+                try { buffer = UdpClient.Receive(ref epGroup); }
+                catch(Exception e) { }
+                if (buffer == null || buffer.Length < 1)
+                    continue;
+                var msg = System.Text.Encoding.Default.GetString(buffer);
+                var ip = epGroup.Address.ToString();
+                Thread listendthread = new Thread(listendThread);
+                ListenedPara para = new ListenedPara();
+                para.Ip = ip;
+                para.Msg = msg;
+                listendthread.Start(para);
+            }
+        }
+        
+        
+        public void listendThread(object a)
+        {
+        	string[] msgtou = null;
 			string feiqtou = null;
 			string msgid = null;
 			string username = null;
@@ -180,67 +228,59 @@ namespace WatchCore.Common
 			string msgtype = null;
 			int bodystart = 0;
 			string msgbody = null;
-            while (IsListening)
+        	ListenedPara para = a as ListenedPara;
+        	string msg = para.Msg;
+        	string ip = para.Ip;
+        	if (msg.Length > 0)
             {
-                System.Threading.Thread.Sleep(1000);
-                try { buffer = UdpClient.Receive(ref epGroup); }
-                catch(Exception e) { }
-                if (buffer == null || buffer.Length < 1)
-                    continue;
-                var msg = System.Text.Encoding.Default.GetString(buffer);
-                if (msg.Length > 0)
-                {
-                	msgtou = msg.Split(':');
-					feiqtou = msgtou[0];
-					msgid = msgtou[1];
-					username = msgtou[2];
-					hostname = msgtou[3];
-					msgtype = msgtou[4];
-					bodystart = feiqtou.Length+msgid.Length+username.Length+hostname.Length+msgtype.Length+5;
-					msgbody = msg.Substring(bodystart);
-                }
-                MsgType revmsgtype = (MsgType)(Int32.Parse(msgtype));
-                switch (revmsgtype) {
-                	case FeiQIM.MsgType.ShakeHand:
-                		SendResponeShakeHandToSomeIP(epGroup.Address.ToString(),msgbody);
-                		break;
-                	case FeiQIM.MsgType.Msg:
-                		SendResponeToSomeIP(msgid,epGroup.Address.ToString());
-                		if(this.LISTENED_MSG!=null)
-                		{
-                			LISTENED_MSG(epGroup.Address.ToString(),msgbody);
-                		}
-                		break;
-                	case FeiQIM.MsgType.SrceenShake:
-                		
-                		if(this.LISTENED_SRCEENSHAKE!=null)
-                		{
-                			LISTENED_SRCEENSHAKE(epGroup.Address.ToString());
-                		}
-                		break;
-                	case FeiQIM.MsgType.OnLine:
-                		if(this.LISTENED_ONLINE!=null)
-                		{
-                			LISTENED_ONLINE(epGroup.Address.ToString());
-                		}
-                		break;
-                	case FeiQIM.MsgType.OffLine:
-                		
-                		break;
-                	case FeiQIM.MsgType.ResponeMsg:
-                		
-                		break;
-                	case FeiQIM.MsgType.Writing:
-                		if(this.LISTENED_WRITING!=null)
-                		{
-                			LISTENED_WRITING(epGroup.Address.ToString());
-                		}
-                		break;
-                	default:
-                		break;
-                }
-                
-                	
+            	msgtou = msg.Split(':');
+				feiqtou = msgtou[0];
+				msgid = msgtou[1];
+				username = msgtou[2];
+				hostname = msgtou[3];
+				msgtype = msgtou[4];
+				bodystart = feiqtou.Length+msgid.Length+username.Length+hostname.Length+msgtype.Length+5;
+				msgbody = msg.Substring(bodystart);
+            }
+            MsgType revmsgtype = (MsgType)(Int32.Parse(msgtype));
+            switch (revmsgtype) {
+            	case FeiQIM.MsgType.ShakeHand:
+            		SendResponeShakeHandToSomeIP(ip,msgbody);
+            		break;
+            	case FeiQIM.MsgType.Msg:
+            		SendResponeToSomeIP(msgid,ip);
+            		if(this.LISTENED_MSG!=null)
+            		{
+            			LISTENED_MSG(ip,msgbody);
+            		}
+            		break;
+            	case FeiQIM.MsgType.SrceenShake:
+            		
+            		if(this.LISTENED_SRCEENSHAKE!=null)
+            		{
+            			LISTENED_SRCEENSHAKE(ip);
+            		}
+            		break;
+            	case FeiQIM.MsgType.OnLine:
+            		if(this.LISTENED_ONLINE!=null)
+            		{
+            			LISTENED_ONLINE(ip);
+            		}
+            		break;
+            	case FeiQIM.MsgType.OffLine:
+            		
+            		break;
+            	case FeiQIM.MsgType.ResponeMsg:
+            		
+            		break;
+            	case FeiQIM.MsgType.Writing:
+            		if(this.LISTENED_WRITING!=null)
+            		{
+            			LISTENED_WRITING(ip);
+            		}
+            		break;
+            	default:
+            		break;
             }
         }
        	
@@ -257,5 +297,20 @@ namespace WatchCore.Common
             }
         	UdpClient.Close();
         }
+	}
+	class ListenedPara
+	{
+		private string ip;
+		
+		public string Ip {
+			get { return ip; }
+			set { ip = value; }
+		}
+		private string msg;
+		
+		public string Msg {
+			get { return msg; }
+			set { msg = value; }
+		}
 	}
 }
