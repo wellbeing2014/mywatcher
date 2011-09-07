@@ -149,6 +149,11 @@ namespace WatchService
 		private void LISTENED_ONLINE(string ip)
 		{
 			//feiq.SendMsgToSomeIP("你上来啦，我们开始吧",ip);
+			DataRow[] dr = feiq.msgdt.Select("ip="+ip);
+			foreach (var element in dr) {
+				string msgagain = element["msg"].ToString();
+				feiq.SendMsgToSomeIP(msgagain,ip);
+			}
 		}
 		private void LISTENED_WRITING(string ip)
 		{
