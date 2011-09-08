@@ -54,12 +54,13 @@ namespace WatchTest
 		private void printline2(string ip)
 		{
 			
-			feiq.SendMsgToSomeIP("你小子终于上线了。",ip);
+			//feiq.SendMsgToSomeIP("你小子终于上线了。",ip);
 		}
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			feiq.SendMsgToSomeIP("ahahhaha","192.10.110.206");
+			//feiq.SendMsgToSomeIP("ahahhaha","192.10.110.206");
+			feiq.BroadcastOnLine();
 		}
 		
 		void Button2Click(object sender, EventArgs e)
