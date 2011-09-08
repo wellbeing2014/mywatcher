@@ -28,6 +28,7 @@ namespace WatchCore.Common
 			ResponeMsg = 33,//消息应答
 			ShakeHand = 114, //消息前握手信息
 			ResponeShakeHand = 115,//应答握手
+			//OnLineState =120,//在线状态
 			Writing = 121,//正在输入
 			Writed = 122 //输入停止
 		}
@@ -39,7 +40,7 @@ namespace WatchCore.Common
 			set { uDPPort = value; }
 		}
 		//广播段 子网上的所有系统
-        private System.Net.IPAddress GroupIP = System.Net.IPAddress.Parse("224.0.0.1");
+        private System.Net.IPAddress GroupIP = System.Net.IPAddress.Parse("226.81.9.8");
       
         private System.Net.Sockets.UdpClient UdpClient;
         private Thread thUDPListener;
@@ -93,7 +94,7 @@ namespace WatchCore.Common
 			{
 				UdpClient = new System.Net.Sockets.UdpClient(Port);
 				UdpClient.JoinMulticastGroup(GroupIP);
-				BroadcastOnLine();
+				//BroadcastOnLine();
 			}
 		}
 		
@@ -115,9 +116,20 @@ namespace WatchCore.Common
 	    /// </summary>
         public void BroadcastOnLine()
         {
-        	//this.msgtype = FeiQIM.MsgType.OnLine.ToString();
-        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.JoinIN.ToString("D"))+userName+"..";
-            var SendIp = new System.Net.IPEndPoint(GroupIP, uDPPort);
+        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,"120")+".";
+        	string msg1=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.JoinIN.ToString("D"))+"wisofttest";
+           	var SendIp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), uDPPort);
+            var SendIp1 = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), uDPPort);
+            var buffer = System.Text.Encoding.Default.GetBytes(msg);
+            var buffer1 = System.Text.Encoding.Default.GetBytes(msg1);
+            UdpClient.Send(buffer1, buffer1.Length, SendIp1);
+            Thread.Sleep(500);
+            UdpClient.Send(buffer, buffer.Length, SendIp);
+        }
+        public void BroadcastOnLine1()
+        {
+        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,"120")+".";
+           	var SendIp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, SendIp);
         }
