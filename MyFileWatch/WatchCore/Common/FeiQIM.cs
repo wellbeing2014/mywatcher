@@ -18,6 +18,8 @@ namespace WatchCore.Common
 	/// </summary>
 	public class FeiQIM
 	{
+		#region 变量声明及属性
+		
 		public enum MsgType:int
 		{
 			Msg=288,//消息内容
@@ -35,17 +37,11 @@ namespace WatchCore.Common
 		
 		//与FEIQ通信端口号
 		private int uDPPort = 2425;
-		public int UDPPort {
-			get { return uDPPort; }
-			set { uDPPort = value; }
-		}
 		//广播段 子网上的所有系统
         private System.Net.IPAddress GroupIP = System.Net.IPAddress.Parse("226.81.9.8");
-      
         private System.Net.Sockets.UdpClient UdpClient;
         private Thread thUDPListener;
-        private bool IsListening = true;
-        
+        private bool IsListening = true;        
         //收到消息的接口方法
         public delegate void ListenedMsg(string ip,string msg);
         public ListenedMsg LISTENED_MSG;
@@ -59,35 +55,44 @@ namespace WatchCore.Common
         public delegate void ListenedWriting(string ip);
         public ListenedWriting LISTENED_WRITING;
         
-       	private string feiQHead = "1_lbt4_09#65664#MACADDR#0#0#0";
-       	
-		public string FeiQHead {
-			get { return feiQHead; }
-			set { feiQHead = value; }
-		}
+        private string feiQHead = "1_lbt4_09#65664#MACADDR#0#0#0";
 		private string MsgId ="1000000000" ;
 		private string userName ="测试服务ROBOT" ;
+		private string hostName ="Wicrosoft206";
+		private string msgtype = MsgType.OnLine.ToString("D") ;
+		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";
+
+		//消息表
+		public DataTable msgdt = new DataTable("dt");
 		
+		public int UDPPort {
+			get { return uDPPort; }
+			set { uDPPort = value; }
+		}
 		public string UserName {
 			get { return userName; }
 			set { userName = value; }
 		}
-		private string hostName ="Wicrosoft206";
-		
 		public string HostName {
 			get { return hostName; }
 			set { hostName = value; }
 		}
-		private string msgtype = MsgType.OnLine.ToString("D") ;
-		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";
-		//消息表
-		public DataTable msgdt = new DataTable("dt");
+		/// <summary>
+        /// "飞秋的消息头。例子：1_lbt4_09#65664#MACADDR#0#0#0"
+        /// </summary>
+		public string FeiQHead {
+			get { return feiQHead; }
+			set { feiQHead = value; }
+		}
+		#endregion
+		
 		
 		public FeiQIM(int Port)
 		{
 			msgdt.Columns.Add(new DataColumn("ip", System.Type.GetType("System.String")));
 			msgdt.Columns.Add(new DataColumn("msg", System.Type.GetType("System.String")));
 			msgdt.Columns.Add(new DataColumn("msgid", System.Type.GetType("System.String")));
+			msgdt.Rows.Add(new string[]{"192.10.110.58","我操你吗的，怎么不出来呢，什么是深复制浅复制1","23123123123"});
 			if(!FunctionUtils.checkPort(Port.ToString()))
 				throw new Exception("端口被占用");
 			else 
@@ -98,7 +103,8 @@ namespace WatchCore.Common
 			}
 		}
 		
-		
+		#region 业务处理
+
 		
 		 /// <summary>
 	    /// 回复握手消息
@@ -158,6 +164,22 @@ namespace WatchCore.Common
 			msg=String.Format(MsgHeader,feiQHead,msgid.ToString(),userName,hostName, FeiQIM.MsgType.Msg.ToString("D"))+msg;
             var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
+            DataRow dr = msgdt.NewRow();
+            dr[0]=ip;//消息表IP
+           	dr[1]=msg;//消息表MSG
+           	dr[2]=msgid.ToString();//消息表MSGID
+            UdpClient.Send(buffer, buffer.Length, epGroup);
+            msgdt.Rows.Add(dr);
+            return msgid.ToString();
+        }
+        
+        public string ReSendMsgToSomeIP(DataRow dr)
+        {
+        	var ip = dr[0].ToString();
+        	var msg = dr[1].ToString();
+        	var msgid = dr[2].ToString();
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
+            var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, epGroup);
             return msgid.ToString();
         }
@@ -183,33 +205,7 @@ namespace WatchCore.Common
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
             UdpClient.Send(buffer, buffer.Length, epGroup);
         }
-
-        /// <summary>
-        /// listen to the group 
-        /// </summary>
-        /// <param name="owner">"this" in most case</param>
-        /// <param name="dgGetMsg">handles message arriving</param>
-        public void StartListen()
-        {
-            IsListening = true;
-            thUDPListener = new Thread(ListenHandler);
-            thUDPListener.Start();
-        }
-
-        /// <summary>
-        /// stop listen
-        /// </summary>
-        public void StopListen()
-        {
-            if(IsListening)
-            {
-            	//UdpClient.DropMulticastGroup(GroupIP);
-            	IsListening = false;
-            	thUDPListener.Abort();
-            }
-           
-        }
-
+        
         /// <summary>
         /// 监听方法
         /// </summary>
@@ -289,9 +285,10 @@ namespace WatchCore.Common
             		
             		break;
             	case FeiQIM.MsgType.ResponeMsg:
-            		DataRow[] dr = msgdt.Select("id="+msgbody);
+            		DataRow[] dr = msgdt.Select("msgid='"+msgbody+"'");
             		if(dr.Length>0)
             			msgdt.Rows.Remove(dr[0]);
+            		
             		break;
             	case FeiQIM.MsgType.Writing:
             		if(this.LISTENED_WRITING!=null)
@@ -303,6 +300,37 @@ namespace WatchCore.Common
             		break;
             }
         }
+		#endregion		
+		
+		#region 全局控制
+		
+        /// <summary>
+        /// listen to the group 
+        /// </summary>
+        /// <param name="owner">"this" in most case</param>
+        /// <param name="dgGetMsg">handles message arriving</param>
+        public void StartListen()
+        {
+            IsListening = true;
+            thUDPListener = new Thread(ListenHandler);
+            thUDPListener.Start();
+        }
+
+        /// <summary>
+        /// stop listen
+        /// </summary>
+        public void StopListen()
+        {
+            if(IsListening)
+            {
+            	//UdpClient.DropMulticastGroup(GroupIP);
+            	IsListening = false;
+            	thUDPListener.Abort();
+            }
+           
+        }
+
+        
        	
         /// <summary>
         /// 关闭连接
@@ -317,6 +345,7 @@ namespace WatchCore.Common
             }
         	UdpClient.Close();
         }
+        #endregion
 	}
 	class ListenedPara
 	{
