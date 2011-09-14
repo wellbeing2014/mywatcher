@@ -122,8 +122,6 @@ namespace WatchService
 			feiq.StartListen();
 			feiq.LISTENED_SRCEENSHAKE = LISTENED_SRCEENSHAKE;
 			feiq.LISTENED_MSG = LISTENED_MSG;
-			feiq.LISTENED_ONLINE = LISTENED_ONLINE;
-			feiq.LISTENED_WRITING = LISTENED_WRITING;
 			
 			DateTime dt =DateTime.Now;
 			int hour = dt.Hour*3600000;
@@ -146,19 +144,8 @@ namespace WatchService
 		{
 			feiq.SendMsgToSomeIP("请你按照规矩回复内容",ip);
 		}
-		private void LISTENED_ONLINE(string ip)
-		{
-			//feiq.SendMsgToSomeIP("你上来啦，我们开始吧",ip);
-			DataRow[] dr = feiq.msgdt.Select("ip="+ip);
-			foreach (var element in dr) {
-				string msgagain = element["msg"].ToString();
-				feiq.SendMsgToSomeIP(msgagain,ip);
-			}
-		}
-		private void LISTENED_WRITING(string ip)
-		{
-			feiq.SendMsgToSomeIP("你在写什么呀，不要太肉麻哦。",ip);
-		}
+		
+		
 		
 		
 		/// <summary>

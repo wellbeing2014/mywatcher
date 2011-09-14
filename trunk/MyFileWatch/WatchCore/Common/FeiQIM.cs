@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Data;
+using System.Net.Sockets;
 
 namespace WatchCore.Common
 {
@@ -30,7 +31,7 @@ namespace WatchCore.Common
 			ResponeMsg = 33,//消息应答
 			ShakeHand = 114, //消息前握手信息
 			ResponeShakeHand = 115,//应答握手
-			//OnLineState =120,//在线状态
+			OnLineState =120,//在线状态
 			Writing = 121,//正在输入
 			Writed = 122 //输入停止
 		}
@@ -61,9 +62,16 @@ namespace WatchCore.Common
 		private string hostName ="Wicrosoft206";
 		private string msgtype = MsgType.OnLine.ToString("D") ;
 		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";
-
 		//消息表
 		public DataTable msgdt = new DataTable("dt");
+		private bool autoResend = true;
+		/// <summary>
+		/// 自动重发
+		/// </summary>
+		public bool AutoResend {
+			get { return autoResend; }
+			set { autoResend = value; }
+		}
 		
 		public int UDPPort {
 			get { return uDPPort; }
@@ -92,7 +100,6 @@ namespace WatchCore.Common
 			msgdt.Columns.Add(new DataColumn("ip", System.Type.GetType("System.String")));
 			msgdt.Columns.Add(new DataColumn("msg", System.Type.GetType("System.String")));
 			msgdt.Columns.Add(new DataColumn("msgid", System.Type.GetType("System.String")));
-			msgdt.Rows.Add(new string[]{"192.10.110.58","我操你吗的，怎么不出来呢，什么是深复制浅复制1","23123123123"});
 			if(!FunctionUtils.checkPort(Port.ToString()))
 				throw new Exception("端口被占用");
 			else 
@@ -122,22 +129,23 @@ namespace WatchCore.Common
 	    /// </summary>
         public void BroadcastOnLine()
         {
-        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,"120")+".";
-        	string msg1=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.JoinIN.ToString("D"))+"wisofttest";
-           	var SendIp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), uDPPort);
-            var SendIp1 = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), uDPPort);
+        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.JoinIN.ToString("D"));
+           	var SendIp = new System.Net.IPEndPoint(GroupIP, uDPPort);
             var buffer = System.Text.Encoding.Default.GetBytes(msg);
-            var buffer1 = System.Text.Encoding.Default.GetBytes(msg1);
-            UdpClient.Send(buffer1, buffer1.Length, SendIp1);
-            Thread.Sleep(500);
             UdpClient.Send(buffer, buffer.Length, SendIp);
         }
-        public void BroadcastOnLine1()
+        
+        public void SendOnLineToSomeIP(string ip)
         {
-        	string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,"120")+".";
-           	var SendIp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.10.110.206"), uDPPort);
-            var buffer = System.Text.Encoding.Default.GetBytes(msg);
-            UdpClient.Send(buffer, buffer.Length, SendIp);
+        	//string msg=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.JoinIN.ToString("D"));
+        	string msg1=String.Format(MsgHeader,feiQHead,MsgId,userName,hostName,MsgType.OnLineState.ToString("D"))+"测试的问题注意哦";
+           	var SendIp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(ip), uDPPort);
+            //var buffer = System.Text.Encoding.Default.GetBytes(msg);
+            var buffer1 = System.Text.Encoding.Default.GetBytes(msg1);
+            //UdpClient.Send(buffer, buffer.Length, SendIp);
+            //SendMsgToSomeIP("",ip);
+            Thread.Sleep(100);
+            UdpClient.Send(buffer1, buffer1.Length, SendIp);
         }
         
         /// <summary>
@@ -212,11 +220,11 @@ namespace WatchCore.Common
         private void ListenHandler()
         {
         	var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Any, 2425);
+        	UdpClient.Client.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReceiveTimeout,1000);
             byte[] buffer = null;
-            
             while (IsListening)
             {
-                System.Threading.Thread.Sleep(200);
+                System.Threading.Thread.Sleep(20);
                 try { buffer = UdpClient.Receive(ref epGroup); }
                 catch(Exception e) { }
                 if (buffer == null || buffer.Length < 1)
@@ -276,6 +284,14 @@ namespace WatchCore.Common
             		}
             		break;
             	case FeiQIM.MsgType.OnLine:
+            		if(AutoResend)
+            		{
+            			Thread.Sleep(200);
+						DataRow[] dr1 = msgdt.Select("ip='"+ip+"'");
+			    		foreach (var element in dr1) {
+							ReSendMsgToSomeIP(element);
+			    		}
+            		}
             		if(this.LISTENED_ONLINE!=null)
             		{
             			LISTENED_ONLINE(ip);
