@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using WatchCore.Common;
 using System.Data;
+using System.Threading;
 
 
 namespace WatchTest
@@ -34,8 +35,9 @@ namespace WatchTest
 			this.textBox2.Text="192.10.110.58";
 			feiq.StartListen();
 			feiq.LISTENED_MSG=printline;
-			feiq.LISTENED_WRITING = printline1;
+			feiq.LISTENED_SRCEENSHAKE = LISTENED_SRCEENSHAKE;
 			feiq.LISTENED_ONLINE = printline2;
+			feiq.AutoResend = true;
 			dt = feiq.msgdt;
 			this.Closing+= new CancelEventHandler(MainForm_Closing);
 			
@@ -61,18 +63,17 @@ namespace WatchTest
 			string date = DateTime.Now.ToLocalTime().ToString();
 				this.textBox4.AppendText("\r\n"+date+":\r\n"+"IP地址："+ip+"\r\n"+msg);
 		}
-		private void printline1(string ip)
+		private void LISTENED_SRCEENSHAKE(string ip)
 		{
-			
-			//MessageBox.Show(ip+"正在输入日日日");
+			feiq.SendMsgToSomeIP("你抖我，我也抖你",ip);
+			feiq.SendScreenShakeToSomeIP(ip);
 		}
 		private void printline2(string ip)
 		{
-			DataRow[] dr = this.dt.Select("ip='"+ip+"'");
-    		foreach (var element in dr) {
-				feiq.SendMsgToSomeIP(element[1].ToString(),ip);
-    		}
-			
+			if(ip.Equals("192.10.110.206"))
+			{
+				feiq.SendOnLineToSomeIP(ip);
+			}
 		}
 		
 		void Button1Click(object sender, EventArgs e)
@@ -80,8 +81,11 @@ namespace WatchTest
 			//feiq.SendMsgToSomeIP("ahahhaha","192.10.110.206");
 			//feiq.BroadcastOnLine();
 			var msg = this.textBox1.Text;
+			var msg1 = "你好~，很高兴为您服务！\n1、查询BUG单，请回复“BUGNO#BUG单号”\n"
++"2、确认非BUG，请回复“NO#BUG单号#原因”\n"
++"3、确认BUG，请回复“YES#BUG单号#原因”\n";
 			var ip = this.textBox2.Text;
-			string msgid= feiq.SendMsgToSomeIP(msg,ip);
+			string msgid= feiq.SendMsgToSomeIP(msg1,ip);
 			this.textBox3.Text = msgid;
 			
 		}

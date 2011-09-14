@@ -172,6 +172,7 @@ namespace WatchTest
 			this.textBox4.Location = new System.Drawing.Point(290, 12);
 			this.textBox4.Multiline = true;
 			this.textBox4.Name = "textBox4";
+			this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.textBox4.Size = new System.Drawing.Size(217, 145);
 			this.textBox4.TabIndex = 9;
 			// 
