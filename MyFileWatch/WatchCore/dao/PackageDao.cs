@@ -84,7 +84,7 @@ namespace WatchCore.dao
 		/// <returns></returns>
 		static public DataTable getAllUnTestPack()
 		{
-			string sql = "SELECT packageInfo.*,moduleInfo.id as realmoduleid, moduleInfo.code FROM moduleInfo right JOIN packageInfo ON moduleInfo.ID = packageInfo.moduleid  order by cdate(packageInfo.packtime) desc";
+			string sql = "SELECT packageInfo.*,moduleInfo.id as realmoduleid, moduleInfo.code FROM moduleInfo right JOIN packageInfo ON moduleInfo.ID = packageInfo.moduleid  order by cast(packageInfo.packtime as datetime) desc";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
@@ -97,13 +97,13 @@ namespace WatchCore.dao
 				+" and ('全部'='"+state+"' or state='"+state+"')";
 			if(begintime!=null)
 			{
-				sql+=" and  cdate(packtime)>=cdate('"+begintime+"')";
+				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";
 			}
 			if(endtime!=null)
 			{
-				sql+=" and  cdate(packtime)<=cdate('"+endtime+"')";
+				sql+=" and  cast(packtime as datetime)<=cast('"+endtime+"' as datetime)";
 			}	
-			sql+=" order by cdate(packtime) desc";
+			sql+=" order by cast(packtime as datetime) desc";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
