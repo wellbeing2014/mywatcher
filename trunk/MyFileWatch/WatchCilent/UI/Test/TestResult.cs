@@ -189,6 +189,7 @@ namespace WatchCilent.UI.Test
 		{
 			MemoryStream stream = new MemoryStream();
 			richTextBox1.SaveFile(stream, RichTextBoxStreamType.RichText);
+			//richTextBox1.SaveFile(@"D:\tttt.rtf");
 			tu.Testcontent=stream.ToArray();
 			if(this.comboBox1.SelectedItem!=null&&this.comboBox1.SelectedIndex!=0)
 			{

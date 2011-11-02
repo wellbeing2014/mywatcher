@@ -39,7 +39,7 @@ namespace WatchCore.dao
 			numtable.Columns.Add("");
 			//------------------查姓名--------------------------------------------
 			string sqlname ="SELECT distinct adminname FROM testunit "+
-					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') ";
+					"where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and cast(testtime as datetime)<=cast('"+endtime+"' as datetime) ";
 			DataSet dataname = SqlDBUtil.ExecuteQuery(sqlname);
 			DataRowCollection drsname = dataname.Tables["ds"].Rows;
 			List<string> adminname = new List<string>();
@@ -48,9 +48,9 @@ namespace WatchCore.dao
 				numtable.Columns.Add(drsname[j][0].ToString(),Type.GetType("System.Double"));
 			}
 			string sql ="SELECT sum(packageInfo.testrate/100) FROM testunit INNER JOIN packageInfo ON testunit.packageid = packageInfo.ID "+
-						"where cdate(testunit.testtime)>=cdate('"+begintime+"') and  cdate(testunit.testtime)<=cdate('"+endtime+"') and testunit.adminname='{0}'";
+						"where cast(testunit.testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testunit.testtime as datetime)<=cast('"+endtime+"' as datetime) and testunit.adminname='{0}'";
 			string sqlnum ="select count(*) from (select distinct testunit.packageid FROM testunit INNER JOIN packageInfo ON testunit.packageid = packageInfo.ID "+
-						"where cdate(testunit.testtime)>=cdate('"+begintime+"') and  cdate(testunit.testtime)<=cdate('"+endtime+"') and testunit.adminname='{0}')";
+						"where cast(testunit.testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testunit.testtime as datetime)<=cast('"+endtime+"' as datetime) and testunit.adminname='{0}')";
 			string sqlv="";
 			DataRow dr = numtable.NewRow();
 			for (int i = 0; i < adminname.Count; i++) {
@@ -78,7 +78,7 @@ namespace WatchCore.dao
 			numtable.Columns.Add("name",Type.GetType("System.String"));
 			//------------------查时间点--------------------------------
 			string sqlcol ="SELECT distinct(Format(testtime,'yyyy-mm-dd') ) FROM testunit "+
-					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') "+
+					"where cast(testtime as datetime)>=cdate('"+begintime+"') and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime) "+
 					"order by Format(testtime,'yyyy-mm-dd') asc";
 			DataSet datacol = SqlDBUtil.ExecuteQuery(sqlcol);
 			DataRowCollection drs = datacol.Tables["ds"].Rows;
@@ -89,7 +89,7 @@ namespace WatchCore.dao
 			}
 			//------------------查姓名--------------------------------------------
 			string sqlname ="SELECT distinct(adminname) FROM testunit "+
-					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') ";
+					"where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime) ";
 			DataSet dataname = SqlDBUtil.ExecuteQuery(sqlname);
 			DataRowCollection drsname = dataname.Tables["ds"].Rows;
 			List<string> adminname = new List<string>();
@@ -97,7 +97,7 @@ namespace WatchCore.dao
 				adminname.Add(drsname[j][0].ToString());
 			}
 			
-			string sql="SELECT count(*) FROM testunit where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') and adminname='{0}' and Format(testtime,'yyyy-mm-dd') =Format('{1}','yyyy-mm-dd')";
+			string sql="SELECT count(*) FROM testunit where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and  casst(testtime as datetime)<=cast('"+endtime+"' as datetime) and adminname='{0}' and Format(testtime,'yyyy-mm-dd') =Format('{1}','yyyy-mm-dd')";
 			string sqlv ="";
 			for (int a = 0; a < adminname.Count; a++) {
 				DataRow dr = numtable.NewRow();
@@ -188,7 +188,7 @@ namespace WatchCore.dao
 		static public DataTable getRePortTest(string begintime,string endtime)
 		{
 			string sql = "SELECT unitno,buglevel,packagename,testtitle FROM testunit " +
-"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') order by unitno asc";
+"where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime) order by unitno asc";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
@@ -246,13 +246,13 @@ namespace WatchCore.dao
 				+" and ('全部'='"+state+"' or state='"+state+"')";
 			if(begintime!=null)
 			{
-				sql+=" and  cdate(testtime)>=cdate('"+begintime+"')";
+				sql+=" and  cast(testtime as datetime)>=cast('"+begintime+"' as datetime)";
 			}
 			if(endtime!=null)
 			{
-				sql+=" and  cdate(testtime)<=cdate('"+endtime+"')";
+				sql+=" and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime)";
 			}	
-			sql+= " order by cdate(testtime) desc";
+			sql+= " order by cast(testtime as datetime) desc";
 			
 			DataSet data=SqlDBUtil.ExecuteQuery(sql);
 			List<TestUnit> ls = new List<TestUnit>();

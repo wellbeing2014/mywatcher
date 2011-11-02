@@ -443,8 +443,9 @@ namespace WatchCore.Common
 		
         public static  int insertReturnID(object obj)
 		{
-			int i =0;
-			try {
+			
+			List<SqlParameter> para = new List<SqlParameter>();
+			try{
 				//反射出类型
 				Type objclass =obj.GetType();
 				//拼SQL开始
@@ -454,7 +455,7 @@ namespace WatchCore.Common
 				PropertyInfo ispojo = objclass.GetProperty("Px");
 				if(ispojo==null)
 				{
-					return i;
+					return 0;
 				}
 				//获取所有属性
 				PropertyInfo[] fields = objclass.GetProperties();
@@ -464,25 +465,44 @@ namespace WatchCore.Common
 					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
 					{
 						object fvalue=field.GetValue(obj,null);
-						//验证整形，空的整形为0
+						SqlParameter tt = new SqlParameter();
+						tt.ParameterName = "@"+field.Name;
+						tt.Value=fvalue;
+						//验证整形
 						if(field.PropertyType.Name=="Int32")
 						{
-							
-							sqltou+=field.Name+",";
-							sqlval=sqlval.Substring(0,sqlval.Length-1)+fvalue.ToString()+",'";
+							tt.SqlDbType=SqlDbType.Int;
 						}
-						else
-						if(fvalue!=null&&fvalue.ToString()!=null)
+						if(field.PropertyType.Name=="String")
 						{
-							sqltou+=field.Name+",";
-							sqlval+=fvalue.ToString()+"','";
+							tt.SqlDbType=SqlDbType.VarChar;
 						}
+						if(field.PropertyType.Name=="Boolean")
+						{
+							tt.SqlDbType=SqlDbType.Bit;
+						}
+						if(field.PropertyType.Name=="DateTime")
+						{
+							tt.SqlDbType=SqlDbType.DateTime;
+						}
+						//大字段
+						if(field.PropertyType.Name=="Byte[]")
+						{
+							tt.SqlDbType=SqlDbType.Binary;
+						}
+						if(fvalue!=null)
+						{
+							para.Add(tt);
+							sqltou+=field.Name+",";
+							sqlval=sqlval.Substring(0,sqlval.Length-1)+tt.ParameterName+",'";
+						}
+						
 					}
 				}
 				String sql=sqltou.Substring(0,sqltou.Length-1)+")"+sqlval.Substring(0,sqlval.Length-2)+");";
 				//拼SQL结束。
-				i=ExecuteInsert(sql,null);
-				return i;
+				return ExecuteInsert(sql,para.ToArray());
+				
 			} catch (Exception) {
 				throw(new Exception("插入失败"));
 			}
