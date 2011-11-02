@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using WatchCore.Common;
 
 namespace WatchCilent
 {

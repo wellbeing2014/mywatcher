@@ -9,7 +9,7 @@
 using System;
 using System.Net;
 using System.IO;
-using WatchCilent.Common;
+using WatchCore.Common;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;

@@ -9,9 +9,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WatchCilent.dao;
-using WatchCilent.pojo;
-using WatchCilent.Common;
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 using System.Collections.Generic;
 using System.IO;
 using System.Data;

@@ -11,13 +11,13 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Net;
-using WatchCilent.Common;
+using WatchCore.Common;
 using System.Collections.Generic;
 using EXControls;
 using System.Threading;
 using System.Diagnostics; 
-using WatchCilent.pojo;
-using WatchCilent.dao;
+using WatchCore.pojo;
+using WatchCore.dao;
 
 namespace WatchCilent.UI.Pub
 {

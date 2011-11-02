@@ -163,21 +163,85 @@ namespace WatchCore.Common
     /// </summary>
     public class UDPManage
     {
+      /// <summary>
+        /// this is a group address
+        /// </summary>
+        private System.Net.IPAddress GroupIP = System.Net.IPAddress.Parse("224.0.0.2");
+
+        /// <summary>
+        /// the birthday of Scott.Yan in Chinese lunar calendar
+        /// </summary>
+        private const int UDPPort = 1020;
+
+        private System.Net.Sockets.UdpClient UdpClient;
+
+        private System.Threading.Thread thUDPListener;
+
+        private bool IsListening = true;
+
+        private System.Windows.Forms.Control Owner;
+
+        private Action<string> DgGetMsg;
+
         /// <summary>
         /// broadcast a message to others
         /// </summary>
         /// <param name="msg"></param>
-        static public void Broadcast(string msg,int UDPPort)
+        public void Broadcast(string msg)
         {
-            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), UDPPort);
+            var epGroup = new System.Net.IPEndPoint(GroupIP, UDPPort);
             var buffer = System.Text.Encoding.UTF8.GetBytes(msg);
-            System.Net.Sockets.UdpClient UdpClient = new System.Net.Sockets.UdpClient(1019);
-           	UdpClient.Send(buffer, buffer.Length, epGroup);
-           	UdpClient.Close();
+            UdpClient.Send(buffer, buffer.Length, epGroup);
         }
 
-      
+        /// <summary>
+        /// listen to the group 
+        /// </summary>
+        /// <param name="owner">"this" in most case</param>
+        /// <param name="dgGetMsg">handles message arriving</param>
+        public void StartListen(System.Windows.Forms.Control owner, Action<string> dgGetMsg)
+        {
+            Owner = owner;
+            DgGetMsg = dgGetMsg;
+            IsListening = true;
+            UdpClient = new System.Net.Sockets.UdpClient(UDPPort);
+            UdpClient.JoinMulticastGroup(GroupIP);
+            thUDPListener = new System.Threading.Thread(ListenHandler);
+            thUDPListener.Start();
+        }
 
+        /// <summary>
+        /// stop listen
+        /// </summary>
+        public void StopListen()
+        {
+            
+            if(IsListening)
+            {
+            	UdpClient.DropMulticastGroup(GroupIP);
+            	thUDPListener.Abort();
+            	UdpClient.Close();
+            	IsListening = false;
+            }
+           
+        }
+
+        private void ListenHandler()
+        {
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Any, UDPPort);
+            byte[] buffer = null;
+            while (IsListening)
+            {
+                System.Threading.Thread.Sleep(1000);
+                try { buffer = UdpClient.Receive(ref epGroup); }
+                catch { }
+                if (buffer == null || buffer.Length < 1)
+                    continue;
+                var msg = System.Text.Encoding.UTF8.GetString(buffer);
+                if (msg.Length > 0)
+                    Owner.Invoke(DgGetMsg, msg);
+            }
+        }
     }
 	}
 }

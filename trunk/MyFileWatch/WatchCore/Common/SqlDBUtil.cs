@@ -13,7 +13,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
-
+using System.Reflection;
 
 namespace WatchCore.Common
 {
@@ -35,13 +35,13 @@ namespace WatchCore.Common
         /// 返回connection对象
         /// 
         /// 
-        public SqlConnection ReturnConn()
+        public static SqlConnection ReturnConn()
         {
             SqlConnection Conn = new SqlConnection(ConnStr);
             Conn.Open();
             return Conn;
         }
-        public void Dispose(SqlConnection Conn)
+        public static void Dispose(SqlConnection Conn)
         {
             if (Conn != null)
             {
@@ -49,29 +49,160 @@ namespace WatchCore.Common
                 Conn.Dispose();
             }
         }
-        /// 
-        /// 运行SQL语句
-        /// 
-        /// 
-        public void RunProc(string SQL)
+        /// <summary>
+        /// 运行SQL增删改语句
+        /// </summary>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static int ExecuteNonQuery(string SQL)
         {
+        	int i=0;
             SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
+            Conn = ReturnConn();
             SqlCommand Cmd;
             Cmd = CreateCmd(SQL, Conn);
             try
             {
+                i=Cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw new Exception(SQL+"执行失败");
+            }
+            Dispose(Conn);
+            return i;
+        }
+        
+        /// <summary>
+        /// 运行SQL增删改语句
+        /// </summary>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static int ExecuteNonQuery(string SQL,SqlParameter[] parameter)
+        {
+        	int rows=0;
+            SqlConnection Conn;
+            Conn = ReturnConn();
+            SqlCommand Cmd;
+            Cmd = CreateCmd(SQL, Conn);
+            Cmd.Parameters.AddRange(parameter);
+            try
+            {
+               rows = Cmd.ExecuteNonQuery();
+               
+            }
+            catch
+            {
+                throw new Exception(SQL);
+                
+            }
+            Dispose(Conn);
+            return rows;
+        }
+        
+        /// <summary>
+        /// 运行SQL查询语句
+        /// </summary>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static DataSet ExecuteQuery(string SQL,SqlParameter[] parameter)
+        {
+        	DataSet ds = new DataSet();
+            SqlConnection Conn;
+            Conn = ReturnConn();
+            SqlCommand Cmd;
+            Cmd = CreateCmd(SQL, Conn);
+            if(parameter!=null) Cmd.Parameters.AddRange(parameter);
+            SqlDataAdapter adapter;
+            try
+            {
+            	adapter = new SqlDataAdapter(Cmd);
+            	adapter.Fill(ds,"ds");
+            }
+            catch(Exception e)
+            {
+                throw new Exception(SQL);
+            }
+            Dispose(Conn);
+            return ds;
+        }
+        
+        
+        //执行单条插入语句，并返回id，不需要返回id的用ExceuteNonQuery执行。
+		public static int ExecuteInsert(string sql,SqlParameter[] parameters)
+        {
+        	SqlConnection Conn;
+            Conn = ReturnConn();
+            SqlCommand Cmd;
+            Cmd = CreateCmd(sql, Conn);
+            if(parameters!=null) Cmd.Parameters.AddRange(parameters);
+           
+            try
+            {
+                
                 Cmd.ExecuteNonQuery();
+                Cmd.CommandText = @"select @@identity";
+                int value = Int32.Parse(Cmd.ExecuteScalar().ToString());
+                return value;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+		
+        /// <summary>
+        /// 运行SQL查询语句
+        /// </summary>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static DataSet ExecuteQuery(string SQL)
+        {
+        	DataSet ds = new DataSet();
+            SqlConnection Conn;
+            Conn = ReturnConn();
+            SqlCommand Cmd;
+            Cmd = CreateCmd(SQL, Conn);
+            SqlDataAdapter adapter;
+            try
+            {
+            	adapter = new SqlDataAdapter(Cmd);
+            	adapter.Fill(ds,"ds");
             }
             catch
             {
                 throw new Exception(SQL);
             }
             Dispose(Conn);
-            return;
+            return ds;
         }
-
+        
+        /// <summary>
+        /// 分页SQL查询语句
+        /// </summary>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static DataSet ExecuteQuery(string SQL,int startpage,int pagesize)
+        {
+        	DataSet ds = new DataSet();
+            SqlConnection Conn;
+            Conn = ReturnConn();
+            SqlCommand Cmd;
+            Cmd = CreateCmd(SQL, Conn);
+            SqlDataAdapter adapter;
+            try
+            {
+            	adapter = new SqlDataAdapter(Cmd);
+            	adapter.Fill(ds,startpage,pagesize,"ds");
+            }
+            catch
+            {
+                throw new Exception(SQL);
+            }
+            Dispose(Conn);
+            return ds;
+        }
+        
         /// 
         /// 运行SQL语句返回DataReader
         /// 
@@ -101,118 +232,22 @@ namespace WatchCore.Common
         /// 
         /// 
         /// 
-        public SqlCommand CreateCmd(string SQL, SqlConnection Conn)
+        public static SqlCommand CreateCmd(string SQL, SqlConnection Conn)
         {
             SqlCommand Cmd;
             Cmd = new SqlCommand(SQL, Conn);
             return Cmd;
         }        /// 
-        /// 生成Command对象
+            
+        
         /// 
-        /// 
-        /// 
-        public SqlCommand CreateCmd(string SQL)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlCommand Cmd;
-            Cmd = new SqlCommand(SQL, Conn);
-            return Cmd;
-        }
-        /// 
-        /// 返回adapter对象
-        /// 
-        /// 
-        /// 
-        /// 
-        public SqlDataAdapter CreateDa(string SQL)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlDataAdapter Da;
-            Da = new SqlDataAdapter(SQL, Conn);
-            return Da;
-        }        /// 
-        /// 运行SQL语句,返回DataSet对象
-        /// 
-        /// SQL语句
-        /// DataSet对象
-        public DataSet RunProc(string SQL, DataSet Ds)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlDataAdapter Da;
-            //Da = CreateDa(SQL, Conn);
-            Da = new SqlDataAdapter(SQL, Conn);
-            try
-            {
-                Da.Fill(Ds);
-            }
-            catch (Exception Err)
-            {
-                throw Err;
-            }
-            Dispose(Conn);
-            return Ds;
-        }
-        /// 
-        /// 运行SQL语句,返回DataSet对象
-        /// 
-        /// SQL语句
-        /// DataSet对象
-        /// 表名
-        public DataSet RunProc(string SQL, DataSet Ds, string tablename)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlDataAdapter Da;
-            Da = CreateDa(SQL);
-            try
-            {
-                Da.Fill(Ds, tablename);
-            }
-            catch (Exception Ex)
-            {
-                throw Ex;
-            }
-            Dispose(Conn);
-            return Ds;
-        }        /// 
-        /// 运行SQL语句,返回DataSet对象
-        /// 
-        /// SQL语句
-        /// DataSet对象
-        /// 表名
-        public DataSet RunProc(string SQL, DataSet Ds, int StartIndex, int PageSize, string    tablename)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlDataAdapter Da;
-            Da = CreateDa(SQL);
-            try
-            {
-                Da.Fill(Ds, StartIndex, PageSize, tablename);
-            }
-            catch (Exception Ex)
-            {
-                throw Ex;
-            }
-            Dispose(Conn);
-            return Ds;
-        }        /// 
         /// 检验是否存在数据
         /// 
         /// 
         public bool ExistDate(string SQL)
         {
             SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
+            Conn = ReturnConn();
             SqlDataReader Dr;
             Dr = CreateCmd(SQL, Conn).ExecuteReader();
             if (Dr.Read())
@@ -228,25 +263,26 @@ namespace WatchCore.Common
         }        /// 
         /// 返回SQL语句执行结果的第一行第一列
         /// 
-        /// 字符串
-        public string ReturnValue(string SQL)
+        /// count(*)
+        public static int ExecuteScalar(string SQL)
         {
             SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            string result;
+            Conn = ReturnConn();
+            SqlCommand cmd;
+            int result=0;
             SqlDataReader Dr;
             try
             {
-                Dr = CreateCmd(SQL, Conn).ExecuteReader();
+            	cmd = CreateCmd(SQL, Conn);
+                Dr = cmd.ExecuteReader();
                 if (Dr.Read())
                 {
-                    result = Dr[0].ToString();
+                	result = Int32.Parse(Dr[0].ToString());
                     Dr.Close();
                 }
                 else
                 {
-                    result = "";
+                    result = 0;
                     Dr.Close();
                 }
             }
@@ -256,134 +292,41 @@ namespace WatchCore.Common
             }
             Dispose(Conn);
             return result;
-        }        /// 
-        /// 返回SQL语句第一列,第ColumnI列,
-        /// 
-        /// 字符串
-        public string ReturnValue(string SQL, int ColumnI)
+        }        
+        /// <summary>
+        /// 返回 第一列第一行从SQL计算的值，如sum()
+        /// </summary>
+        /// <param name="SQL"></param>
+        /// <returns></returns>
+        public static double ExecuteSUM(string SQL,SqlParameter[] parameter)
         {
             SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            string result;
+            Conn = ReturnConn();
+            double result=0.00;
+            SqlCommand cmd;
             SqlDataReader Dr;
             try
             {
-                Dr = CreateCmd(SQL, Conn).ExecuteReader();
+            	cmd = CreateCmd(SQL, Conn);
+            	if(parameter!=null) cmd.Parameters.AddRange(parameter);
+                Dr = cmd.ExecuteReader();
+                if (Dr.Read())
+                {
+                	result = Convert.ToDouble(Dr[0].ToString());
+                    Dr.Close();
+                }
+                else
+                {
+                    Dr.Close();
+                }
             }
             catch
             {
                 throw new Exception(SQL);
             }
-            if (Dr.Read())
-            {
-                result = Dr[ColumnI].ToString();
-            }
-            else
-            {
-                result = "";
-            }
-            Dr.Close();
             Dispose(Conn);
             return result;
-        }        /// 
-        /// 生成一个存储过程使用的sqlcommand.
-        /// 
-        /// 存储过程名.
-        /// 存储过程入参数组.
-        /// sqlcommand对象.
-        public SqlCommand CreateCmd(string procName, SqlParameter[] prams)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlCommand Cmd = new SqlCommand(procName, Conn);
-            Cmd.CommandType = CommandType.StoredProcedure;
-            if (prams != null)
-            {
-                foreach (SqlParameter parameter in prams)
-                {
-                    if (parameter != null)
-                    {
-                        Cmd.Parameters.Add(parameter);
-                    }
-                }
-            }
-            return Cmd;
-        }
-        /// 
-        /// 为存储过程生成一个SqlCommand对象
-        /// 
-        /// 存储过程名
-        /// 存储过程参数
-        /// SqlCommand对象
-        private SqlCommand CreateCmd(string procName, SqlParameter[] prams, SqlDataReader Dr)
-        {
-            SqlConnection Conn;
-            Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            SqlCommand Cmd = new SqlCommand(procName, Conn);
-            Cmd.CommandType = CommandType.StoredProcedure;
-            if (prams != null)
-            {
-                foreach (SqlParameter parameter in prams)
-                    Cmd.Parameters.Add(parameter);
-            }
-            Cmd.Parameters.Add(
-             new SqlParameter("ReturnValue", SqlDbType.Int, 4,
-             ParameterDirection.ReturnValue, false, 0, 0,
-             string.Empty, DataRowVersion.Default, null));
-
-            return Cmd;
-        }        ///         /// 运行存储过程,返回.
-        /// 
-        /// 存储过程名
-        /// 存储过程参数
-        /// SqlDataReader对象
-        public void RunProc(string procName, SqlParameter[] prams, SqlDataReader Dr)
-        {
-
-            SqlCommand Cmd = CreateCmd(procName, prams, Dr);
-            Dr = Cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-            return;
-        }        /// 
-        /// 运行存储过程,返回.
-        /// 
-        /// 存储过程名
-        /// 存储过程参数
-        public string RunProc(string procName, SqlParameter[] prams)
-        {
-            SqlDataReader Dr;
-            SqlCommand Cmd = CreateCmd(procName, prams);
-            Dr = Cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-            if (Dr.Read())
-            {
-                return Dr.GetValue(0).ToString();
-            }
-            else
-            {
-                return "";
-            }
-        }        /// 
-        /// 运行存储过程,返回dataset.
-        /// 
-        /// 存储过程名.
-        /// 存储过程入参数组.
-        /// dataset对象.
-        public DataSet RunProc(string procName, SqlParameter[] prams, DataSet Ds)
-        {
-            SqlCommand Cmd = CreateCmd(procName, prams);
-            SqlDataAdapter Da = new SqlDataAdapter(Cmd);
-            try
-            {
-                Da.Fill(Ds);
-            }
-            catch (Exception Ex)
-            {
-                throw Ex;
-            }
-            return Ds;
-        }
+        }  
         
         public static bool insert(object obj)
 		{
@@ -414,24 +357,24 @@ namespace WatchCore.Common
 						//验证整形
 						if(field.PropertyType.Name=="Int32")
 						{
-							tt.DbType=DbType.Int32;
+							tt.SqlDbType=SqlDbType.Int;
 						}
 						if(field.PropertyType.Name=="String")
 						{
-							tt.DbType=DbType.String;
+							tt.SqlDbType=SqlDbType.VarChar;
 						}
 						if(field.PropertyType.Name=="Boolean")
 						{
-							tt.DbType=DbType.Boolean;
+							tt.SqlDbType=SqlDbType.Bit;
 						}
 						if(field.PropertyType.Name=="DateTime")
 						{
-							tt.DbType=DbType.Date;
+							tt.SqlDbType=SqlDbType.DateTime;
 						}
 						//大字段
 						if(field.PropertyType.Name=="Byte[]")
 						{
-							tt.DbType=DbType.Binary;
+							tt.SqlDbType=SqlDbType.Binary;
 						}
 						if(fvalue!=null)
 						{
@@ -447,10 +390,208 @@ namespace WatchCore.Common
 				ExecuteQuery(sql,para.ToArray());
 				return true;
 			} catch (Exception e) {
-				MessageBox.Show(e.ToString());
-				return false;
+				throw(new Exception("插入失败"));
 			}
 		}
+        
+        public static  int insertreturn(object obj)
+		{
+			int i =0;
+			try {
+				//反射出类型
+				Type objclass =obj.GetType();
+				//拼SQL开始
+				string sqltou = "insert into "+objclass.Name+"(";
+				string sqlval="values('";
+				//验证是否为pojo类。
+				PropertyInfo ispojo = objclass.GetProperty("Px");
+				if(ispojo==null)
+				{
+					return i;
+				}
+				//获取所有属性
+				PropertyInfo[] fields = objclass.GetProperties();
+				foreach(PropertyInfo field in fields)
+				{
+					//去掉验证属性及主键
+					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
+					{
+						object fvalue=field.GetValue(obj,null);
+						//验证整形，空的整形为0
+						if(field.PropertyType.Name=="Int32")
+						{
+							
+							sqltou+=field.Name+",";
+							sqlval=sqlval.Substring(0,sqlval.Length-1)+fvalue.ToString()+",'";
+						}
+						else
+						if(fvalue!=null&&fvalue.ToString()!=null)
+						{
+							sqltou+=field.Name+",";
+							sqlval+=fvalue.ToString()+"','";
+						}
+					}
+				}
+				String sql=sqltou.Substring(0,sqltou.Length-1)+")"+sqlval.Substring(0,sqlval.Length-2)+");";
+				//拼SQL结束。
+				i=ExecuteNonQuery(sql,null);
+				return i;
+			} catch (Exception) {
+				throw(new Exception("插入失败"));
+			}
+		}
+		
+        public static  int insertReturnID(object obj)
+		{
+			int i =0;
+			try {
+				//反射出类型
+				Type objclass =obj.GetType();
+				//拼SQL开始
+				string sqltou = "insert into "+objclass.Name+"(";
+				string sqlval="values('";
+				//验证是否为pojo类。
+				PropertyInfo ispojo = objclass.GetProperty("Px");
+				if(ispojo==null)
+				{
+					return i;
+				}
+				//获取所有属性
+				PropertyInfo[] fields = objclass.GetProperties();
+				foreach(PropertyInfo field in fields)
+				{
+					//去掉验证属性及主键
+					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
+					{
+						object fvalue=field.GetValue(obj,null);
+						//验证整形，空的整形为0
+						if(field.PropertyType.Name=="Int32")
+						{
+							
+							sqltou+=field.Name+",";
+							sqlval=sqlval.Substring(0,sqlval.Length-1)+fvalue.ToString()+",'";
+						}
+						else
+						if(fvalue!=null&&fvalue.ToString()!=null)
+						{
+							sqltou+=field.Name+",";
+							sqlval+=fvalue.ToString()+"','";
+						}
+					}
+				}
+				String sql=sqltou.Substring(0,sqltou.Length-1)+")"+sqlval.Substring(0,sqlval.Length-2)+");";
+				//拼SQL结束。
+				i=ExecuteInsert(sql,null);
+				return i;
+			} catch (Exception) {
+				throw(new Exception("插入失败"));
+			}
+		}
+        
+		public static bool update(object obj)
+		{
+			List<SqlParameter> para = new List<SqlParameter>();
+			try {
+				//反射出类型
+				Type objclass =obj.GetType();
+				//拼SQL开始
+				string sqltou = "update "+objclass.Name+" set ";
+				
+				//验证是否为pojo类。
+				PropertyInfo ispojo = objclass.GetProperty("Px");
+				if(ispojo==null)
+				{
+					return false;
+				}
+				PropertyInfo px = objclass.GetProperty(ispojo.GetValue(obj,null).ToString());
+				if(px==null||px.GetValue(obj,null)==null)
+				{
+					return false;
+				}
+				//获取所有属性
+				PropertyInfo[] fields = objclass.GetProperties();
+				string tempsql ="";
+				foreach(PropertyInfo field in fields)
+				{
+					//去掉验证属性及主键
+					if(field.Name!="Px"&&field.Name!=ispojo.GetValue(obj,null).ToString())
+					{
+						object fvalue=field.GetValue(obj,null);
+						
+						SqlParameter tt = new SqlParameter();
+						tt.ParameterName = "@"+field.Name;
+						tt.IsNullable =true;
+						if(fvalue!=null)
+							tt.Value=fvalue;
+						else 
+							tt.Value =DBNull.Value;
+						//验证整形
+						if(field.PropertyType.Name=="Int32")
+						{
+							tt.SqlDbType=SqlDbType.Int;
+						}
+						if(field.PropertyType.Name=="String")
+						{
+							tt.SqlDbType=SqlDbType.VarChar;
+						}
+						if(field.PropertyType.Name=="Boolean")
+						{
+							tt.SqlDbType=SqlDbType.Bit;
+						}
+						if(field.PropertyType.Name=="DateTime")
+						{
+							tt.SqlDbType=SqlDbType.DateTime;
+						}
+						//大字段
+						if(field.PropertyType.Name=="Byte[]")
+						{
+							tt.SqlDbType=SqlDbType.Binary;
+						}
+						para.Add(tt);
+						tempsql=tempsql+field.Name+"="+tt.ParameterName+",";
+						
+					}
+				}
+				
+				
+				String sql=sqltou+tempsql.Substring(0,tempsql.Length-1)+" where "+px.Name+"="+px.GetValue(obj,null).ToString()+";";
+				//拼SQL结束。
+				ExecuteNonQuery(sql,para.ToArray());
+				return true;
+			} catch (Exception) {
+				throw(new Exception("更新失败"));
+			}
+		}
+		
+		public static bool delete(object obj)
+		{
+			try {
+				//反射出类型
+				Type objclass =obj.GetType();
+				//拼SQL开始
+				string sqltou = "delete from "+objclass.Name+" where ";
+				
+				//验证是否为pojo类。
+				PropertyInfo ispojo = objclass.GetProperty("Px");
+				if(ispojo==null)
+				{
+					return false;
+				}
+				PropertyInfo px = objclass.GetProperty(ispojo.GetValue(obj,null).ToString());
+				if(px==null||px.GetValue(obj,null)==null)
+				{
+					return false;
+				}
+				
+				String sql=sqltou+px.Name+"="+px.GetValue(obj,null).ToString()+";";
+				//拼SQL结束。
+				ExecuteNonQuery(sql);
+				return true;
+			} catch (Exception) {
+				throw(new Exception("删除失败"));
+			}
+		}
+		
     }    
 }
  

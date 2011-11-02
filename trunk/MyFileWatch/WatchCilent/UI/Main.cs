@@ -12,7 +12,9 @@ using System.Windows.Forms;
 using WatchCilent.UI.Test;
 using WatchCilent.UI;
 using WatchCilent.UI.Pub;
-using WatchCilent.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
+using WatchCore.Common;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 

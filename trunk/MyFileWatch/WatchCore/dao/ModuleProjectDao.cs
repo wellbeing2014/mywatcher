@@ -29,7 +29,7 @@ namespace WatchCore.dao
 		static public List<ModuleProject> getAllMPByPrjIDAndMdlID(string pid,string mid)
 		{
 			string sql = "SELECT * from ModuleProject where moduleid="+mid+" and projectid="+pid;
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<ModuleProject> ls = new List<ModuleProject>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
