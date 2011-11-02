@@ -40,7 +40,7 @@ namespace WatchCore.dao
 			//------------------查姓名--------------------------------------------
 			string sqlname ="SELECT distinct adminname FROM testunit "+
 					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') ";
-			DataSet dataname = AccessDBUtil.ExecuteQuery(sqlname);
+			DataSet dataname = SqlDBUtil.ExecuteQuery(sqlname);
 			DataRowCollection drsname = dataname.Tables["ds"].Rows;
 			List<string> adminname = new List<string>();
 			for (int j = 0; j < drsname.Count; j++) {
@@ -55,9 +55,9 @@ namespace WatchCore.dao
 			DataRow dr = numtable.NewRow();
 			for (int i = 0; i < adminname.Count; i++) {
 				sqlv = string.Format(sql,adminname[i]);
-				double num1 = AccessDBUtil.ExecuteSUM(sqlv,null);
+				double num1 = SqlDBUtil.ExecuteSUM(sqlv,null);
 				sqlv = string.Format(sqlnum,adminname[i]);
-				double num2 = AccessDBUtil.ExecuteSUM(sqlv,null);
+				double num2 = SqlDBUtil.ExecuteSUM(sqlv,null);
 				if(num2==0.00)
 					dr[i+1]=0;
 				else
@@ -80,7 +80,7 @@ namespace WatchCore.dao
 			string sqlcol ="SELECT distinct(Format(testtime,'yyyy-mm-dd') ) FROM testunit "+
 					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') "+
 					"order by Format(testtime,'yyyy-mm-dd') asc";
-			DataSet datacol = AccessDBUtil.ExecuteQuery(sqlcol);
+			DataSet datacol = SqlDBUtil.ExecuteQuery(sqlcol);
 			DataRowCollection drs = datacol.Tables["ds"].Rows;
 			List<string> timecol = new List<string>();
 			for (int i = 0; i < drs.Count; i++) {
@@ -90,7 +90,7 @@ namespace WatchCore.dao
 			//------------------查姓名--------------------------------------------
 			string sqlname ="SELECT distinct(adminname) FROM testunit "+
 					"where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') ";
-			DataSet dataname = AccessDBUtil.ExecuteQuery(sqlname);
+			DataSet dataname = SqlDBUtil.ExecuteQuery(sqlname);
 			DataRowCollection drsname = dataname.Tables["ds"].Rows;
 			List<string> adminname = new List<string>();
 			for (int j = 0; j < drsname.Count; j++) {
@@ -105,7 +105,7 @@ namespace WatchCore.dao
 				for(int b = 0;b<timecol.Count;b++)
 				{
 					sqlv = string.Format(sql,adminname[a],timecol[b]);
-					int num = AccessDBUtil.ExecuteScalar(sqlv);
+					int num = SqlDBUtil.ExecuteScalar(sqlv);
 					dr[b+1] = num;
 				}
 				numtable.Rows.Add(dr);
@@ -129,16 +129,16 @@ namespace WatchCore.dao
 				"and cdate(testtime)<=cdate('"+endtime+"') "+"and buglevel='{0}'";
 			
 				string sqltemp = string.Format(sql,CommonConst.BUGLEVEL_QinWei);
-				int qinwei =AccessDBUtil.ExecuteScalar(sqltemp);
+				int qinwei =SqlDBUtil.ExecuteScalar(sqltemp);
 				
 				sqltemp = string.Format(sql,CommonConst.BUGLEVEL_YiBan);
-				int yiban =AccessDBUtil.ExecuteScalar(sqltemp);
+				int yiban =SqlDBUtil.ExecuteScalar(sqltemp);
 				
 				sqltemp = string.Format(sql,CommonConst.BUGLEVEL_YanZhong);
-				int yanzhong =AccessDBUtil.ExecuteScalar(sqltemp);
+				int yanzhong =SqlDBUtil.ExecuteScalar(sqltemp);
 				
 				sqltemp = string.Format(sql,CommonConst.BUGLEVEL_JinJI);
-				int jinji =AccessDBUtil.ExecuteScalar(sqltemp);
+				int jinji =SqlDBUtil.ExecuteScalar(sqltemp);
 			
 				numtable.Rows.Add(null,qinwei,yiban,jinji,yanzhong);
 		
@@ -166,16 +166,16 @@ namespace WatchCore.dao
 			
 			foreach (PersonInfo ps in personlist) {
 				string sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_QinWei);
-				int qinwei =AccessDBUtil.ExecuteScalar(sqltemp);
+				int qinwei =SqlDBUtil.ExecuteScalar(sqltemp);
 				轻微+=qinwei;//合计数
 				sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_YiBan);
-				int yiban =AccessDBUtil.ExecuteScalar(sqltemp);
+				int yiban =SqlDBUtil.ExecuteScalar(sqltemp);
 				一般+=yiban;//合计数
 				sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_YanZhong);
-				int yanzhong =AccessDBUtil.ExecuteScalar(sqltemp);
+				int yanzhong =SqlDBUtil.ExecuteScalar(sqltemp);
 				严重+=yanzhong;//合计数
 				sqltemp = string.Format(sql,ps.Id,CommonConst.BUGLEVEL_JinJI);
-				int jinji =AccessDBUtil.ExecuteScalar(sqltemp);
+				int jinji =SqlDBUtil.ExecuteScalar(sqltemp);
 				紧急+=jinji;//合计数
 				int zongji=jinji+yanzhong+yiban+qinwei;
 				numtable.Rows.Add(ps.Fullname,qinwei,yiban,jinji,yanzhong,zongji);
@@ -189,7 +189,7 @@ namespace WatchCore.dao
 		{
 			string sql = "SELECT unitno,buglevel,packagename,testtitle FROM testunit " +
 "where cdate(testtime)>=cdate('"+begintime+"') and  cdate(testtime)<=cdate('"+endtime+"') order by unitno asc";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
 		
@@ -204,7 +204,7 @@ namespace WatchCore.dao
         	dtno="BUG"+dtno;
         	returnstring = dtno;
         	int no;
-			DataSet data=AccessDBUtil.ExecuteQuery("SELECT top 1 unitno from testunit where unitno like '"+dtno+"%' order by unitno desc");
+			DataSet data=SqlDBUtil.ExecuteQuery("SELECT top 1 unitno from testunit where unitno like '"+dtno+"%' order by unitno desc");
 			if(data.Tables["ds"].Rows.Count!=0)
 			{
 				
@@ -228,7 +228,7 @@ namespace WatchCore.dao
 			
 		static public List<TestUnit> getAlltestUnit()
 		{
-			DataSet data=AccessDBUtil.ExecuteQuery("select Unitno,Packagename,Buglevel,Testtitle,Testtime,Adminname,State,Id from testunit order by Unitno desc");
+			DataSet data=SqlDBUtil.ExecuteQuery("select Unitno,Packagename,Buglevel,Testtitle,Testtime,Adminname,State,Id from testunit order by Unitno desc");
 			List<TestUnit> ls = new List<TestUnit>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -254,7 +254,7 @@ namespace WatchCore.dao
 			}	
 			sql+= " order by cdate(testtime) desc";
 			
-			DataSet data=AccessDBUtil.ExecuteQuery(sql);
+			DataSet data=SqlDBUtil.ExecuteQuery(sql);
 			List<TestUnit> ls = new List<TestUnit>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -268,7 +268,7 @@ namespace WatchCore.dao
 			bool isSuccess = false;
 			string sql = "update testunit set state='"+state+"' where id="+id;
 			try {
-				AccessDBUtil.ExecuteNonQuery(sql);
+				SqlDBUtil.ExecuteNonQuery(sql);
 				isSuccess = true;
 			} catch (Exception) {
 				
@@ -279,7 +279,7 @@ namespace WatchCore.dao
 		
 		static public TestUnit gettestUnitById(int id)
 		{
-			DataSet data=AccessDBUtil.ExecuteQuery("select top 1 * from testunit where id="+id.ToString());
+			DataSet data=SqlDBUtil.ExecuteQuery("select top 1 * from testunit where id="+id.ToString());
 			if(data.Tables["ds"].Rows.Count>0)
 			{
 			TestUnit ls=Row2TestUnit(data.Tables["ds"].Rows[0]);

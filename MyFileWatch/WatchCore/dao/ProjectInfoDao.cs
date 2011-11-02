@@ -15,7 +15,7 @@ using WatchCore.dao;
 using WatchCore.pojo;
 
 
-namespace WatchCilent.dao
+namespace WatchCore.dao
 {
 	/// <summary>
 	/// Description of ProjectInfoDao.
@@ -29,7 +29,7 @@ namespace WatchCilent.dao
 		static public DataTable getAllProjectTable()
 		{
 			string sql = "select * from projectinfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			DataRow dr = data.Tables["ds"].NewRow();
 			dr["projectname"] = "全部项目";
 			dr["id"] = 0;
@@ -40,7 +40,7 @@ namespace WatchCilent.dao
 		static public List<ProjectInfo> getAllProjectInfo()
 		{
 			string sql = "select * from projectinfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<ProjectInfo> ls = new List<ProjectInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -53,7 +53,7 @@ namespace WatchCilent.dao
 		{
 			string sql = "select * from ProjectInfo where id in (SELECT moduleproject.projectid FROM moduleInfo , moduleproject " +
 				"where moduleInfo.ID = moduleproject.moduleid and moduleInfo.fullname like '"+mname+"%' and code = '"+mcode+"')";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<ProjectInfo> ls = new List<ProjectInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -66,7 +66,7 @@ namespace WatchCilent.dao
 		{
 			string sql = "select * from ProjectInfo where id in (SELECT moduleproject.projectid FROM  moduleproject " +
 				"where moduleproject.moduleid = "+id+")";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<ProjectInfo> ls = new List<ProjectInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{

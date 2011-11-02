@@ -10,11 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
-using WatchCilent.Common;
-using WatchCilent.dao;
-using WatchCilent.pojo;
-
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 
 namespace WatchCilent
 {
@@ -87,7 +85,7 @@ namespace WatchCilent
 				newmodule.Managerid = Int32.Parse(comboBox1.SelectedValue.ToString());
 				newmodule.Managername=comboBox1.Text;
 				newmodule.Id=0;
-				bool isinsert=AccessDBUtil.insert(newmodule);
+				bool isinsert=SqlDBUtil.insert(newmodule);
 				if(isinsert) getAllModuleInfo();
 			}
 		}
@@ -139,7 +137,7 @@ namespace WatchCilent
 				module.Code = this.textBox2.Text;
 				module.Managerid=Int32.Parse(this.comboBox1.SelectedValue.ToString());
 				module.Managername=this.comboBox1.Text;
-				AccessDBUtil.update(module);
+				SqlDBUtil.update(module);
 				this.getAllModuleInfo();
 			}
 		}
@@ -180,7 +178,7 @@ namespace WatchCilent
 				return;
 			}
 			ModuleInfo module=ListView1_Select(this.listView1.SelectedItems[0]);
-			AccessDBUtil.delete(module);
+			SqlDBUtil.delete(module);
 			this.getAllModuleInfo();
 		}
 /**************************版本信息结束*******************************************************************/		
@@ -228,7 +226,7 @@ namespace WatchCilent
 				project.Projectname=textBox4.Text;
 				project.Projectpath=textBox3.Text;
 				project.Url=textBox7.Text;
-				AccessDBUtil.insert(project);
+				SqlDBUtil.insert(project);
 				getAllProjectInfo();
 			}
 		}
@@ -282,7 +280,7 @@ namespace WatchCilent
 				project.Projectname = this.textBox4.Text;
 				project.Projectpath = this.textBox3.Text;
 				project.Url=this.textBox7.Text;
-				AccessDBUtil.update(project);
+				SqlDBUtil.update(project);
 				this.getAllProjectInfo();
 			}
 		}
@@ -295,7 +293,7 @@ namespace WatchCilent
 				return;
 			}
 			ProjectInfo project=ListView2_Select(this.listView2.SelectedItems[0]);
-			AccessDBUtil.delete(project);
+			SqlDBUtil.delete(project);
 			this.getAllProjectInfo();
 		}
 /**************************项目信息结束*******************************************************************/	
@@ -342,7 +340,7 @@ namespace WatchCilent
 				PersonInfo person= new PersonInfo();
 				person.Fullname=textBox6.Text;
 				person.Ip=textBox5.Text;
-				AccessDBUtil.insert(person);
+				SqlDBUtil.insert(person);
 				getAllPersonInfo();
 			}
 		}
@@ -390,7 +388,7 @@ namespace WatchCilent
 				PersonInfo person=ListView3_Select(this.listView3.SelectedItems[0]);
 				person.Fullname = this.textBox6.Text;
 				person.Ip = this.textBox5.Text;
-				AccessDBUtil.update(person);
+				SqlDBUtil.update(person);
 				this.getAllPersonInfo();
 			}
 		}
@@ -403,7 +401,7 @@ namespace WatchCilent
 				return;
 			}
 			PersonInfo person=ListView3_Select(this.listView3.SelectedItems[0]);
-			AccessDBUtil.delete(person);
+			SqlDBUtil.delete(person);
 			this.getAllPersonInfo();
 		}
 /**************************责任人信息结束*******************************************************************/	
@@ -481,7 +479,7 @@ namespace WatchCilent
 					ModuleProject mp = new ModuleProject();
 					mp.Moduleid=((ModuleInfo)this.listBox1.SelectedItems[i]).Id;
 					mp.Projectid = (int)comboBox2.SelectedValue;
-					AccessDBUtil.insert(mp);
+					SqlDBUtil.insert(mp);
 				}
 			}
 			else 
@@ -502,7 +500,7 @@ namespace WatchCilent
 					string mid =((ModuleInfo)this.listBox2.SelectedItems[i]).Id.ToString();
 					List<ModuleProject> mplist = 
 						ModuleProjectDao.getAllMPByPrjIDAndMdlID(pid,mid);
-					AccessDBUtil.delete(mplist[0]);
+					SqlDBUtil.delete(mplist[0]);
 				}
 			}
 			else 

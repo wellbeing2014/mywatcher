@@ -28,7 +28,7 @@ namespace WatchCore.dao
 		static public DataTable getAllModuleTable()
 		{
 			string sql = "select * from ModuleInfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			DataRow dr = data.Tables["ds"].NewRow();
 			dr["fullname"] = "全部平台";
 			dr["id"] = 0;
@@ -39,7 +39,7 @@ namespace WatchCore.dao
 		static public List<ModuleInfo> getAllModuleInfo()
 		{
 			string sql = "select * from ModuleInfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<ModuleInfo> ls = new List<ModuleInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -50,7 +50,7 @@ namespace WatchCore.dao
 		static public List<ModuleInfo> getAllModuleInfoByProjectID(string id)
 		{
 			string sql = "SELECT * from moduleInfo where id in (select moduleid from moduleproject where projectid="+id+")";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<ModuleInfo> ls = new List<ModuleInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -63,7 +63,7 @@ namespace WatchCore.dao
 		{
 			string sql = "SELECT * FROM moduleInfo  " +
 				"where  moduleInfo.fullname like '"+mname+"%' and code = '"+mcode+"'";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<ModuleInfo> ls = new List<ModuleInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{

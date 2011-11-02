@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
-using WatchCilent.dao;
-using WatchCilent.pojo;
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 
 /*
  * Created by SharpDevelop.

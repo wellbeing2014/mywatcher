@@ -11,11 +11,12 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Data;
-using WatchCilent.dao;
-using WatchCilent.pojo;
-using WatchCilent.Common;
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 using System.Collections.Generic;
 using MFCComboBox;
+using WatchCore.Common;
 namespace WatchCilent.UI.Test
 {
 	/// <summary>
@@ -260,10 +261,10 @@ namespace WatchCilent.UI.Test
 				bool isSave = false;
 				
 				if(tu.Id!=0)
-					isSave = AccessDBUtil.update(tu);
+					isSave = SqlDBUtil.update(tu);
 				else
 				{
-					tu.Id = AccessDBUtil.insertReturnID(tu);
+					tu.Id = SqlDBUtil.insertReturnID(tu);
 					isSave = true;
 				}
 				if(isSave)

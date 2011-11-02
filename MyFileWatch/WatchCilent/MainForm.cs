@@ -15,9 +15,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 using System.Runtime.InteropServices;
-using WatchCilent.Common;
-using WatchCilent.dao;
-using WatchCilent.pojo;
+using WatchCore.dao;
+using WatchCore.pojo;
+using WatchCore.Common;
 
 namespace WatchCilent
 {
@@ -228,7 +228,7 @@ namespace WatchCilent
 				{
 					PackageInfo pack = new PackageInfo();
 					pack = ListViewSelect(lt);
-					AccessDBUtil.delete(pack);
+					SqlDBUtil.delete(pack);
 				}
 			}
 			else
@@ -267,7 +267,7 @@ namespace WatchCilent
 				pack = ListViewSelect(listView1.SelectedItems[0]);
 				pack.State="已测试";
 				pack.Testtime=System.DateTime.Now.ToLocalTime().ToString();
-				AccessDBUtil.update(pack);
+				SqlDBUtil.update(pack);
 			}
 			getAllPackInList();
 		}
@@ -278,7 +278,7 @@ namespace WatchCilent
 				PackageInfo pack = new PackageInfo();
 				pack = ListViewSelect(listView1.SelectedItems[0]);
 				pack.State="已作废";
-				AccessDBUtil.update(pack);
+				SqlDBUtil.update(pack);
 			}
 			getAllPackInList();
 		}
@@ -290,7 +290,7 @@ namespace WatchCilent
 				pack = ListViewSelect(listView1.SelectedItems[0]);
 				pack.State="已发布";
 				pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
-				AccessDBUtil.update(pack);
+				SqlDBUtil.update(pack);
 			}
 			getAllPackInList();
 		}

@@ -57,30 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\AccessDBUtil.cs" />
-    <Compile Include="Common\CommonConst.cs" />
-    <Compile Include="Common\Communication.cs" />
-    <Compile Include="Common\FunctionUtils.cs" />
-    <Compile Include="Common\DirectoryListParser.cs" />
-    <Compile Include="Common\WordDocumentMerger.cs" />
-    <Compile Include="dao\ModuleDao.cs" />
-    <Compile Include="dao\ModuleProjectDao.cs" />
-    <Compile Include="dao\PackageDao.cs" />
-    <Compile Include="dao\PersonDao.cs" />
-    <Compile Include="dao\ProjectInfoDao.cs" />
-    <Compile Include="dao\TestUnitDao.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="pojo\ModuleProject.cs" />
-    <Compile Include="pojo\TestUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="pojo\ModuleInfo.cs" />
-    <Compile Include="pojo\PackageInfo.cs" />
-    <Compile Include="pojo\PersonInfo.cs" />
-    <Compile Include="pojo\ProjectInfo.cs" />
     <Compile Include="UI\ConfigForm.cs" />
     <Compile Include="UI\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -200,12 +182,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MISC" />
-    <Folder Include="pojo" />
-    <Folder Include="dao" />
     <Folder Include="UI" />
-    <Folder Include="Common" />
     <Folder Include="UI\Pack" />
     <Folder Include="UI\Test" />
     <Folder Include="UI\Pub" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WatchCore\WatchCore.csproj">
+      <Project>{FFB3B2FE-B623-42AA-9FDB-FFE4807D7F14}</Project>
+      <Name>WatchCore</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

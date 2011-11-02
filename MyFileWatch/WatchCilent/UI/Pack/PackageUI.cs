@@ -11,10 +11,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using WatchCilent.dao;
-using WatchCilent.pojo;
-using WatchCilent.Common;
-
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 namespace WatchCilent
 {
 	/// <summary>
@@ -177,7 +176,7 @@ namespace WatchCilent
 				{
 					PackageInfo pack = new PackageInfo();
 					pack = ListViewSelect(lt);
-					AccessDBUtil.delete(pack);
+					SqlDBUtil.delete(pack);
 				}
 			}
 			else
@@ -198,7 +197,7 @@ namespace WatchCilent
 					pack = ListViewSelect(lt);
 					pack.State=CommonConst.PACKSTATE_YiCeShi;
 					pack.Testtime=System.DateTime.Now.ToLocalTime().ToString();
-					AccessDBUtil.update(pack);
+					SqlDBUtil.update(pack);
 				}
 			}
 			getAllPackInList();
@@ -215,7 +214,7 @@ namespace WatchCilent
 					pack = ListViewSelect(lt);
 					pack.State=CommonConst.PACKSTATE_YiFeiZhi;
 					//pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
-					AccessDBUtil.update(pack);
+					SqlDBUtil.update(pack);
 				}
 			}
 			getAllPackInList();
@@ -232,7 +231,7 @@ namespace WatchCilent
 					pack = ListViewSelect(lt);
 					pack.State=CommonConst.PACKSTATE_YiFaBu;
 					pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
-					AccessDBUtil.update(pack);
+					SqlDBUtil.update(pack);
 				}
 			}
 			getAllPackInList();

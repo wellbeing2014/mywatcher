@@ -33,7 +33,7 @@ namespace WatchCore.dao
 			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid " +
 						"where cdate(packageInfo.packtime) >=cdate('"+begintime+"')"+
 						" and cdate(packageInfo.packtime) <=cdate('"+endtime+"')"+" order by cdate(packageInfo.packtime) asc";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
 		
@@ -62,13 +62,13 @@ namespace WatchCore.dao
 			int total =0;
 			foreach (PersonInfo ps in personlist) {
 				string sqltemp = string.Format(sql,ps.Id,CommonConst.PACKSTATE_YiFaBu);
-				int pubnum =AccessDBUtil.ExecuteScalar(sqltemp);
+				int pubnum =SqlDBUtil.ExecuteScalar(sqltemp);
 				pub+=pubnum;//合计数
 				sqltemp = string.Format(sql,ps.Id,CommonConst.PACKSTATE_YiFeiZhi);
-				int fznum =AccessDBUtil.ExecuteScalar(sqltemp);
+				int fznum =SqlDBUtil.ExecuteScalar(sqltemp);
 				fz+=fznum;//合计数
 				sqltemp = string.Format(totalsql,ps.Id);
-				int totalnum =AccessDBUtil.ExecuteScalar(sqltemp);
+				int totalnum =SqlDBUtil.ExecuteScalar(sqltemp);
 				total+=totalnum;//合计数
 				double rate = (double)pubnum/(fznum+pubnum);//一定要用double类型.
 				numtable.Rows.Add(ps.Fullname,pubnum,fznum,totalnum,rate.ToString("P", provider));
@@ -85,7 +85,7 @@ namespace WatchCore.dao
 		static public DataTable getAllUnTestPack()
 		{
 			string sql = "SELECT packageInfo.*,moduleInfo.id as realmoduleid, moduleInfo.code FROM moduleInfo right JOIN packageInfo ON moduleInfo.ID = packageInfo.moduleid  order by cdate(packageInfo.packtime) desc";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
 		
@@ -104,7 +104,7 @@ namespace WatchCore.dao
 				sql+=" and  cdate(packtime)<=cdate('"+endtime+"')";
 			}	
 			sql+=" order by cdate(packtime) desc";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -118,7 +118,7 @@ namespace WatchCore.dao
 			string time = System.DateTime.Now.ToLocalTime().ToString();
 			string sql = "update packageinfo set pubpath = '"+pubpath+"',publishtime ='"+time+"',state ='已发布' where id="+id;
 			try {
-				int i = AccessDBUtil.ExecuteNonQuery(sql);
+				int i = SqlDBUtil.ExecuteNonQuery(sql);
 				if(i!=0)
 					return true;
 				else
@@ -134,7 +134,7 @@ namespace WatchCore.dao
 		static public List<PackageInfo> getAllPackageInfo()
 		{
 			string sql = "select * from packageinfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -146,7 +146,7 @@ namespace WatchCore.dao
 		static public List<PackageInfo> getPackageInfoBypath(string path)
 		{
 			string sql = "select * from packageinfo where packagepath='"+path+"'";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql,null);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-using WatchCilent.dao;
-using WatchCilent.pojo;
+using WatchCore.dao;
+using WatchCore.pojo;
 
 /*
  * Created by SharpDevelop.

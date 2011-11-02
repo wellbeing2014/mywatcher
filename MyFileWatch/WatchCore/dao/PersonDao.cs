@@ -27,7 +27,7 @@ namespace WatchCore.dao
 		static public DataTable getPersonTable()
 		{
 			string sql = "select * from PersonInfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			DataRow dr = data.Tables["ds"].NewRow();
 			dr["fullname"] = "全部责任人";
 			dr["id"] = 0;
@@ -38,7 +38,7 @@ namespace WatchCore.dao
 		static public List<PersonInfo> getAllPersonInfo()
 		{
 			string sql = "select * from PersonInfo";
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<PersonInfo> ls = new List<PersonInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
@@ -50,7 +50,7 @@ namespace WatchCore.dao
 		static public PersonInfo getPersonInfoByModuleid(int id)
 		{
 			string sql = "select PersonInfo.* from PersonInfo,moduleInfo where PersonInfo.id = moduleInfo.managerid and moduleInfo.id="+id.ToString();
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			PersonInfo ls = new PersonInfo();
 			if(data.Tables["ds"].Rows.Count>0)
 			{
@@ -61,7 +61,7 @@ namespace WatchCore.dao
 		static public PersonInfo getPersonInfoByid(int id)
 		{
 			string sql = "select PersonInfo.* from PersonInfo where PersonInfo.id = "+id.ToString();
-			DataSet data = AccessDBUtil.ExecuteQuery(sql);
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			PersonInfo ls = new PersonInfo();
 			if(data.Tables["ds"].Rows.Count>0)
 			{

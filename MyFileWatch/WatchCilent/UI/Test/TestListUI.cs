@@ -10,11 +10,11 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using WatchCilent.dao;
-using WatchCilent.pojo;
-using WatchCilent.Common;
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 using System.Collections.Generic;
-
+using WatchCore.Common;
 namespace WatchCilent.UI.Test
 {
 	/// <summary>
@@ -223,7 +223,7 @@ namespace WatchCilent.UI.Test
 			{
 				foreach (ListViewItem lvi in this.listView1.CheckedItems) {
 					TestUnit tu = ListViewSelect(lvi);
-				    AccessDBUtil.delete(tu);
+				    SqlDBUtil.delete(tu);
 				}
 				MessageBox.Show("删除成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 				this.listView1.Items.Clear();

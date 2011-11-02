@@ -14,10 +14,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using WatchCilent.dao;
-using WatchCilent.pojo;
-using WatchCilent.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 using System.ComponentModel;
+using WatchCore.Common;
 
 namespace WatchCilent
 {
@@ -404,11 +404,11 @@ namespace WatchCilent
 			packageinfo.State=CommonConst.PACKSTATE_YiChuLi;
 			if(packageinfo.Id>0)
 			{
-				AccessDBUtil.update(packageinfo);
+				SqlDBUtil.update(packageinfo);
 			}
 			else
 			{
-				AccessDBUtil.insert(packageinfo);
+				SqlDBUtil.insert(packageinfo);
 			}
 		}
 		void getAllProjectPath()
@@ -471,7 +471,7 @@ namespace WatchCilent
 				try {
 					FileInfo packfile = new FileInfo(frompath);
 					if (packfile.Exists) packfile.Delete();
-					AccessDBUtil.delete(this.packageinfo);
+					SqlDBUtil.delete(this.packageinfo);
 					MessageBox.Show("更新包删除成功");
 					this.Close();
 					this.Dispose();

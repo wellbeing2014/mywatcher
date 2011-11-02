@@ -10,9 +10,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using WatchCilent.Common;
-using WatchCilent.dao;
-using WatchCilent.pojo;
+using WatchCore.Common;
+using WatchCore.dao;
+using WatchCore.pojo;
 
 namespace WatchCilent
 {
