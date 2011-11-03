@@ -102,8 +102,13 @@ namespace WatchCilent.UI
 			ctrl.Dock = System.Windows.Forms.DockStyle.Fill;
 			if(this.panel2.Controls.Count>0)
 			{
-				this.panel2.Controls.Clear();
-				this.panel2.Controls.Add(ctrl);
+				foreach (Control element in this.panel2.Controls) {
+					if(element==ctrl) 
+						element.Visible=true;
+					else 
+						element.Visible=false;
+				}
+				
 			}
 		}
 	
@@ -161,10 +166,7 @@ namespace WatchCilent.UI
 			}
 		}
 		
-		   
-  
-      
-    	
+		       	
 	     protected override void WndProc(ref Message m)   
 	     {   
 	         switch (m.Msg)   
@@ -211,17 +213,17 @@ namespace WatchCilent.UI
 		
 		void 发布ToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			changeForm(new PublishUI());
+			changeForm(this.publishUI1);
 		}
 		
 		void 更新包ToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			changeForm(new PackageUI());
+			changeForm(this.packageUI1);
 		}
 		
 		void ToolStripMenuItem1Click(object sender, EventArgs e)
 		{
-			changeForm(new TestListUI());
+			changeForm(this.testlistUI1);
 		}
 	}
 }

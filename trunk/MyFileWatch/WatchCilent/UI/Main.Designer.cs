@@ -41,6 +41,8 @@ namespace WatchCilent.UI
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.packageUI1 = new WatchCilent.PackageUI();
+			this.testlistUI1 = new WatchCilent.UI.Test.TestListUI();
+			this.publishUI1 = new WatchCilent.UI.Pub.PublishUI();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.更新包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +79,8 @@ namespace WatchCilent.UI
 			// panel2
 			// 
 			this.panel2.Controls.Add(this.packageUI1);
+			this.panel2.Controls.Add(this.publishUI1);
+			this.panel2.Controls.Add(this.testlistUI1);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(0, 24);
 			this.panel2.Name = "panel2";
@@ -90,6 +94,20 @@ namespace WatchCilent.UI
 			this.packageUI1.Name = "packageUI1";
 			this.packageUI1.Size = new System.Drawing.Size(909, 463);
 			this.packageUI1.TabIndex = 0;
+			
+			/// <summary>
+			/// zengjia 
+			/// </summary>
+			this.testlistUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.testlistUI1.Location = new System.Drawing.Point(0, 0);
+			this.testlistUI1.Name = "testlistUI1";
+			this.testlistUI1.Visible = false;
+			
+			
+			this.publishUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.publishUI1.Location = new System.Drawing.Point(0, 0);
+			this.publishUI1.Name = "publishUI1";
+			this.publishUI1.Visible = false;
 			// 
 			// menuStrip1
 			// 
@@ -255,6 +273,8 @@ namespace WatchCilent.UI
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.Panel panel1;
 		private WatchCilent.PackageUI packageUI1;
+		private WatchCilent.UI.Pub.PublishUI  publishUI1;
+		private WatchCilent.UI.Test.TestListUI testlistUI1;
 		//private WatchCilent.PackageUI packageUI1;
 		
 		

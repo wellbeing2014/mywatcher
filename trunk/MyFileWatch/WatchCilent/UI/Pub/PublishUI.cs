@@ -80,9 +80,28 @@ namespace WatchCilent.UI.Pub
 			this.exListView1.Columns.Add(new EXColumnHeader("进度", 120));
 			this.exListView1.Columns.Add(new EXColumnHeader("状态", 60));
 			this.exListView1.Columns.Add(new EXColumnHeader("操作", 80));
-			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null);
 			
-			
+			this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,(count%pagesize==0)?count/pagesize:count/pagesize+1,this.count);
+			getPublishPackageList();
+			//
+			// TODO: Add constructor code after the InitializeComponent() call.
+			//
+		}
+		
+		private void getPublishPackageList()
+		{
+			this.count = PackageDao.queryPackageInfoCount("0","0","已发布",null,null);
+			int countpage = (count%pagesize==0)?count/pagesize:count/pagesize+1;
+			if(this.currentpage>countpage) this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,countpage,this.count);
+			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null,
+			                                                  (currentpage>1)?((this.currentpage-1)*pagesize):0
+			                                                  ,pagesize);		
 			this.exListView1.BeginUpdate();
 			this.exListView1.Items.Clear();
 			foreach(PackageInfo pack in ls)
@@ -90,9 +109,6 @@ namespace WatchCilent.UI.Pub
 				ListViewBing(pack);
 			}
 			this.exListView1.EndUpdate();
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 		
 		private void ListViewBing(PackageInfo packinfo)
@@ -491,28 +507,36 @@ namespace WatchCilent.UI.Pub
 			
 		}
 		
-		
-		
-		
+			
 		
 		void LinkLabel3LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			
+			this.currentpage=1;
+			getPublishPackageList();
 		}
 		
 		void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			
+			if(this.currentpage>1)
+			{
+				this.currentpage--;
+			}
+			getPublishPackageList();
 		}
 		
 		void LinkLabel2LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			
+			if(this.currentpage<((count%pagesize==0)?count/pagesize:count/pagesize+1))
+			{
+				this.currentpage++;
+			}
+			getPublishPackageList();
 		}
 		
 		void LinkLabel4LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			
+			this.currentpage=(count%pagesize==0)?count/pagesize:count/pagesize+1;
+			getPublishPackageList();
 		}
 	}
 	class UploadParam{
