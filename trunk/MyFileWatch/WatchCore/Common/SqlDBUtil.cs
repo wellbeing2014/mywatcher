@@ -37,9 +37,16 @@ namespace WatchCore.Common
         /// 
         public static SqlConnection ReturnConn()
         {
-            SqlConnection Conn = new SqlConnection(ConnStr);
-            Conn.Open();
-            return Conn;
+        	try {
+        		SqlConnection Conn = new SqlConnection(ConnStr);
+            	Conn.Open();
+            	return Conn;
+        		
+        	} catch (Exception e) {
+        		
+        		throw(new Exception("打开数据库失败："+e.ToString()));
+        	}
+            
         }
         public static void Dispose(SqlConnection Conn)
         {
@@ -182,7 +189,7 @@ namespace WatchCore.Common
         /// </summary>
         /// <param name="SQL"></param>
         /// <returns></returns>
-        public static DataSet ExecuteQuery(string SQL,int startpage,int pagesize)
+        public static DataSet ExecuteQuery(string SQL,int startnum,int pagesize)
         {
         	DataSet ds = new DataSet();
             SqlConnection Conn;
@@ -193,7 +200,7 @@ namespace WatchCore.Common
             try
             {
             	adapter = new SqlDataAdapter(Cmd);
-            	adapter.Fill(ds,startpage,pagesize,"ds");
+            	adapter.Fill(ds,startnum,pagesize,"ds");
             }
             catch
             {
@@ -610,6 +617,36 @@ namespace WatchCore.Common
 			} catch (Exception) {
 				throw(new Exception("删除失败"));
 			}
+		}
+		
+		public static bool CheckDBState()
+		{
+			SqlConnection Conn;
+            Conn = ReturnConn();
+            SqlCommand cmd;
+            bool result=false;
+            SqlDataReader Dr;
+            try
+            {
+            	cmd = CreateCmd("select getdate()", Conn);
+                Dr = cmd.ExecuteReader();
+                if (Dr.Read())
+                {
+                	result = true;
+                    Dr.Close();
+                }
+                else
+                {
+                    result = false;
+                    Dr.Close();
+                }
+            }
+            catch
+            {
+                throw new Exception("数据库异常~");
+            }
+            Dispose(Conn);
+            return result;
 		}
 		
     }    

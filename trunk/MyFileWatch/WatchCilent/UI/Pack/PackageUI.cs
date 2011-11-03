@@ -26,6 +26,14 @@ namespace WatchCilent
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		
+		private int currentpage=0;
+		private int count = 0;
+		private int pagesize = 20;
+		
+		private string currentstr = "当前第{0}页";
+		private string countstr ="共{0}页/共{1}条";
+		private string pagestr ="每页{0}条";
+		
 		public PackageUI()
 		{
 			//
@@ -79,6 +87,12 @@ namespace WatchCilent
 				dateTimePicker1.Value=dt.AddDays(-7);
 			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
 			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
+			
+			
+			this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,(count%pagesize==0)?count/pagesize:count/pagesize+1,this.count);
 			getAllPackInList();
 			
 			//
@@ -120,12 +134,22 @@ namespace WatchCilent
 			
 			string begin=this.dateTimePicker1.Value.ToShortDateString()+" 00:00:00";
 			string end =this.dateTimePicker2.Value.ToShortDateString()+" 23:59:59";
+			
 			if(this.dateTimePicker1.IsDisposed&&this.dateTimePicker2.IsDisposed)
 			{
 				begin=null;
 				end =null;
 			}
-			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,begin,end);
+			
+			this.count = PackageDao.queryPackageInfoCount(moduleid,manageid,state,begin,end);
+			int countpage = (count%pagesize==0)?count/pagesize:count/pagesize+1;
+			if(this.currentpage>countpage) this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,countpage,this.count);
+			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,begin,end,
+			                                                  (currentpage>1)?((this.currentpage-1)*pagesize):0
+			                                                  ,pagesize);
 			this.listView1.Items.Clear();
 			foreach(PackageInfo pack in ls)
 			{
@@ -354,5 +378,43 @@ namespace WatchCilent
 
 
 		
+		
+		void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if(this.currentpage>1)
+			{
+				this.currentpage--;
+			}
+			getAllPackInList();
+		}
+		
+		void LinkLabel2LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if(this.currentpage<((count%pagesize==0)?count/pagesize:count/pagesize+1))
+			{
+				this.currentpage++;
+			}
+			getAllPackInList();
+		}
+		
+		void LinkLabel3LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			this.currentpage=1;
+			getAllPackInList();
+		}
+		
+		void LinkLabel4LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			this.currentpage=(count%pagesize==0)?count/pagesize:count/pagesize+1;
+			getAllPackInList();
+		}
+		void CheckBox1CheckedChanged(object sender, EventArgs e)
+		{
+			bool isallcheck=this.checkBox1.Checked;
+				foreach (ListViewItem element in this.listView1.Items) {
+					element.Checked=isallcheck;
+				}
+			
+		}
 	}
 }

@@ -263,6 +263,55 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
+		static public int QueryTestUnitCount(string moduleid,string managerid,string level,string state,string begintime, string endtime)
+		{
+			string sql = "select count(*) from testunit where "
+			+"(0="+moduleid+" or moduleid="+moduleid+")"
+				+" and (0="+managerid+" or adminid="+managerid+")"
+				+" and ('全部等级'='"+level+"' or buglevel='"+level+"')"
+				+" and ('全部'='"+state+"' or state='"+state+"')";
+			if(begintime!=null)
+			{
+				sql+=" and  cast(testtime as datetime)>=cast('"+begintime+"' as datetime)";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime)";
+			}	
+			
+			
+			return SqlDBUtil.ExecuteScalar(sql);
+			
+		}
+	
+		
+		static public List<TestUnit> QueryTestUnit(string moduleid,string managerid,string level,string state,string begintime, string endtime,
+		                                          int startnum,int pagesize)
+		{
+			string sql = "select Unitno,Packagename,Buglevel,Testtitle,Testtime,Adminname,State,Id from testunit where "
+			+"(0="+moduleid+" or moduleid="+moduleid+")"
+				+" and (0="+managerid+" or adminid="+managerid+")"
+				+" and ('全部等级'='"+level+"' or buglevel='"+level+"')"
+				+" and ('全部'='"+state+"' or state='"+state+"')";
+			if(begintime!=null)
+			{
+				sql+=" and  cast(testtime as datetime)>=cast('"+begintime+"' as datetime)";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime)";
+			}	
+			sql+= " order by cast(testtime as datetime) desc";
+			
+			DataSet data=SqlDBUtil.ExecuteQuery(sql,startnum,pagesize);
+			List<TestUnit> ls = new List<TestUnit>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2Tu(row));
+			}
+			return ls;
+		}
+		
 		static public bool UpdateState(string state,string id)
 		{
 			bool isSuccess = false;

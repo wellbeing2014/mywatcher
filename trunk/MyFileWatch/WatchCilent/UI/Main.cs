@@ -63,7 +63,19 @@ namespace WatchCilent.UI
 				}
 				else InitializeComponent();
 			}
-			else InitializeComponent();
+			else 
+			{
+				try {
+					SqlDBUtil.CheckDBState();
+				} catch (Exception) {
+					
+					MessageBox.Show("数据库异常","DBERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+					this.Close();
+					System.Windows.Forms.Application.Exit();
+				}
+				InitializeComponent();
+			}
+			
 			this.notifyIcon1.Visible=true;
 			this.notifyIcon1.MouseClick+= new MouseEventHandler(notifyIcon1_Click);
 			this.SizeChanged+= new EventHandler(Main_MinimumSizeChanged);

@@ -113,6 +113,51 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
+		static public int queryPackageInfoCount(string moduleid,string managerid,string state,string begintime,string endtime)
+		{
+			string sql = "select count(*) from packageinfo where "
+				+"(0="+moduleid+" or moduleid="+moduleid+")"
+				+" and (0="+managerid+" or managerid="+managerid+")"
+				+" and ('全部'='"+state+"' or state='"+state+"')";
+			if(begintime!=null)
+			{
+				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cast(packtime as datetime)<=cast('"+endtime+"' as datetime)";
+			}	
+			
+			return SqlDBUtil.ExecuteScalar(sql);
+		}
+		
+		
+		static public List<PackageInfo> queryPackageInfo(string moduleid,string managerid,
+		                                                 string state,string begintime,string endtime,
+		                                                int startnum,int pagesize)
+		{
+			string sql = "select * from packageinfo where "
+				+"(0="+moduleid+" or moduleid="+moduleid+")"
+				+" and (0="+managerid+" or managerid="+managerid+")"
+				+" and ('全部'='"+state+"' or state='"+state+"')";
+			if(begintime!=null)
+			{
+				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cast(packtime as datetime)<=cast('"+endtime+"' as datetime)";
+			}	
+			sql+=" order by cast(packtime as datetime) desc";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,startnum,pagesize);
+			List<PackageInfo> ls = new List<PackageInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2PackageInfo(row));
+			}
+			return ls;
+		}
+		
 		public static bool updateForPub(string id,string pubpath)
 		{
 			string time = System.DateTime.Now.ToLocalTime().ToString();

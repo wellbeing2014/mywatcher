@@ -37,6 +37,14 @@ namespace WatchCilent.UI.Test
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.button8 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
@@ -66,6 +74,14 @@ namespace WatchCilent.UI.Test
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.checkBox1);
+			this.panel1.Controls.Add(this.linkLabel2);
+			this.panel1.Controls.Add(this.linkLabel4);
+			this.panel1.Controls.Add(this.linkLabel3);
+			this.panel1.Controls.Add(this.linkLabel1);
+			this.panel1.Controls.Add(this.label3);
+			this.panel1.Controls.Add(this.label5);
+			this.panel1.Controls.Add(this.label4);
 			this.panel1.Controls.Add(this.treeView1);
 			this.panel1.Controls.Add(this.button8);
 			this.panel1.Controls.Add(this.button6);
@@ -88,6 +104,94 @@ namespace WatchCilent.UI.Test
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(800, 388);
 			this.panel1.TabIndex = 0;
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.checkBox1.Location = new System.Drawing.Point(139, 331);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(17, 24);
+			this.checkBox1.TabIndex = 65;
+			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
+			// 
+			// linkLabel2
+			// 
+			this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel2.Location = new System.Drawing.Point(702, 332);
+			this.linkLabel2.Name = "linkLabel2";
+			this.linkLabel2.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel2.TabIndex = 61;
+			this.linkLabel2.TabStop = true;
+			this.linkLabel2.Text = "下一页";
+			this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel2LinkClicked);
+			// 
+			// linkLabel4
+			// 
+			this.linkLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel4.Location = new System.Drawing.Point(748, 332);
+			this.linkLabel4.Name = "linkLabel4";
+			this.linkLabel4.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel4.TabIndex = 63;
+			this.linkLabel4.TabStop = true;
+			this.linkLabel4.Text = "末页";
+			this.linkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel4LinkClicked);
+			// 
+			// linkLabel3
+			// 
+			this.linkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel3.Location = new System.Drawing.Point(618, 332);
+			this.linkLabel3.Name = "linkLabel3";
+			this.linkLabel3.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel3.TabIndex = 64;
+			this.linkLabel3.TabStop = true;
+			this.linkLabel3.Text = "首页";
+			this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3LinkClicked);
+			// 
+			// linkLabel1
+			// 
+			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel1.Location = new System.Drawing.Point(660, 332);
+			this.linkLabel1.Name = "linkLabel1";
+			this.linkLabel1.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel1.TabIndex = 62;
+			this.linkLabel1.TabStop = true;
+			this.linkLabel1.Text = "上一页";
+			this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1LinkClicked);
+			// 
+			// label3
+			// 
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label3.Location = new System.Drawing.Point(162, 332);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(70, 20);
+			this.label3.TabIndex = 60;
+			this.label3.Text = "当前第几页";
+			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label5.Location = new System.Drawing.Point(238, 332);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(74, 20);
+			this.label5.TabIndex = 59;
+			this.label5.Text = "每页20条";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.Location = new System.Drawing.Point(318, 332);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(100, 20);
+			this.label4.TabIndex = 58;
+			this.label4.Text = "共几页/共几条";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// treeView1
 			// 
@@ -257,9 +361,9 @@ namespace WatchCilent.UI.Test
 									this.columnHeader7});
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
-			this.listView1.Location = new System.Drawing.Point(138, 41);
+			this.listView1.Location = new System.Drawing.Point(138, 37);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(662, 315);
+			this.listView1.Size = new System.Drawing.Size(662, 292);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -309,6 +413,14 @@ namespace WatchCilent.UI.Test
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.LinkLabel linkLabel3;
+		private System.Windows.Forms.LinkLabel linkLabel4;
+		private System.Windows.Forms.LinkLabel linkLabel2;
+		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.ComboBox comboBox3;
 		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.Button button5;
