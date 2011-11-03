@@ -482,6 +482,30 @@ namespace WatchCilent.UI.Pub
 			
 			
 		}
+		
+		
+		
+		
+		
+		void LinkLabel3LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			
+		}
+		
+		void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			
+		}
+		
+		void LinkLabel2LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			
+		}
+		
+		void LinkLabel4LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			
+		}
 	}
 	class UploadParam{
 	private ProgressBar bar;

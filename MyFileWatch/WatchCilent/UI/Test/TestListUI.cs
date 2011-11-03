@@ -26,6 +26,14 @@ namespace WatchCilent.UI.Test
 		private System.Windows.Forms.DateTimePicker dateTimePicker2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
+		private int currentpage=0;
+		private int count = 0;
+		private int pagesize = 20;
+		
+		private string currentstr = "当前第{0}页";
+		private string countstr ="共{0}页/共{1}条";
+		private string pagestr ="每页{0}条";
+		
 		public TestListUI()
 		{
 			//
@@ -85,6 +93,12 @@ namespace WatchCilent.UI.Test
 			this.listView1.DoubleClick += new EventHandler(ListVew_DoubleClick); 
 			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
 			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
+			
+			this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,(count%pagesize==0)?count/pagesize:count/pagesize+1,this.count);
+			
 			getTestUnitList();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -109,8 +123,18 @@ namespace WatchCilent.UI.Test
 				begin=null;
 				end =null;
 			}
+			
+			this.count = TestUnitDao.QueryTestUnitCount(moduleid,manageid,level,state,begin,end);
+			int countpage = (count%pagesize==0)?count/pagesize:count/pagesize+1;
+			if(this.currentpage>countpage) this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,countpage,this.count);
+			
 			this.listView1.Items.Clear();
-			List<TestUnit>alltu=TestUnitDao.QueryTestUnit(moduleid,manageid,level,state,begin,end);
+			List<TestUnit>alltu=TestUnitDao.QueryTestUnit(moduleid,manageid,level,state,begin,end,
+			                                             (currentpage>1)?((this.currentpage-1)*pagesize):0
+			                                                  ,pagesize);
 			foreach (TestUnit tu in alltu) {
 				ListViewBing(tu);
 			}
@@ -426,5 +450,45 @@ namespace WatchCilent.UI.Test
 		#endregion 
 		
 		
+		
+		
+		
+		void CheckBox1CheckedChanged(object sender, EventArgs e)
+		{
+			bool isallcheck=this.checkBox1.Checked;
+				foreach (ListViewItem element in this.listView1.Items) {
+					element.Checked=isallcheck;
+				}
+		}
+		
+		void LinkLabel3LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			this.currentpage=1;
+			getTestUnitList();
+		}
+		
+		void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if(this.currentpage>1)
+			{
+				this.currentpage--;
+			}
+			getTestUnitList();
+		}
+		
+		void LinkLabel2LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if(this.currentpage<((count%pagesize==0)?count/pagesize:count/pagesize+1))
+			{
+				this.currentpage++;
+			}
+			getTestUnitList();
+		}
+		
+		void LinkLabel4LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			this.currentpage=(count%pagesize==0)?count/pagesize:count/pagesize+1;
+			getTestUnitList();
+		}
 	}
 }
