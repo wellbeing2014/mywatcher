@@ -30,6 +30,14 @@ namespace WatchCilent.UI.Pub
 		private string username = System.Configuration.ConfigurationManager.AppSettings["FTPID"];
 		private string password = System.Configuration.ConfigurationManager.AppSettings["FTPPWD"];
 		string WisofServiceHost = System.Configuration.ConfigurationManager.AppSettings["WisofServiceHost"];
+		private int currentpage=0;
+		private int count = 0;
+		private int pagesize = 20;
+		
+		private string currentstr = "当前第{0}页";
+		private string countstr ="共{0}页/共{1}条";
+		private string pagestr ="每页{0}条";
+		
 		public PublishUI()
 		{
 			//
