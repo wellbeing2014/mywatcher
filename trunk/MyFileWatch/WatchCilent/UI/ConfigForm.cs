@@ -470,6 +470,8 @@ namespace WatchCilent
 		//选择
 		void Button4Click(object sender, EventArgs e)
 		{
+			if(null!=comboBox2.SelectedValue)
+			{
 			int count = this.listBox1.SelectedItems.Count;
 			if(count>0&&(int)comboBox2.SelectedValue!=0)
 			{
@@ -487,6 +489,8 @@ namespace WatchCilent
 				MessageBox.Show("请选择相应的模块或项目","提示");
 			}
 			getlistboxdata();
+			}
+			else MessageBox.Show("请选择相应的模块或项目","提示");
 		}
 		void Button5Click(object sender, EventArgs e)
 		{
@@ -517,5 +521,7 @@ namespace WatchCilent
 			getAllPersonInfo();
 			getAllModuleProject();
 		}
+		
+		
 	}
 }
