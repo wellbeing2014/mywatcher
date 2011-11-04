@@ -109,10 +109,10 @@ namespace WatchCilent
 			// tabPage4
 			// 
 			this.tabPage4.Controls.Add(this.panel1);
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Location = new System.Drawing.Point(4, 21);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(655, 371);
+			this.tabPage4.Size = new System.Drawing.Size(655, 372);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "版本项目关联";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@ namespace WatchCilent
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(649, 365);
+			this.panel1.Size = new System.Drawing.Size(649, 366);
 			this.panel1.TabIndex = 0;
 			// 
 			// label6
@@ -152,7 +152,7 @@ namespace WatchCilent
 			// button5
 			// 
 			this.button5.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button5.Location = new System.Drawing.Point(287, 206);
+			this.button5.Location = new System.Drawing.Point(287, 207);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(75, 23);
 			this.button5.TabIndex = 5;
@@ -163,7 +163,7 @@ namespace WatchCilent
 			// button4
 			// 
 			this.button4.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button4.Location = new System.Drawing.Point(287, 140);
+			this.button4.Location = new System.Drawing.Point(287, 141);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(75, 23);
 			this.button4.TabIndex = 4;
@@ -210,6 +210,7 @@ namespace WatchCilent
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(201, 20);
 			this.comboBox2.TabIndex = 0;
+			this.comboBox2.SelectedIndexChanged += new System.EventHandler(comboBox2_SelectedIndexChanged);
 			// 
 			// tabPage3
 			// 
@@ -218,10 +219,10 @@ namespace WatchCilent
 			this.tabPage3.Controls.Add(this.listView3);
 			this.tabPage3.Controls.Add(this.groupBox3);
 			this.tabPage3.Controls.Add(this.button11);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Location = new System.Drawing.Point(4, 21);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(655, 371);
+			this.tabPage3.Size = new System.Drawing.Size(655, 372);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "责任人管理";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -262,6 +263,7 @@ namespace WatchCilent
 			this.listView3.TabIndex = 6;
 			this.listView3.UseCompatibleStateImageBehavior = false;
 			this.listView3.View = System.Windows.Forms.View.Details;
+			this.listView3.Click += new System.EventHandler(this.ListView3Click);
 			// 
 			// columnHeader7
 			// 
@@ -333,10 +335,10 @@ namespace WatchCilent
 			this.tabPage2.Controls.Add(this.listView2);
 			this.tabPage2.Controls.Add(this.groupBox2);
 			this.tabPage2.Controls.Add(this.button8);
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Location = new System.Drawing.Point(4, 21);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(655, 371);
+			this.tabPage2.Size = new System.Drawing.Size(655, 372);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "项目管理";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -472,10 +474,10 @@ namespace WatchCilent
 			this.tabPage1.Controls.Add(this.button1);
 			this.tabPage1.Controls.Add(this.listView1);
 			this.tabPage1.Controls.Add(this.groupBox1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Location = new System.Drawing.Point(4, 21);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(655, 371);
+			this.tabPage1.Size = new System.Drawing.Size(655, 372);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "版本管理";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -699,6 +701,8 @@ namespace WatchCilent
 		List<PersonInfo> datasource_person ;
 		List<ProjectInfo> projectlist;
 		List<ModuleInfo> modulelist;
+		
+		
 		
 		
 		
