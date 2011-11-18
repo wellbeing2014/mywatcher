@@ -64,7 +64,11 @@ namespace WatchCilent.UI.Pub
 			this.treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
 			this.treeView1.Leave+=new EventHandler(treeView1_Leave);
 			this.treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);
-			
+			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
+			//让选中项背景色呈现蓝色
+            treeView1.SelectedNode.BackColor = Color.SteelBlue;
+            //前景色为白色
+            treeView1.SelectedNode.ForeColor = Color.White;
 			
 			this.exListView1.MySortBrush = SystemBrushes.ControlLight;
 			this.exListView1.MyHighlightBrush = Brushes.Goldenrod;
@@ -85,6 +89,7 @@ namespace WatchCilent.UI.Pub
 			this.label3.Text=string.Format(currentstr,this.currentpage);
 			this.label5.Text = string.Format(pagestr,this.pagesize);
 			this.label4.Text = string.Format(countstr,(count%pagesize==0)?count/pagesize:count/pagesize+1,this.count);
+			
 			getPublishPackageList();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -93,13 +98,21 @@ namespace WatchCilent.UI.Pub
 		
 		private void getPublishPackageList()
 		{
-			this.count = PackageDao.queryPackageInfoCount("0","0","已发布",null,null);
+			string _moduleid ;
+			string _managerid;
+			string _state;
+			string _ftppath;
+			if(this.treeView1.SelectedNode!=null&&this.treeView1.SelectedNode.Index==0)
+			{
+				
+			}
+			this.count = PackageDao.queryPackageInfoCount("0","0","已发布",null,null,null);
 			int countpage = (count%pagesize==0)?count/pagesize:count/pagesize+1;
 			if(this.currentpage>countpage) this.currentpage=1;
 			this.label3.Text=string.Format(currentstr,this.currentpage);
 			this.label5.Text = string.Format(pagestr,this.pagesize);
 			this.label4.Text = string.Format(countstr,countpage,this.count);
-			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null,
+			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null,null,
 			                                                  (currentpage>1)?((this.currentpage-1)*pagesize):0
 			                                                  ,pagesize);		
 			this.exListView1.BeginUpdate();
@@ -436,6 +449,7 @@ namespace WatchCilent.UI.Pub
 		
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
 		{
+			this.treeView1.SelectedNode=e.Node;
 			
 		}
 		 

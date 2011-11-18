@@ -49,6 +49,14 @@ namespace WatchCore.pojo
 			set { url = value; }
 		}
 		
+		private string ftppath;
+		
+		public string Ftppath {
+			get { return ftppath; }
+			set { ftppath = value; }
+		}
+		
+		
 		public override  bool Equals(object o)
 		{
 			ProjectInfo gb =(ProjectInfo)o;

@@ -226,7 +226,7 @@ namespace WatchCore.Common
             {
                 System.Threading.Thread.Sleep(20);
                 try { buffer = UdpClient.Receive(ref epGroup); }
-                catch(Exception e) { }
+                catch(Exception) { }
                 if (buffer == null || buffer.Length < 1)
                     continue;
                 var msg = System.Text.Encoding.Default.GetString(buffer);

@@ -126,7 +126,7 @@ namespace WatchCore.Common
             	adapter = new SqlDataAdapter(Cmd);
             	adapter.Fill(ds,"ds");
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw new Exception(SQL);
             }
@@ -319,7 +319,11 @@ namespace WatchCore.Common
                 Dr = cmd.ExecuteReader();
                 if (Dr.Read())
                 {
-                	result = Convert.ToDouble(Dr[0].ToString());
+                	try {
+                		result = Convert.ToDouble(Dr[0].ToString());
+                	} catch (Exception) {
+                	}
+                	
                     Dr.Close();
                 }
                 else
@@ -330,6 +334,7 @@ namespace WatchCore.Common
             catch
             {
                 throw new Exception(SQL);
+                
             }
             Dispose(Conn);
             return result;
@@ -396,7 +401,7 @@ namespace WatchCore.Common
 				//拼SQL结束。
 				ExecuteQuery(sql,para.ToArray());
 				return true;
-			} catch (Exception e) {
+			} catch (Exception) {
 				throw(new Exception("插入失败"));
 			}
 		}
