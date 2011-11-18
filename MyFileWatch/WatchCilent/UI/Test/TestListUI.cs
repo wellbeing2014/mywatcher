@@ -14,7 +14,6 @@ using WatchCore.Common;
 using WatchCore.dao;
 using WatchCore.pojo;
 using System.Collections.Generic;
-using WatchCore.Common;
 namespace WatchCilent.UI.Test
 {
 	/// <summary>

@@ -194,6 +194,19 @@ namespace WatchCore.Common
             UdpClient.Send(buffer, buffer.Length, epGroup);
         }
 
+         /// <summary>
+        /// broadcast a message to others
+        /// </summary>
+        /// <param name="msg"></param>
+        static public void Broadcast(string msg,int UDPPort)
+        {
+            var epGroup = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("224.0.0.2"), UDPPort);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(msg);
+            System.Net.Sockets.UdpClient UdpClient = new System.Net.Sockets.UdpClient(1019);
+           	UdpClient.Send(buffer, buffer.Length, epGroup);
+           	UdpClient.Close();
+        }
+        
         /// <summary>
         /// listen to the group 
         /// </summary>

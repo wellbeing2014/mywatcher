@@ -141,13 +141,13 @@ namespace WatchCilent
 				end =null;
 			}
 			
-			this.count = PackageDao.queryPackageInfoCount(moduleid,manageid,state,begin,end);
+			this.count = PackageDao.queryPackageInfoCount(moduleid,manageid,state,null,begin,end);
 			int countpage = (count%pagesize==0)?count/pagesize:count/pagesize+1;
 			if(this.currentpage>countpage) this.currentpage=1;
 			this.label3.Text=string.Format(currentstr,this.currentpage);
 			this.label5.Text = string.Format(pagestr,this.pagesize);
 			this.label4.Text = string.Format(countstr,countpage,this.count);
-			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,begin,end,
+			List<PackageInfo> ls =PackageDao.queryPackageInfo(moduleid,manageid,state,null,begin,end,
 			                                                  (currentpage>1)?((this.currentpage-1)*pagesize):0
 			                                                  ,pagesize);
 			this.listView1.Items.Clear();

@@ -72,6 +72,8 @@ namespace WatchCilent
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.textBox8 = new System.Windows.Forms.TextBox();
+			this.label10 = new System.Windows.Forms.Label();
 			this.textBox7 = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
@@ -95,6 +97,7 @@ namespace WatchCilent
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
 			this.tabPage4.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -210,7 +213,6 @@ namespace WatchCilent
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(201, 20);
 			this.comboBox2.TabIndex = 0;
-			this.comboBox2.SelectedIndexChanged += new System.EventHandler(comboBox2_SelectedIndexChanged);
 			// 
 			// tabPage3
 			// 
@@ -345,7 +347,7 @@ namespace WatchCilent
 			// 
 			// button6
 			// 
-			this.button6.Location = new System.Drawing.Point(64, 61);
+			this.button6.Location = new System.Drawing.Point(64, 86);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(50, 23);
 			this.button6.TabIndex = 8;
@@ -355,7 +357,7 @@ namespace WatchCilent
 			// 
 			// button7
 			// 
-			this.button7.Location = new System.Drawing.Point(8, 61);
+			this.button7.Location = new System.Drawing.Point(8, 86);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(50, 23);
 			this.button7.TabIndex = 7;
@@ -371,12 +373,13 @@ namespace WatchCilent
 			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 									this.columnHeader4,
 									this.columnHeader5,
-									this.columnHeader6});
+									this.columnHeader6,
+									this.columnHeader9});
 			this.listView2.FullRowSelect = true;
 			this.listView2.GridLines = true;
-			this.listView2.Location = new System.Drawing.Point(8, 90);
+			this.listView2.Location = new System.Drawing.Point(8, 120);
 			this.listView2.Name = "listView2";
-			this.listView2.Size = new System.Drawing.Size(639, 276);
+			this.listView2.Size = new System.Drawing.Size(639, 246);
 			this.listView2.TabIndex = 6;
 			this.listView2.UseCompatibleStateImageBehavior = false;
 			this.listView2.View = System.Windows.Forms.View.Details;
@@ -399,6 +402,8 @@ namespace WatchCilent
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.textBox8);
+			this.groupBox2.Controls.Add(this.label10);
 			this.groupBox2.Controls.Add(this.textBox7);
 			this.groupBox2.Controls.Add(this.label7);
 			this.groupBox2.Controls.Add(this.label8);
@@ -407,10 +412,25 @@ namespace WatchCilent
 			this.groupBox2.Controls.Add(this.textBox4);
 			this.groupBox2.Location = new System.Drawing.Point(8, 4);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(639, 51);
+			this.groupBox2.Size = new System.Drawing.Size(639, 76);
 			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "编辑";
+			// 
+			// textBox8
+			// 
+			this.textBox8.Location = new System.Drawing.Point(73, 43);
+			this.textBox8.Name = "textBox8";
+			this.textBox8.Size = new System.Drawing.Size(132, 21);
+			this.textBox8.TabIndex = 7;
+			// 
+			// label10
+			// 
+			this.label10.Location = new System.Drawing.Point(6, 46);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(61, 23);
+			this.label10.TabIndex = 6;
+			this.label10.Text = "FTP路径:";
 			// 
 			// textBox7
 			// 
@@ -459,7 +479,7 @@ namespace WatchCilent
 			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(120, 61);
+			this.button8.Location = new System.Drawing.Point(120, 86);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(50, 23);
 			this.button8.TabIndex = 9;
@@ -484,7 +504,7 @@ namespace WatchCilent
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(120, 63);
+			this.button3.Location = new System.Drawing.Point(120, 66);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(50, 23);
 			this.button3.TabIndex = 4;
@@ -494,7 +514,7 @@ namespace WatchCilent
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(64, 63);
+			this.button2.Location = new System.Drawing.Point(64, 66);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(50, 23);
 			this.button2.TabIndex = 3;
@@ -504,7 +524,7 @@ namespace WatchCilent
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(8, 63);
+			this.button1.Location = new System.Drawing.Point(8, 66);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(50, 23);
 			this.button1.TabIndex = 2;
@@ -523,9 +543,9 @@ namespace WatchCilent
 									this.columnHeader3});
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
-			this.listView1.Location = new System.Drawing.Point(8, 92);
+			this.listView1.Location = new System.Drawing.Point(8, 95);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(639, 276);
+			this.listView1.Size = new System.Drawing.Size(639, 273);
 			this.listView1.TabIndex = 1;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -623,6 +643,10 @@ namespace WatchCilent
 			this.tabControl1.Size = new System.Drawing.Size(663, 397);
 			this.tabControl1.TabIndex = 0;
 			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "FTP地址";
+			// 
 			// ConfigForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -645,6 +669,9 @@ namespace WatchCilent
 			this.tabControl1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ColumnHeader columnHeader9;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.TextBox textBox8;
 		private System.Windows.Forms.TextBox textBox7;
 		private System.Windows.Forms.ComboBox comboBox2;
 		private System.Windows.Forms.Label label4;

@@ -36,11 +36,10 @@ namespace WatchService
 		public WatchService()
 		{
 			InitializeComponent();
-			dbpath = System.Configuration.ConfigurationSettings.AppSettings["dbpath"];
 			logpath = System.Configuration.ConfigurationSettings.AppSettings["logpath"];
-			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
-			Microsoft.Win32.RegistryKey reg = key.CreateSubKey("software\\WatchService");  
-   			reg.SetValue("dbpath",dbpath ); 
+//			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
+//			Microsoft.Win32.RegistryKey reg = key.CreateSubKey("software\\WatchService");  
+//   			reg.SetValue("dbpath",dbpath ); 
 		}
 		
 		private void InitializeComponent()
@@ -142,7 +141,7 @@ namespace WatchService
 		
 		private void LISTENED_MSG(string ip,string msg)
 		{
-			feiq.SendMsgToSomeIP("请你按照规矩回复内容",ip);
+			feiq.SendMsgToSomeIP("你回复的内容：\n"+msg+@" \n请你按照规矩回复内容",ip);
 		}
 		
 		
@@ -178,7 +177,13 @@ namespace WatchService
 			pack.Packagename = temps.Replace(@".rar","");
 			pack.Packtime=DateTime.Now.ToLocalTime().ToString();
 			pack.State="已接收";
-			AccessDBUtil.insert(pack);
+			try {
+				SqlDBUtil.insert(pack);
+			} catch (Exception) {
+				
+				WriteToLog("数据库插入更新包失败："+pack.Packagepath);
+			}
+			
 			//通知客户端watchclient
 			try
 			{

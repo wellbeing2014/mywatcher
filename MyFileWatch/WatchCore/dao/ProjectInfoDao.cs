@@ -81,6 +81,7 @@ namespace WatchCore.dao
 			project.Projectname = row["projectname"].ToString();
 			project.Projectpath = row["projectpath"].ToString();
 			project.Url = row["url"].ToString();
+			project.Ftppath = row["ftppath"].ToString();
 			return project;
 		}
 	}

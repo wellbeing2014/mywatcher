@@ -26,13 +26,13 @@ namespace WatchCore.dao
 		public PackageDao()
 		{
 		}
-	
+	 
 		
 		static public DataTable getRePortPack(string begintime ,string endtime)
 		{
 			string sql = "SELECT packageInfo.packagename, packageInfo.packtime,personinfo.fullname FROM personinfo right JOIN packageInfo ON personinfo.ID = packageInfo.managerid " +
-						"where cdate(packageInfo.packtime) >=cdate('"+begintime+"')"+
-						" and cdate(packageInfo.packtime) <=cdate('"+endtime+"')"+" order by cdate(packageInfo.packtime) asc";
+						"where cast(packageInfo.packtime as datetime) >=cast('"+begintime+"' as datetime)"+
+						" and cast(packageInfo.packtime as datetime) <=cast('"+endtime+"' as datetime)"+" order by cast(packageInfo.packtime as datetime) asc";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			return data.Tables["ds"];
 		}
@@ -48,12 +48,12 @@ namespace WatchCore.dao
 			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
 			string sql="SELECT count(*) from packageinfo a where "+
 				"a.managerid ={0} "+
-				"and cdate(packtime)>=cdate('"+begintime+"') "+
-				"and cdate(packtime)<=cdate('"+endtime+"') "+"and state='{1}'";
+				"and cast(packtime as datetime)>=cast('"+begintime+"' as datetime) "+
+				"and cast(packtime as datetime)<=cast('"+endtime+"' as datetime) "+"and state='{1}'";
 			string totalsql="SELECT count(*) from packageinfo a where "+
 				"a.managerid ={0} "+
-				"and cdate(packtime)>=cdate('"+begintime+"') "+
-				"and cdate(packtime)<=cdate('"+endtime+"') ";
+				"and cast(packtime as datetime)>=cast('"+begintime+"' as datetime) "+
+				"and cast(packtime as datetime)<=cast('"+endtime+"' as datetime) ";
 			System.Globalization.NumberFormatInfo provider = new System.Globalization.NumberFormatInfo();
 			provider.PercentDecimalDigits = 2;//小数点保留几位数. 
 			provider.PercentPositivePattern = 1;//百分号出现在何处. 
@@ -113,12 +113,17 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
-		static public int queryPackageInfoCount(string moduleid,string managerid,string state,string begintime,string endtime)
+		static public int queryPackageInfoCount(string moduleid,string managerid,string state,string pubpath,string begintime,string endtime)
 		{
+			if(null==pubpath)
+			{
+				pubpath="全部";
+			}
 			string sql = "select count(*) from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部'='"+state+"' or state='"+state+"')";
+				+" and ('全部'='"+state+"' or state='"+state+"')"
+				+" and ('全部'='"+pubpath+"' or pubpath='"+pubpath+"')";
 			if(begintime!=null)
 			{
 				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";
@@ -133,13 +138,14 @@ namespace WatchCore.dao
 		
 		
 		static public List<PackageInfo> queryPackageInfo(string moduleid,string managerid,
-		                                                 string state,string begintime,string endtime,
+		                                                 string state,string pubpath,string begintime,string endtime,
 		                                                int startnum,int pagesize)
 		{
 			string sql = "select * from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部'='"+state+"' or state='"+state+"')";
+				+" and ('全部'='"+state+"' or state='"+state+"')"
+				+" and ('全部'='"+pubpath+"' or pubpath='"+pubpath+"')";
 			if(begintime!=null)
 			{
 				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";

@@ -50,7 +50,7 @@ namespace WatchCore.dao
 			string sql ="SELECT sum(packageInfo.testrate/100) FROM testunit INNER JOIN packageInfo ON testunit.packageid = packageInfo.ID "+
 						"where cast(testunit.testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testunit.testtime as datetime)<=cast('"+endtime+"' as datetime) and testunit.adminname='{0}'";
 			string sqlnum ="select count(*) from (select distinct testunit.packageid FROM testunit INNER JOIN packageInfo ON testunit.packageid = packageInfo.ID "+
-						"where cast(testunit.testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testunit.testtime as datetime)<=cast('"+endtime+"' as datetime) and testunit.adminname='{0}')";
+						"where cast(testunit.testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testunit.testtime as datetime)<=cast('"+endtime+"' as datetime) and testunit.adminname='{0}') a";
 			string sqlv="";
 			DataRow dr = numtable.NewRow();
 			for (int i = 0; i < adminname.Count; i++) {
@@ -77,9 +77,9 @@ namespace WatchCore.dao
 			DataTable numtable = new DataTable("numdt");
 			numtable.Columns.Add("name",Type.GetType("System.String"));
 			//------------------查时间点--------------------------------
-			string sqlcol ="SELECT distinct(Format(testtime,'yyyy-mm-dd') ) FROM testunit "+
-					"where cast(testtime as datetime)>=cdate('"+begintime+"') and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime) "+
-					"order by Format(testtime,'yyyy-mm-dd') asc";
+			string sqlcol ="SELECT distinct(CONVERT(varchar(10), cast(testtime as datetime), 23) ) FROM testunit "+
+					"where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and  cast(testtime as datetime)<=cast('"+endtime+"' as datetime) "+
+					"order by CONVERT(varchar(10), cast(testtime as datetime), 23)  asc";
 			DataSet datacol = SqlDBUtil.ExecuteQuery(sqlcol);
 			DataRowCollection drs = datacol.Tables["ds"].Rows;
 			List<string> timecol = new List<string>();
@@ -97,7 +97,10 @@ namespace WatchCore.dao
 				adminname.Add(drsname[j][0].ToString());
 			}
 			
-			string sql="SELECT count(*) FROM testunit where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and  casst(testtime as datetime)<=cast('"+endtime+"' as datetime) and adminname='{0}' and Format(testtime,'yyyy-mm-dd') =Format('{1}','yyyy-mm-dd')";
+			string sql="SELECT count(*) FROM testunit where cast(testtime as datetime)>=" +
+				"cast('"+begintime+"' as datetime) and  " +
+				"cast(testtime as datetime)<=cast('"+endtime+"' as datetime) and " +
+				"adminname='{0}' and CONVERT(varchar(10), cast(testtime as datetime), 23) =CONVERT(varchar(10), cast('{1}' as datetime), 23)";
 			string sqlv ="";
 			for (int a = 0; a < adminname.Count; a++) {
 				DataRow dr = numtable.NewRow();
@@ -125,8 +128,8 @@ namespace WatchCore.dao
 			
 			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
 			string sql="SELECT count(*) from testunit where "+
-				"cdate(testtime)>=cdate('"+begintime+"') "+
-				"and cdate(testtime)<=cdate('"+endtime+"') "+"and buglevel='{0}'";
+				"cast(testtime as datetime)>=cast('"+begintime+"' as datetime) "+
+				"and cast(testtime as datetime)<=cast('"+endtime+"' as datetime) "+"and buglevel='{0}'";
 			
 				string sqltemp = string.Format(sql,CommonConst.BUGLEVEL_QinWei);
 				int qinwei =SqlDBUtil.ExecuteScalar(sqltemp);
@@ -155,8 +158,8 @@ namespace WatchCore.dao
 			numtable.Columns.Add("总计",Type.GetType("System.Int32"));
 			List<PersonInfo> personlist = PersonDao.getAllPersonInfo();
 			string sql="SELECT count(*) from testunit where adminid={0} "+
-				"and cdate(testtime)>=cdate('"+begintime+"') "+
-				"and cdate(testtime)<=cdate('"+endtime+"') "+"and buglevel='{1}'";
+				"and cast(testtime as datetime)>=cast('"+begintime+"' as datetime) "+
+				"and cast(testtime as datetime)<=cast('"+endtime+"' as datetime) "+"and buglevel='{1}'";
 			
 			
 			int 轻微 = 0;

@@ -16,7 +16,6 @@ using WatchCore.dao;
 using WatchCore.pojo;
 using System.Collections.Generic;
 using MFCComboBox;
-using WatchCore.Common;
 namespace WatchCilent.UI.Test
 {
 	/// <summary>
