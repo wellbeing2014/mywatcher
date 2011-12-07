@@ -71,6 +71,7 @@ namespace WatchCilent
 			this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.textBox8 = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
@@ -97,7 +98,6 @@ namespace WatchCilent
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
 			this.tabPage4.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -112,10 +112,10 @@ namespace WatchCilent
 			// tabPage4
 			// 
 			this.tabPage4.Controls.Add(this.panel1);
-			this.tabPage4.Location = new System.Drawing.Point(4, 21);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(655, 372);
+			this.tabPage4.Size = new System.Drawing.Size(655, 371);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "版本项目关联";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -133,7 +133,7 @@ namespace WatchCilent
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(649, 366);
+			this.panel1.Size = new System.Drawing.Size(649, 365);
 			this.panel1.TabIndex = 0;
 			// 
 			// label6
@@ -155,7 +155,7 @@ namespace WatchCilent
 			// button5
 			// 
 			this.button5.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button5.Location = new System.Drawing.Point(287, 207);
+			this.button5.Location = new System.Drawing.Point(287, 206);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(75, 23);
 			this.button5.TabIndex = 5;
@@ -166,7 +166,7 @@ namespace WatchCilent
 			// button4
 			// 
 			this.button4.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button4.Location = new System.Drawing.Point(287, 141);
+			this.button4.Location = new System.Drawing.Point(287, 140);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(75, 23);
 			this.button4.TabIndex = 4;
@@ -183,7 +183,7 @@ namespace WatchCilent
 			this.listBox2.Location = new System.Drawing.Point(378, 56);
 			this.listBox2.Name = "listBox2";
 			this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-			this.listBox2.Size = new System.Drawing.Size(266, 304);
+			this.listBox2.Size = new System.Drawing.Size(266, 292);
 			this.listBox2.TabIndex = 3;
 			// 
 			// listBox1
@@ -195,7 +195,7 @@ namespace WatchCilent
 			this.listBox1.Location = new System.Drawing.Point(5, 56);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-			this.listBox1.Size = new System.Drawing.Size(266, 304);
+			this.listBox1.Size = new System.Drawing.Size(266, 292);
 			this.listBox1.TabIndex = 2;
 			// 
 			// label4
@@ -212,6 +212,7 @@ namespace WatchCilent
 			this.comboBox2.Location = new System.Drawing.Point(79, 3);
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(201, 20);
+			this.comboBox2.SelectedIndexChanged += new System.EventHandler(comboBox2_SelectedIndexChanged);
 			this.comboBox2.TabIndex = 0;
 			// 
 			// tabPage3
@@ -221,10 +222,10 @@ namespace WatchCilent
 			this.tabPage3.Controls.Add(this.listView3);
 			this.tabPage3.Controls.Add(this.groupBox3);
 			this.tabPage3.Controls.Add(this.button11);
-			this.tabPage3.Location = new System.Drawing.Point(4, 21);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(655, 372);
+			this.tabPage3.Size = new System.Drawing.Size(655, 371);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "责任人管理";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -337,10 +338,10 @@ namespace WatchCilent
 			this.tabPage2.Controls.Add(this.listView2);
 			this.tabPage2.Controls.Add(this.groupBox2);
 			this.tabPage2.Controls.Add(this.button8);
-			this.tabPage2.Location = new System.Drawing.Point(4, 21);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(655, 372);
+			this.tabPage2.Size = new System.Drawing.Size(655, 371);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "项目管理";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -400,6 +401,10 @@ namespace WatchCilent
 			this.columnHeader6.Text = "URL";
 			this.columnHeader6.Width = 224;
 			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "FTP地址";
+			// 
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.textBox8);
@@ -421,7 +426,7 @@ namespace WatchCilent
 			// 
 			this.textBox8.Location = new System.Drawing.Point(73, 43);
 			this.textBox8.Name = "textBox8";
-			this.textBox8.Size = new System.Drawing.Size(132, 21);
+			this.textBox8.Size = new System.Drawing.Size(257, 21);
 			this.textBox8.TabIndex = 7;
 			// 
 			// label10
@@ -434,14 +439,14 @@ namespace WatchCilent
 			// 
 			// textBox7
 			// 
-			this.textBox7.Location = new System.Drawing.Point(465, 14);
+			this.textBox7.Location = new System.Drawing.Point(380, 41);
 			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(168, 21);
+			this.textBox7.Size = new System.Drawing.Size(253, 21);
 			this.textBox7.TabIndex = 5;
 			// 
 			// label7
 			// 
-			this.label7.Location = new System.Drawing.Point(426, 17);
+			this.label7.Location = new System.Drawing.Point(341, 44);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(33, 23);
 			this.label7.TabIndex = 4;
@@ -449,7 +454,7 @@ namespace WatchCilent
 			// 
 			// label8
 			// 
-			this.label8.Location = new System.Drawing.Point(219, 17);
+			this.label8.Location = new System.Drawing.Point(336, 17);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(38, 23);
 			this.label8.TabIndex = 3;
@@ -465,16 +470,16 @@ namespace WatchCilent
 			// 
 			// textBox3
 			// 
-			this.textBox3.Location = new System.Drawing.Point(263, 14);
+			this.textBox3.Location = new System.Drawing.Point(380, 14);
 			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(146, 21);
+			this.textBox3.Size = new System.Drawing.Size(253, 21);
 			this.textBox3.TabIndex = 1;
 			// 
 			// textBox4
 			// 
 			this.textBox4.Location = new System.Drawing.Point(73, 14);
 			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(132, 21);
+			this.textBox4.Size = new System.Drawing.Size(257, 21);
 			this.textBox4.TabIndex = 0;
 			// 
 			// button8
@@ -494,10 +499,10 @@ namespace WatchCilent
 			this.tabPage1.Controls.Add(this.button1);
 			this.tabPage1.Controls.Add(this.listView1);
 			this.tabPage1.Controls.Add(this.groupBox1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 21);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(655, 372);
+			this.tabPage1.Size = new System.Drawing.Size(655, 371);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "版本管理";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -642,10 +647,6 @@ namespace WatchCilent
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(663, 397);
 			this.tabControl1.TabIndex = 0;
-			// 
-			// columnHeader9
-			// 
-			this.columnHeader9.Text = "FTP地址";
 			// 
 			// ConfigForm
 			// 

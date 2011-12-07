@@ -99,6 +99,7 @@ namespace WatchCilent.UI.Pub
 			this.checkBox2.TabIndex = 42;
 			this.checkBox2.Text = "时间段";
 			this.checkBox2.UseVisualStyleBackColor = true;
+			this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox2CheckedChanged);
 			// 
 			// dateTimePicker1
 			// 
@@ -168,6 +169,7 @@ namespace WatchCilent.UI.Pub
 			this.textBox1.Size = new System.Drawing.Size(160, 21);
 			this.textBox1.TabIndex = 53;
 			this.textBox1.Text = "请输入关键字...";
+			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(textBox1_KeyDown);
 			// 
 			// button3
 			// 

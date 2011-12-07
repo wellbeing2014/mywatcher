@@ -25,11 +25,13 @@ namespace WatchCilent.UI.Pub
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
+			System.DateTime today = System.DateTime.Now;
+			this.textBox1.Text = today.Year.ToString()+today.Month.ToString()+today.Day.ToString();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
+	
 		
 		void Button1Click(object sender, EventArgs e)
 		{

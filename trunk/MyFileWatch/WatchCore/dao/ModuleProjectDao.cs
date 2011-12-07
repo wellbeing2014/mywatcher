@@ -26,6 +26,19 @@ namespace WatchCore.dao
 		{
 		}
 		
+		/// <summary>
+		/// 获取每个模块，关联的项目数
+		/// </summary>
+		/// <param name="packid">更新包ID</param>
+		/// <returns></returns>
+		static public int getPrjNumByPackid(string packid)
+		{
+			string sql="select count(*) from dbo.moduleproject where moduleid = (select moduleid from  packageinfo where id="+packid+")";
+			return SqlDBUtil.ExecuteScalar(sql);
+		}
+		
+		
+		
 		static public List<ModuleProject> getAllMPByPrjIDAndMdlID(string pid,string mid)
 		{
 			string sql = "SELECT * from ModuleProject where moduleid="+mid+" and projectid="+pid;

@@ -189,6 +189,7 @@ namespace WatchCilent
 			this.textBox4.Text =null;
 			this.textBox3.Text=null;
 			this.textBox7.Text=null;
+			this.textBox8.Text = null;
 			projectlist=ProjectInfoDao.getAllProjectInfo();
 			this.listView2.Items.Clear();
 			foreach(ProjectInfo project in projectlist)
@@ -202,6 +203,7 @@ namespace WatchCilent
 			lvi.Text=project.Projectname;
 			lvi.SubItems.Add(project.Projectpath);
 			lvi.SubItems.Add(project.Url);
+			lvi.SubItems.Add(project.Ftppath);
 			lvi.SubItems.Add(project.Id.ToString());
 			//lvi.SubItems.Add();
 			this.listView2.Items.Add(lvi);
@@ -214,7 +216,8 @@ namespace WatchCilent
 			project.Projectname = lvi.SubItems[0].Text;
 			project.Projectpath = lvi.SubItems[1].Text;
 			project.Url = lvi.SubItems[2].Text;
-			project.Id = Int32.Parse(lvi.SubItems[3].Text);
+			project.Ftppath = lvi.SubItems[3].Text;
+			project.Id = Int32.Parse(lvi.SubItems[4].Text);
 			return project;
 		}
 		//新增
@@ -226,6 +229,7 @@ namespace WatchCilent
 				project.Projectname=textBox4.Text;
 				project.Projectpath=textBox3.Text;
 				project.Url=textBox7.Text;
+				project.Ftppath=textBox8.Text;
 				SqlDBUtil.insert(project);
 				getAllProjectInfo();
 			}
@@ -248,7 +252,12 @@ namespace WatchCilent
 			if(textBox7.Text.Trim()=="")
 			{
 				isvalidated = false;
-				message += "Url";
+				message += "Url,";
+			}
+			if(textBox8.Text.Trim()=="")
+			{
+				isvalidated = false;
+				message += "FTP路径";
 			}
 			if(!isvalidated)
 			{
@@ -264,7 +273,7 @@ namespace WatchCilent
 			this.textBox4.Text = selectmodule.Projectname;
 			this.textBox3.Text = selectmodule.Projectpath;
 			this.textBox7.Text = selectmodule.Url;
-			
+			this.textBox8.Text = selectmodule.Ftppath;
 		}
 		
 		void Button6Click(object sender, EventArgs e)
@@ -280,6 +289,7 @@ namespace WatchCilent
 				project.Projectname = this.textBox4.Text;
 				project.Projectpath = this.textBox3.Text;
 				project.Url=this.textBox7.Text;
+				project.Ftppath=this.textBox8.Text;
 				SqlDBUtil.update(project);
 				this.getAllProjectInfo();
 			}
@@ -416,7 +426,8 @@ namespace WatchCilent
 			comboBox2.DataSource = projectlist;
 			comboBox2.DisplayMember ="Projectname";
 			comboBox2.ValueMember = "Id";
-			
+			comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+			comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			getlistboxdata();
 			
 			

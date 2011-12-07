@@ -113,17 +113,13 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
-		static public int queryPackageInfoCount(string moduleid,string managerid,string state,string pubpath,string begintime,string endtime)
+		static public int queryPackageInfoCount(string moduleid,string managerid,string state,string begintime,string endtime)
 		{
-			if(null==pubpath)
-			{
-				pubpath="全部";
-			}
+			
 			string sql = "select count(*) from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部'='"+state+"' or state='"+state+"')"
-				+" and ('全部'='"+pubpath+"' or pubpath='"+pubpath+"')";
+				+" and ('全部'='"+state+"' or state='"+state+"')";
 			if(begintime!=null)
 			{
 				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";
@@ -138,14 +134,13 @@ namespace WatchCore.dao
 		
 		
 		static public List<PackageInfo> queryPackageInfo(string moduleid,string managerid,
-		                                                 string state,string pubpath,string begintime,string endtime,
+		                                                 string state,string begintime,string endtime,
 		                                                int startnum,int pagesize)
 		{
 			string sql = "select * from packageinfo where "
 				+"(0="+moduleid+" or moduleid="+moduleid+")"
 				+" and (0="+managerid+" or managerid="+managerid+")"
-				+" and ('全部'='"+state+"' or state='"+state+"')"
-				+" and ('全部'='"+pubpath+"' or pubpath='"+pubpath+"')";
+				+" and ('全部'='"+state+"' or state='"+state+"')";
 			if(begintime!=null)
 			{
 				sql+=" and  cast(packtime as datetime)>=cast('"+begintime+"' as datetime)";
@@ -155,6 +150,104 @@ namespace WatchCore.dao
 				sql+=" and  cast(packtime as datetime)<=cast('"+endtime+"' as datetime)";
 			}	
 			sql+=" order by cast(packtime as datetime) desc";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,startnum,pagesize);
+			List<PackageInfo> ls = new List<PackageInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2PackageInfo(row));
+			}
+			return ls;
+		}
+		//发布更新包查询
+		static public int queryPubPackageInfoCount(string moduleid,string managerid,string pubpath,string keyword,string begintime,string endtime)
+		{
+			string sql = "SELECT count(DISTINCT a.id) FROM packageInfo AS a INNER JOIN "+
+                      "moduleInfo AS b ON a.moduleid = b.ID INNER JOIN "+
+                      "moduleproject AS c ON b.ID = c.moduleid INNER JOIN "+
+                      "projectinfo AS d ON c.projectid = d.ID "+
+					"WHERE (0 = "+moduleid+" or a.moduleid = " +moduleid +") "+
+					"and (0 = "+managerid+" or a.managerid = "+managerid+") ";
+				
+			if(null==pubpath)
+			{
+				pubpath="";
+				sql+=" and a.state ='已发布'";
+			}
+			else if(pubpath.Equals("未发布"))
+			{
+				sql+=" and a.state ='已测试'";
+			}
+			else if(pubpath.Equals("今日发布"))
+			{
+				begintime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 00:00:00";
+				endtime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 23:59:59";
+			}
+			else
+			{
+				sql+=" and a.state ='已发布'";
+				sql+=" and (d.ftppath + a.pubpath LIKE '"+pubpath+"%')";
+			}
+			if(null!=keyword&&"".Equals(keyword))
+			{
+				sql+=" and a.packagename like '%"+keyword+"%'";
+			}
+			if(begintime!=null)
+			{
+				sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
+			}	
+			
+			return SqlDBUtil.ExecuteScalar(sql);
+		}
+		
+		
+		static public List<PackageInfo> queryPubPackageInfo(string moduleid,string managerid,string pubpath,string keyword,string begintime,string endtime,
+		                                                int startnum,int pagesize)
+		{
+			string sql = "SELECT DISTINCT a.* FROM packageInfo AS a INNER JOIN "+
+                      "moduleInfo AS b ON a.moduleid = b.ID INNER JOIN "+
+                      "moduleproject AS c ON b.ID = c.moduleid INNER JOIN "+
+                      "projectinfo AS d ON c.projectid = d.ID "+
+					"WHERE (0 = "+moduleid+" or a.moduleid = " +moduleid +") "+
+					"and (0 = "+managerid+" or a.managerid = "+managerid+") ";
+				
+			if(null==pubpath)
+			{
+				pubpath="";
+				sql+=" and a.state ='已发布'";
+			}
+			else if(pubpath.Equals("未发布"))
+			{
+				sql+=" and a.state ='已测试'";
+				begintime = null;
+				endtime = null;
+			}
+			else if(pubpath.Equals("今日发布"))
+			{
+				begintime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 00:00:00";
+				endtime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 23:59:59";
+			}
+			else
+			{
+				sql+=" and a.state ='已发布'";
+				sql+=" and (d.ftppath + a.pubpath LIKE '"+pubpath+"%')";
+			}
+			if(null!=keyword&&"".Equals(keyword))
+			{
+				sql+=" and a.packagename like '%"+keyword+"%'";
+			}
+			if(begintime!=null)
+			{
+				sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+			}
+			if(endtime!=null)
+			{
+				sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
+			}	
+			sql+=" order by publishtime  desc";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,startnum,pagesize);
 			List<PackageInfo> ls = new List<PackageInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)

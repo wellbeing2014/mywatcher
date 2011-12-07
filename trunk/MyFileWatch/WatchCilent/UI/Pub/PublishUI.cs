@@ -44,6 +44,29 @@ namespace WatchCilent.UI.Pub
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			
+			List<PersonInfo> datasource_person = PersonDao.getAllPersonInfo();
+			PersonInfo person = new PersonInfo();
+			person.Fullname = "全部责任人";
+			person.Id = 0;
+			datasource_person.Insert(0,person);
+			this.comboBox2.DataSource = datasource_person;
+			this.comboBox2.DisplayMember = "Fullname";
+			this.comboBox2.ValueMember = "Id";
+		
+			
+			List<ModuleInfo> datasource_module = ModuleDao.getAllModuleInfo();
+			ModuleInfo all = new ModuleInfo();
+			all.Fullname ="全部模块";
+			all.Id=0;
+			datasource_module.Insert(0,all);
+			this.comboBox1.DataSource = datasource_module;
+			this.comboBox1.DisplayMember ="Fullname";
+			this.comboBox1.ValueMember = "Id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			//----------------------------------
 			TreeNode root1 = new TreeNode();
 			root1.Text = "未发布";
 			TreeNode root = new TreeNode();
@@ -58,13 +81,14 @@ namespace WatchCilent.UI.Pub
 				}
 			}
 			this.treeView1.Nodes.Add(root1);
+			this.treeView1.Nodes.Add("今日发布");
 			this.treeView1.Nodes.Add(root);
 			this.treeView1.Nodes[1].Expand();
 			this.treeView1.AfterExpand+=new TreeViewEventHandler(treeView1_AfterExpand);
 			this.treeView1.NodeMouseClick+= new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
 			this.treeView1.Leave+=new EventHandler(treeView1_Leave);
 			this.treeView1.BeforeSelect+=new TreeViewCancelEventHandler(treeView1_BeforeSelect);
-			treeView1.SelectedNode=treeView1.Nodes[0].Nodes[0];
+			treeView1.SelectedNode=treeView1.Nodes[0];
 			//让选中项背景色呈现蓝色
             treeView1.SelectedNode.BackColor = Color.SteelBlue;
             //前景色为白色
@@ -82,13 +106,17 @@ namespace WatchCilent.UI.Pub
 			this.exListView1.Columns.Add(new EXColumnHeader("更新包名称", 200));
 			this.exListView1.Columns.Add(new EXEditableColumnHeader("上传路径", 180));
 			this.exListView1.Columns.Add(new EXColumnHeader("进度", 120));
-			this.exListView1.Columns.Add(new EXColumnHeader("状态", 60));
-			this.exListView1.Columns.Add(new EXColumnHeader("操作", 80));
+			this.exListView1.Columns.Add(new EXColumnHeader("状态", 150));
+			this.exListView1.Columns.Add(new EXColumnHeader("操作", 45));
 			
 			this.currentpage=1;
 			this.label3.Text=string.Format(currentstr,this.currentpage);
 			this.label5.Text = string.Format(pagestr,this.pagesize);
 			this.label4.Text = string.Format(countstr,(count%pagesize==0)?count/pagesize:count/pagesize+1,this.count);
+			
+			System.DateTime dt =System.DateTime.Now; 
+				dateTimePicker1.Value=dt.AddDays(-7);
+			
 			
 			getPublishPackageList();
 			//
@@ -98,23 +126,48 @@ namespace WatchCilent.UI.Pub
 		
 		private void getPublishPackageList()
 		{
-			string _moduleid ;
-			string _managerid;
-			string _state;
-			string _ftppath;
-			if(this.treeView1.SelectedNode!=null&&this.treeView1.SelectedNode.Index==0)
+			string _moduleid="0" ;
+			string _managerid="0";
+			
+			string _pubpath=null;
+			string _begin = null;
+			string _end = null;
+			string _keyword=null;
+			
+			if(!this.dateTimePicker1.IsDisposed&&!this.dateTimePicker2.IsDisposed)
 			{
-				
+				_begin = this.dateTimePicker1.Value.ToShortDateString()+" 00:00:00";
+				_end = this.dateTimePicker2.Value.ToShortDateString()+" 23:59:59";
 			}
-			this.count = PackageDao.queryPackageInfoCount("0","0","已发布",null,null,null);
+			
+			if(this.treeView1.SelectedNode!=null)
+			{
+					_pubpath=this.treeView1.SelectedNode.FullPath.Replace('\\','/');
+					if(!ftphost.Equals(_pubpath))
+						_pubpath = _pubpath.Replace(ftphost+"/","");
+					else _pubpath = null;
+			}
+			else
+			{
+				MessageBox.Show("请选择分类！");
+				return;
+			}
+			
+			_moduleid = this.comboBox1.SelectedValue.ToString();
+			_managerid = this.comboBox2.SelectedValue.ToString();
+			if(!string.IsNullOrEmpty(this.textBox1.Text)&&!"请输入关键字...".Equals(this.textBox1.Text))
+			{
+				_keyword=textBox1.Text;
+			}
+			this.count = PackageDao.queryPubPackageInfoCount(_moduleid,_managerid,_pubpath,_keyword,_begin,_end);
 			int countpage = (count%pagesize==0)?count/pagesize:count/pagesize+1;
 			if(this.currentpage>countpage) this.currentpage=1;
 			this.label3.Text=string.Format(currentstr,this.currentpage);
 			this.label5.Text = string.Format(pagestr,this.pagesize);
 			this.label4.Text = string.Format(countstr,countpage,this.count);
-			List<PackageInfo> ls =PackageDao.queryPackageInfo("0","0","已发布",null,null,null,
+			List<PackageInfo> ls =PackageDao.queryPubPackageInfo(_moduleid,_managerid,_pubpath,_keyword,_begin,_end,
 			                                                  (currentpage>1)?((this.currentpage-1)*pagesize):0
-			                                                  ,pagesize);		
+			                                                  ,pagesize);	
 			this.exListView1.BeginUpdate();
 			this.exListView1.Items.Clear();
 			foreach(PackageInfo pack in ls)
@@ -141,7 +194,7 @@ namespace WatchCilent.UI.Pub
 			LinkLabel llbl = new LinkLabel();
 			llbl.Tag = cs;
 			llbl.LinkClicked += new LinkLabelLinkClickedEventHandler(llbl_LinkClicked);
-			
+	
 			if(!string.IsNullOrEmpty(packinfo.PubPath)&&CommonConst.PACKSTATE_YiFaBu.Equals(packinfo.State))
 			{
 				serverpath.Text=packinfo.PubPath;
@@ -149,11 +202,13 @@ namespace WatchCilent.UI.Pub
 				b.Maximum =100;
 				b.Value =100;
 				llbl.Text = "重传";
+
 			}
 			else
 			{
 				status.Text="未上传";
 				llbl.Text = "上传";
+
 			}
 			item.SubItems.Add(serverpath);
 			item.SubItems.Add(cs);
@@ -161,6 +216,7 @@ namespace WatchCilent.UI.Pub
 			item.SubItems.Add(cs1);
 			item.SubItems.Add(packinfo.Id.ToString());
 			item.SubItems.Add(packinfo.Packagepath);
+			item.Tag="true";//默认是 确认上传
 			this.exListView1.AddControlToSubItem(b, cs);
 			this.exListView1.AddControlToSubItem(llbl, cs1);
 			this.exListView1.Items.Add(item);
@@ -169,37 +225,45 @@ namespace WatchCilent.UI.Pub
 		private void llbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
 			
 			LinkLabel l = (LinkLabel) sender;
-			if (!l.Enabled) return;
 			EXControlListViewSubItem subitem = l.Tag as EXControlListViewSubItem;
 			ProgressBar p = subitem.MyControl as ProgressBar;
 			ListViewItem item = (ListViewItem) p.Tag;
 			string serverpath =item.SubItems[1].Text;
-			if(string.IsNullOrEmpty(serverpath))
+			
+			if (!l.Text.Equals("上传")&&!l.Text.Equals("重传")) 
 			{
-				if(this.treeView1.SelectedNode!=null&&this.treeView1.SelectedNode!=this.treeView1.Nodes[0])
-				{
-					serverpath = this.treeView1.SelectedNode.FullPath.Replace('\\','/');
-					item.SubItems[1].Text =serverpath;
-				}
-				else
-				{
-					MessageBox.Show("请选择服务器路径","提示");
-					return;
-				}
+				item.Tag = "false";
 			}
-			
-			Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
-			th.IsBackground = true;
-			
-			UploadParam up =new UploadParam();
-			up.PackPath=item.SubItems[6].Text;//@"D:\111.txt";
-			up.Bar= p;
-			up.ServerPath=serverpath;
-			th.Start(up);
-			l.Enabled = false;
+			else 
+			{
+				item.Tag = "true";
+				if(string.IsNullOrEmpty(serverpath))
+				{
+					System.DateTime today = System.DateTime.Now;
+					string todaystr  = today.ToString("yyyyMMdd");
+					DialogResult mr = MessageBox.Show("是否使用当前日期“"+todaystr+"“作为文件夹?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+					if(DialogResult.Yes==mr)
+					{
+						item.SubItems[1].Text =todaystr;
+						serverpath = todaystr;
+					}
+					else return;
+				}
+				
+				Thread th = new Thread(new ParameterizedThreadStart(UpdateProgressBarMethod));
+				th.IsBackground = true;
+				
+				UploadParam up =new UploadParam();
+				up.PackPath=item.SubItems[6].Text;//@"D:\111.txt";
+				up.Bar= p;
+				up.ServerPath=serverpath;
+				th.Start(up);
+				l.Text = "取消";
+			}
+					
 		}
 		
-		private delegate void del_do_update(ProgressBar pb,int pvalue,int pmax);
+		private delegate void del_do_update(ProgressBar pb,int pvalue,int pmax,int curnum,int sum,string prjname);
 		private delegate void del_do_changetxt(LinkLabel l, string text);
 		private void UpdateProgressBarMethod(object param) {
 			UploadParam up =(UploadParam)param ;
@@ -210,18 +274,26 @@ namespace WatchCilent.UI.Pub
 			this.Upload1(packfile,serverpath,pp);
 			
 		}
-	
-		private void do_update(ProgressBar p,int pvalue,int pmax) {
+		/// <summary>
+		/// 上传时同步UI进度条方法
+		/// </summary>
+		/// <param name="p">进度条控件对象</param>
+		/// <param name="pvalue">进度条当前值</param>
+		/// <param name="pmax">进度条最大值</param>
+		/// <param name="curnum">当前上传的第几个项目</param>
+		/// <param name="sum">总的项目个数</param>
+		/// <param name="prjname">项目名称</param>
+		private void do_update(ProgressBar p,int pvalue,int pmax,int curnum,int sum,string prjname) {
 			p.Minimum=0;
-			p.Maximum=pmax;
-			p.Value=pvalue;
+			p.Maximum=pmax*sum;
+			p.Value=pmax*(curnum-1)+pvalue;
 			 ListViewItem item = (ListViewItem) p.Tag;
-			 if(pvalue!=pmax)
+			 if(p.Value!=p.Maximum)
 			 {
-			 	item.SubItems[3].Text = "正在上传";
+			 	item.SubItems[3].Text = string.Format("正在上传至{0}({1}/{2})",prjname,curnum,sum);
 			 }
 			 else{
-			 	item.SubItems[3].Text="上传完成";
+			 	item.SubItems[3].Text=string.Format("上传完成({0}/{1})",curnum,sum);
 			 	SaveInList(item);
 			 }
 		}
@@ -240,12 +312,17 @@ namespace WatchCilent.UI.Pub
 			l.Text = text;
 		}
 		
+		/// <summary>
+		/// 上传具体方法，根据关联的项目数循环上传至FTP
+		/// </summary>
+		/// <param name="filename">被上传的文件路径</param>
+		/// <param name="serverpath">上传的项目所在的相对路径</param>
+		/// <param name="pp">进度条控件</param>
 		private void Upload1(string filename,string serverpath,ProgressBar pp)
 		{
 			//读取区间大小
 			int buffLength = 2048;
 			byte[] buffer;
-			del_do_update delupdate = new del_do_update(do_update);
 			FtpWebRequest reqFTP;
 			FtpWebResponse	uploadResponse=null ;
 			//上传数据流
@@ -253,60 +330,83 @@ namespace WatchCilent.UI.Pub
 			//本地文件流
 			FileStream fs = null;
 		    FileInfo fileInf = new FileInfo(filename);
-		    string uri = serverpath+fileInf.Name;
-		    
+		   
 		    ListViewItem item = (ListViewItem) pp.Tag;
+		    
 			LinkLabel l = ((LinkLabel) ((EXControlListViewSubItem) item.SubItems[4]).MyControl);
+			del_do_update delupdate = new del_do_update(do_update);
 			del_do_changetxt delchangetxt = new del_do_changetxt(ChangeTextMethod);
 			
-			try {
-				// 根据uri创建FtpWebRequest对象 
-			    reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri)); 
-			    // ftp用户名和密码
-			    reqFTP.Credentials = new NetworkCredential(this.username, this.password); 
-			    // 默认为true，连接不会被关闭
-			    // 在一个命令之后被执行
-			    reqFTP.KeepAlive = false; 
-			    // 指定执行什么命令
-			    reqFTP.Method = WebRequestMethods.Ftp.UploadFile; 
-			    // 指定数据传输类型
-			    reqFTP.UseBinary = true; 
-			    // 上传文件时通知服务器文件的大小
-			    reqFTP.ContentLength = fileInf.Length;
-				//pp.Value=0;		    
-			    //pp.Maximum = (int)fileInf.Length;
-			    // 缓冲大小设置为2kb
-			    buffer = new byte[buffLength];
-			    // 打开一个文件流 (System.IO.FileStream) 去读上传的文件
-			    fs = fileInf.OpenRead();
-			    strm = reqFTP.GetRequestStream(); 
-			    int bytesRead;
-				int hasread=0;		    
-				while (true) 
-				{ 
-					bytesRead = fs.Read(buffer, 0, buffer.Length);
-					hasread+=bytesRead;
-					if (bytesRead == 0) 
-						break; 
-					strm.Write(buffer, 0, bytesRead);
-					pp.BeginInvoke(delupdate,new object[]{pp,hasread,(int)fileInf.Length});
-				} 
-				fs.Close();
-				strm.Close();
-				uploadResponse = (FtpWebResponse)reqFTP.GetResponse(); 
-				l.BeginInvoke(delchangetxt, new object[] {l, "重传"});
-			} catch (Exception) {
-				l.BeginInvoke(delchangetxt, new object[] {l, "重传"});
+			//查询要上传至服务器的项目数
+			List<ProjectInfo> _prjlist = new List<ProjectInfo>();
+			if(!string.IsNullOrEmpty(item.SubItems[5].Text))
+			{
+				_prjlist =ProjectInfoDao.getAllProjectInfoByPackID(new string[]{item.SubItems[5].Text});
 			}
-		    finally
-		    {
-		    	if (uploadResponse!= null) 
-				uploadResponse.Close(); 
-				if (fs != null) 
-				fs.Close(); 
-				if (strm != null) 
-				strm.Close(); 
-		    }
+			
+			for (int i = 0; i < _prjlist.Count; i++) {
+				
+				if(!bool.Parse(item.Tag as string))//中断
+				{
+					break;
+				}
+				try {
+					this.MakeDirectory(ftphost+_prjlist[i].Ftppath+serverpath);
+					
+				} catch (Exception) {
+					MessageBox.Show("创建文件夹错误，可能目标文件夹已经存在","提示");
+				}
+				
+				string uri =ftphost+_prjlist[i].Ftppath+serverpath+fileInf.Name;
+				try {
+					// 根据uri创建FtpWebRequest对象 
+				    reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(uri)); 
+				    // ftp用户名和密码
+				    reqFTP.Credentials = new NetworkCredential(this.username, this.password);
+				    reqFTP.Proxy = GlobalProxySelection.GetEmptyWebProxy();
+				    // 默认为true，连接不会被关闭
+				    // 在一个命令之后被执行
+				    reqFTP.KeepAlive = false; 
+				    // 指定执行什么命令
+				    reqFTP.Method = WebRequestMethods.Ftp.UploadFile; 
+				    // 指定数据传输类型
+				    reqFTP.UseBinary = true; 
+				    // 上传文件时通知服务器文件的大小
+				    reqFTP.ContentLength = fileInf.Length;
+				    // 缓冲大小设置为2kb
+				    buffer = new byte[buffLength];
+				    // 打开一个文件流 (System.IO.FileStream) 去读上传的文件
+				    fs = fileInf.OpenRead();
+				    strm = reqFTP.GetRequestStream(); 
+				    int bytesRead;
+					int hasread=0;
+					pp.BeginInvoke(delupdate,new object[]{pp,hasread,(int)fileInf.Length,i+1,_prjlist.Count,_prjlist[i].Projectname});					
+					while (bool.Parse(item.Tag as string))//中断
+					{ 
+						bytesRead = fs.Read(buffer, 0, buffer.Length);
+						hasread+=bytesRead;
+						if (bytesRead == 0) 
+							break; 
+						strm.Write(buffer, 0, bytesRead);
+						pp.BeginInvoke(delupdate,new object[]{pp,hasread,(int)fileInf.Length,i+1,_prjlist.Count,_prjlist[i].Projectname});
+					} 
+					fs.Close();
+					strm.Close();
+					uploadResponse = (FtpWebResponse)reqFTP.GetResponse(); 
+				} catch (Exception e) {
+					MessageBox.Show("上传到"+uri+"发生错误:"+e.ToString(),"提示");
+					pp.BeginInvoke(delupdate,new object[]{pp,(int)fileInf.Length,(int)fileInf.Length,i+1,_prjlist.Count,_prjlist[i].Projectname});
+				}
+			}
+			l.BeginInvoke(delchangetxt, new object[] {l, "重传"});
+		    
+	    	if (uploadResponse!= null) 
+			uploadResponse.Close(); 
+			if (fs != null) 
+			fs.Close(); 
+			if (strm != null) 
+			strm.Close(); 
+		    
 		}
 		
 		private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
@@ -329,6 +429,34 @@ namespace WatchCilent.UI.Pub
 			}
 		}
 		
+		
+		//复制文件
+		private bool CopyFile(string uristring,string target)
+		{
+			try {
+				Uri uri = new Uri ( uristring );
+				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
+				listRequest.Credentials = new NetworkCredential ( username , password );
+				listRequest.Method = WebRequestMethods.Ftp.Rename;
+				listRequest.Proxy = GlobalProxySelection.GetEmptyWebProxy();
+				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
+				if(listResponse.StatusCode== FtpStatusCode.PathnameCreated)
+				{
+					listResponse.Close();
+					return true;
+				}
+				else
+				{
+					listResponse.Close();
+					return false;
+				}
+			} catch (Exception) {
+				
+				return false;
+			}
+			
+		}
+		
 		//新建目录
 		private bool MakeDirectory(string uristring)
 		{
@@ -337,6 +465,7 @@ namespace WatchCilent.UI.Pub
 				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
 				listRequest.Credentials = new NetworkCredential ( username , password );
 				listRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
+				listRequest.Proxy = GlobalProxySelection.GetEmptyWebProxy();
 				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
 				if(listResponse.StatusCode== FtpStatusCode.PathnameCreated)
 				{
@@ -363,6 +492,7 @@ namespace WatchCilent.UI.Pub
 				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
 				listRequest.Credentials = new NetworkCredential ( username , password );
 				listRequest.Method = WebRequestMethods.Ftp.RemoveDirectory;
+				listRequest.Proxy = GlobalProxySelection.GetEmptyWebProxy();
 				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
 				if(listResponse.StatusCode== FtpStatusCode.FileActionOK)
 				{
@@ -388,6 +518,7 @@ namespace WatchCilent.UI.Pub
 				FtpWebRequest listRequest = ( FtpWebRequest ) WebRequest.Create ( uri );
 				listRequest.Credentials = new NetworkCredential ( username , password );
 				listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+				listRequest.Proxy = GlobalProxySelection.GetEmptyWebProxy();
 				FtpWebResponse listResponse = ( FtpWebResponse )listRequest.GetResponse();
 				Stream responseStream = listResponse.GetResponseStream ( );
 				StreamReader readStream = new StreamReader ( responseStream , System.Text.Encoding.Default );
@@ -414,8 +545,9 @@ namespace WatchCilent.UI.Pub
 				responseStream.Close();
 				readStream.Close();
 				return null;
-			} catch (Exception) {
+			} catch (Exception e) {
 				
+				MessageBox.Show(e.ToString(),"FTP访问错误");
 				return new string[]{""};
 			}
 			
@@ -450,7 +582,7 @@ namespace WatchCilent.UI.Pub
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
 		{
 			this.treeView1.SelectedNode=e.Node;
-			
+			getPublishPackageList();
 		}
 		 
         
@@ -508,14 +640,24 @@ namespace WatchCilent.UI.Pub
 			string msg ="今日发布\n";
 			if(this.exListView1.SelectedItems.Count>0)
 			{
+				string[] packidarray = new string[this.exListView1.SelectedItems.Count];
 				for (int i = 0; i < this.exListView1.SelectedItems.Count; i++) {
 					string name = this.exListView1.SelectedItems[i].SubItems[0].Text;
 					string path = this.exListView1.SelectedItems[i].SubItems[1].Text;
 					msg+=(i+1).ToString()+"、";
 					msg+=name+"\n";
-					msg+="下载地址："+path.Insert(6,username+":"+password+"@")+"/"+name+".rar\n";
+					packidarray[i] = this.exListView1.SelectedItems[i].SubItems[5].Text;
 				}
-				Communication.TCPManage.SendMessage(WisofServiceHost,msg+"##"+ip);
+				msg+="受影响的项目包括:\n";
+				List<ProjectInfo> prolist = ProjectInfoDao.getAllProjectInfoByPackID(packidarray);
+				for(int j = 0;j<prolist.Count;j++)
+				{
+					msg+= (j+1).ToString()+"、";
+					msg+=prolist[j].Projectname+":"+ftphost.Insert(6,username+":"+password+"@")+"/"+prolist[j].Ftppath+"\n";
+				}
+				//MessageBox.Show(msg);
+				Clipboard.SetDataObject(msg,true);
+				MessageBox.Show("发布信息成功复制到剪贴板","提示");
 			}
 			
 			
@@ -552,6 +694,127 @@ namespace WatchCilent.UI.Pub
 			this.currentpage=(count%pagesize==0)?count/pagesize:count/pagesize+1;
 			getPublishPackageList();
 		}
+		
+		void CheckBox2CheckedChanged(object sender, EventArgs e)
+		{
+			Point cb1p=new Point();
+			cb1p=this.comboBox1.Location;
+			Point cb2p=new Point();
+			cb2p=this.comboBox2.Location;
+			Point cb3p=new Point();
+			cb3p=this.textBox1.Location;
+			if(!this.checkBox2.Checked)
+			{
+				this.dateTimePicker1.Dispose();
+				this.dateTimePicker2.Dispose();
+				this.label1.Dispose();
+				this.label2.Dispose();
+				cb1p.X=cb1p.X-250;
+				cb2p.X=cb2p.X-250;
+				cb3p.X=cb3p.X-250;
+				this.comboBox1.Location=cb1p;
+				this.comboBox2.Location=cb2p;
+				this.textBox1.Location=cb3p;
+			}
+			else
+			{
+			
+			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			
+			this.Controls.Add(this.dateTimePicker1);
+			this.Controls.Add(this.dateTimePicker2);
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.label2);
+			// 
+			// dateTimePicker1
+			// 
+			this.dateTimePicker1.Location = new System.Drawing.Point(91, 3);
+			this.dateTimePicker1.Name = "dateTimePicker1";
+			this.dateTimePicker1.Size = new System.Drawing.Size(106, 21);
+			System.DateTime dt =System.DateTime.Now; 
+				dateTimePicker1.Value=dt.AddDays(-7);
+			this.dateTimePicker1.TabIndex = 45;
+			// 
+			// dateTimePicker2
+			// 
+			this.dateTimePicker2.Location = new System.Drawing.Point(226, 3);
+			this.dateTimePicker2.Name = "dateTimePicker2";
+			this.dateTimePicker2.Size = new System.Drawing.Size(107, 21);
+			this.dateTimePicker2.TabIndex = 46;
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(66, 6);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(19, 18);
+			this.label1.TabIndex = 47;
+			this.label1.Text = "起";
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(203, 6);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(17, 18);
+			this.label2.TabIndex = 48;
+			this.label2.Text = "止";
+			// 
+			// comboBox2
+			// 
+			this.comboBox2.FormattingEnabled = true;
+			this.comboBox2.Location = new System.Drawing.Point(476, 3);
+			this.comboBox2.Name = "comboBox2";
+			this.comboBox2.Size = new System.Drawing.Size(89, 20);
+			this.comboBox2.TabIndex = 44;
+			// 
+			// comboBox1
+			// 
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(349, 3);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(121, 20);
+			this.comboBox1.TabIndex = 43;
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(574, 4);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(160, 21);
+			this.textBox1.TabIndex = 53;
+			this.textBox1.Text = "请输入关键字...";
+			cb1p.X=cb1p.X+250;
+			cb2p.X=cb2p.X+250;
+			cb3p.X=cb3p.X+250;
+			this.comboBox1.Location=cb1p;
+			this.comboBox2.Location=cb2p;
+			this.textBox1.Location=cb3p;
+			this.textBox1.KeyDown += new KeyEventHandler(textBox1_KeyDown);
+			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
+			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
+			}
+			getPublishPackageList();
+		}
+		
+		private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13)
+            {
+                SendKeys.Send("{TAB}");            
+            }
+        }
+		
+		/// <summary>
+		/// 所有条件变化
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void conditionChanged(object sender, EventArgs e)
+		{
+			getPublishPackageList();
+		}
+		
 	}
 	class UploadParam{
 	private ProgressBar bar;
