@@ -28,7 +28,7 @@ namespace WatchCore.dao
 		
 		static public DataTable getAllProjectTable()
 		{
-			string sql = "select * from projectinfo";
+			string sql = "select * from projectinfo order by projectname";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			DataRow dr = data.Tables["ds"].NewRow();
 			dr["projectname"] = "全部项目";
@@ -39,7 +39,7 @@ namespace WatchCore.dao
 		}
 		static public List<ProjectInfo> getAllProjectInfo()
 		{
-			string sql = "select * from projectinfo";
+			string sql = "select * from projectinfo order by projectname";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<ProjectInfo> ls = new List<ProjectInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
@@ -74,6 +74,34 @@ namespace WatchCore.dao
 			}
 			return ls;
 		}
+		/// <summary>
+		/// 根据更新包ID获取关联的项目信息
+		/// </summary>
+		/// <param name="packidArray"></param>
+		/// <returns></returns>
+		static public List<ProjectInfo> getAllProjectInfoByPackID(string[] packidArray)
+		{
+			string packstr = "";
+			foreach (var element in packidArray) {
+				packstr+="'"+element+"',";
+			} 
+			packstr = packstr.Substring(0,packstr.Length-1);
+			string sql="SELECT DISTINCT c.* FROM packageInfo AS a INNER JOIN "+
+                      "moduleInfo AS b ON a.moduleid = b.ID INNER JOIN "+
+                      "moduleproject AS d ON b.ID = d.moduleid INNER JOIN "+
+                      "projectinfo AS c ON d.projectid = c.ID "+
+				"WHERE  (a.ID IN ("+packstr+"))";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
+			List<ProjectInfo> ls = new List<ProjectInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2ProjectInfo(row));
+			}
+			return ls;
+		}
+		
+		
+			
 		private static ProjectInfo Row2ProjectInfo(DataRow row)
 		{
 			ProjectInfo project = new ProjectInfo();
@@ -84,5 +112,7 @@ namespace WatchCore.dao
 			project.Ftppath = row["ftppath"].ToString();
 			return project;
 		}
+		
+		
 	}
 }
