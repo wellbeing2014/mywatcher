@@ -27,7 +27,7 @@ namespace WatchCore.dao
 		
 		static public DataTable getAllModuleTable()
 		{
-			string sql = "select * from ModuleInfo";
+			string sql = "select * from ModuleInfo order by fullname";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			DataRow dr = data.Tables["ds"].NewRow();
 			dr["fullname"] = "全部平台";
@@ -38,7 +38,7 @@ namespace WatchCore.dao
 		
 		static public List<ModuleInfo> getAllModuleInfo()
 		{
-			string sql = "select * from ModuleInfo";
+			string sql = "select * from ModuleInfo order by fullname";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
 			List<ModuleInfo> ls = new List<ModuleInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)

@@ -127,5 +127,13 @@ namespace WatchCore.pojo
 			get { return state; }
 			set { state = value; }
 		}
+		
+		private string bugtype;
+		
+		public string Bugtype {
+			get { return bugtype; }
+			set { bugtype = value; }
+		}
+		
 	}
 }
