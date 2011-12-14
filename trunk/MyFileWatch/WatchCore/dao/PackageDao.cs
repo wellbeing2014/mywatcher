@@ -299,6 +299,16 @@ namespace WatchCore.dao
 			return ls;
 		}
 // /// 
+
+		static public PackageInfo getPackageInfoByID(string id)
+		{
+			string sql = "select * from packageinfo where id='"+id+"'";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql,null);
+			if(data.Tables["ds"].Rows.Count>0)
+				return Row2PackageInfo(data.Tables["ds"].Rows[0]);
+			else 
+				return null;
+		}
 		
 		private static PackageInfo Row2PackageInfo(DataRow row)
 		{

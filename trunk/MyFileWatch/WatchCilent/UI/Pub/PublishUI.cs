@@ -383,6 +383,7 @@ namespace WatchCilent.UI.Pub
 					pp.BeginInvoke(delupdate,new object[]{pp,hasread,(int)fileInf.Length,i+1,_prjlist.Count,_prjlist[i].Projectname});					
 					while (bool.Parse(item.Tag as string))//中断
 					{ 
+						//Thread.Sleep(300);
 						bytesRead = fs.Read(buffer, 0, buffer.Length);
 						hasread+=bytesRead;
 						if (bytesRead == 0) 
@@ -648,7 +649,7 @@ namespace WatchCilent.UI.Pub
 					msg+=name+"\n";
 					packidarray[i] = this.exListView1.SelectedItems[i].SubItems[5].Text;
 				}
-				msg+="受影响的项目包括:\n";
+				msg+="需要更新的项目包括:\n";
 				List<ProjectInfo> prolist = ProjectInfoDao.getAllProjectInfoByPackID(packidarray);
 				for(int j = 0;j<prolist.Count;j++)
 				{

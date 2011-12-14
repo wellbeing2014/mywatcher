@@ -23,6 +23,16 @@ namespace WatchCore.Common
 //		public static string HtmlUrl =@dbc.GetValue("HtmlUrl").ToString();
 //		public static string WisofServiceHost =@dbc.GetValue("WisofServiceHost").ToString();
 		
+		
+		public static readonly string[] BUGTYPE = {"界面样式","功能设计","建议质疑","编码逻辑"};
+		public const string BUGTYPE_JieMian = "界面样式";
+		public const string BUGTYPE_GongNeng = "功能设计";
+		public const string BUGTYPE_JianYi = "建议质疑";
+		public const string BUGTYPE_BianMa = "编码逻辑";
+		
+		/// <summary>
+		/// BUG等级
+		/// </summary>
 		public static readonly  string[] BUGLEVEL ={"一般","严重","轻微","紧急"};
 		public const string BUGLEVEL_YiBan = "一般";
 		public const string BUGLEVEL_YanZhong = "严重";

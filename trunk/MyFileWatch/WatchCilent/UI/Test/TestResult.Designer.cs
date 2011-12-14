@@ -52,6 +52,8 @@ namespace WatchCilent.UI.Test
 			this.label9 = new System.Windows.Forms.Label();
 			this.textBox9 = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.comboBox6 = new System.Windows.Forms.ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.multiColumnFilterComboBox1 = new MFCComboBox.MultiColumnFilterComboBox();
 			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -59,6 +61,9 @@ namespace WatchCilent.UI.Test
 			this.comboBox4 = new System.Windows.Forms.ComboBox();
 			this.comboBox5 = new System.Windows.Forms.ComboBox();
 			this.button4 = new System.Windows.Forms.Button();
+			this.button5 = new System.Windows.Forms.Button();
+			this.button6 = new System.Windows.Forms.Button();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -141,7 +146,7 @@ namespace WatchCilent.UI.Test
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(133, 24);
 			this.checkBox1.TabIndex = 10;
-			this.checkBox1.Text = "保存后自动通知主管";
+			this.checkBox1.Text = "保存即通知主管";
 			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
 			// label6
@@ -201,6 +206,8 @@ namespace WatchCilent.UI.Test
 			// 
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.comboBox6);
+			this.panel1.Controls.Add(this.label4);
 			this.panel1.Controls.Add(this.multiColumnFilterComboBox1);
 			this.panel1.Controls.Add(this.comboBox3);
 			this.panel1.Controls.Add(this.comboBox2);
@@ -214,13 +221,29 @@ namespace WatchCilent.UI.Test
 			this.panel1.Size = new System.Drawing.Size(593, 67);
 			this.panel1.TabIndex = 24;
 			// 
+			// comboBox6
+			// 
+			this.comboBox6.FormattingEnabled = true;
+			this.comboBox6.Location = new System.Drawing.Point(456, 10);
+			this.comboBox6.Name = "comboBox6";
+			this.comboBox6.Size = new System.Drawing.Size(134, 20);
+			this.comboBox6.TabIndex = 21;
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(396, 12);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(54, 18);
+			this.label4.TabIndex = 22;
+			this.label4.Text = "缺陷类型";
+			// 
 			// multiColumnFilterComboBox1
 			// 
 			this.multiColumnFilterComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.multiColumnFilterComboBox1.FormattingEnabled = true;
 			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(64, 9);
 			this.multiColumnFilterComboBox1.Name = "multiColumnFilterComboBox1";
-			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(526, 22);
+			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(327, 22);
 			this.multiColumnFilterComboBox1.TabIndex = 1;
 			// 
 			// comboBox3
@@ -274,11 +297,46 @@ namespace WatchCilent.UI.Test
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.Button4Click);
 			// 
+			// button5
+			// 
+			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button5.Location = new System.Drawing.Point(205, 406);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(62, 23);
+			this.button5.TabIndex = 26;
+			this.button5.Text = "上一个";
+			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.Button5Click);
+			// 
+			// button6
+			// 
+			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button6.Location = new System.Drawing.Point(273, 406);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(62, 23);
+			this.button6.TabIndex = 25;
+			this.button6.Text = "下一个";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button6Click);
+			// 
+			// checkBox2
+			// 
+			this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.checkBox2.Location = new System.Drawing.Point(142, 406);
+			this.checkBox2.Name = "checkBox2";
+			this.checkBox2.Size = new System.Drawing.Size(57, 24);
+			this.checkBox2.TabIndex = 27;
+			this.checkBox2.Text = "关注";
+			this.checkBox2.UseVisualStyleBackColor = true;
+			// 
 			// TestResult
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(619, 441);
+			this.Controls.Add(this.checkBox2);
+			this.Controls.Add(this.button5);
+			this.Controls.Add(this.button6);
 			this.Controls.Add(this.button4);
 			this.Controls.Add(this.comboBox5);
 			this.Controls.Add(this.comboBox4);
@@ -300,6 +358,11 @@ namespace WatchCilent.UI.Test
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.CheckBox checkBox2;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.ComboBox comboBox6;
 		private System.Windows.Forms.Button button4;
 		private MFCComboBox.MultiColumnFilterComboBox multiColumnFilterComboBox1;
 		private System.Windows.Forms.ComboBox comboBox5;

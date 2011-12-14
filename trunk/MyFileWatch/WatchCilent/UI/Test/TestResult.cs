@@ -23,6 +23,13 @@ namespace WatchCilent.UI.Test
 	/// </summary>
 	public partial class TestResult : Form
 	{
+		
+		private TestListParameter tp;
+		
+		public TestListParameter Tp {
+			get { return tp; }
+			set { tp = value; }
+		}
 		private TestUnit tu = new TestUnit();
 		//缺陷列表的HTML路径
 		string unitHTMLpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"]);
@@ -51,6 +58,10 @@ namespace WatchCilent.UI.Test
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.button5.Dispose();
+			this.button6.Dispose();
+			this.checkBox2.Dispose();
+			
 			this.comboBox1.DataSource = Source_Person;
 			this.comboBox1.DisplayMember = "fullname";
 			this.comboBox1.ValueMember = "id";
@@ -73,6 +84,9 @@ namespace WatchCilent.UI.Test
 			this.comboBox5.DataSource = CommonConst.BUGLEVEL;
 			this.comboBox5.DropDownStyle= ComboBoxStyle.DropDownList;
 			
+			this.comboBox6.DataSource = CommonConst.BUGTYPE;
+			this.comboBox6.DropDownStyle= ComboBoxStyle.DropDownList;
+			
 			this.multiColumnFilterComboBox1.DataSource = PackageDao.getAllUnTestPack();
 			
 			this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packagename",200,true));
@@ -94,15 +108,56 @@ namespace WatchCilent.UI.Test
 		/// 编辑窗口
 		/// </summary>
 		/// <param name="tuint"></param>
-		public TestResult(TestUnit tuint)
+		public TestResult(TestUnit tuint,bool isEdit)
 		{
 			this.tu=tuint;
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			if(isEdit)
+			{
+				this.button3.Enabled = false;
+				this.button5.Dispose();
+				this.button6.Dispose();
+				this.checkBox2.Dispose();
+			}
+			else
+			{
+				this.button5.Location = this.button1.Location;
+				this.button6.Location = this.button2.Location;
+				this.checkBox2.Location = this.checkBox1.Location;
+				this.button1.Dispose();
+				this.button2.Dispose();
+				this.button3.Dispose();
+				this.button4.Dispose();
+				this.checkBox1.Dispose();
+				int sumtu = TestUnitDao.QueryTestUnitCount(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
+				                                    tp.Begintime,tp.Endtime);
+				if(tp.Startindex-1 <= 0 )
+				{
+					this.button5.Enabled = false;
+				}
+				if(tp.Startindex+1 >= sumtu )
+				{
+					this.button6.Enabled = false;
+				}
+			}
+		
+			TestUnitBing();
+			
+			this.CenterToParent();
 			
 			
+			
+		}
+		
+		/// <summary>
+		/// 绑定数据到控件
+		/// </summary>
+		void TestUnitBing()
+		{
+			this.multiColumnFilterComboBox1.Items.Clear();
 			this.multiColumnFilterComboBox1.Items.Add(this.tu);
 			this.multiColumnFilterComboBox1.DisplayMember = "Packagename";
             this.multiColumnFilterComboBox1.ValueMember = "Packageid";
@@ -110,6 +165,7 @@ namespace WatchCilent.UI.Test
 			this.multiColumnFilterComboBox1.Enabled = false;
 			
 			//绑定主管
+			this.comboBox1.Items.Clear();
 			this.comboBox1.DataSource = this.Source_Person;
 			this.comboBox1.DisplayMember = "fullname";
 			this.comboBox1.ValueMember = "id";
@@ -126,6 +182,7 @@ namespace WatchCilent.UI.Test
 			}
 			
 			//绑定模块（平台）
+			this.comboBox2.Items.Clear();
 			this.comboBox2.DataSource = this.Source_Module;
 			this.comboBox2.DisplayMember = "fullname";
 			this.comboBox2.ValueMember = "id";
@@ -142,6 +199,7 @@ namespace WatchCilent.UI.Test
 			}
 			
 			//绑定项目
+			this.comboBox3.Items.Clear();
 			this.comboBox3.DataSource = this.Source_Project;
 			this.comboBox3.DisplayMember = "projectname";
 			this.comboBox3.ValueMember = "id";
@@ -157,6 +215,7 @@ namespace WatchCilent.UI.Test
 				}
 			}
 			//绑定BUG等级
+			this.comboBox5.Items.Clear();
 			this.comboBox5.Items.AddRange(CommonConst.BUGLEVEL);
 			foreach (var element in CommonConst.BUGLEVEL) {
 				if(element.Equals(tu.Buglevel))
@@ -165,25 +224,25 @@ namespace WatchCilent.UI.Test
 					break;
 				}
 			}
+			//绑定BUG类型
+			this.comboBox6.Items.Clear();
+			this.comboBox6.Items.AddRange(CommonConst.BUGTYPE);
+			foreach (var element in CommonConst.BUGTYPE) {
+				if(element.Equals(tu.Bugtype))
+				{
+					this.comboBox6.SelectedItem = element;
+					break;
+				}
+			}
 			
 			this.textBox9.Text = tu.Testtitle;
 			this.textBox1.Text = tu.Unitno;
 			this.textBox1.ReadOnly = true;
-			
-			this.button3.Enabled = false;
 
 			MemoryStream stream = new MemoryStream(tu.Testcontent);
 			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
-			
-			this.CenterToParent();
-			
-			
-			//InsertImage();
-			//read();
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
+		
 		bool TestuiSave()
 		{
 			MemoryStream stream = new MemoryStream();
@@ -212,6 +271,7 @@ namespace WatchCilent.UI.Test
 			}
 					
 			tu.Buglevel =this.comboBox5.Text;
+			tu.Bugtype = this.comboBox6.Text;
 			tu.Packagename =this.multiColumnFilterComboBox1.Text;//his.textBox3.Text;
 			if(this.multiColumnFilterComboBox1.SelectedValue!=null)
 			{
@@ -243,15 +303,15 @@ namespace WatchCilent.UI.Test
 		{
 			try {
 				string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-					"》有一项内容为『"+tu.Testtitle+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+tu.Unitno+".html"+"查看详细并确认。";
+					"》有一项内容为『"+tu.Testtitle+"』、类型为『"+tu.Bugtype+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+tu.Unitno+".html"+"查看详细并确认。";
 				PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
 				string[] iplist = person.Ip.Split(';');
 				foreach(string ip in iplist)
 				{
 					Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
 				}
-			} catch (Exception) {
-				MessageBox.Show("通知主管失败！");
+			} catch (Exception e) {
+				MessageBox.Show("通知主管失败！:"+e.ToString());
 			}
 		}
 		void Button1Click(object sender, System.EventArgs e)
@@ -299,16 +359,18 @@ namespace WatchCilent.UI.Test
 		
 		void CreateTestUnit(string unitdocTpl,string tempdocpath,string unitdocpath)
 		{
+			PackageInfo pi = PackageDao.getPackageInfoByID(tu.Packageid);
 			WordDocumentMerger wm = new WordDocumentMerger();
 			try {
 				
 				wm.Open(unitdocTpl);
 				wm.WriteIntoMarkBook("AdminName",tu.Adminname);
 				wm.WriteIntoMarkBook("BUGLevel",tu.Buglevel);
+				wm.WriteIntoMarkBook("BUGType",tu.Bugtype);
 				wm.WriteIntoMarkBook("UnitNO",tu.Unitno);
 				wm.WriteIntoMarkBook("ModuleName",tu.Modulename);
 				wm.WriteIntoMarkBook("NO",tu.Unitno);
-				wm.WriteIntoMarkBook("PackageName",tu.Packagename);
+				wm.WriteIntoMarkBook("PackageName",pi.Packagepath);
 				wm.WriteIntoMarkBook("ProjectName",tu.Projectname);
 				wm.WriteIntoMarkBook("TestTime",tu.Testtime);
 				wm.WriteIntoMarkBook("Title",tu.Testtitle);
@@ -350,6 +412,7 @@ namespace WatchCilent.UI.Test
 			this.richTextBox1.Clear();
 			//重新设置BUG编号
 			this.textBox1.Text = TestUnitDao.getNewUnitNO();
+			this.tu.Id = 0;
 		}
 		
 		/// <summary>
@@ -397,6 +460,111 @@ namespace WatchCilent.UI.Test
 				}
 			}
 		}
+		//浏览模式 上一个 按钮
+		void Button5Click(object sender, EventArgs e)
+		{
+			if(tp!=null)
+			{
+				int sumtu = TestUnitDao.QueryTestUnitCount(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
+				                                    tp.Begintime,tp.Endtime);
+				List<TestUnit> tulist = TestUnitDao.QueryTestUnit(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
+				                                    tp.Begintime,tp.Endtime,tp.Startindex-1,1);
+				if(tulist.Count>0)
+				{
+					this.tu = tulist[0];
+					TestUnitBing();
+					tp.Startindex = tp.Startindex-1;
+					if(tp.Startindex==0)
+					{
+						this.button5.Enabled = false;
+					}
+					
+				}
+				else
+				{
+					MessageBox.Show("没有找到上一条数据","出错");
+				}
+			}
+		}
+		//浏览模式 下一个 按钮
+		void Button6Click(object sender, EventArgs e)
+		{
+			if(tp!=null)
+			{
+				int sumtu = TestUnitDao.QueryTestUnitCount(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
+				                                    tp.Begintime,tp.Endtime);
+				List<TestUnit> tulist = TestUnitDao.QueryTestUnit(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
+				                                    tp.Begintime,tp.Endtime,tp.Startindex+1,1);
+				if(tulist.Count>0)
+				{
+					this.tu = tulist[0];
+					TestUnitBing();
+					tp.Startindex = tp.Startindex+1;
+					if(tp.Startindex>=sumtu)
+					{
+						this.button6.Enabled = false;
+					}
+					
+				}
+				else
+				{
+					MessageBox.Show("没有找到下一条数据","出错");
+				}
+			}
+		}
 		
+		
+	}
+	class TestListParameter
+	{
+		private string moduleid;
+		
+		public string Moduleid {
+			get { return moduleid; }
+			set { moduleid = value; }
+		}
+		private string manageid;
+		
+		public string Manageid {
+			get { return manageid; }
+			set { manageid = value; }
+		}
+		private string level;
+		
+		public string Level {
+			get { return level; }
+			set { level = value; }
+		}
+		private string state;
+		
+		public string State {
+			get { return state; }
+			set { state = value; }
+		}
+		
+		private string begintime;
+		
+		public string Begintime {
+			get { return begintime; }
+			set { begintime = value; }
+		}
+		private string endtime;
+		
+		public string Endtime {
+			get { return endtime; }
+			set { endtime = value; }
+		}
+		private int startindex;
+		
+		public int Startindex {
+			get { return startindex; }
+			set { startindex = value; }
+		}
+		private int pagesize;
+		
+		public int Pagesize {
+			get { return pagesize; }
+			set { pagesize = value; }
+		}
 	}
 }
