@@ -24,11 +24,12 @@ namespace WatchCore.Common
 //		public static string WisofServiceHost =@dbc.GetValue("WisofServiceHost").ToString();
 		
 		
-		public static readonly string[] BUGTYPE = {"界面样式","功能设计","建议质疑","编码逻辑"};
+		public static readonly string[] BUGTYPE = {"界面样式","功能设计","建议质疑","编码逻辑","编译打包"};
 		public const string BUGTYPE_JieMian = "界面样式";
 		public const string BUGTYPE_GongNeng = "功能设计";
 		public const string BUGTYPE_JianYi = "建议质疑";
 		public const string BUGTYPE_BianMa = "编码逻辑";
+		public const string BUGTYPE_BianYi = "编译打包";
 		
 		/// <summary>
 		/// BUG等级

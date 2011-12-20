@@ -210,7 +210,7 @@ namespace WatchCilent.UI.Test
 			if(this.listView1.CheckedItems.Count==1)
 			{
 				TestUnit tu = ListViewSelect(this.listView1.CheckedItems[0]);
-				TestResult tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id));
+				TestResult tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id),null);
 				tr.ShowDialog();
 			}
 			else
@@ -225,7 +225,28 @@ namespace WatchCilent.UI.Test
 			if(this.listView1.SelectedItems.Count==1)
 			{
 				TestUnit tu = ListViewSelect(this.listView1.SelectedItems[0]);
-				TestResult tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id));
+				TestResult tr = null;
+				TestListParameter tp = new TestListParameter();
+				
+				if(this.dateTimePicker1.IsDisposed&&this.dateTimePicker2.IsDisposed)
+				{
+					tp.Begintime=null;
+					tp.Endtime =null;
+				}
+				else
+				{
+					tp.Begintime = this.dateTimePicker1.Value.ToShortDateString()+" 00:00:00";
+					tp.Endtime = this.dateTimePicker2.Value.ToShortDateString()+" 23:59:59";;
+				}
+				tp.Level = this.comboBox3.Text;
+				tp.Manageid = this.comboBox2.SelectedValue.ToString();
+				tp.Moduleid = this.comboBox1.SelectedValue.ToString();
+				
+				tp.Pagesize = pagesize ;
+				tp.Startindex = (currentpage-1)*pagesize+this.listView1.SelectedItems[0].Index;
+				tp.State = this.treeView1.SelectedNode.Text;
+				//tr.Tp = tp;
+				tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id),tp);
 				tr.ShowDialog();
 			}
 			else

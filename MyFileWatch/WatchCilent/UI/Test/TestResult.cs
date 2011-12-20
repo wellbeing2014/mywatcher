@@ -58,6 +58,7 @@ namespace WatchCilent.UI.Test
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.Text ="缺陷新建";
 			this.button5.Dispose();
 			this.button6.Dispose();
 			this.checkBox2.Dispose();
@@ -108,15 +109,16 @@ namespace WatchCilent.UI.Test
 		/// 编辑窗口
 		/// </summary>
 		/// <param name="tuint"></param>
-		public TestResult(TestUnit tuint,bool isEdit)
+		public TestResult(TestUnit tuint,TestListParameter tp)
 		{
 			this.tu=tuint;
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			if(isEdit)
+			if(tp==null)
 			{
+				this.Text ="缺陷编辑";
 				this.button3.Enabled = false;
 				this.button5.Dispose();
 				this.button6.Dispose();
@@ -124,6 +126,8 @@ namespace WatchCilent.UI.Test
 			}
 			else
 			{
+				this.Text ="缺陷浏览";
+				this.Tp = tp;
 				this.button5.Location = this.button1.Location;
 				this.button6.Location = this.button2.Location;
 				this.checkBox2.Location = this.checkBox1.Location;
@@ -134,17 +138,19 @@ namespace WatchCilent.UI.Test
 				this.checkBox1.Dispose();
 				int sumtu = TestUnitDao.QueryTestUnitCount(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
 				                                    tp.Begintime,tp.Endtime);
-				if(tp.Startindex-1 <= 0 )
-				{
+				if(tp.Startindex-1 < 0 )
 					this.button5.Enabled = false;
-				}
-				if(tp.Startindex+1 >= sumtu )
-				{
+				else 
+					this.button5.Enabled = true;
+				
+				if(tp.Startindex+2 > sumtu )
 					this.button6.Enabled = false;
-				}
+				else 
+					this.button6.Enabled = true;
 			}
 		
-			TestUnitBing();
+			TestUnitBingDS();
+			TestUnitBingData();
 			
 			this.CenterToParent();
 			
@@ -153,9 +159,47 @@ namespace WatchCilent.UI.Test
 		}
 		
 		/// <summary>
+		/// 绑定数据源到控件
+		/// </summary>
+		void TestUnitBingDS()
+		{
+			this.comboBox1.DataSource = this.Source_Person;
+			this.comboBox1.DisplayMember = "fullname";
+			this.comboBox1.ValueMember = "id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			this.comboBox2.DataSource = this.Source_Module;
+			this.comboBox2.DisplayMember = "fullname";
+			this.comboBox2.ValueMember = "id";
+			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			//绑定项目
+			this.comboBox3.DataSource = this.Source_Project;
+			this.comboBox3.DisplayMember = "projectname";
+			this.comboBox3.ValueMember = "id";
+			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			//绑定BUG等级
+			if(!this.comboBox5.IsDisposed)
+			{
+				this.comboBox5.Items.AddRange(CommonConst.BUGLEVEL);
+			}
+			
+			//绑定BUG类型
+			if(!this.comboBox6.IsDisposed)
+			{
+				this.comboBox6.Items.AddRange(CommonConst.BUGTYPE);
+			}
+			
+		}
+		
+		/// <summary>
 		/// 绑定数据到控件
 		/// </summary>
-		void TestUnitBing()
+		void TestUnitBingData()
 		{
 			this.multiColumnFilterComboBox1.Items.Clear();
 			this.multiColumnFilterComboBox1.Items.Add(this.tu);
@@ -165,12 +209,6 @@ namespace WatchCilent.UI.Test
 			this.multiColumnFilterComboBox1.Enabled = false;
 			
 			//绑定主管
-			this.comboBox1.Items.Clear();
-			this.comboBox1.DataSource = this.Source_Person;
-			this.comboBox1.DisplayMember = "fullname";
-			this.comboBox1.ValueMember = "id";
-			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
-			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			foreach (DataRow element in this.Source_Person.Rows) {
 				string tempid = element["id"].ToString();
 				if(Int32.Parse(tempid)== tu.Adminid)
@@ -182,12 +220,7 @@ namespace WatchCilent.UI.Test
 			}
 			
 			//绑定模块（平台）
-			this.comboBox2.Items.Clear();
-			this.comboBox2.DataSource = this.Source_Module;
-			this.comboBox2.DisplayMember = "fullname";
-			this.comboBox2.ValueMember = "id";
-			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
-			this.comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
 			foreach (DataRow element in this.Source_Module.Rows) {
 				string tempid = element["id"].ToString();
 				if(Int32.Parse(tempid)== tu.Moduleid)
@@ -199,12 +232,6 @@ namespace WatchCilent.UI.Test
 			}
 			
 			//绑定项目
-			this.comboBox3.Items.Clear();
-			this.comboBox3.DataSource = this.Source_Project;
-			this.comboBox3.DisplayMember = "projectname";
-			this.comboBox3.ValueMember = "id";
-			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
-			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			foreach (DataRow element in this.Source_Project.Rows) {
 				string tempid = element["id"].ToString();
 				if(Int32.Parse(tempid)== tu.Projectid)
@@ -215,8 +242,6 @@ namespace WatchCilent.UI.Test
 				}
 			}
 			//绑定BUG等级
-			this.comboBox5.Items.Clear();
-			this.comboBox5.Items.AddRange(CommonConst.BUGLEVEL);
 			foreach (var element in CommonConst.BUGLEVEL) {
 				if(element.Equals(tu.Buglevel))
 				{
@@ -225,8 +250,6 @@ namespace WatchCilent.UI.Test
 				}
 			}
 			//绑定BUG类型
-			this.comboBox6.Items.Clear();
-			this.comboBox6.Items.AddRange(CommonConst.BUGTYPE);
 			foreach (var element in CommonConst.BUGTYPE) {
 				if(element.Equals(tu.Bugtype))
 				{
@@ -359,7 +382,7 @@ namespace WatchCilent.UI.Test
 		
 		void CreateTestUnit(string unitdocTpl,string tempdocpath,string unitdocpath)
 		{
-			PackageInfo pi = PackageDao.getPackageInfoByID(tu.Packageid);
+			PackageInfo pi = PackageDao.getPackageInfoByID(tu.Packageid.ToString());
 			WordDocumentMerger wm = new WordDocumentMerger();
 			try {
 				
@@ -376,7 +399,7 @@ namespace WatchCilent.UI.Test
 				wm.WriteIntoMarkBook("Title",tu.Testtitle);
 				wm.InsertMerge(new string[]{tempdocpath},"Content");
 				wm.Save(unitdocpath);
-			} catch (Exception) {
+			} catch (Exception e) {
 				
 				MessageBox.Show("生成测试单元文档失败！");
 			}
@@ -435,6 +458,10 @@ namespace WatchCilent.UI.Test
 		/// <param name="e"></param>
 		void Package_SelectedValueChanged(object sender, EventArgs e)
 		{
+			if(this.multiColumnFilterComboBox1.SelectedItem==null)
+			{
+				return ;
+			}
 			DataRowView package =(DataRowView) this.multiColumnFilterComboBox1.SelectedItem;
 			string  moduleid =  package["realmoduleid"].ToString();
 			string  managerid =  package["managerid"].ToString();
@@ -471,14 +498,18 @@ namespace WatchCilent.UI.Test
 				                                    tp.Begintime,tp.Endtime,tp.Startindex-1,1);
 				if(tulist.Count>0)
 				{
-					this.tu = tulist[0];
-					TestUnitBing();
+					this.tu = TestUnitDao.gettestUnitById(tulist[0].Id);
+					TestUnitBingData();
 					tp.Startindex = tp.Startindex-1;
-					if(tp.Startindex==0)
-					{
+					if(tp.Startindex-1 < 0 )
 						this.button5.Enabled = false;
-					}
+					else 
+						this.button5.Enabled = true;
 					
+					if(tp.Startindex+2 > sumtu )
+						this.button6.Enabled = false;
+					else 
+						this.button6.Enabled = true;
 				}
 				else
 				{
@@ -497,13 +528,18 @@ namespace WatchCilent.UI.Test
 				                                    tp.Begintime,tp.Endtime,tp.Startindex+1,1);
 				if(tulist.Count>0)
 				{
-					this.tu = tulist[0];
-					TestUnitBing();
+					this.tu = TestUnitDao.gettestUnitById(tulist[0].Id);
+					TestUnitBingData();
 					tp.Startindex = tp.Startindex+1;
-					if(tp.Startindex>=sumtu)
-					{
+					if(tp.Startindex-1 < 0 )
+						this.button5.Enabled = false;
+					else 
+						this.button5.Enabled = true;
+					
+					if(tp.Startindex+2 > sumtu )
 						this.button6.Enabled = false;
-					}
+					else 
+						this.button6.Enabled = true;
 					
 				}
 				else
@@ -515,7 +551,7 @@ namespace WatchCilent.UI.Test
 		
 		
 	}
-	class TestListParameter
+	public class TestListParameter
 	{
 		private string moduleid;
 		
