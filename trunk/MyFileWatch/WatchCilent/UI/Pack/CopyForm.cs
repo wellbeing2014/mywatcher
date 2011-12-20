@@ -114,9 +114,23 @@ namespace WatchCilent
 					List<ModuleInfo> list =ModuleDao.getAllModuleInfoLikename(name,code);
 					if (list.Count!=0)
 					{
+						ModuleInfo right_module =null;
+						if(list.Count>=2)
+						{
+							//找到多个模块（可能是使用分组前缀及其他模块），查找出 使用分组前缀的模块
+							for (int i = 0; i < list.Count; i++) {
+								if(list[i].Fullname.Contains("_"+name))//是否使用分组前缀
+								{
+									right_module = list[i];
+									break;
+								}
+							}
+						}
+						else
+							right_module = list[0];
 						for (index_module=0;index_module<datasource_module.Count ;index_module++ ) 
 						{
-							if(list[0].Id==datasource_module[index_module].Id)
+							if(right_module.Id==datasource_module[index_module].Id)
 							{
 								this.comboBox1.SelectedItem=this.comboBox1.Items[index_module];
 								//this.packageinfo.Managerid = list[0].Managerid;

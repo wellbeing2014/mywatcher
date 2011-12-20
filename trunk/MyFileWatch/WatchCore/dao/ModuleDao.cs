@@ -62,7 +62,7 @@ namespace WatchCore.dao
 		static public List<ModuleInfo> getAllModuleInfoLikename(string mname ,string mcode)
 		{
 			string sql = "SELECT * FROM moduleInfo  " +
-				"where  moduleInfo.fullname like '"+mname+"%' and code = '"+mcode+"'";
+				"where  moduleInfo.fullname like '%"+mname+"%' and code = '"+mcode+"'";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<ModuleInfo> ls = new List<ModuleInfo>();
 			foreach(DataRow row in data.Tables["ds"].Rows)

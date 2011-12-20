@@ -66,6 +66,50 @@ namespace WatchCore.dao
 			numtable.Rows.Add(dr);
 			return numtable;
 		}
+		
+		/// <summary>
+		///	统计BUG类型
+		/// </summary>
+		/// <param name="begintime"></param>
+		/// <param name="endtime"></param>
+		/// <returns></returns>
+		static public DataTable getRePortBugType(string begintime ,string endtime)
+		{
+			DataTable numtable = new DataTable("numdt");
+			numtable.Columns.Add("",Type.GetType("System.String"));
+			numtable.Columns.Add(CommonConst.BUGTYPE_JieMian,Type.GetType("System.Int32"));
+			numtable.Columns.Add(CommonConst.BUGTYPE_GongNeng,Type.GetType("System.Int32"));
+			numtable.Columns.Add(CommonConst.BUGTYPE_JianYi,Type.GetType("System.Int32"));
+			numtable.Columns.Add(CommonConst.BUGTYPE_BianMa,Type.GetType("System.Int32"));
+			numtable.Columns.Add(CommonConst.BUGTYPE_BianYi,Type.GetType("System.Int32"));
+			//------------------查姓名--------------------------------------------
+			string sqlname ="SELECT distinct adminname FROM testunit "+
+					"where cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and cast(testtime as datetime)<=cast('"+endtime+"' as datetime) ";
+			DataSet dataname = SqlDBUtil.ExecuteQuery(sqlname);
+			DataRowCollection drsname = dataname.Tables["ds"].Rows;
+			List<string> adminname = new List<string>();
+			for (int j = 0; j < drsname.Count; j++) {
+				adminname.Add(drsname[j][0].ToString());
+				numtable.Columns.Add(drsname[j][0].ToString(),Type.GetType("System.Double"));
+			}
+			
+			string sql ="select count(*) from testunit where bugtype = '{0}' and adminname='{1}'"+
+						"and cast(testtime as datetime)>=cast('"+begintime+"' as datetime) and "+
+				" cast(testtime as datetime)<=cast('"+endtime+"' as datetime)";
+			
+			for (int i = 0; i < adminname.Count; i++) {
+				DataRow dr = numtable.NewRow();
+				dr[0]=adminname[i];
+				for (int p = 0; p < CommonConst.BUGTYPE.Length; p++) {
+					
+					dr[p+1] =SqlDBUtil.ExecuteScalar(string.Format(sql,CommonConst.BUGTYPE[p],adminname[i]));
+				}
+				numtable.Rows.Add(dr);
+			}
+			
+			return numtable;
+		}
+		
 		/// <summary>
 		/// 统计BUG趋势图
 		/// </summary>
@@ -352,6 +396,7 @@ namespace WatchCore.dao
 			test.Testorid =Int32.Parse(!(row["testorid"].ToString().Equals(""))?row["testorid"].ToString():"0");
 			test.Adminname = row["adminname"].ToString();
 			test.Buglevel = row["buglevel"].ToString();
+			test.Bugtype = row["bugtype"].ToString();
 			test.Modulename = row["modulename"].ToString();
 			test.Packagename = row["packagename"].ToString();
 			test.Projectname = row["projectname"].ToString();
