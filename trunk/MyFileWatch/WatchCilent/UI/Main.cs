@@ -43,6 +43,7 @@ namespace WatchCilent.UI
 	       
 		public Main()
 		{
+			
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
@@ -91,8 +92,7 @@ namespace WatchCilent.UI
 			this.Close();
 			System.Windows.Forms.Application.Exit();
 		}
-		
-		
+	
 		/// <summary>
 		/// 切换主界面
 		/// </summary>
@@ -225,5 +225,11 @@ namespace WatchCilent.UI
 		{
 			changeForm(this.testlistUI1);
 		}
+		
+		void 主题ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			changeForm(this.themelistUI1);
+		}
+		
 	}
 }

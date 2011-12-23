@@ -34,7 +34,7 @@ namespace WatchCilent
 		{
 			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
 			Microsoft.Win32.RegistryKey reg = key.CreateSubKey("software\\WisoftWatchClient");  
-   			reg.SetValue("dbpath", this.textBox1.Text); 
+			reg.SetValue("dbpath", this.textBox1.Text);
    			reg.SetValue("UnitDocPath", this.textBox2.Text); 
    			reg.SetValue("UnitHtmlPath", this.textBox3.Text); 
    			reg.SetValue("HtmlUrl", this.textBox4.Text); 
