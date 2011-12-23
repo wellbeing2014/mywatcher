@@ -44,9 +44,11 @@ namespace WatchCilent.UI
 			this.testlistUI1 = new WatchCilent.UI.Test.TestListUI();
 			this.publishUI1 = new WatchCilent.UI.Pub.PublishUI();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.themelistUI1 = new WatchCilent.UI.Theme.ThemeListUI();
 			this.更新包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.发布ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.主题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +83,7 @@ namespace WatchCilent.UI
 			this.panel2.Controls.Add(this.packageUI1);
 			this.panel2.Controls.Add(this.publishUI1);
 			this.panel2.Controls.Add(this.testlistUI1);
+			this.panel2.Controls.Add(this.themelistUI1);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(0, 24);
 			this.panel2.Name = "panel2";
@@ -108,6 +111,11 @@ namespace WatchCilent.UI
 			this.publishUI1.Location = new System.Drawing.Point(0, 0);
 			this.publishUI1.Name = "publishUI1";
 			this.publishUI1.Visible = false;
+			
+			this.themelistUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.themelistUI1.Location = new System.Drawing.Point(0, 0);
+			this.themelistUI1.Name = "themelistUI1";
+			this.themelistUI1.Visible = false;
 			// 
 			// menuStrip1
 			// 
@@ -116,6 +124,7 @@ namespace WatchCilent.UI
 									this.toolStripMenuItem1,
 									this.发布ToolStripMenuItem,
 									this.配置ToolStripMenuItem,
+									this.主题ToolStripMenuItem,
 									this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -143,6 +152,14 @@ namespace WatchCilent.UI
 			this.发布ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
 			this.发布ToolStripMenuItem.Text = "发布";
 			this.发布ToolStripMenuItem.Click += new System.EventHandler(this.发布ToolStripMenuItemClick);
+			// 
+			// 主题ToolStripMenuItem
+			// 
+			this.主题ToolStripMenuItem.Name = "主题ToolStripMenuItem";
+			this.主题ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+			this.主题ToolStripMenuItem.Text = "主题";
+			this.主题ToolStripMenuItem.Click += new System.EventHandler(this.主题ToolStripMenuItemClick);
+			
 			// 
 			// 配置ToolStripMenuItem
 			// 
@@ -268,6 +285,7 @@ namespace WatchCilent.UI
 		private System.Windows.Forms.ToolStripMenuItem contentsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 配置ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 主题ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 更新包ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		private System.Windows.Forms.MenuStrip menuStrip1;
@@ -275,6 +293,7 @@ namespace WatchCilent.UI
 		private WatchCilent.PackageUI packageUI1;
 		private WatchCilent.UI.Pub.PublishUI  publishUI1;
 		private WatchCilent.UI.Test.TestListUI testlistUI1;
+		private WatchCilent.UI.Theme.ThemeListUI themelistUI1;
 		//private WatchCilent.PackageUI packageUI1;
 		
 		

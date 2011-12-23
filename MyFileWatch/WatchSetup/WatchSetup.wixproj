@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{E013308C-1B80-4BE2-8FB3-B879397E491C}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Package</OutputType>
+    <RootNamespace>WatchSetup</RootNamespace>
+    <OutputName>WatchSetup</OutputName>
+    <WixToolPath Condition=" '$(WixToolPath)' == '' ">$(SharpDevelopBinPath)\Tools\Wix</WixToolPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(WixToolPath)\wix.targets</WixTargetsPath>
+    <WixTasksPath Condition=" '$(WixTasksPath)' == '' ">$(WixToolPath)\WixTasks.dll</WixTasksPath>
+    <SupressIces>ICE45</SupressIces>
+    <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <WixExtension Include="$(WixToolPath)\WixUIExtension.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Files.wxs" />
+    <Compile Include="Setup.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="license.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixLibrary Include="C:\Program Files\Windows Installer XML v3.5\bin\difxapp_x86.wixlib" />
+  </ItemGroup>
+  <Import Project="$(WixToolPath)\wix.targets" />
+</Project>
