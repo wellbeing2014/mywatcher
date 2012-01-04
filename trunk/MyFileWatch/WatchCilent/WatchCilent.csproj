@@ -71,6 +71,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WinHtmlControl">
@@ -123,6 +124,10 @@
     <Compile Include="UI\Pub\SelectPath.Designer.cs">
       <DependentUpon>SelectPath.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pub\UpdateWims.cs" />
+    <Compile Include="UI\Pub\UpdateWims.Designer.cs">
+      <DependentUpon>UpdateWims.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pub\UploadFTP.cs" />
     <Compile Include="UI\Pub\UploadFTP.Designer.cs">
       <DependentUpon>UploadFTP.cs</DependentUpon>
@@ -147,9 +152,18 @@
     <Compile Include="UI\Test\TestResult.Designer.cs">
       <DependentUpon>TestResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Theme\SelectUnit.cs" />
+    <Compile Include="UI\Theme\SelectUnit.Designer.cs">
+      <DependentUpon>SelectUnit.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Theme\ThemeListUI.cs" />
     <Compile Include="UI\Theme\ThemeListUI.Designer.cs">
       <DependentUpon>ThemeListUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\WimsToTest\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <EmbeddedResource Include="UI\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -181,6 +195,9 @@
     <EmbeddedResource Include="UI\Pub\SelectPath.resx">
       <DependentUpon>SelectPath.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Pub\UpdateWims.resx">
+      <DependentUpon>UpdateWims.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\UploadFTP.resx">
       <DependentUpon>UploadFTP.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,11 +213,19 @@
     <EmbeddedResource Include="UI\Test\TestResult.resx">
       <DependentUpon>TestResult.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Theme\SelectUnit.resx">
+      <DependentUpon>SelectUnit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Theme\ThemeListUI.resx">
       <DependentUpon>ThemeListUI.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="releasenote.txt" />
+    <None Include="Web References\WimsToTest\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WimsToTest\WimsToTestManager.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MISC" />
@@ -215,5 +240,16 @@
       <Project>{FFB3B2FE-B623-42AA-9FDB-FFE4807D7F14}</Project>
       <Name>WatchCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://192.10.110.49:8080/wisoftintegrateframe/services/WimsToTest%3fwsdl">
+      <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://192.10.110.49:8080/wisoftintegrateframe/services/WimsToTest%3fwsdl</UpdateFromURL>
+      <RelPath>Web References\WimsToTest</RelPath>
+      <Namespace>WatchCilent.WimsToTest</Namespace>
+    </WebReferenceUrl>
   </ItemGroup>
 </Project>
