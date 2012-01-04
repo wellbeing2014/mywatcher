@@ -22,13 +22,14 @@ namespace WatchCilent.UI.Theme
 	/// </summary>
 	public partial class ThemeListUI : UserControl
 	{
+		private TreeNode themeTree = new TreeNode("默认主题");
 		public ThemeListUI()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
+			getThemeTree();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -37,14 +38,68 @@ namespace WatchCilent.UI.Theme
 		void getThemeTree()
 		{
 			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname("朱新培");
-			List<TreeNode> maintreelist = new List<TreeNode>();
+			//List<TreeNode> maintreelist = new List<TreeNode>();
+			TreeNode main =new TreeNode();
+			//默认主题
 			TreeNode tmp =new TreeNode("默认主题");
+			TestTheme default_tt = new TestTheme();
+			default_tt.Id=99999;
+			default_tt.Personid=0;
+			default_tt.Personname="朱新培";
+			tmp.Tag = default_tt;
+			
+			main.Nodes.Add(tmp);
+			
 			foreach (var element in ttlist) {
 				TreeNode tmp1 = null;
+				tmp1 = new TreeNode(element.Favname);
+				tmp1.Tag = element;
 				if(element.Parentid == 0)
 				{
-					tmp1 = new TreeNode();
+					main.Nodes.Add(tmp1);
 				}
+				else
+				{
+					creatTree(tmp1,main);
+				}
+			}
+			TreeNode[] tn = new TreeNode[main.Nodes.Count];
+			main.Nodes.CopyTo(tn,0);
+			this.treeView1.Nodes.AddRange(tn);
+		}
+		
+		void creatTree(TreeNode childtn,TreeNode parenttn)
+		{
+			if(parenttn.Tag!=null)
+			{
+				TestTheme child = childtn.Tag as TestTheme;
+				TestTheme parent = parenttn.Tag as TestTheme;
+				if(child.Parentid == parent.Id)
+				{
+					parenttn.Nodes.Add(childtn);
+					return ;
+				} 
+			}
+			
+			
+			
+			for (int i = 0; i < parenttn.Nodes.Count; i++) {
+				 creatTree(childtn,parenttn.Nodes[i]);
+//				parenttn.Nodes.RemoveAt(i);
+//				parenttn.Nodes.Insert(i,tn);
+			}
+			return ;
+		}
+		
+		//新增缺陷关联
+		void Button3Click(object sender, EventArgs e)
+		{
+			SelectUnit su = new SelectUnit();
+			su.StartPosition = FormStartPosition.CenterParent;
+			DialogResult dr = su.ShowDialog();
+			if(dr==DialogResult.OK)
+			{
+				
 			}
 		}
 	}

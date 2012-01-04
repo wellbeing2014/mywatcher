@@ -105,6 +105,7 @@ namespace WatchCilent.UI.Theme
 			this.button3.TabIndex = 4;
 			this.button3.Text = "新增";
 			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
 			// button2
 			// 
