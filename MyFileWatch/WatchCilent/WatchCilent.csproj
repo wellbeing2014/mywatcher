@@ -51,7 +51,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="Infragistics2.Win.Misc.v11.1" />
     <Reference Include="Interop.Graph">
       <HintPath>Interop.Graph.dll</HintPath>
     </Reference>
