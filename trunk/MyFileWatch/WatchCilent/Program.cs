@@ -84,7 +84,6 @@ namespace WatchCilent
 		/// <param name="instance">Process进程实例</param>
 		public static void HandleRunningInstance(Process instance)
 		{
-			
 			//确保窗口没有被最小化或最大化
 			ShowWindowAsync (instance.MainWindowHandle , WS_SHOWNORMAL);
 	
