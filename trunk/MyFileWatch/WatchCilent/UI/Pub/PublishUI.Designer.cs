@@ -56,6 +56,7 @@ namespace WatchCilent.UI.Pub
 			this.label3 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
+			this.button4 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// exListView1
@@ -169,7 +170,6 @@ namespace WatchCilent.UI.Pub
 			this.textBox1.Size = new System.Drawing.Size(160, 21);
 			this.textBox1.TabIndex = 53;
 			this.textBox1.Text = "请输入关键字...";
-			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(textBox1_KeyDown);
 			// 
 			// button3
 			// 
@@ -260,10 +260,22 @@ namespace WatchCilent.UI.Pub
 			this.label4.Text = "共几页/共几条";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// button4
+			// 
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Location = new System.Drawing.Point(620, 333);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(88, 25);
+			this.button4.TabIndex = 64;
+			this.button4.Text = "同步WIMS发布";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Button4Click);
+			// 
 			// PublishUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.button4);
 			this.Controls.Add(this.linkLabel2);
 			this.Controls.Add(this.linkLabel4);
 			this.Controls.Add(this.linkLabel3);
@@ -289,6 +301,7 @@ namespace WatchCilent.UI.Pub
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label3;
