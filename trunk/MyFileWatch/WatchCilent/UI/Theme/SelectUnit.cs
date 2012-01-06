@@ -42,6 +42,47 @@ namespace WatchCilent.UI.Theme
 			//
 			InitializeComponent();
 			
+			List<PersonInfo> datasource_person = PersonDao.getAllPersonInfo();
+			PersonInfo person = new PersonInfo();
+			person.Fullname = "全部责任人";
+			person.Id = 0;
+			datasource_person.Insert(0,person);
+			this.comboBox2.DataSource = datasource_person;
+			this.comboBox2.DisplayMember = "Fullname";
+			this.comboBox2.ValueMember = "Id";
+		
+			
+			List<ModuleInfo> datasource_module = ModuleDao.getAllModuleInfo();
+			ModuleInfo all = new ModuleInfo();
+			all.Fullname ="全部模块";
+			all.Id=0;
+			datasource_module.Insert(0,all);
+			this.comboBox1.DataSource = datasource_module;
+			this.comboBox1.DisplayMember ="Fullname";
+			this.comboBox1.ValueMember = "Id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			
+			
+			this.comboBox3.Items.Add("全部等级");
+			this.comboBox3.Items.AddRange(CommonConst.BUGLEVEL);
+			this.comboBox3.SelectedIndex = 0;
+			
+			this.comboBox3.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			this.comboBox1.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			this.comboBox2.SelectedIndexChanged+=new EventHandler(conditionChanged);
+			
+			this.dateTimePicker1.ValueChanged += new EventHandler(conditionChanged);
+			this.dateTimePicker2.ValueChanged += new EventHandler(conditionChanged);
+			
+			this.currentpage=1;
+			this.label3.Text=string.Format(currentstr,this.currentpage);
+			this.label5.Text = string.Format(pagestr,this.pagesize);
+			this.label4.Text = string.Format(countstr,(count%pagesize==0)?count/pagesize:count/pagesize+1,this.count);
+			
+			getTestUnitList();
+			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -245,6 +286,14 @@ namespace WatchCilent.UI.Theme
 			{
 				MessageBox.Show("请至少选择一条记录！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 			}
+		}
+		
+		void CheckBox1CheckedChanged(object sender, EventArgs e)
+		{
+			bool isallcheck=this.checkBox1.Checked;
+				foreach (ListViewItem element in this.listView1.Items) {
+					element.Checked=isallcheck;
+				}
 		}
 	}
 }
