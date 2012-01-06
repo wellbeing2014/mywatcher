@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using WatchCilent.UI;
 using WatchCilent.UI.Pub;
+using WatchCilent.UI.Theme;
 using System.Runtime.InteropServices;
 
 
@@ -39,9 +40,9 @@ namespace WatchCilent
 			{
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
-				Application.Run(new Main());
+				//Application.Run(new Main());
 				//Application.Run(new UpdateWims());
-				
+				Application.Run(new SelectUnit());
 			}
 			else
 			{

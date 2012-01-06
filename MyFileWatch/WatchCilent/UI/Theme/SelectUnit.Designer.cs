@@ -37,6 +37,8 @@ namespace WatchCilent.UI.Theme
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
 			this.linkLabel4 = new System.Windows.Forms.LinkLabel();
@@ -61,8 +63,6 @@ namespace WatchCilent.UI.Theme
 			this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -93,6 +93,29 @@ namespace WatchCilent.UI.Theme
 			this.panel1.Size = new System.Drawing.Size(760, 327);
 			this.panel1.TabIndex = 0;
 			// 
+			// button2
+			// 
+			this.button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.button2.Location = new System.Drawing.Point(403, 296);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(116, 28);
+			this.button2.TabIndex = 83;
+			this.button2.Text = "取消";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.button1.Location = new System.Drawing.Point(255, 296);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(116, 28);
+			this.button1.TabIndex = 83;
+			this.button1.Text = "确定";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
+			// 
 			// checkBox1
 			// 
 			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -101,6 +124,7 @@ namespace WatchCilent.UI.Theme
 			this.checkBox1.Size = new System.Drawing.Size(17, 24);
 			this.checkBox1.TabIndex = 82;
 			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
 			// 
 			// linkLabel2
 			// 
@@ -249,7 +273,9 @@ namespace WatchCilent.UI.Theme
 			// 
 			// listView1
 			// 
-			this.listView1.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.listView1.CheckBoxes = true;
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 									this.columnHeader1,
@@ -261,9 +287,9 @@ namespace WatchCilent.UI.Theme
 									this.columnHeader7});
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
-			this.listView1.Location = new System.Drawing.Point(-4, 28);
+			this.listView1.Location = new System.Drawing.Point(3, 28);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(768, 245);
+			this.listView1.Size = new System.Drawing.Size(754, 245);
 			this.listView1.TabIndex = 66;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -302,31 +328,6 @@ namespace WatchCilent.UI.Theme
 			// 
 			this.columnHeader7.Text = "状态";
 			this.columnHeader7.Width = 50;
-			// 
-			// button1
-			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(255, 296);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(116, 28);
-			this.button1.TabIndex = 83;
-			this.button1.Text = "确定";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.Button1Click);
-			// 
-			// button2
-			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button2.Location = new System.Drawing.Point(403, 296);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(116, 28);
-			this.button2.TabIndex = 83;
-			this.button2.Text = "取消";
-			this.button2.UseVisualStyleBackColor = true;
 			// 
 			// SelectUnit
 			// 
