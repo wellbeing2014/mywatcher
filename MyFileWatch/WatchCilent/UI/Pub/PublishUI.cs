@@ -816,6 +816,26 @@ namespace WatchCilent.UI.Pub
 			getPublishPackageList();
 		}
 		
+		/// <summary>
+		/// 同步WIMS
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button4Click(object sender, EventArgs e)
+		{
+			if(this.exListView1.SelectedItems.Count>0)
+			{
+				List<string> versions = new List<string>();
+				for (int i = 0; i < this.exListView1.SelectedItems.Count; i++) {
+					string name = this.exListView1.SelectedItems[i].SubItems[0].Text;
+					versions.Add(name);
+				}
+				UpdateWims uw = new UpdateWims(versions.ToArray());
+				uw.StartPosition = FormStartPosition.CenterParent;
+				uw.ShowDialog();
+			}
+			
+		}
 	}
 	class UploadParam{
 	private ProgressBar bar;

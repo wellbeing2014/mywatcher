@@ -47,6 +47,7 @@ namespace WatchCilent.UI.Pub
 			this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// listView1
@@ -66,10 +67,10 @@ namespace WatchCilent.UI.Pub
 									this.columnHeader8});
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
-			this.listView1.Location = new System.Drawing.Point(12, 12);
+			this.listView1.Location = new System.Drawing.Point(12, 32);
 			this.listView1.Name = "listView1";
 			this.listView1.ShowItemToolTips = true;
-			this.listView1.Size = new System.Drawing.Size(671, 271);
+			this.listView1.Size = new System.Drawing.Size(671, 251);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -115,12 +116,11 @@ namespace WatchCilent.UI.Pub
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(561, 289);
+			this.button1.Location = new System.Drawing.Point(548, 289);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(58, 23);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "确定";
+			this.button1.Size = new System.Drawing.Size(71, 23);
+			this.button1.TabIndex = 4;
+			this.button1.Text = "同步状态";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
@@ -132,22 +132,37 @@ namespace WatchCilent.UI.Pub
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(58, 23);
 			this.button2.TabIndex = 2;
-			this.button2.Text = "取消";
+			this.button2.Text = "关闭";
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.Button2Click);
+			// 
+			// textBox1
+			// 
+			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox1.Location = new System.Drawing.Point(548, 5);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(135, 21);
+			this.textBox1.TabIndex = 3;
+			this.textBox1.Text = "输入版本号……";
+			this.textBox1.Leave += new System.EventHandler(textBox1_TabIndexChanged);
+			this.textBox1.Click += new System.EventHandler(textBox1_Click);
+			
 			// 
 			// UpdateWims
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(695, 321);
+			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.listView1);
 			this.Name = "UpdateWims";
 			this.Text = "UpdateWims";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.ColumnHeader columnHeader6;

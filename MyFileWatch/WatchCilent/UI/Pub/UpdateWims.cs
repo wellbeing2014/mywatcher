@@ -19,20 +19,23 @@ namespace WatchCilent.UI.Pub
 	public partial class UpdateWims : Form
 	{
 		private WimsToTestManager tm;
-		
-		public UpdateWims()
+		private string[] vers;
+		private bool isEditQuery = false;
+		private string wimsLoginId="";
+		public UpdateWims(string[] versions)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
+			this.vers = versions;
+			this.wimsLoginId = System.Configuration.ConfigurationManager.AppSettings["WimsLoginId"];
 			InitializeComponent();
 			try {
 				string wimsurl = System.Configuration.ConfigurationManager.AppSettings["WimsUrl"];
 				tm = new WimsToTestManager(wimsurl);
-				getWimsTrack("南京玄武框架(nj_wif)1.0.0beta1");
+				getWimsTrack(vers);
 			} catch (Exception e ) {
-				
-				MessageBox.Show("链接WIMS服务器超时");
+				MessageBox.Show("访问WIMS服务出错");
 			}
 			
 		
@@ -44,14 +47,20 @@ namespace WatchCilent.UI.Pub
 		/// <summary>
 		/// 获取问题单
 		/// </summary>
-		private void getWimsTrack(string ver)
+		private void getWimsTrack(string[] ver)
 		{
-			trackReturn tr = tm.findFinishWimsTrackByVer(ver);
-			wimsSingleIssueTracking[] wt = tr.value;
 			this.listView1.Items.Clear();
-			foreach (var element in wt) {
-				ListViewBing(element);
+			for (int i = 0; i < ver.Length; i++) {
+				trackReturn tr = tm.findFinishWimsTrackByVer(ver[i]);
+			    wimsSingleIssueTracking[] wt = tr.value;
+			    if(wt!=null)
+			    {
+			    	foreach (var element in wt) {
+			    		ListViewBing(element);
+			    	}
+			    }
 			}
+			
 		}
 		/// <summary>
 		/// LIstVieW 绑定数据。
@@ -88,6 +97,7 @@ namespace WatchCilent.UI.Pub
 		
 		void Button2Click(object sender, EventArgs e)
 		{
+			tm.Dispose();
 			this.Close();
 		}
 		
@@ -99,9 +109,8 @@ namespace WatchCilent.UI.Pub
 				string message ="";
 				for (int i = 0; i < this.listView1.CheckedItems.Count; i++) {
 					string trackid = this.listView1.CheckedItems[i].SubItems[8].Text;
-					string personid ="5d86e98b2b4b7668012b4d04417e001b";
-					string newstatus ="2";
-					baseReturn br = tm.updateWimsTrackStatus(trackid,personid,newstatus);
+					string newstatus ="1";
+					baseReturn br = tm.updateWimsTrackStatus(trackid,this.wimsLoginId,newstatus);
 					if(!br.isSuccued)
 					{
 						message+="序号：【"+this.listView1.CheckedItems[i].Text+"】"+br.message+"\n";
@@ -114,10 +123,29 @@ namespace WatchCilent.UI.Pub
 				}
 				else
 					MessageBox.Show(message,"有错误");
-				getWimsTrack("南京玄武框架(nj_wif)1.0.0beta1");
+				if(isEditQuery)
+				{
+					getWimsTrack(new string[]{this.textBox1.Text});
+				}
+				else getWimsTrack(vers);
 			}
 			else
 				MessageBox.Show("请选择要发布的问题单");
+		}
+		
+		void textBox1_Click(object sender, EventArgs e)
+		{
+			this.textBox1.Text = "";
+		}
+		
+		
+		void textBox1_TabIndexChanged(object sender, EventArgs e)
+		{
+			isEditQuery = true;
+			if(!string.IsNullOrEmpty(this.textBox1.Text)&&this.textBox1.Text!="输入版本号……")
+			{
+				getWimsTrack(new string[]{this.textBox1.Text});
+			}
 		}
 	}
 }
