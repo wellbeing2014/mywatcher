@@ -40,9 +40,9 @@ namespace WatchCilent
 			{
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
-				//Application.Run(new Main());
+				Application.Run(new Main());
 				//Application.Run(new UpdateWims());
-				Application.Run(new SelectUnit());
+				//Application.Run(new SelectUnit());
 			}
 			else
 			{

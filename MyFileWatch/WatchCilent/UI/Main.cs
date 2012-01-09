@@ -9,6 +9,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+
+using System.Configuration;
+using System.Collections;
 using WatchCilent.UI.Test;
 using WatchCilent.UI;
 using WatchCilent.UI.Pub;
@@ -81,12 +84,24 @@ namespace WatchCilent.UI
 			this.notifyIcon1.MouseClick+= new MouseEventHandler(notifyIcon1_Click);
 			this.SizeChanged+= new EventHandler(Main_MinimumSizeChanged);
 			this.Closing+= new CancelEventHandler(Main_Closing);
-			
+			LoadModules();
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
+		
+		
+		void LoadModules()
+		{
+			IDictionary IDTest2 = (IDictionary)ConfigurationSettings.GetConfig("modules"); 
+			string[] keys=new string[IDTest2.Keys.Count]; 
+			string[] values=new string[IDTest2.Keys.Count]; 
+			IDTest2.Keys.CopyTo(keys,0); 
+			IDTest2.Values.CopyTo(values,0);
+			MessageBox.Show(keys[0]+" "+values[0]);;
+		}
+		
 		private void main_Load(object sender, EventArgs e)
 		{
 			this.Close();
@@ -114,13 +129,7 @@ namespace WatchCilent.UI
 	
 	
 		
-		void 配置ToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			ConfigForm cm = new ConfigForm();
-			cm.StartPosition = FormStartPosition.CenterParent;
-			cm.ShowDialog();
-			this.panel2.Controls[0].Refresh();
-		}
+		
 		//最小化隐藏窗口到通知图标
 		private void Main_MinimumSizeChanged( object sender,EventArgs e)
 		{
@@ -221,6 +230,14 @@ namespace WatchCilent.UI
 			changeForm(this.packageUI1);
 		}
 		
+		void 配置ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			ConfigForm cm = new ConfigForm();
+			cm.StartPosition = FormStartPosition.CenterParent;
+			cm.ShowDialog();
+			this.panel2.Controls[0].Refresh();
+		}
+		//测试
 		void ToolStripMenuItem1Click(object sender, EventArgs e)
 		{
 			changeForm(this.testlistUI1);
