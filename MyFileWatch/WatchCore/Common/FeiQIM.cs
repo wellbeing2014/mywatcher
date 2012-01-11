@@ -58,7 +58,7 @@ namespace WatchCore.Common
         
         private string feiQHead = "1_lbt4_09#65664#MACADDR#0#0#0";
 		private string MsgId ="1000000000" ;
-		private string userName ="测试服务ROBOT" ;
+		private string userName ="测试ROBOT" ;
 		private string hostName ="Wicrosoft206";
 		private string msgtype = MsgType.OnLine.ToString("D") ;
 		private string MsgHeader ="{0}:{1}:{2}:{3}:{4}:";

@@ -84,7 +84,7 @@ namespace WatchCilent.UI
 			this.notifyIcon1.MouseClick+= new MouseEventHandler(notifyIcon1_Click);
 			this.SizeChanged+= new EventHandler(Main_MinimumSizeChanged);
 			this.Closing+= new CancelEventHandler(Main_Closing);
-			LoadModules();
+			//LoadModules();
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
