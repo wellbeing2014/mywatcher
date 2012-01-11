@@ -116,8 +116,8 @@ namespace WatchService
 			}
 			tcp  = new Communication.TCPManage();
 			tcp.StartListen(listenhandler);
-			feiq.HostName="WISOFT";
-			feiq.UserName= "WisofT";
+			feiq.HostName="测试服务监控";
+			feiq.UserName= "测试ROBOT";
 			feiq.StartListen();
 			feiq.LISTENED_SRCEENSHAKE = LISTENED_SRCEENSHAKE;
 			feiq.LISTENED_MSG = LISTENED_MSG;

@@ -15,6 +15,7 @@ namespace WatchCilent
 	/// </summary>
 	public class ModuleSetting:System.Configuration.ConfigurationSection
 	{
-		[ConfigurationProperty("maxValue",IsRequired=false)]
+		//[ConfigurationProperty("maxValue",IsRequired=false)]
+	
 	}
 }
