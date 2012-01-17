@@ -48,6 +48,7 @@ namespace WatchCilent.UI.Pub
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// listView1
@@ -144,24 +145,35 @@ namespace WatchCilent.UI.Pub
 			this.textBox1.Size = new System.Drawing.Size(135, 21);
 			this.textBox1.TabIndex = 3;
 			this.textBox1.Text = "输入版本号……";
-			this.textBox1.Leave += new System.EventHandler(textBox1_TabIndexChanged);
-			this.textBox1.Click += new System.EventHandler(textBox1_Click);
-			
+			this.textBox1.Click+=new System.EventHandler(textBox1_Click);
+			this.textBox1.TabIndexChanged += new System.EventHandler(textBox1_TabIndexChanged);
+			// 
+			// comboBox1
+			// 
+			this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(454, 291);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(88, 20);
+			this.comboBox1.TabIndex = 5;
 			// 
 			// UpdateWims
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(695, 321);
+			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.listView1);
 			this.Name = "UpdateWims";
-			this.Text = "UpdateWims";
+			this.Text = "WIMS状态同步";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.ColumnHeader columnHeader7;

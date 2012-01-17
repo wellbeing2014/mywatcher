@@ -10,6 +10,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using WatchCilent.WimsToTest;
+using System.Collections;
+
 
 namespace WatchCilent.UI.Pub
 {
@@ -22,6 +24,7 @@ namespace WatchCilent.UI.Pub
 		private string[] vers;
 		private bool isEditQuery = false;
 		private string wimsLoginId="";
+		
 		public UpdateWims(string[] versions)
 		{
 			//
@@ -29,7 +32,15 @@ namespace WatchCilent.UI.Pub
 			//
 			this.vers = versions;
 			this.wimsLoginId = System.Configuration.ConfigurationManager.AppSettings["WimsLoginId"];
+			ArrayList mylist = new ArrayList(); 
+			mylist.Add (new DictionaryEntry ("未完成","0"));
+			mylist.Add (new DictionaryEntry ("已完成","1"));
+			mylist.Add (new DictionaryEntry ("已发布","2"));
+			
 			InitializeComponent();
+			comboBox1.DataSource = mylist;
+			comboBox1.DisplayMember ="Key";
+			comboBox1.ValueMember ="Value";
 			try {
 				string wimsurl = System.Configuration.ConfigurationManager.AppSettings["WimsUrl"];
 				tm = new WimsToTestManager(wimsurl);
@@ -109,7 +120,7 @@ namespace WatchCilent.UI.Pub
 				string message ="";
 				for (int i = 0; i < this.listView1.CheckedItems.Count; i++) {
 					string trackid = this.listView1.CheckedItems[i].SubItems[8].Text;
-					string newstatus ="1";
+					string newstatus =this.comboBox1.SelectedValue.ToString();
 					baseReturn br = tm.updateWimsTrackStatus(trackid,this.wimsLoginId,newstatus);
 					if(!br.isSuccued)
 					{

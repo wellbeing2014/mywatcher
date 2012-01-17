@@ -44,6 +44,10 @@ namespace WatchCilent.UI.Theme
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.listView1 = new System.Windows.Forms.ListView();
+			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -131,11 +135,39 @@ namespace WatchCilent.UI.Theme
 			// 
 			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.columnHeader1,
+									this.columnHeader2,
+									this.columnHeader3,
+									this.columnHeader4});
+			this.listView1.FullRowSelect = true;
+			this.listView1.GridLines = true;
 			this.listView1.Location = new System.Drawing.Point(182, 3);
 			this.listView1.Name = "listView1";
 			this.listView1.Size = new System.Drawing.Size(484, 175);
 			this.listView1.TabIndex = 1;
 			this.listView1.UseCompatibleStateImageBehavior = false;
+			this.listView1.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "缺陷编号";
+			this.columnHeader1.Width = 100;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "测试对象";
+			this.columnHeader2.Width = 200;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "标题";
+			this.columnHeader3.Width = 260;
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "责任人";
+			this.columnHeader4.Width = 80;
 			// 
 			// treeView1
 			// 
@@ -157,6 +189,10 @@ namespace WatchCilent.UI.Theme
 			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ColumnHeader columnHeader4;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.Button button1;
