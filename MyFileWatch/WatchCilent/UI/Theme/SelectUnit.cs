@@ -139,7 +139,6 @@ namespace WatchCilent.UI.Theme
 			lvi.SubItems.Add(tu.State);
 			lvi.SubItems.Add(tu.Id.ToString());//
 			this.listView1.Items.Add(lvi);
-			
 		}
 		
 		private TestUnit  ListViewSelect(ListViewItem lvi)

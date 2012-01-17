@@ -13,6 +13,8 @@ using System.Windows.Forms;
 using WatchCore.dao;
 using WatchCore.pojo;
 using System.Collections.Generic;
+using WatchCore.Common;
+using WatchCilent.UI.Test;
 
 
 namespace WatchCilent.UI.Theme
@@ -30,11 +32,47 @@ namespace WatchCilent.UI.Theme
 			//
 			InitializeComponent();
 			getThemeTree();
+			this.treeView1.BeforeSelect += new TreeViewCancelEventHandler(treeView1_BeforeSelect);
+			this.treeView1.Leave += new EventHandler(treeView1_Leave);
+			this.treeView1.NodeMouseClick += new TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
+			this.listView1.DoubleClick += new EventHandler(ListVew_DoubleClick); 
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
 		
+			
+		//将要选中新节点之前发生
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (treeView1.SelectedNode != null)
+            {
+                //将上一个选中的节点背景色还原（原先没有颜色）
+                treeView1.SelectedNode.BackColor = Color.Empty;
+                //还原前景色
+                treeView1.SelectedNode.ForeColor = Color.Black;
+            }
+        }
+        
+        //失去焦点时
+        private void treeView1_Leave(object sender, EventArgs e)
+        {
+            if(treeView1.SelectedNode!=null)
+            {
+                //让选中项背景色呈现蓝色
+                treeView1.SelectedNode.BackColor = Color.SteelBlue;
+                //前景色为白色
+                treeView1.SelectedNode.ForeColor = Color.White;
+            }
+        }
+		
+        
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs  e)
+		{
+			this.treeView1.SelectedNode=e.Node;
+			getGuanlianUnitList();
+		}
+		 
 		void getThemeTree()
 		{
 			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname("朱新培");
@@ -47,7 +85,6 @@ namespace WatchCilent.UI.Theme
 			default_tt.Personid=0;
 			default_tt.Personname="朱新培";
 			tmp.Tag = default_tt;
-			
 			main.Nodes.Add(tmp);
 			
 			foreach (var element in ttlist) {
@@ -80,9 +117,7 @@ namespace WatchCilent.UI.Theme
 					return ;
 				} 
 			}
-			
-			
-			
+
 			for (int i = 0; i < parenttn.Nodes.Count; i++) {
 				 creatTree(childtn,parenttn.Nodes[i]);
 //				parenttn.Nodes.RemoveAt(i);
@@ -90,6 +125,8 @@ namespace WatchCilent.UI.Theme
 			}
 			return ;
 		}
+		
+
 		
 		//新增缺陷关联
 		void Button3Click(object sender, EventArgs e)
@@ -99,8 +136,77 @@ namespace WatchCilent.UI.Theme
 			DialogResult dr = su.ShowDialog();
 			if(dr==DialogResult.OK)
 			{
-				
+				TestTheme theme = this.treeView1.SelectedNode.Tag as TestTheme;
+				foreach (var element in su.select_tu) {
+					Testunittheme tt = new Testunittheme();
+					tt.Themeid = theme.Id;
+					tt.Unitid = element.Id;
+					SqlDBUtil.insert(tt);
+				}
+				getGuanlianUnitList();
 			}
+		}
+		
+				/// <summary>
+		/// 查询关联的测试单元列表
+		/// </summary>
+		void getGuanlianUnitList()
+		{
+			string themeid =((TestTheme)(this.treeView1.SelectedNode.Tag)).Id.ToString();
+			List<TestUnit> tulist =TestUnitDao.getGuanLianUnitList(themeid);
+			this.listView1.Items.Clear();
+			foreach (TestUnit tu in tulist) {
+				ListViewBing(tu);
+			}
+		}
+		
+		/// <summary>
+		/// LIstVieW 绑定数据。
+		/// </summary>
+		/// <param name="tu"></param>
+		private void ListViewBing(TestUnit tu)
+		{
+			ListViewItem lvi = new ListViewItem();
+			lvi.Text=tu.Unitno;//
+			lvi.Checked=false;
+			lvi.SubItems.Add(tu.Packagename);
+			//lvi.SubItems.Add(tu.Buglevel);
+			lvi.SubItems.Add(tu.Testtitle);
+			//lvi.SubItems.Add(tu.Testtime);
+			lvi.SubItems.Add(tu.Adminname);//
+			//lvi.SubItems.Add(tu.State);
+			lvi.SubItems.Add(tu.Id.ToString());//
+			this.listView1.Items.Add(lvi);
+			
+		}
+		private TestUnit  ListViewSelect(ListViewItem lvi)
+		{
+			TestUnit tu = new TestUnit();
+			tu.Unitno = lvi.Text;
+			tu.Packagename = lvi.SubItems[1].Text;
+			//tu.Buglevel = lvi.SubItems[2].Text;
+			tu.Testtitle = lvi.SubItems[2].Text;
+			//tu.Testtime = lvi.SubItems[4].Text;
+			tu.Adminname = lvi.SubItems[3].Text;
+			//tu.State = lvi.SubItems[6].Text;
+			tu.Id = Int32.Parse(lvi.SubItems[4].Text);
+			return tu;
+		}
+		
+			
+		void ListVew_DoubleClick(object sender, EventArgs e)
+		{
+			if(this.listView1.SelectedItems.Count==1)
+			{
+				TestUnit tu = ListViewSelect(this.listView1.SelectedItems[0]);
+				TestResult tr = null;
+				tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id),null);
+				tr.ShowDialog();
+			}
+			else
+			{
+				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}			
 		}
 	}
 }
