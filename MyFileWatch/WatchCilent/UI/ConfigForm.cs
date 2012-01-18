@@ -31,6 +31,7 @@ namespace WatchCilent
 			getAllProjectInfo();
 			getAllPersonInfo();
 			getAllModuleProject();
+			getAllModuleProject2();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -51,6 +52,7 @@ namespace WatchCilent
 			this.textBox1.Text =null;
 			this.textBox2.Text=null;
 			modulelist=ModuleDao.getAllModuleInfo();
+			modulelist2=ModuleDao.getAllModuleInfo();
 			this.listView1.Items.Clear();
 			foreach(ModuleInfo module in modulelist)
 			{
@@ -191,6 +193,7 @@ namespace WatchCilent
 			this.textBox7.Text=null;
 			this.textBox8.Text = null;
 			projectlist=ProjectInfoDao.getAllProjectInfo();
+			projectlist2=ProjectInfoDao.getAllProjectInfo();
 			this.listView2.Items.Clear();
 			foreach(ProjectInfo project in projectlist)
 			{
@@ -415,7 +418,7 @@ namespace WatchCilent
 			this.getAllPersonInfo();
 		}
 /**************************责任人信息结束*******************************************************************/	
-/**************************关联开始*******************************************************************/	
+/**************************项目关联开始*******************************************************************/	
 		private void getAllModuleProject()
 		{
 			ProjectInfo project = new ProjectInfo();
@@ -435,6 +438,7 @@ namespace WatchCilent
 		
 		void getlistboxdata()
 		{
+			
 			List<ModuleInfo> selmodule =ModuleDao.getAllModuleInfoByProjectID(comboBox2.SelectedValue.ToString());
 			List<ModuleInfo> listBox1data = new List<ModuleInfo>();
 			List<ModuleInfo> listBox2data = new List<ModuleInfo>();
@@ -459,22 +463,24 @@ namespace WatchCilent
 			this.listBox1.DataSource = listBox1data;
 			this.listBox1.DisplayMember = "Fullname";
 			this.listBox1.ValueMember ="Id";
+			this.listBox1.SelectedItem =null;
 			
 			this.listBox2.DataSource = listBox2data;
 			this.listBox2.DisplayMember = "Fullname";
 			this.listBox2.ValueMember ="Id";
+			this.listBox2.SelectedItem =null;
 			
 		}
 		
 	
-		
-		void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if(comboBox2.SelectedValue!=null)
-			{
-				getlistboxdata();
-			}
-		}
+//		
+//		void comboBox2SelectedIndexChanged(object sender, EventArgs e)
+//		{
+//			if(comboBox2.SelectedValue!=null)
+//			{
+//				getlistboxdata();
+//			}
+//		}
 		
 		
 		
@@ -525,15 +531,151 @@ namespace WatchCilent
 			getlistboxdata();
 		}
 		
+//		void TabChangeRefresh(object sender, EventArgs e)
+//		{
+//			getAllModuleInfo();
+//			getAllProjectInfo();
+//			getAllPersonInfo();
+//			getAllModuleProject();
+//			getAllModuleProject2();
+//		}
+		
+		
+/**************************项目关联结束*******************************************************************/	
+/**************************版本关联开始*******************************************************************/	
+		private void getAllModuleProject2()
+		{
+			ModuleInfo mi = new ModuleInfo();
+			mi.Fullname = "选择版本名称";
+			mi.Id = 0;
+			modulelist2.Insert(0,mi);
+			
+			ProjectInfo project2 = new ProjectInfo();
+//			project2.Projectname = "";
+//			project2.Id = 0;
+//			projectlist2.Insert(0,project2);
+			
+			comboBox3.DataSource = modulelist2;
+			comboBox3.DisplayMember ="fullname";
+			comboBox3.ValueMember = "id";
+			comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
+			comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			getlistboxdata2();			
+		}					
+		
+		void getlistboxdata2()
+		{
+			
+			
+			List<ProjectInfo> selproject =ProjectInfoDao.getAllProjectInfoByModuleid(Int32.Parse(comboBox3.SelectedValue.ToString()));
+			List<ProjectInfo> listBox4data = new List<ProjectInfo>();
+			List<ProjectInfo> listBox3data = new List<ProjectInfo>();
+			foreach(ProjectInfo project2 in projectlist2 )
+			{
+				bool t = true;
+				foreach(ProjectInfo sel in selproject)
+				{
+					if(sel.Equals(project2))
+					{
+						t = false;
+						break;
+					}
+				}
+				if(t)
+					listBox4data.Add(project2);
+				else 
+					listBox3data.Add(project2);
+			}
+			
+			
+			this.listBox4.DataSource = listBox4data;
+			this.listBox4.DisplayMember = "projectname";
+			this.listBox4.ValueMember ="id";
+			this.listBox4.SelectedItem =null;
+			
+			this.listBox3.DataSource = listBox3data;
+			this.listBox3.DisplayMember = "projectname";
+			this.listBox3.ValueMember ="id";	
+			this.listBox3.SelectedItem =null;			
+		}
+		
+
+		
+		//选择
+		void Button13Click(object sender, EventArgs e)
+		{
+			if(null!=comboBox3.SelectedValue)
+			{
+			int count = this.listBox4.SelectedItems.Count;
+			if(count>0&&(int)comboBox3.SelectedValue!=0)
+			{
+				int i ;
+				for(i=0;i<count;i++)
+				{
+					ModuleProject mp = new ModuleProject();
+					mp.Projectid=((ProjectInfo)this.listBox4.SelectedItems[i]).Id;
+					//mp.Moduleid = (int)comboBox3.SelectedValue;
+					mp.Moduleid = Int32.Parse(comboBox3.SelectedValue.ToString());
+					SqlDBUtil.insert(mp);
+				}
+			}
+			else 
+			{
+				MessageBox.Show("请选择相应的模块或项目","提示");
+			}
+			getlistboxdata2();
+			}
+			else MessageBox.Show("请选择相应的模块或项目","提示");
+		}
+		
+		//撤选
+		void Button12Click(object sender, EventArgs e)
+		{
+			int count = this.listBox3.SelectedItems.Count;
+			if(count>0&&(int)comboBox3.SelectedValue!=0)
+			{
+				int i ;
+				for(i=0;i<count;i++)
+				{
+					string mid =comboBox3.SelectedValue.ToString();
+					string pid =((ProjectInfo)this.listBox3.SelectedItems[i]).Id.ToString();
+					List<ModuleProject> mplist = 
+						ModuleProjectDao.getAllMPByPrjIDAndMdlID(pid,mid);
+					SqlDBUtil.delete(mplist[0]);
+				}
+			}
+			else 
+			{
+				MessageBox.Show("请选择相应的模块或项目","提示");
+			}
+			getlistboxdata2();
+		}
+		
 		void TabChangeRefresh(object sender, EventArgs e)
 		{
 			getAllModuleInfo();
 			getAllProjectInfo();
 			getAllPersonInfo();
 			getAllModuleProject();
+			getAllModuleProject2();
 		}
 		
 		
+		void ComboBox3SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if(comboBox3.SelectedValue!=null)
+			{
+				getlistboxdata2();
+			}
+		}
 		
+		void ComboBox2SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if(comboBox2.SelectedValue!=null)
+			{
+				getlistboxdata();
+			}
+		}
+/**************************版本关联结束*******************************************************************/
 	}
 }

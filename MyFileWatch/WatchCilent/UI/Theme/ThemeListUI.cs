@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using WatchCore.Common;
 using WatchCilent.UI.Test;
 
-
 namespace WatchCilent.UI.Theme
 {
 	/// <summary>
@@ -76,6 +75,7 @@ namespace WatchCilent.UI.Theme
 		void getThemeTree()
 		{
 			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname("朱新培");
+			this.treeView1.Nodes.Clear();
 			//List<TreeNode> maintreelist = new List<TreeNode>();
 			TreeNode main =new TreeNode();
 			//默认主题
@@ -203,10 +203,66 @@ namespace WatchCilent.UI.Theme
 				tr = new TestResult(TestUnitDao.gettestUnitById(tu.Id),null);
 				tr.ShowDialog();
 			}
+			else{
+MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			}			
+		}			
+		
+		//新增主题
+		void Button1Click(object sender, EventArgs e)
+		{
+			if(this.treeView1.SelectedNode==null)
+			{
+				MessageBox.Show("请选择主题");
+				return;
+			}
+			TestTheme theme1= this.treeView1.SelectedNode.Tag as TestTheme;
+			CreateThemeDialog ct = new CreateThemeDialog();
+			ct.StartPosition = FormStartPosition.CenterParent;
+			DialogResult dr = ct.ShowDialog();
+			if(dr==DialogResult.OK)
+			{
+				TestTheme theme2 = new TestTheme();
+				//theme2.Id=theme1.Id;
+				theme2.Parentid=theme1.Id;
+				theme2.Personid=theme1.Personid;
+				theme2.Personname=theme1.Personname;
+				theme2.Favname=ct.fname;
+				SqlDBUtil.insert(theme2);
+				MessageBox.Show("创建成功","提示");
+				getThemeTree();
+			}
 			else
 			{
-				MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
-			}			
+				MessageBox.Show("创建失败","提示");
+				return;
+			}
+		}
+		
+		
+		//删除主题
+		void Button2Click(object sender, EventArgs e)
+		{
+			if(this.treeView1.SelectedNode==null)
+			{
+				MessageBox.Show("请选择要删除的主题");
+				return;
+			}
+			else
+			{
+				
+				TestTheme theme= this.treeView1.SelectedNode.Tag as TestTheme;
+				if(theme.Id ==99999)
+				{
+					MessageBox.Show("默认主题不能删除","提示");
+				}
+				else
+				{
+					SqlDBUtil.delete(theme);
+					MessageBox.Show("删除成功","提示");
+					getThemeTree();
+				}
+			}
 		}
 	}
 }

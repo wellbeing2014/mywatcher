@@ -98,6 +98,16 @@ namespace WatchCilent
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.label13 = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.button12 = new System.Windows.Forms.Button();
+			this.button13 = new System.Windows.Forms.Button();
+			this.listBox3 = new System.Windows.Forms.ListBox();
+			this.listBox4 = new System.Windows.Forms.ListBox();
+			this.label15 = new System.Windows.Forms.Label();
+			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.tabPage4.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -107,15 +117,17 @@ namespace WatchCilent
 			this.tabPage1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
+			this.tabPage5.SuspendLayout();
+			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabPage4
 			// 
 			this.tabPage4.Controls.Add(this.panel1);
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Location = new System.Drawing.Point(4, 21);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(655, 371);
+			this.tabPage4.Size = new System.Drawing.Size(655, 372);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "版本项目关联";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -133,7 +145,7 @@ namespace WatchCilent
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(649, 365);
+			this.panel1.Size = new System.Drawing.Size(649, 366);
 			this.panel1.TabIndex = 0;
 			// 
 			// label6
@@ -155,7 +167,7 @@ namespace WatchCilent
 			// button5
 			// 
 			this.button5.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button5.Location = new System.Drawing.Point(287, 206);
+			this.button5.Location = new System.Drawing.Point(287, 207);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(75, 23);
 			this.button5.TabIndex = 5;
@@ -166,7 +178,7 @@ namespace WatchCilent
 			// button4
 			// 
 			this.button4.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.button4.Location = new System.Drawing.Point(287, 140);
+			this.button4.Location = new System.Drawing.Point(287, 141);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(75, 23);
 			this.button4.TabIndex = 4;
@@ -212,8 +224,8 @@ namespace WatchCilent
 			this.comboBox2.Location = new System.Drawing.Point(79, 3);
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(201, 20);
-			this.comboBox2.SelectedIndexChanged += new System.EventHandler(comboBox2_SelectedIndexChanged);
 			this.comboBox2.TabIndex = 0;
+			this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.ComboBox2SelectedIndexChanged);
 			// 
 			// tabPage3
 			// 
@@ -222,10 +234,10 @@ namespace WatchCilent
 			this.tabPage3.Controls.Add(this.listView3);
 			this.tabPage3.Controls.Add(this.groupBox3);
 			this.tabPage3.Controls.Add(this.button11);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Location = new System.Drawing.Point(4, 21);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(655, 371);
+			this.tabPage3.Size = new System.Drawing.Size(655, 372);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "责任人管理";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -338,10 +350,10 @@ namespace WatchCilent
 			this.tabPage2.Controls.Add(this.listView2);
 			this.tabPage2.Controls.Add(this.groupBox2);
 			this.tabPage2.Controls.Add(this.button8);
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Location = new System.Drawing.Point(4, 21);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(655, 371);
+			this.tabPage2.Size = new System.Drawing.Size(655, 372);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "项目管理";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -499,10 +511,10 @@ namespace WatchCilent
 			this.tabPage1.Controls.Add(this.button1);
 			this.tabPage1.Controls.Add(this.listView1);
 			this.tabPage1.Controls.Add(this.groupBox1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Location = new System.Drawing.Point(4, 21);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(655, 371);
+			this.tabPage1.Size = new System.Drawing.Size(655, 372);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "版本管理";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -642,11 +654,118 @@ namespace WatchCilent
 			this.tabControl1.Controls.Add(this.tabPage2);
 			this.tabControl1.Controls.Add(this.tabPage3);
 			this.tabControl1.Controls.Add(this.tabPage4);
+			this.tabControl1.Controls.Add(this.tabPage5);
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(663, 397);
 			this.tabControl1.TabIndex = 0;
+			// 
+			// tabPage5
+			// 
+			this.tabPage5.Controls.Add(this.panel2);
+			this.tabPage5.Location = new System.Drawing.Point(4, 21);
+			this.tabPage5.Name = "tabPage5";
+			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage5.Size = new System.Drawing.Size(655, 372);
+			this.tabPage5.TabIndex = 4;
+			this.tabPage5.Text = "项目版本关联";
+			this.tabPage5.UseVisualStyleBackColor = true;
+			// 
+			// panel2
+			// 
+			this.panel2.Controls.Add(this.label13);
+			this.panel2.Controls.Add(this.label14);
+			this.panel2.Controls.Add(this.button12);
+			this.panel2.Controls.Add(this.button13);
+			this.panel2.Controls.Add(this.listBox3);
+			this.panel2.Controls.Add(this.listBox4);
+			this.panel2.Controls.Add(this.label15);
+			this.panel2.Controls.Add(this.comboBox3);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel2.Location = new System.Drawing.Point(3, 3);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(649, 366);
+			this.panel2.TabIndex = 0;
+			// 
+			// label13
+			// 
+			this.label13.Location = new System.Drawing.Point(378, 48);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(100, 13);
+			this.label13.TabIndex = 15;
+			this.label13.Text = "已选项目";
+			// 
+			// label14
+			// 
+			this.label14.Location = new System.Drawing.Point(5, 45);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(100, 13);
+			this.label14.TabIndex = 14;
+			this.label14.Text = "待选项目";
+			// 
+			// button12
+			// 
+			this.button12.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.button12.Location = new System.Drawing.Point(287, 215);
+			this.button12.Name = "button12";
+			this.button12.Size = new System.Drawing.Size(75, 23);
+			this.button12.TabIndex = 13;
+			this.button12.Text = "撤选";
+			this.button12.UseVisualStyleBackColor = true;
+			this.button12.Click += new System.EventHandler(this.Button12Click);
+			// 
+			// button13
+			// 
+			this.button13.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.button13.Location = new System.Drawing.Point(287, 149);
+			this.button13.Name = "button13";
+			this.button13.Size = new System.Drawing.Size(75, 23);
+			this.button13.TabIndex = 12;
+			this.button13.Text = "选择";
+			this.button13.UseVisualStyleBackColor = true;
+			this.button13.Click += new System.EventHandler(this.Button13Click);
+			// 
+			// listBox3
+			// 
+			this.listBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.listBox3.FormattingEnabled = true;
+			this.listBox3.ItemHeight = 12;
+			this.listBox3.Location = new System.Drawing.Point(378, 64);
+			this.listBox3.Name = "listBox3";
+			this.listBox3.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+			this.listBox3.Size = new System.Drawing.Size(266, 292);
+			this.listBox3.TabIndex = 11;
+			// 
+			// listBox4
+			// 
+			this.listBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left)));
+			this.listBox4.FormattingEnabled = true;
+			this.listBox4.ItemHeight = 12;
+			this.listBox4.Location = new System.Drawing.Point(5, 64);
+			this.listBox4.Name = "listBox4";
+			this.listBox4.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+			this.listBox4.Size = new System.Drawing.Size(266, 292);
+			this.listBox4.TabIndex = 10;
+			// 
+			// label15
+			// 
+			this.label15.Location = new System.Drawing.Point(5, 14);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(68, 23);
+			this.label15.TabIndex = 9;
+			this.label15.Text = "版本名称：";
+			// 
+			// comboBox3
+			// 
+			this.comboBox3.FormattingEnabled = true;
+			this.comboBox3.Location = new System.Drawing.Point(79, 11);
+			this.comboBox3.Name = "comboBox3";
+			this.comboBox3.Size = new System.Drawing.Size(201, 20);
+			this.comboBox3.TabIndex = 8;
+			this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.ComboBox3SelectedIndexChanged);
 			// 
 			// ConfigForm
 			// 
@@ -668,8 +787,20 @@ namespace WatchCilent
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
+			this.tabPage5.ResumeLayout(false);
+			this.panel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ComboBox comboBox3;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.ListBox listBox4;
+		private System.Windows.Forms.ListBox listBox3;
+		private System.Windows.Forms.Button button13;
+		private System.Windows.Forms.Button button12;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.TabPage tabPage5;
 		private System.Windows.Forms.ColumnHeader columnHeader9;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.TextBox textBox8;
@@ -728,7 +859,9 @@ namespace WatchCilent
 		private System.Windows.Forms.TabControl tabControl1;
 		List<PersonInfo> datasource_person ;
 		List<ProjectInfo> projectlist;
+		List<ProjectInfo> projectlist2;
 		List<ModuleInfo> modulelist;
+		List<ModuleInfo> modulelist2;
 		
 		
 		

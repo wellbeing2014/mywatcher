@@ -120,6 +120,7 @@ namespace WatchCilent.UI.Theme
 			this.button2.TabIndex = 3;
 			this.button2.Text = "删除主题";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// button1
 			// 
@@ -130,6 +131,7 @@ namespace WatchCilent.UI.Theme
 			this.button1.TabIndex = 2;
 			this.button1.Text = "新增主题";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// listView1
 			// 
