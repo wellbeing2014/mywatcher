@@ -384,6 +384,25 @@ namespace WatchCore.dao
 			else
 				return new TestUnit();
 		}
+		
+		/// <summary>
+		/// 查询被主题关联的缺陷列表
+		/// </summary>
+		/// <param name="themeid"></param>
+		/// <returns></returns>
+		public static List<TestUnit> getGuanLianUnitList(string themeid)
+		{
+			string sql = "select * from testunit where id in (select unitid from testunittheme where themeid ="+themeid+")";
+			DataSet data=SqlDBUtil.ExecuteQuery(sql);
+			List<TestUnit> ls = new List<TestUnit>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2Tu(row));
+			}
+			return ls;
+		
+		}
+		
 		private static TestUnit Row2TestUnit(DataRow row)
 		{
 			TestUnit test = new TestUnit();
