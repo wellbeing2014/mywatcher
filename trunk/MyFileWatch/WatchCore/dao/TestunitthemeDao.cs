@@ -25,13 +25,15 @@ namespace WatchCore.dao
 		{
 		}
 		
-		public static DelGuanLianUnit(string[] unitid,string themeid)
+		public static bool DelGuanLianUnit(string[] unitid,string themeid)
 		{
-			string 
+			string unitstr ="";
 			for (int i = 0; i < unitid; i++) {
 				
 			}
+			return true;
 		}
+		
 		
 		private static Testunittheme Row2unitTheme(DataRow row)
 		{
