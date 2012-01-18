@@ -25,6 +25,13 @@ namespace WatchCore.dao
 		{
 		}
 		
+		public static DelGuanLianUnit(string[] unitid,string themeid)
+		{
+			string 
+			for (int i = 0; i < unitid; i++) {
+				
+			}
+		}
 		
 		private static Testunittheme Row2unitTheme(DataRow row)
 		{
@@ -32,7 +39,6 @@ namespace WatchCore.dao
 			mp.Id = Int32.Parse(row["id"].ToString());
 			mp.Unitid = Int32.Parse(row["unitid"].ToString());
 			mp.Themeid = Int32.Parse(row["themeid"].ToString());
-			
 			return mp;
 		}
 	}

@@ -37,7 +37,6 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
-		
 		private static TestTheme  Row2TestTheme(DataRow row)
 		{
 			TestTheme testtheme = new TestTheme();
