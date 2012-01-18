@@ -264,5 +264,10 @@ MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBox
 				}
 			}
 		}
+		
+		void Button4Click(object sender, EventArgs e)
+		{
+			
+		}
 	}
 }
