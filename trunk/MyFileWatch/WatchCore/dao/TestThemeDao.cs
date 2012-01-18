@@ -24,6 +24,7 @@ namespace WatchCore.dao
 		{
 		}
 		
+		
 		static public List<TestTheme> getAllTestThemeByPersonname(string personname )
 		{
 			string sql = "SELECT * FROM TestTheme  " +

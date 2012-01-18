@@ -152,6 +152,10 @@
     <Compile Include="UI\Test\TestResult.Designer.cs">
       <DependentUpon>TestResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Theme\CreateThemeDialog.cs" />
+    <Compile Include="UI\Theme\CreateThemeDialog.Designer.cs">
+      <DependentUpon>CreateThemeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Theme\SelectUnit.cs" />
     <Compile Include="UI\Theme\SelectUnit.Designer.cs">
       <DependentUpon>SelectUnit.cs</DependentUpon>
@@ -212,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\TestResult.resx">
       <DependentUpon>TestResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Theme\CreateThemeDialog.resx">
+      <DependentUpon>CreateThemeDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Theme\SelectUnit.resx">
       <DependentUpon>SelectUnit.cs</DependentUpon>
