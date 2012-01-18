@@ -28,7 +28,7 @@ namespace WatchCore.dao
 		public static bool DelGuanLianUnit(string[] unitid,string themeid)
 		{
 			string unitstr ="";
-			for (int i = 0; i < unitid; i++) {
+			for (int i = 0; i < unitid.Length; i++) {
 				
 			}
 			return true;
