@@ -72,6 +72,21 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
+		/// <summary>
+		/// 检查模块代码是否存在
+		/// </summary>
+		/// <param name="code">模块代码</param>
+		/// <returns>true 存在，false 不存在</returns>
+		static public bool getModuleByCode(string code)
+		{
+			string sql = "select count(*) from ModuleInfo where code = '"+code+"'";
+			int data = SqlDBUtil.ExecuteScalar(sql);
+			if(data > 0)
+				return true;
+			else
+				return false;
+		}
+		
 		private static ModuleInfo Row2ModuleInfo(DataRow row)
 		{
 			ModuleInfo module = new ModuleInfo();
