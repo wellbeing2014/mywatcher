@@ -87,8 +87,16 @@ namespace WatchCilent
 				newmodule.Managerid = Int32.Parse(comboBox1.SelectedValue.ToString());
 				newmodule.Managername=comboBox1.Text;
 				newmodule.Id=0;
-				bool isinsert=SqlDBUtil.insert(newmodule);
+				if(ModuleDao.getModuleByCode(newmodule.Code))
+				{
+					MessageBox.Show("模块代码已存在，不能重复！","提示：");
+					return;
+				}
+				else
+				{
+					bool isinsert=SqlDBUtil.insert(newmodule);
 				if(isinsert) getAllModuleInfo();
+				}
 			}
 		}
 		//选择列表记录

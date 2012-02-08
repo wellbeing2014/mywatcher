@@ -147,6 +147,25 @@ namespace WatchCilent.UI.Theme
 			}
 		}
 		
+		/// <summary>
+		/// 删除缺陷关联
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Button4Click(object sender, EventArgs e)
+		{
+			int selnum = this.listView1.SelectedItems.Count;
+			if(selnum>0)
+			{
+				DialogResult a = MessageBox.Show("您正准备删除"+selnum+"条缺陷……","删除",MessageBoxButtons.OKCancel)
+				if(DialogResult.OK==a)
+				{
+					
+				}
+			}
+			else
+				MessageBox.Show("请选择要删除的缺陷","删除");
+		}
 				/// <summary>
 		/// 查询关联的测试单元列表
 		/// </summary>
@@ -265,9 +284,6 @@ MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBox
 			}
 		}
 		
-		void Button4Click(object sender, EventArgs e)
-		{
-			
-		}
+		
 	}
 }
