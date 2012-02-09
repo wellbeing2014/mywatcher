@@ -41,11 +41,13 @@ namespace WatchCilent.UI.Theme
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.checkBox1);
 			this.panel1.Controls.Add(this.button2);
 			this.panel1.Controls.Add(this.button1);
 			this.panel1.Controls.Add(this.textBox1);
@@ -93,6 +95,15 @@ namespace WatchCilent.UI.Theme
 			this.label1.TabIndex = 0;
 			this.label1.Text = "请输入主题名：";
 			// 
+			// checkBox1
+			// 
+			this.checkBox1.Location = new System.Drawing.Point(12, 72);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(104, 24);
+			this.checkBox1.TabIndex = 3;
+			this.checkBox1.Text = "根目录";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
 			// CreateThemeDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -107,6 +118,7 @@ namespace WatchCilent.UI.Theme
 			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button1;

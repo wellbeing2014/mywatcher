@@ -24,6 +24,18 @@ namespace WatchCore.dao
 		{
 		}
 		
+		public static bool DeleteTheme(string themeid)
+		{
+			string sql="delete from testtheme where id='"+themeid+"' or parentid ='"+themeid+"'";
+			try {
+				SqlDBUtil.ExecuteNonQuery(sql);
+				return true;	
+			} catch (Exception) {
+				throw new Exception("删除出现异常");
+				return false;
+			}
+			
+		}
 		
 		static public List<TestTheme> getAllTestThemeByPersonname(string personname )
 		{

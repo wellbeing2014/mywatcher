@@ -86,7 +86,7 @@ namespace WatchCilent.UI.Theme
 			default_tt.Personname="朱新培";
 			tmp.Tag = default_tt;
 			main.Nodes.Add(tmp);
-			
+            
 			foreach (var element in ttlist) {
 				TreeNode tmp1 = null;
 				tmp1 = new TreeNode(element.Favname);
@@ -103,6 +103,12 @@ namespace WatchCilent.UI.Theme
 			TreeNode[] tn = new TreeNode[main.Nodes.Count];
 			main.Nodes.CopyTo(tn,0);
 			this.treeView1.Nodes.AddRange(tn);
+			
+			this.treeView1.SelectedNode = treeView1.Nodes[0];
+			//让选中项背景色呈现蓝色
+            treeView1.SelectedNode.BackColor = Color.SteelBlue;
+            //前景色为白色
+            treeView1.SelectedNode.ForeColor = Color.White;
 		}
 		
 		void creatTree(TreeNode childtn,TreeNode parenttn)
@@ -157,26 +163,40 @@ namespace WatchCilent.UI.Theme
 			int selnum = this.listView1.SelectedItems.Count;
 			if(selnum>0)
 			{
-				DialogResult a = MessageBox.Show("您正准备删除"+selnum+"条缺陷……","删除",MessageBoxButtons.OKCancel)
+				string[] unitidSZ = new string[selnum];
+				for (int i = 0; i < selnum; i++) {
+					unitidSZ[i] = listView1.SelectedItems[i].SubItems[4].Text;
+				}
+				DialogResult a = MessageBox.Show("您正准备删除"+selnum+"条缺陷……","删除",MessageBoxButtons.OKCancel);
 				if(DialogResult.OK==a)
 				{
-					
+					TestunitthemeDao.DelGuanLianUnit(unitidSZ,((TestTheme)(this.treeView1.SelectedNode.Tag)).Id.ToString());
+					MessageBox.Show("删除成功","删除");
 				}
+				getGuanlianUnitList();
 			}
 			else
 				MessageBox.Show("请选择要删除的缺陷","删除");
+			
+			
 		}
 				/// <summary>
 		/// 查询关联的测试单元列表
 		/// </summary>
 		void getGuanlianUnitList()
 		{
-			string themeid =((TestTheme)(this.treeView1.SelectedNode.Tag)).Id.ToString();
+			TestTheme theme= this.treeView1.SelectedNode.Tag as TestTheme;
+			string themeid =theme.Id.ToString();
 			List<TestUnit> tulist =TestUnitDao.getGuanLianUnitList(themeid);
 			this.listView1.Items.Clear();
 			foreach (TestUnit tu in tulist) {
 				ListViewBing(tu);
 			}
+			if(string.IsNullOrEmpty(theme.Favcontent))
+				this.textBox1.Text = "请输入描述……";
+			else
+				this.textBox1.Text = theme.Favcontent;
+			
 		}
 		
 		/// <summary>
@@ -243,18 +263,22 @@ MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBox
 			{
 				TestTheme theme2 = new TestTheme();
 				//theme2.Id=theme1.Id;
-				theme2.Parentid=theme1.Id;
-				theme2.Personid=theme1.Personid;
+				if(ct.isTreeRoot)
+				{
+					theme2.Parentid=0;
+					theme2.Personid=0;
+					
+				}
+				else
+				{
+					theme2.Parentid=theme1.Id;
+					theme2.Personid=theme1.Personid;
+				}
 				theme2.Personname=theme1.Personname;
 				theme2.Favname=ct.fname;
 				SqlDBUtil.insert(theme2);
 				MessageBox.Show("创建成功","提示");
 				getThemeTree();
-			}
-			else
-			{
-				MessageBox.Show("创建失败","提示");
-				return;
 			}
 		}
 		
@@ -277,13 +301,32 @@ MessageBox.Show("请选择一条记录","提示",MessageBoxButtons.OK,MessageBox
 				}
 				else
 				{
-					SqlDBUtil.delete(theme);
-					MessageBox.Show("删除成功","提示");
-					getThemeTree();
+					DialogResult a = MessageBox.Show("您正准备删除主题，与之关联的缺陷将一并删除","删除",MessageBoxButtons.OKCancel);
+					if(DialogResult.OK==a)
+					{
+						TestunitthemeDao.DelGuanLianUnit(null,theme.Id.ToString());
+						TestThemeDao.DeleteTheme(theme.Id.ToString());
+						this.listView1.Items.Clear();
+						MessageBox.Show("删除成功","提示");
+						getThemeTree();
+					}
 				}
 			}
 		}
 		
 		
+		//保存描述的方法
+		void Button5Click(object sender, EventArgs e)
+		{
+			TestTheme theme= this.treeView1.SelectedNode.Tag as TestTheme;
+			theme.Favcontent=this.textBox1.Text;
+			SqlDBUtil.update(theme);
+			MessageBox.Show("保存成功","提示");
+		}
+		
+		void textBox1_TextChanged(object sender, EventArgs e)
+		{
+			MessageBox.Show("您正在离开编辑内容描述，是否保存","提示",MessageBoxButtons.OKCancel);
+		}
 	}
 }

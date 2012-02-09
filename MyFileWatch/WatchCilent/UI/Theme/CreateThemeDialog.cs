@@ -18,6 +18,7 @@ namespace WatchCilent.UI.Theme
 	public partial class CreateThemeDialog : Form
 	{
 		public string fname = "";
+		public bool isTreeRoot =false;
 		public CreateThemeDialog()
 		{
 			InitializeComponent();
@@ -36,6 +37,7 @@ namespace WatchCilent.UI.Theme
 			{
 				this.fname=temp;
 			}
+			this.isTreeRoot = this.checkBox1.Checked;
 		}
 	}
 }

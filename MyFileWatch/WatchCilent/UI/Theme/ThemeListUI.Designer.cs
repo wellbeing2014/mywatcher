@@ -77,6 +77,7 @@ namespace WatchCilent.UI.Theme
 			this.button5.TabIndex = 7;
 			this.button5.Text = "保存";
 			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// textBox1
 			// 
@@ -89,6 +90,7 @@ namespace WatchCilent.UI.Theme
 			this.textBox1.Size = new System.Drawing.Size(484, 150);
 			this.textBox1.TabIndex = 6;
 			this.textBox1.Text = "请输入描述……";
+			this.textBox1.TabIndexChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
 			// button4
 			// 
@@ -205,5 +207,6 @@ namespace WatchCilent.UI.Theme
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.Panel panel1;
+		
 	}
 }
