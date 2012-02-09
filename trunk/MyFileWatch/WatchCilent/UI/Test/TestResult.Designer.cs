@@ -322,12 +322,13 @@ namespace WatchCilent.UI.Test
 			// checkBox2
 			// 
 			this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.checkBox2.Location = new System.Drawing.Point(142, 406);
+			this.checkBox2.Location = new System.Drawing.Point(133, 406);
 			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(57, 24);
+			this.checkBox2.Size = new System.Drawing.Size(66, 24);
 			this.checkBox2.TabIndex = 27;
 			this.checkBox2.Text = "关注";
 			this.checkBox2.UseVisualStyleBackColor = true;
+			this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox2CheckedChanged);
 			// 
 			// TestResult
 			// 

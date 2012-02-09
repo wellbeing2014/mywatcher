@@ -25,13 +25,35 @@ namespace WatchCore.dao
 		{
 		}
 		
+		/// <summary>
+		/// 删除主题测试单元关联表
+		/// </summary>
+		/// <param name="unitid">测试单元ID数组，如果传入NULL则删除全部关联</param>
+		/// <param name="themeid">主题ID</param>
+		/// <returns></returns>
 		public static bool DelGuanLianUnit(string[] unitid,string themeid)
 		{
+			string sql="delete from testunittheme where themeid ='"+themeid+"'";
 			string unitstr ="";
-			for (int i = 0; i < unitid.Length; i++) {
-				
+			if(unitid==null)
+				unitstr = "0";
+			else
+			{
+				for (int i = 0; i < unitid.Length; i++) {
+					
+					unitstr="'"+unitid[i]+"',"+unitstr;
+				}
+				unitstr=unitstr.Substring(0,unitstr.Length-1);
+				sql+=" and unitid in ("+unitstr+") ";
 			}
-			return true;
+			try {
+				SqlDBUtil.ExecuteNonQuery(sql);
+				return true;	
+			} catch (Exception) {
+				throw new Exception("删除id数据出现异常");
+				return false;
+			}
+			
 		}
 		
 		

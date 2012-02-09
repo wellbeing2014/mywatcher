@@ -550,6 +550,24 @@ namespace WatchCilent.UI.Test
 		}
 		
 		
+		//关注
+		void CheckBox2CheckedChanged(object sender, EventArgs e)
+		{
+			if(this.checkBox2.Checked)
+			{
+				
+			}
+			else
+			{
+				DialogResult a =MessageBox.Show("是否取消关注主题","提示",MessageBoxButtons.OKCancel);
+				if(DialogResult.OK ==a)
+				{
+					this.checkBox2.Text="未关注";
+				}
+				else
+					this.checkBox2.Checked = true;
+			}
+		}
 	}
 	public class TestListParameter
 	{
