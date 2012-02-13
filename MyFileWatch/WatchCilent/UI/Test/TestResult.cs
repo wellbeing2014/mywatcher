@@ -555,7 +555,16 @@ namespace WatchCilent.UI.Test
 		{
 			if(this.checkBox2.Checked)
 			{
-				
+				Theme.ChoseThemeDialog cd = new WatchCilent.UI.Theme.ChoseThemeDialog();
+				cd.StartPosition = FormStartPosition.CenterParent;
+				DialogResult a = cd.ShowDialog();
+				if (DialogResult.OK == a) {
+					
+					Testunittheme tt = new Testunittheme();
+					tt.Themeid = theme.Id;
+					tt.Unitid = element.Id;
+					SqlDBUtil.insert(tt);
+				}
 			}
 			else
 			{
