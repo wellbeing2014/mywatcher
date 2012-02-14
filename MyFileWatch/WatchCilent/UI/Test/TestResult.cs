@@ -559,10 +559,14 @@ namespace WatchCilent.UI.Test
 				cd.StartPosition = FormStartPosition.CenterParent;
 				DialogResult a = cd.ShowDialog();
 				if (DialogResult.OK == a) {
-					
+					if(cd.selthem==null)
+					{
+						MessageBox.Show("选择关注主题出错，请重新选择","提示");
+						return;
+					}
 					Testunittheme tt = new Testunittheme();
-					tt.Themeid = theme.Id;
-					tt.Unitid = element.Id;
+					tt.Themeid = cd.selthem.Id;
+					tt.Unitid = this.tu.Id;
 					SqlDBUtil.insert(tt);
 				}
 			}
