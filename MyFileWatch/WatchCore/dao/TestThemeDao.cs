@@ -50,6 +50,25 @@ namespace WatchCore.dao
 			return ls;
 		}
 		
+		/// <summary>
+		/// 根据关联的unitid获取主题
+		/// </summary>
+		/// <param name="unitid"></param>
+		/// <returns></returns>
+		static public List<TestTheme> getTestThemeByUnitid(string unitid )
+		{
+			string sql = "SELECT * FROM TestTheme  " +
+				"where id in (select themeid from testunittheme where unitid="+unitid+")";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
+			List<TestTheme> ls = new List<TestTheme>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2TestTheme(row));
+			}
+			return ls;
+		}
+		
+				
 		private static TestTheme  Row2TestTheme(DataRow row)
 		{
 			TestTheme testtheme = new TestTheme();
