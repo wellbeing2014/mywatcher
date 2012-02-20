@@ -91,7 +91,14 @@ namespace WatchCilent.UI.Theme
 		      }
 		}
 	    
-	  
+	    public static void ExpandParent(TreeNode tn)
+	    {
+	    	if(tn.Parent!=null)
+	    	{
+	    		tn.Parent.Expand();
+	    		ExpandParent(tn.Parent);
+	    	}
+	    }
 	    
 	    #endregion
 	}
