@@ -33,7 +33,7 @@ namespace WatchCilent.UI.Theme
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			unitid = "235";
+			unitid = "161";
 			this.unitid=unitid;
 			
 				
@@ -103,6 +103,7 @@ namespace WatchCilent.UI.Theme
 				{
 					tn.Checked = true;
 					//selthem.Remove(element);
+					TreeViewCheck.ExpandParent(tn);
 				}
 			}
 		}
