@@ -168,6 +168,7 @@
     <Compile Include="UI\Theme\ThemeListUI.Designer.cs">
       <DependentUpon>ThemeListUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Theme\TreeViewCheck.cs" />
     <Compile Include="Web References\WimsToTest\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

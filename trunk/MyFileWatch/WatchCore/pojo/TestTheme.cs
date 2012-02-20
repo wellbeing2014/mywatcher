@@ -66,5 +66,7 @@ namespace WatchCore.pojo
 			get { return favcontent; }
 			set { favcontent = value; }
 		}
+		
+		
 	}
 }
