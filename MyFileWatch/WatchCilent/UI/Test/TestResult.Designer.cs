@@ -63,7 +63,7 @@ namespace WatchCilent.UI.Test
 			this.button4 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -319,23 +319,24 @@ namespace WatchCilent.UI.Test
 			this.button6.UseVisualStyleBackColor = true;
 			this.button6.Click += new System.EventHandler(this.Button6Click);
 			// 
-			// checkBox2
+			// linkLabel1
 			// 
-			this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.checkBox2.Location = new System.Drawing.Point(133, 406);
-			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(66, 24);
-			this.checkBox2.TabIndex = 27;
-			this.checkBox2.Text = "关注";
-			this.checkBox2.UseVisualStyleBackColor = true;
-			this.checkBox2.CheckedChanged += new System.EventHandler(this.CheckBox2CheckedChanged);
+			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.linkLabel1.Location = new System.Drawing.Point(139, 406);
+			this.linkLabel1.Name = "linkLabel1";
+			this.linkLabel1.Size = new System.Drawing.Size(53, 23);
+			this.linkLabel1.TabIndex = 28;
+			this.linkLabel1.TabStop = true;
+			this.linkLabel1.Text = "未被关注";
+			this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1LinkClicked);
 			// 
 			// TestResult
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(619, 441);
-			this.Controls.Add(this.checkBox2);
+			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.button5);
 			this.Controls.Add(this.button6);
 			this.Controls.Add(this.button4);
@@ -359,7 +360,7 @@ namespace WatchCilent.UI.Test
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.CheckBox checkBox2;
+		private System.Windows.Forms.LinkLabel linkLabel1;
 		private System.Windows.Forms.Button button6;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.Label label4;

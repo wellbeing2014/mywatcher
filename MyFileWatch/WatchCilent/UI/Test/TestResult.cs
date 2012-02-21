@@ -61,7 +61,7 @@ namespace WatchCilent.UI.Test
 			this.Text ="缺陷新建";
 			this.button5.Dispose();
 			this.button6.Dispose();
-			this.checkBox2.Dispose();
+			this.linkLabel1.Dispose();
 			
 			this.comboBox1.DataSource = Source_Person;
 			this.comboBox1.DisplayMember = "fullname";
@@ -122,7 +122,7 @@ namespace WatchCilent.UI.Test
 				this.button3.Enabled = false;
 				this.button5.Dispose();
 				this.button6.Dispose();
-				this.checkBox2.Dispose();
+				this.linkLabel1.Dispose();
 			}
 			else
 			{
@@ -130,7 +130,8 @@ namespace WatchCilent.UI.Test
 				this.Tp = tp;
 				this.button5.Location = this.button1.Location;
 				this.button6.Location = this.button2.Location;
-				this.checkBox2.Location = this.checkBox1.Location;
+				this.linkLabel1.Location = this.checkBox1.Location;
+				
 				this.button1.Dispose();
 				this.button2.Dispose();
 				this.button3.Dispose();
@@ -264,6 +265,14 @@ namespace WatchCilent.UI.Test
 
 			MemoryStream stream = new MemoryStream(tu.Testcontent);
 			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+			
+			if(!this.linkLabel1.IsDisposed)
+			{
+				if(TestThemeDao.getTestThemeByUnitid(tu.Id.ToString()).Count>0)
+					this.linkLabel1.Text = "已被关注";
+				else
+					this.linkLabel1.Text = "未被关注";
+			}
 		}
 		
 		bool TestuiSave()
@@ -550,39 +559,34 @@ namespace WatchCilent.UI.Test
 		}
 		
 		
-		//关注
-		void CheckBox2CheckedChanged(object sender, EventArgs e)
+	
+		void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if(this.checkBox2.Checked)
-			{
-				
-				Theme.ChoseThemeDialog cd = new WatchCilent.UI.Theme.ChoseThemeDialog(null);
-				cd.StartPosition = FormStartPosition.CenterParent;
-				DialogResult a = cd.ShowDialog();
-//				Theme.ChoseThemeDialog cd = new WatchCilent.UI.Theme.ChoseThemeDialog();
-//				cd.StartPosition = FormStartPosition.CenterParent;
-//				DialogResult a = cd.ShowDialog();
-//				if (DialogResult.OK == a) {
-//					if(cd.selthem==null)
-//					{
-//						MessageBox.Show("选择关注主题出错，请重新选择","提示");
-//						return;
-//					}
-//					Testunittheme tt = new Testunittheme();
-//					tt.Themeid = cd.selthem.Id;
-//					tt.Unitid = this.tu.Id;
-//					SqlDBUtil.insert(tt);
-//				}
-			}
-			else
-			{
-				DialogResult a =MessageBox.Show("是否取消关注主题","提示",MessageBoxButtons.OKCancel);
-				if(DialogResult.OK ==a)
+			Theme.ChoseThemeDialog cd = new WatchCilent.UI.Theme.ChoseThemeDialog(this.tu.Id.ToString());
+			cd.StartPosition = FormStartPosition.CenterParent;
+			DialogResult a = cd.ShowDialog();
+			if (DialogResult.OK == a) {
+				if(cd.selthem.Count>0)
 				{
-					this.checkBox2.Text="未关注";
+					TestunitthemeDao.DelGuanLianUnit(new string[]{this.tu.Id.ToString()},null);
+					for (int i = 0; i < cd.selthem.Count; i++) {
+						Testunittheme tt = new Testunittheme();
+						tt.Themeid = cd.selthem[i].Id;
+					    tt.Unitid = this.tu.Id;
+					    SqlDBUtil.insert(tt);
+					}
+					this.linkLabel1.Text = "已被关注";
 				}
 				else
-					this.checkBox2.Checked = true;
+				{
+					DialogResult b =MessageBox.Show("您一个主题都不关注？","提示",MessageBoxButtons.OKCancel);
+					if(DialogResult.OK == b)
+					{
+						TestunitthemeDao.DelGuanLianUnit(new string[]{this.tu.Id.ToString()},null);
+						this.linkLabel1.Text = "未被关注";
+					}
+				}
+				
 			}
 		}
 	}
