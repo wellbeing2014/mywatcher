@@ -33,7 +33,7 @@ namespace WatchCilent.UI.Theme
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			unitid = "161";
+			//unitid = "161";
 			this.unitid=unitid;
 			
 				
@@ -90,7 +90,7 @@ namespace WatchCilent.UI.Theme
 			TreeNode[] tn = new TreeNode[main.Nodes.Count];
 			main.Nodes.CopyTo(tn,0);
 			this.treeView1.Nodes.AddRange(tn);
-			
+			this.treeView1.ExpandAll();
 			this.treeView1.SelectedNode = treeView1.Nodes[0];
 			
 		}
@@ -103,7 +103,7 @@ namespace WatchCilent.UI.Theme
 				{
 					tn.Checked = true;
 					//selthem.Remove(element);
-					TreeViewCheck.ExpandParent(tn);
+					//TreeViewCheck.ExpandParent(tn);
 				}
 			}
 		}
@@ -215,7 +215,7 @@ namespace WatchCilent.UI.Theme
 			foreach (var element in sel_temp) {
 				selthem.Add(element.Tag as TestTheme);
 			}
-			MessageBox.Show(selthem.Count.ToString());
+			
 		}
 		
 		private void treeView1_AfterCheck(object sender, TreeViewEventArgs e) 

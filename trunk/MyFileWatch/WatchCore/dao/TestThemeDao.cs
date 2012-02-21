@@ -57,10 +57,22 @@ namespace WatchCore.dao
 		/// <returns></returns>
 		static public List<TestTheme> getTestThemeByUnitid(string unitid )
 		{
+			List<TestTheme> ls = new List<TestTheme>();
+			string sql1 ="select count(*) from testunittheme where themeid = 99999 and unitid="+unitid;
+			int count=SqlDBUtil.ExecuteScalar(sql1);
+			if(count>0)
+			{
+				TestTheme default_tt = new TestTheme();
+				default_tt.Id=99999;
+				default_tt.Personid=0;
+				default_tt.Personname="朱新培";
+				ls.Add(default_tt);
+			}
+			
 			string sql = "SELECT * FROM TestTheme  " +
 				"where id in (select themeid from testunittheme where unitid="+unitid+")";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
-			List<TestTheme> ls = new List<TestTheme>();
+			
 			foreach(DataRow row in data.Tables["ds"].Rows)
 			{
 				ls.Add(Row2TestTheme(row));

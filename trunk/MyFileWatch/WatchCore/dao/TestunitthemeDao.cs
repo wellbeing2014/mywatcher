@@ -34,7 +34,9 @@ namespace WatchCore.dao
 		/// <returns></returns>
 		public static bool DelGuanLianUnit(string[] unitid,string themeid)
 		{
-			string sql="delete from testunittheme where themeid ='"+themeid+"'";
+			string sql="delete from testunittheme where 1 = 1 ";
+			if(themeid!=null)
+				sql+="and themeid='"+themeid+"'";
 			string unitstr ="";
 			if(unitid==null)
 				unitstr = "0";
