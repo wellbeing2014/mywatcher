@@ -59,6 +59,7 @@
     <Compile Include="Common\DirectoryListParser.cs" />
     <Compile Include="Common\FeiQIM.cs" />
     <Compile Include="Common\FunctionUtils.cs" />
+    <Compile Include="Common\MD5Common.cs" />
     <Compile Include="Common\SqlDBUtil.cs" />
     <Compile Include="Common\WordDocumentMerger.cs" />
     <Compile Include="dao\ModuleDao.cs" />

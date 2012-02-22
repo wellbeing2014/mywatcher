@@ -13,6 +13,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Data;
+using System.Xml;
+using System.Configuration;
 
 using Microsoft.Win32;
 //using Word;
@@ -312,6 +314,71 @@ namespace WatchCore.Common
             }  
             return dt;  
         }
+        
+        
+        ///<summary> 
+		///在＊.exe.config文件中appSettings配置节增加一对键、值对 
+		///</summary> 
+		///<param name="newKey"></param> 
+		///<param name="newValue"></param> 
+		public static void UpdateAppConfig(string newKey, string newValue) 
+		{ 
+			bool isModified = false; 
+			foreach (string key in ConfigurationManager.AppSettings) 
+			{ 
+				if (key == newKey) 
+				{ 
+					isModified = true; 
+				} 
+			} 
+			
+			// Open App.Config of executable 
+			Configuration config = 
+			ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); 
+			// You need to remove the old settings object before you can replace it 
+			if (isModified) 
+			{ 
+				config.AppSettings.Settings.Remove(newKey); 
+			} 
+			// Add an Application Setting. 
+			config.AppSettings.Settings.Add(newKey, newValue); 
+			// Save the changes in App.config file. 
+			config.Save(ConfigurationSaveMode.Modified); 
+			// Force a reload of a changed section. 
+			ConfigurationManager.RefreshSection("appSettings"); 
+		} 
+        
+        /// <summary> 
+		/// 写入Key，Value 到XML文件 
+		/// </summary> 
+		/// <param name="Key"></param> 
+		/// <param name="Value"></param> 
+		public static void SaveConfig(string Key, string Value) 
+		{ 
+			XmlDocument doc = new XmlDocument(); 
+			//获得配置文件的全路径 
+			string strFileName = AppDomain.CurrentDomain.BaseDirectory.ToString() + "App.config"; 
+			doc.Load(strFileName); 
+			//找出名称为“add”的所有元素 
+			XmlNodeList nodes = doc.GetElementsByTagName("add"); 
+			for (int i = 0; i < nodes.Count; i++) 
+			{ 
+			//获得将当前元素的key属性 
+			XmlAttribute att = nodes[i].Attributes["key"]; 
+			//根据元素的第一个属性来判断当前的元素是不是目标元素 
+			if (att.Value == Key) 
+			{ 
+			//对目标元素中的第二个属性赋值 
+			att = nodes[i].Attributes["value"]; 
+			
+			att.Value = Value; 
+			break; 
+			} 
+			} 
+			//保存上面的修改 
+			doc.Save(strFileName); 
+			ConfigurationManager.RefreshSection("appSettings"); 
+		} 
     }
 
 	

@@ -40,6 +40,13 @@ namespace WatchCore.pojo
 			get { return ip; }
 			set { ip = value; }
 		}
+		
+		private string password;
+		
+		public string Password {
+			get { return password; }
+			set { password = value; }
+		}
 		public PersonInfo()
 		{
 		}

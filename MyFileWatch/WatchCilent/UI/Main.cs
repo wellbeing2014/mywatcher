@@ -55,15 +55,23 @@ namespace WatchCilent.UI
 			//注册热键(窗体句柄,热键ID,辅助键,实键)   
 			RegisterHotKey(this.Handle,888,(int)KeyModifiers.Ctrl , Keys.N);
 			RegisterHotKey(this.Handle,999, ((int)KeyModifiers.Ctrl+(int)KeyModifiers.Shift), Keys.A);
+        	string username=ConfigurationManager.AppSettings["Username"];
+        	string password=ConfigurationManager.AppSettings["Password"];
         	
-			if(dbc==null|| dbc.GetValue("dbpath")==null)
+			if(dbc==null|| dbc.GetValue("Username1")==null
+        	   ||(PersonDao.getAllPersonInfo(username,password).Count!=1)
+			  )
 			//if(!FunctionUtils.ConfigRight())
 			{
+        		MessageBox.Show("对不起，您的设置可能有问题，请重新设置");
 				Dbconfig db = new Dbconfig();
 				if(db.ShowDialog()!= DialogResult.OK)
 				{
 					
-					this.Load += new EventHandler(main_Load);
+					//this.Load += new EventHandler(main_Load);
+					this.Close();
+					System.Windows.Forms.Application.Exit();
+					//return;
 				}
 				else InitializeComponent();
 			}
