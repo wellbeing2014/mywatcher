@@ -34,6 +34,28 @@ namespace WatchCore.dao
 			data.Tables["ds"].Rows.InsertAt(dr,0);
 			return	data.Tables["ds"];
 		}
+		static public List<PersonInfo> getAllPersonInfo(string name,string password)
+		{
+			string sql = "select * from PersonInfo where fullname='"+name+"' and password='"+password+"'";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
+			List<PersonInfo> ls = new List<PersonInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2PersonInfo(row));
+			}
+			return ls;
+		}
+		static public List<PersonInfo> getAllPersonInfo(string name)
+		{
+			string sql = "select * from PersonInfo where fullname='"+name+"'";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
+			List<PersonInfo> ls = new List<PersonInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2PersonInfo(row));
+			}
+			return ls;
+		}
 		
 		static public List<PersonInfo> getAllPersonInfo()
 		{
@@ -76,6 +98,7 @@ namespace WatchCore.dao
 			person.Id = Int32.Parse(row["id"].ToString());
 			person.Fullname = row["fullname"].ToString();
 			person.Ip = row["ip"].ToString();
+			person.Password =row["password"].ToString();
 			return person;
 		}
 	}

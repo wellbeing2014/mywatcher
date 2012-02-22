@@ -48,6 +48,10 @@ namespace WatchCilent
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.textBox5 = new System.Windows.Forms.TextBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.textBox7 = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -81,7 +85,7 @@ namespace WatchCilent
 			// button1
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(137, 212);
+			this.button1.Location = new System.Drawing.Point(137, 272);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 3;
@@ -153,11 +157,47 @@ namespace WatchCilent
 			this.textBox5.Size = new System.Drawing.Size(247, 21);
 			this.textBox5.TabIndex = 2;
 			// 
+			// label7
+			// 
+			this.label7.Location = new System.Drawing.Point(12, 201);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(94, 18);
+			this.label7.TabIndex = 4;
+			this.label7.Text = "用户姓名：";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// textBox6
+			// 
+			this.textBox6.Location = new System.Drawing.Point(112, 198);
+			this.textBox6.Name = "textBox6";
+			this.textBox6.Size = new System.Drawing.Size(247, 21);
+			this.textBox6.TabIndex = 5;
+			// 
+			// textBox7
+			// 
+			this.textBox7.Location = new System.Drawing.Point(112, 225);
+			this.textBox7.Name = "textBox7";
+			this.textBox7.Size = new System.Drawing.Size(247, 21);
+			this.textBox7.TabIndex = 6;
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(12, 225);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(94, 18);
+			this.label8.TabIndex = 7;
+			this.label8.Text = "用户密码：";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// Dbconfig
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(371, 247);
+			this.ClientSize = new System.Drawing.Size(372, 307);
+			this.Controls.Add(this.label8);
+			this.Controls.Add(this.textBox7);
+			this.Controls.Add(this.textBox6);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.textBox5);
 			this.Controls.Add(this.textBox4);
@@ -176,6 +216,10 @@ namespace WatchCilent
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox textBox7;
+		private System.Windows.Forms.TextBox textBox6;
+		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.TextBox textBox5;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TextBox textBox4;

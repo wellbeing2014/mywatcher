@@ -75,8 +75,6 @@ namespace WatchCilent.UI.Test
 			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			
-			
-			
 			this.comboBox3.Items.Add("全部等级");
 			this.comboBox3.Items.AddRange(CommonConst.BUGLEVEL);
 			this.comboBox3.SelectedIndex = 0;
