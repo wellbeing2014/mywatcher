@@ -39,8 +39,13 @@ namespace WatchCore.dao
 		
 		static public List<TestTheme> getAllTestThemeByPersonname(string personname )
 		{
-			string sql = "SELECT * FROM TestTheme  " +
-				"where  personname='"+personname+"'";
+			string sql = "SELECT * FROM TestTheme  ";
+			if(string.IsNullOrEmpty(personname))
+			{
+				sql +="where  personname is null";
+			}
+			else
+			 	sql +="where  personname='"+personname+"'";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			List<TestTheme> ls = new List<TestTheme>();
 			foreach(DataRow row in data.Tables["ds"].Rows)
@@ -57,15 +62,18 @@ namespace WatchCore.dao
 		/// <returns></returns>
 		static public List<TestTheme> getTestThemeByUnitid(string unitid )
 		{
+			
 			List<TestTheme> ls = new List<TestTheme>();
 			string sql1 ="select count(*) from testunittheme where themeid = 99999 and unitid="+unitid;
 			int count=SqlDBUtil.ExecuteScalar(sql1);
 			if(count>0)
 			{
+				string personid = System.Configuration.ConfigurationManager.AppSettings["UserId"];
+				//string personname = System.Configuration.ConfigurationManager.AppSettings["Username"];
 				TestTheme default_tt = new TestTheme();
 				default_tt.Id=99999;
-				default_tt.Personid=0;
-				default_tt.Personname="朱新培";
+				default_tt.Personid=((personid==null)?0:Int32.Parse(personid));
+				default_tt.Personname=System.Configuration.ConfigurationManager.AppSettings["Username"];
 				ls.Add(default_tt);
 			}
 			

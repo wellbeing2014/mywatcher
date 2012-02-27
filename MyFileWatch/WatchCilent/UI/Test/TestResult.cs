@@ -331,16 +331,24 @@ namespace WatchCilent.UI.Test
 		/// <summary>
 		/// 给主管发送飞秋消息。
 		/// </summary>
-		void SendMessageToManager()
+		void SendMessageToManager(string userip,bool adminip)
 		{
 			try {
 				string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
 					"》有一项内容为『"+tu.Testtitle+"』、类型为『"+tu.Bugtype+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+tu.Unitno+".html"+"查看详细并确认。";
-				PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
-				string[] iplist = person.Ip.Split(';');
-				foreach(string ip in iplist)
+				if(adminip)
 				{
-					Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+					PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
+					string[] iplist = person.Ip.Split(';');
+					foreach(string ip in iplist)
+					{
+						Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip);
+					}
+				}
+				string[] iplist1 = userip.Split(';');
+				foreach(string ip1 in iplist1)
+				{
+					Communication.TCPManage.SendMessage(WisofServiceHost,content+"##"+ip1);
 				}
 			} catch (Exception e) {
 				MessageBox.Show("通知主管失败！:"+e.ToString());
@@ -378,7 +386,7 @@ namespace WatchCilent.UI.Test
 					//勾选自动发送
 					if(this.checkBox1.Checked)
 					{
-						SendMessageToManager();
+						SendMessageToManager("",true);
 					}
 				
 					MessageBox.Show("保存成功！");
@@ -456,7 +464,12 @@ namespace WatchCilent.UI.Test
 		{
 			if(TestuiSave())
 			{
-				SendMessageToManager();
+				//SendMessageToManager();
+				EditFeiQnote ef = new EditFeiQnote();
+				if(DialogResult.OK==ef.ShowDialog())
+				{
+					SendMessageToManager(ef.ip,ef.adminip);
+				}
 			}
 		}
 		
