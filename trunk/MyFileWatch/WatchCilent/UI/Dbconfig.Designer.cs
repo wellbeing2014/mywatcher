@@ -212,7 +212,7 @@ namespace WatchCilent
 			this.Controls.Add(this.label1);
 			this.MaximizeBox = false;
 			this.Name = "Dbconfig";
-			this.Text = "数据库配置";
+			this.Text = "系统配置";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}

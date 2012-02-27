@@ -21,6 +21,7 @@ namespace WatchCilent
 	/// </summary>
 	public partial class Dbconfig : Form
 	{
+		
 		public Dbconfig()
 		{
 			//
@@ -39,19 +40,24 @@ namespace WatchCilent
 			this.textBox3.Enabled = false;
 			this.textBox4.Enabled = false;
 			this.textBox5.Enabled = false;
-			if(string.IsNullOrEmpty(ConfigurationManager.AppSettings["Username"])||
-			   string.IsNullOrEmpty(ConfigurationManager.AppSettings["Password"]))
-			{
-				MessageBox.Show("您是第一次登录，请设置用户名密码。/n若用户名不存在请联系管理员","提示");
-				this.TabIndex=this.textBox6.TabIndex;
-			}
+			this.textBox6.Text = ConfigurationManager.AppSettings["Username"];
+			this.textBox7.Text = ConfigurationManager.AppSettings["Password"];
+//			if(string.IsNullOrEmpty(ConfigurationManager.AppSettings["Username"]))
+//			{
+//				MessageBox.Show("您是第一次登录，请设置用户名密码。\n若用户名不存在请联系管理员","提示");
+//				this.TabIndex=this.textBox6.TabIndex;
+//			}
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
 		
+		
+		
 		void Button1Click(object sender, EventArgs e)
 		{
+			string username = this.textBox6.Text;
+			string password = this.textBox7.Text;
 			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
 			Microsoft.Win32.RegistryKey reg = key.CreateSubKey("software\\WisoftWatchClient");  
 			reg.SetValue("Version", this.textBox1.Text);
@@ -61,20 +67,23 @@ namespace WatchCilent
    			reg.SetValue("HtmlUrl", this.textBox4.Text); 
    			reg.SetValue("WisofServiceHost", this.textBox5.Text);
    			
-   			if(PersonDao.getAllPersonInfo(this.textBox6.Text).Count==1)
+   			if(PersonDao.getAllPersonInfo(username).Count==1)
    			{
-   				PersonInfo ps = PersonDao.getAllPersonInfo(this.textBox6.Text)[0];
-   				ps.Fullname = this.textBox6.Text;
-   				ps.Password = this.textBox7.Text;
-				reg.SetValue("Username", this.textBox6.Text);
-				reg.SetValue("Password", this.textBox7.Text);			
-	   			FunctionUtils.UpdateAppConfig("Username",this.textBox6.Text);
-	   			FunctionUtils.UpdateAppConfig("Password",this.textBox7.Text);
+   				PersonInfo ps = PersonDao.getAllPersonInfo(username)[0];
+   				ps.Fullname = username;
+   				password = MD5Common.GetMd5Hash(password);
+   				ps.Password = password;
+				reg.SetValue("Username", username);
+				reg.SetValue("Password", password);	
+				reg.SetValue("UserId", ps.Id);				
+	   			FunctionUtils.UpdateAppConfig("Username",username);
+	   			FunctionUtils.UpdateAppConfig("Password",password);
+	   			FunctionUtils.UpdateAppConfig("UserId",ps.Id.ToString());
 	   			SqlDBUtil.update(ps);
    			}
    			else
    			{
-   				MessageBox.Show("数据库没有该用户");
+   				MessageBox.Show("数据库没有该用户!,请联系管理员");
    			}
 		}
 	}

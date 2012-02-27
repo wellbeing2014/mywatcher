@@ -74,7 +74,7 @@ namespace WatchCilent.UI.Theme
 		 
 		void getThemeTree()
 		{
-			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname("朱新培");
+			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname(System.Configuration.ConfigurationManager.AppSettings["username"]);
 			this.treeView1.Nodes.Clear();
 			//List<TreeNode> maintreelist = new List<TreeNode>();
 			TreeNode main =new TreeNode();
@@ -82,8 +82,9 @@ namespace WatchCilent.UI.Theme
 			TreeNode tmp =new TreeNode("默认主题");
 			TestTheme default_tt = new TestTheme();
 			default_tt.Id=99999;
-			default_tt.Personid=0;
-			default_tt.Personname="朱新培";
+			string personid = System.Configuration.ConfigurationManager.AppSettings["UserId"];
+			default_tt.Personid=((personid==null)?0:Int32.Parse(personid));
+			default_tt.Personname=System.Configuration.ConfigurationManager.AppSettings["Username"];
 			tmp.Tag = default_tt;
 			main.Nodes.Add(tmp);
             

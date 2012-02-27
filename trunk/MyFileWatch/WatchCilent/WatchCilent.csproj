@@ -41,7 +41,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <BaseAddress>4194304</BaseAddress>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
@@ -93,6 +93,10 @@
     <Compile Include="UI\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\MainCustomer.cs" />
+    <Compile Include="UI\MainCustomer.Designer.cs">
+      <DependentUpon>MainCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\MsgForm.cs" />
     <Compile Include="UI\MsgForm.Designer.cs">
       <DependentUpon>MsgForm.cs</DependentUpon>
@@ -131,6 +135,10 @@
     <Compile Include="UI\Pub\UploadFTP.cs" />
     <Compile Include="UI\Pub\UploadFTP.Designer.cs">
       <DependentUpon>UploadFTP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Test\EditFeiQnote.cs" />
+    <Compile Include="UI\Test\EditFeiQnote.Designer.cs">
+      <DependentUpon>EditFeiQnote.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Test\ReportListUI.cs" />
     <Compile Include="UI\Test\ReportListUI.Designer.cs">
@@ -183,6 +191,9 @@
     <EmbeddedResource Include="UI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\MainCustomer.resx">
+      <DependentUpon>MainCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\MsgForm.resx">
       <DependentUpon>MsgForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -209,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\UploadFTP.resx">
       <DependentUpon>UploadFTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Test\EditFeiQnote.resx">
+      <DependentUpon>EditFeiQnote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\ReportXX.resx">
       <DependentUpon>ReportXX.cs</DependentUpon>

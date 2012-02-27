@@ -38,6 +38,8 @@ namespace WatchCilent
 			Process pr=GetRunningInstance();
 			if(pr==null)
 			{
+				
+				//MessageBox.Show(System.Environment.CurrentDirectory+"releasenot.txt");
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				//Application.Run(new Dbconfig());

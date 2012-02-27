@@ -46,24 +46,44 @@ namespace WatchCilent.UI
 	       
 		public Main()
 		{
-			
+			//MessageBox.Show("数据库异常");
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
-			Microsoft.Win32.RegistryKey dbc = key.OpenSubKey("software\\WisoftWatchClient");  
+			Microsoft.Win32.RegistryKey dbc = key.OpenSubKey("software\\WisoftWatchClient",true);  
 			//注册热键(窗体句柄,热键ID,辅助键,实键)   
 			RegisterHotKey(this.Handle,888,(int)KeyModifiers.Ctrl , Keys.N);
 			RegisterHotKey(this.Handle,999, ((int)KeyModifiers.Ctrl+(int)KeyModifiers.Shift), Keys.A);
         	string username=ConfigurationManager.AppSettings["Username"];
         	string password=ConfigurationManager.AppSettings["Password"];
+        	bool checkpass = true;
+        	string errorstr ="";
         	
-			if(dbc==null|| dbc.GetValue("Username1")==null
-        	   ||(PersonDao.getAllPersonInfo(username,password).Count!=1)
-			  )
-			//if(!FunctionUtils.ConfigRight())
+        	if(dbc==null|| dbc.GetValue("Username")==null)
+        	{
+        		checkpass = false;
+        		errorstr = "对不起，您的设置可能有问题，请重新设置！";
+        	}
+        	else if(string.IsNullOrEmpty(username))
+        	{
+        		checkpass = false;
+        		errorstr = "您好像是第一次登录系统，请设置用户名密码";
+        	}
+        	else if(PersonDao.getAllPersonInfo(username,password).Count!=1)
+        	{
+        		checkpass = false;
+        		errorstr = "您的用户名密码好像不正确，请设置用户名密码";
+        	}
+        	else if(dbc.GetValue("Version").ToString()!="0.4.0")
+        	{
+        		System.Diagnostics.Process.Start("notepad.exe",System.Environment.CurrentDirectory+"\\releasenote.txt");
+        		dbc.SetValue("Version","0.4.0");
+        	}
+        	
+        	if(!checkpass)
 			{
-        		MessageBox.Show("对不起，您的设置可能有问题，请重新设置");
+        		MessageBox.Show(errorstr);
 				Dbconfig db = new Dbconfig();
 				if(db.ShowDialog()!= DialogResult.OK)
 				{
@@ -73,10 +93,25 @@ namespace WatchCilent.UI
 					System.Windows.Forms.Application.Exit();
 					//return;
 				}
-				else InitializeComponent();
+				else
+				{
+					if(dbc.GetValue("Version").ToString()!="0.4.0")
+		        	{
+		        		System.Diagnostics.Process.Start("notepad.exe",System.Environment.CurrentDirectory+"\\releasenote.txt");
+		        		dbc.SetValue("Version","0.4.0");
+		        	}
+					InitializeComponent();
+					username=ConfigurationManager.AppSettings["Username"];
+					if(string.IsNullOrEmpty(username))
+					{
+						this.Text = this.Text+"--未登录";
+					}
+					else this.Text = this.Text+"--"+username;
+				}
 			}
 			else 
 			{
+				
 				try {
 					SqlDBUtil.CheckDBState();
 				} catch (Exception) {
@@ -86,6 +121,7 @@ namespace WatchCilent.UI
 					System.Windows.Forms.Application.Exit();
 				}
 				InitializeComponent();
+				this.Text = this.Text+"--"+username;
 			}
 			
 			this.notifyIcon1.Visible=true;

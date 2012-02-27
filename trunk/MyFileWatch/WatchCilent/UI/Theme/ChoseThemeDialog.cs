@@ -53,7 +53,7 @@ namespace WatchCilent.UI.Theme
 		{
 			if(unitid!=null)
 				selthem = TestThemeDao.getTestThemeByUnitid(unitid);
-			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname("朱新培");
+			List<TestTheme> ttlist = TestThemeDao.getAllTestThemeByPersonname(System.Configuration.ConfigurationManager.AppSettings["username"]);
 			this.treeView1.Nodes.Clear();
 			//List<TreeNode> maintreelist = new List<TreeNode>();
 			TreeNode main =new TreeNode();
