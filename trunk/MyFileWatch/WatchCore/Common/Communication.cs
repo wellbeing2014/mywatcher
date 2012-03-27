@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
+using System.Net.Sockets;
 
 namespace WatchCore.Common
 {
@@ -20,15 +21,15 @@ namespace WatchCore.Common
 	public partial class Communication 
 	{
 		 public static System.Net.IPAddress GetLocalIP()
-    {
+    	{
         var host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
         if (host.AddressList.Length < 1)
             throw new Exception("Can't find any valid IP address.");
 
         System.Net.IPAddress myIP = null;
-        foreach (var p in host.AddressList)
+		 foreach (var p in host.AddressList)
         {
-            if (!p.IsIPv6LinkLocal)
+            if (p.AddressFamily == AddressFamily.InterNetwork)
             {
                 myIP = p;
                 break;
@@ -73,7 +74,7 @@ namespace WatchCore.Common
         		byte[] buffer = System.Text.Encoding.UTF8.GetBytes(msg);
             var destIP =System.Net.IPAddress.Parse(destinationIP);
             var myIP = Communication.GetLocalIP();
-
+			//var myIP = "192.10.110.54";
             var epDest = new System.Net.IPEndPoint(destIP, 1124);
             
             Random ro = new Random(); 
