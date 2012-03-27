@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
+using System.Net.Sockets;
 namespace WatchService
 {
 	
@@ -27,7 +27,7 @@ namespace WatchService
 	        System.Net.IPAddress myIP = null;
 	        foreach (var p in host.AddressList)
 	        {
-	            if (!p.IsIPv6LinkLocal)
+	            if (p.AddressFamily == AddressFamily.InterNetwork)
 	            {
 	                myIP = p;
 	                break;
