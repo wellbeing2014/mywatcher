@@ -522,5 +522,15 @@ namespace WatchCilent
 			e.Cancel = false;
 		}
 		
+		//打开服务目录
+		void Button8Click(object sender, EventArgs e)
+		{
+			if(this.treeView1.SelectedNode!=null)
+			{
+				FunctionUtils.openDirectory(this.treeView1.SelectedNode.Tag as String);
+			}
+			else
+				MessageBox.Show("请选择一个服务项目","提示");
+		}
 	}
 }

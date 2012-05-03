@@ -61,12 +61,13 @@ namespace WatchCilent
 			this.button7 = new System.Windows.Forms.Button();
 			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.label5 = new System.Windows.Forms.Label();
+			this.button8 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(524, 301);
+			this.button1.Location = new System.Drawing.Point(453, 301);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(46, 23);
 			this.button1.TabIndex = 0;
@@ -200,7 +201,7 @@ namespace WatchCilent
 			// button6
 			// 
 			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button6.Location = new System.Drawing.Point(418, 301);
+			this.button6.Location = new System.Drawing.Point(347, 301);
 			this.button6.Name = "button6";
 			this.button6.Size = new System.Drawing.Size(47, 23);
 			this.button6.TabIndex = 6;
@@ -211,7 +212,7 @@ namespace WatchCilent
 			// button7
 			// 
 			this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button7.Location = new System.Drawing.Point(471, 301);
+			this.button7.Location = new System.Drawing.Point(400, 301);
 			this.button7.Name = "button7";
 			this.button7.Size = new System.Drawing.Size(47, 23);
 			this.button7.TabIndex = 6;
@@ -235,11 +236,23 @@ namespace WatchCilent
 			this.label5.TabIndex = 15;
 			this.label5.Text = "测试复杂度:";
 			// 
+			// button8
+			// 
+			this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button8.Location = new System.Drawing.Point(505, 301);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(65, 23);
+			this.button8.TabIndex = 16;
+			this.button8.Text = "服务目录";
+			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.Button8Click);
+			// 
 			// BussinessForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(638, 336);
+			this.Controls.Add(this.button8);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.comboBox3);
 			this.Controls.Add(this.button5);
@@ -263,6 +276,7 @@ namespace WatchCilent
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ComboBox comboBox3;
 		private System.Windows.Forms.Button button7;

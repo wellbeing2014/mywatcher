@@ -24,7 +24,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
@@ -43,7 +43,7 @@
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
@@ -69,6 +69,7 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
@@ -81,6 +82,9 @@
     <Compile Include="ModuleSetting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resource1.Designer.cs">
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\ConfigForm.cs" />
     <Compile Include="UI\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -88,6 +92,10 @@
     <Compile Include="UI\Dbconfig.cs" />
     <Compile Include="UI\Dbconfig.Designer.cs">
       <DependentUpon>Dbconfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Form1.cs" />
+    <Compile Include="UI\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Main.cs" />
     <Compile Include="UI\Main.Designer.cs">
@@ -177,16 +185,43 @@
       <DependentUpon>ThemeListUI.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Theme\TreeViewCheck.cs" />
+    <Compile Include="UI\UICheck\CaptureImageToolColorTable.cs" />
+    <Compile Include="UI\UICheck\ColorSelector.cs" />
+    <Compile Include="UI\UICheck\ColorSelector.Designer.cs">
+      <DependentUpon>ColorSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UICheck\DrawStyle.cs" />
+    <Compile Include="UI\UICheck\DrawToolsControl.cs" />
+    <Compile Include="UI\UICheck\DrawToolsControl.Designer.cs">
+      <DependentUpon>DrawToolsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UICheck\DrawToolsDockStyle.cs" />
+    <Compile Include="UI\UICheck\GraphicsPathHelper.cs" />
+    <Compile Include="UI\UICheck\OperateManager.cs" />
+    <Compile Include="UI\UICheck\OperateObject.cs" />
+    <Compile Include="UI\UICheck\OperateType.cs" />
+    <Compile Include="UI\UICheck\RoundStyle.cs" />
+    <Compile Include="UI\UICheck\SizeGrip.cs" />
+    <Compile Include="UI\UICheck\UICheck.cs" />
+    <Compile Include="UI\UICheck\UICheck.Designer.cs">
+      <DependentUpon>UICheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="Web References\WimsToTest\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Properties\Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Dbconfig.resx">
       <DependentUpon>Dbconfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -248,7 +283,22 @@
     <EmbeddedResource Include="UI\Theme\ThemeListUI.resx">
       <DependentUpon>ThemeListUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\UICheck\DrawToolsControl.resx">
+      <DependentUpon>DrawToolsControl.Designer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UICheck\UICheck.resx">
+      <DependentUpon>UICheck.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Icons\Accept.ico" />
+    <None Include="Icons\Arrow.ico" />
+    <None Include="Icons\Ellipse.ico" />
+    <None Include="Icons\Exit.ico" />
+    <None Include="Icons\Line.ico" />
+    <None Include="Icons\Rectangular.ico" />
+    <None Include="Icons\Redo.png" />
+    <None Include="Icons\Save.ico" />
+    <None Include="Icons\Text.ico" />
     <None Include="releasenote.txt" />
     <None Include="Web References\WimsToTest\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -263,6 +313,8 @@
     <Folder Include="UI\Test" />
     <Folder Include="UI\Pub" />
     <Folder Include="UI\Theme" />
+    <Folder Include="UI\UICheck" />
+    <Folder Include="Icons" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WatchCore\WatchCore.csproj">

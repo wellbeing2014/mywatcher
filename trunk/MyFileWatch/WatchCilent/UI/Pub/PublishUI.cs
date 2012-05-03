@@ -329,7 +329,21 @@ namespace WatchCilent.UI.Pub
 			Stream strm = null;
 			//本地文件流
 			FileStream fs = null;
+			
+			//获取文件信息
 		    FileInfo fileInf = new FileInfo(filename);
+			try {
+				 if(!fileInf.Exists)
+			    {
+				 	MessageBox.Show("文件不存在","提示");
+				 	return;
+			    }
+			} catch (Exception e1) {
+				
+		    	MessageBox.Show(e1.ToString(),"提示");
+		    	return ;
+			}		   
+		   
 		   
 		    ListViewItem item = (ListViewItem) pp.Tag;
 		    
@@ -407,7 +421,6 @@ namespace WatchCilent.UI.Pub
 			fs.Close(); 
 			if (strm != null) 
 			strm.Close(); 
-		    
 		}
 		
 		private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
