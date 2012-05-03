@@ -26,6 +26,8 @@ namespace WatchService
 		public const string MyServiceName = "WatchService";
 		static private string  dbpath = null;
 		static private string  logpath = null;
+		static private string	Dicuser = null;
+		static private string	Dicpwd = null;
 		static private string[]  msgip ;
 		static private string[]  watchpaths ;
 		static System.Timers.Timer tt ;
@@ -37,6 +39,8 @@ namespace WatchService
 		{
 			InitializeComponent();
 			logpath = System.Configuration.ConfigurationSettings.AppSettings["logpath"];
+			Dicuser = System.Configuration.ConfigurationSettings.AppSettings["Dicuser"];
+			Dicpwd = System.Configuration.ConfigurationSettings.AppSettings["Dicpwd"];
 //			Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine;  
 //			Microsoft.Win32.RegistryKey reg = key.CreateSubKey("software\\WatchService");  
 //   			reg.SetValue("dbpath",dbpath ); 
@@ -85,15 +89,18 @@ namespace WatchService
 			//Console.WriteLine("开始监控...");
 			//Console.WriteLine("记录XLS位置："+logfile);
 			//Console.Write("监控文件夹位置：");
+			
 			WriteToLog("开始监控...");
 			// TODO: Implement Functionality Here
 			int pathcount=0;
 			while(pathcount<watchpaths.Length)
 			{
-				try
-				{
+				
 				//Console.WriteLine(watchpaths[pathcount]);
 				WriteToLog(watchpaths[pathcount]);
+			
+				try
+				{
 				FileSystemWatcher curWatcher = new FileSystemWatcher();
 				curWatcher.BeginInit();
 				curWatcher.IncludeSubdirectories = true;
@@ -106,14 +113,16 @@ namespace WatchService
 				curWatcher.EnableRaisingEvents = true;
 				curWatcher.EndInit();
 				pathcount++;
-						}
-				catch(Exception)
+				}
+				catch(Exception e)
 				{
 					//Console.WriteLine("监控路径失败！");
-					WriteToLog("监控路径失败！");
+					WriteToLog("监控路径失败！"+e.ToString());
+					msgToFQ("您好，管理员，小月月在监控"+@watchpaths[pathcount]+@"时发生错误：\n"+e.ToString());
 					pathcount++;
 				}
 			}
+			
 			tcp  = new Communication.TCPManage();
 			tcp.StartListen(listenhandler);
 			feiq.HostName="测试服务监控";
@@ -157,6 +166,7 @@ namespace WatchService
 			feiq.StopListen();
 			Thread.Sleep(10000);
 			WriteToLog(System.DateTime.Now.ToLocalTime()+":系统关闭");
+			msgToFQ("您好，管理员，小月月在"+System.DateTime.Now.ToLocalTime()+"被关闭");
 		}
 		
 		static void OnFileCreated(Object source, FileSystemEventArgs e)

@@ -42,8 +42,9 @@ namespace WatchCilent
 				//MessageBox.Show(System.Environment.CurrentDirectory+"releasenot.txt");
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new UI.Form1());
 				//Application.Run(new Dbconfig());
-				Application.Run(new Main());
+				//Application.Run(new Main());
 				//Application.Run(new UI.Theme.ChoseThemeDialog(null));
 				//Application.Run(new UpdateWims());
 				//Application.Run(new SelectUnit());
