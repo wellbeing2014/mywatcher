@@ -31,7 +31,7 @@ namespace WatchCilent.UI.UICheck
 			//
 			InitializeComponent();
 			 
-            Bitmap b = new Bitmap(@"C:\Users\wellbeing.wellbeing-PC\Desktop\Chrysanthemum.jpg");
+            Bitmap b = new Bitmap(@"E:\1.jpg");
             this.pictureBox1.Image=b;
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
