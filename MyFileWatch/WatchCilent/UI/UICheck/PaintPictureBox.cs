@@ -36,31 +36,74 @@ namespace WatchCilent.UI.UICheck
 		{
 			base.OnPaint(pe);
 			
-			Graphics g = pe.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-			
-            
-             using (Pen pen = new Pen(Color.Red))
+			if (_mouseDown)
+            {
+                
+                    if (DrawStyle != DrawStyle.None)
                     {
-                        pen.DashStyle = DashStyle.DashDot;
-                        pen.DashCap = DashCap.Round;
-                        pen.DashPattern = new float[] { 9f, 3f, 3f, 3f };
-
-                        g.DrawRectangle(
-                            pen,
-                            Rectangle.FromLTRB(
-                            _mouseDownPoint.X,
-                            _mouseDownPoint.Y,
-                            _endPoint.X,
-                            _endPoint.Y));
+                        _endPoint = e.Location;
+                        if (DrawStyle == DrawStyle.Line)
+                        {
+                            LinePointList.Add(_endPoint);
+                        }
+                        base.Invalidate();
                     }
+                    else if (SizeGrip != SizeGrip.None)
+                    {
+                        ChangeSelctImageRect(e.Location);
+                    }
+
+            }
+            else
+            {
+               
+                if (DrawStyle == DrawStyle.None)
+                {
+                    if (OperateManager.OperateCount == 0)
+                    {
+                        SetSizeGrip(e.Location);
+                    }
+                }
+                else
+                {
+                    if(SelectImageRect.Contains(e.Location))
+                    {
+                        Cursor = DrawCursor;
+                    }
+                    else
+                    {
+                        Cursor = SelectCursor;
+                    }
+                }
+            }
 			
 		}
 		
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
-			_mouseDownPoint = e.Location;
+			
+            if (e.Button == MouseButtons.Left)
+            {
+                if (SelectedImage)
+                {
+                    if (DrawStyle != DrawStyle.None)
+                    {
+                        _mouseDown = true;
+                        _mouseDownPoint = e.Location;
+
+                        if (DrawStyle == DrawStyle.Line)
+                        {
+                            LinePointList.Add(_mouseDownPoint);
+                        }
+                    }
+                }
+                else
+                {
+                    _mouseDown = true;
+                    _mouseDownPoint = e.Location;
+                }
+            }
 		}
 		
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -69,6 +112,24 @@ namespace WatchCilent.UI.UICheck
 			_endPoint = e.Location;
 			base.Invalidate();
 		}
+		
+		
+		 protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            if (e.Button == MouseButtons.Left)
+            {
+                
+                _endPoint = e.Location;
+                base.Invalidate();
+               
+                _mouseDown = false;
+                _mouseDownPoint = Point.Empty;
+            }
+        }
+		
+		
 		
 		public Bitmap GetImg()
 		{
