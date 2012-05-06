@@ -39,6 +39,7 @@ namespace WatchCilent.UI.UICheck
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.pictureBox1 = new WatchCilent.UI.UICheck.PaintPictureBox();
+			this.drawToolsControl = new WatchCilent.UI.UICheck.DrawToolsControl();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
@@ -83,6 +84,16 @@ namespace WatchCilent.UI.UICheck
 			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBox1.TabIndex = 0;
 			this.pictureBox1.TabStop = false;
+			
+			 // 
+            // drawToolsControl
+            // 
+            this.drawToolsControl.Location = new System.Drawing.Point(2, 154);
+            this.drawToolsControl.Name = "drawToolsControl";
+            this.drawToolsControl.Padding = new System.Windows.Forms.Padding(2);
+            this.drawToolsControl.Size = new System.Drawing.Size(224, 29);
+            this.drawToolsControl.TabIndex = 0;
+			
 			// 
 			// button5
 			// 
@@ -157,6 +168,8 @@ namespace WatchCilent.UI.UICheck
 		private WatchCilent.UI.UICheck.PaintPictureBox pictureBox1;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private WatchCilent.UI.UICheck.DrawToolsControl drawToolsControl;
+		
 		private System.Windows.Forms.Panel panel1;
 		
 		

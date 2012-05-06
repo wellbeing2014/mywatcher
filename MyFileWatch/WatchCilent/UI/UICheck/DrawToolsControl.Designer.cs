@@ -36,51 +36,51 @@ namespace WatchCilent.UI.UICheck
         /// </summary>
         private void InitializeComponent()
         {
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonRectangular = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonEllipse = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonText = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonArrow = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLine = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonRedo = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAccept = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // toolStrip
-            // 
-            this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonRectangular,
-            this.toolStripButtonEllipse,
-            this.toolStripButtonText,
-            this.toolStripButtonArrow,
-            this.toolStripButtonLine,
-            this.toolStripSeparator1,
-            this.toolStripButtonRedo,
-            this.toolStripButtonSave,
-            this.toolStripSeparator2,
-            this.toolStripButtonExit,
-            this.toolStripButtonAccept});
-            this.toolStrip.Location = new System.Drawing.Point(2, 2);
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(220, 25);
-            this.toolStrip.TabIndex = 0;
-            this.toolStrip.Text = "toolStrip1";
-            // 
-            // toolStripButtonRectangular
-            // 
-            this.toolStripButtonRectangular.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRectangular.Image = global::WatchCilent.Properties.Resource1.Rectangular;
-            this.toolStripButtonRectangular.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRectangular.Name = "toolStripButtonRectangular";
-            this.toolStripButtonRectangular.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRectangular.Text = "添加矩形";
-            // 
+        	this.toolStrip = new System.Windows.Forms.ToolStrip();
+        	this.toolStripButtonRectangular = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripButtonEllipse = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripButtonText = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripButtonArrow = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripButtonLine = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+        	this.toolStripButtonRedo = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+        	this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+        	this.toolStripButtonAccept = new System.Windows.Forms.ToolStripButton();
+        	this.toolStrip.SuspendLayout();
+        	this.SuspendLayout();
+        	// 
+        	// toolStrip
+        	// 
+        	this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+        	this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+        	        	        	this.toolStripButtonRectangular,
+        	        	        	this.toolStripButtonEllipse,
+        	        	        	this.toolStripButtonText,
+        	        	        	this.toolStripButtonArrow,
+        	        	        	this.toolStripButtonLine,
+        	        	        	this.toolStripSeparator1,
+        	        	        	this.toolStripButtonRedo,
+        	        	        	this.toolStripButtonSave,
+        	        	        	this.toolStripSeparator2,
+        	        	        	this.toolStripButtonExit,
+        	        	        	this.toolStripButtonAccept});
+        	this.toolStrip.Location = new System.Drawing.Point(2, 2);
+        	this.toolStrip.Name = "toolStrip";
+        	this.toolStrip.Size = new System.Drawing.Size(220, 25);
+        	this.toolStrip.TabIndex = 0;
+        	this.toolStrip.Text = "toolStrip1";
+        	// 
+        	// toolStripButtonRectangular
+        	// 
+        	this.toolStripButtonRectangular.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+        	this.toolStripButtonRectangular.Image = global::WatchCilent.Properties.Resource1.Rectangular;
+        	this.toolStripButtonRectangular.ImageTransparentColor = System.Drawing.Color.Magenta;
+        	this.toolStripButtonRectangular.Name = "toolStripButtonRectangular";
+        	this.toolStripButtonRectangular.Size = new System.Drawing.Size(23, 22);
+        	this.toolStripButtonRectangular.Text = "添加矩形";
+        	// 
             // toolStripButtonEllipse
             // 
             this.toolStripButtonEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -162,20 +162,18 @@ namespace WatchCilent.UI.UICheck
             this.toolStripButtonAccept.Name = "toolStripButtonAccept";
             this.toolStripButtonAccept.Size = new System.Drawing.Size(23, 20);
             this.toolStripButtonAccept.Text = "完成截图";
-            // 
-            // DrawToolsControl
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.toolStrip);
-            this.Name = "DrawToolsControl";
-            this.Padding = new System.Windows.Forms.Padding(2);
-            this.Size = new System.Drawing.Size(224, 29);
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        	// DrawToolsControl
+        	// 
+        	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        	this.Controls.Add(this.toolStrip);
+        	this.Name = "DrawToolsControl";
+        	this.Padding = new System.Windows.Forms.Padding(2);
+        	this.Size = new System.Drawing.Size(224, 29);
+        	this.toolStrip.ResumeLayout(false);
+        	this.toolStrip.PerformLayout();
+        	this.ResumeLayout(false);
+        	this.PerformLayout();
         }
 
         #endregion

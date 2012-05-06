@@ -26,55 +26,43 @@ namespace WatchCilent.UI.UICheck
 		private Point _mouseDownPoint;
         private Point _endPoint;
         private bool _mouseDown;
+        private OperateManager _operateManager;
+        
+         private DrawStyle DrawStyle
+        {
+            get { return DrawStyle.Ellipse; }
+        }
+         
+         internal OperateManager OperateManager
+        {
+            get
+            {
+                if (_operateManager == null)
+                {
+                    _operateManager = new OperateManager();
+                }
+                return _operateManager;
+            }
+        }
+
 		
 		public PaintPictureBox()
 		{
 		}
 		
 		
-		protected override void OnPaint(PaintEventArgs pe)
+		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(pe);
+			base.OnPaint(e);
 			
-			if (_mouseDown)
-            {
-                
-                    if (DrawStyle != DrawStyle.None)
-                    {
-                        _endPoint = e.Location;
-                        if (DrawStyle == DrawStyle.Line)
-                        {
-                            LinePointList.Add(_endPoint);
-                        }
-                        base.Invalidate();
-                    }
-                    else if (SizeGrip != SizeGrip.None)
-                    {
-                        ChangeSelctImageRect(e.Location);
-                    }
+			 Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+			
+			DrawOperate(g);
 
-            }
-            else
+            if (DrawStyle != DrawStyle.None)
             {
-               
-                if (DrawStyle == DrawStyle.None)
-                {
-                    if (OperateManager.OperateCount == 0)
-                    {
-                        SetSizeGrip(e.Location);
-                    }
-                }
-                else
-                {
-                    if(SelectImageRect.Contains(e.Location))
-                    {
-                        Cursor = DrawCursor;
-                    }
-                    else
-                    {
-                        Cursor = SelectCursor;
-                    }
-                }
+                DrawTools(g, _endPoint);
             }
 			
 		}
@@ -85,24 +73,8 @@ namespace WatchCilent.UI.UICheck
 			
             if (e.Button == MouseButtons.Left)
             {
-                if (SelectedImage)
-                {
-                    if (DrawStyle != DrawStyle.None)
-                    {
-                        _mouseDown = true;
-                        _mouseDownPoint = e.Location;
-
-                        if (DrawStyle == DrawStyle.Line)
-                        {
-                            LinePointList.Add(_mouseDownPoint);
-                        }
-                    }
-                }
-                else
-                {
                     _mouseDown = true;
                     _mouseDownPoint = e.Location;
-                }
             }
 		}
 		
@@ -123,13 +95,57 @@ namespace WatchCilent.UI.UICheck
                 
                 _endPoint = e.Location;
                 base.Invalidate();
+                
+                if(_mouseDown)
+                {
+	                if (DrawStyle != DrawStyle.None)
+	                {
+	                    AddOperate(e.Location);
+	                }
+                }
                
                 _mouseDown = false;
                 _mouseDownPoint = Point.Empty;
             }
         }
 		
-		
+		private void AddOperate(Point point)
+        {
+            
+
+            Color color = Color.Red;
+            switch (DrawStyle)
+            {
+                case DrawStyle.Rectangle:
+                    OperateManager.AddOperate(
+                        OperateType.DrawRectangle,
+                        color,
+                       Rectangle.FromLTRB(
+                        _mouseDownPoint.X,
+                        _mouseDownPoint.Y,
+                        point.X,
+                        point.Y));
+                    break;
+                case DrawStyle.Ellipse:
+                    OperateManager.AddOperate(
+                       OperateType.DrawEllipse,
+                       color,
+                      Rectangle.FromLTRB(
+                       _mouseDownPoint.X,
+                       _mouseDownPoint.Y,
+                       point.X,
+                       point.Y));
+                    break;
+                case DrawStyle.Arrow:
+                    Point[] points = new Point[] { _mouseDownPoint, point };
+                    OperateManager.AddOperate(
+                        OperateType.DrawArrow,
+                        color,
+                        points);
+                    break;
+                
+            }
+        }
 		
 		public Bitmap GetImg()
 		{
@@ -139,5 +155,102 @@ namespace WatchCilent.UI.UICheck
 		}
 		
 		
+		 private void DrawOperate(Graphics g)
+        {
+            foreach (OperateObject obj in OperateManager.OperateList)
+            {
+                switch (obj.OperateType)
+                {
+                    case OperateType.DrawRectangle:
+                        using (Pen pen = new Pen(obj.Color))
+                        {
+                            g.DrawRectangle(
+                                pen,
+                                (Rectangle)obj.Data);
+                        }
+                        break;
+                    case OperateType.DrawEllipse:
+                        using (Pen pen = new Pen(obj.Color))
+                        {
+                            g.DrawEllipse(
+                                pen,
+                                (Rectangle)obj.Data);
+                        }
+                        break;
+                    case OperateType.DrawArrow:
+                        Point[] points = obj.Data as Point[];
+                        using (Pen pen = new Pen(obj.Color))
+                        {
+                            pen.EndCap = LineCap.Custom;
+                            pen.CustomEndCap = new AdjustableArrowCap(4, 4, true);
+                            g.DrawLine(pen, points[0], points[1]);
+                        }
+                        break;
+                    case OperateType.DrawLine:
+                        using (Pen pen = new Pen(obj.Color))
+                        {
+                            g.DrawLines(pen, obj.Data as Point[]);
+                        }
+                        break;
+                }
+            }
+        }
+		
+		 private void DrawTools(Graphics g, Point point)
+        {
+            
+            switch (DrawStyle)
+            {
+                case DrawStyle.Rectangle:
+                    using (Pen pen = new Pen(Color.Red))
+                    {
+                        g.DrawRectangle(
+                            pen,
+                            Rectangle.FromLTRB(
+                            _mouseDownPoint.X,
+                            _mouseDownPoint.Y,
+                            point.X,
+                            point.Y));
+                    }
+                    break;
+                case DrawStyle.Ellipse:
+                    using (Pen pen = new Pen(Color.Red))
+                    {
+                        g.DrawEllipse(
+                            pen,
+                            Rectangle.FromLTRB(
+                            _mouseDownPoint.X,
+                            _mouseDownPoint.Y,
+                            point.X,
+                            point.Y));
+                    }
+                    break;
+                case DrawStyle.Arrow:
+                    using (Pen pen = new Pen(Color.Red))
+                    {
+                        pen.EndCap = LineCap.ArrowAnchor;
+                        pen.EndCap = LineCap.Custom;
+                        pen.CustomEndCap = new AdjustableArrowCap(4, 4, true);
+                        g.DrawLine(pen, _mouseDownPoint, point);
+                    }
+                    break;
+                case DrawStyle.Text:
+                    using (Pen pen = new Pen(Color.Red))
+                    {
+                        pen.DashStyle = DashStyle.DashDot;
+                        pen.DashCap = DashCap.Round;
+                        pen.DashPattern = new float[] { 9f, 3f, 3f, 3f };
+
+                        g.DrawRectangle(
+                            pen,
+                            Rectangle.FromLTRB(
+                            _mouseDownPoint.X,
+                            _mouseDownPoint.Y,
+                            point.X,
+                            point.Y));
+                    }
+                    break;
+            }
+        }
 	}
 }
