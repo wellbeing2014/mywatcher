@@ -60,6 +60,7 @@ namespace WatchCilent.UI.UICheck
             drawToolsControl.ButtonDrawStyleClick += new EventHandler(
                 DrawToolsControlButtonDrawStyleClick);
              colorSelector.ColorChanged += new EventHandler(colorSelector_ColorChanged);
+             colorSelector.FontSizeChanged += new EventHandler(colorSelector_FontSizeChanged);
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -74,6 +75,11 @@ namespace WatchCilent.UI.UICheck
 		}
 		
 		
+			
+		private void colorSelector_FontSizeChanged(object sender, EventArgs e)
+		{
+			this.pictureBox1.
+		}
 		private void colorSelector_ColorChanged(object sender, EventArgs e)
 		{
 			this.pictureBox1.SelectColor = SelectedColor;
