@@ -186,11 +186,14 @@
     </Compile>
     <Compile Include="UI\Theme\TreeViewCheck.cs" />
     <Compile Include="UI\UICheck\CaptureImageToolColorTable.cs" />
+    <Compile Include="UI\UICheck\ColorLabel.cs" />
     <Compile Include="UI\UICheck\ColorSelector.cs" />
     <Compile Include="UI\UICheck\ColorSelector.Designer.cs">
       <DependentUpon>ColorSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UICheck\ControlPaintEx.cs" />
     <Compile Include="UI\UICheck\DrawStyle.cs" />
+    <Compile Include="UI\UICheck\DrawTextData.cs" />
     <Compile Include="UI\UICheck\DrawToolsControl.cs" />
     <Compile Include="UI\UICheck\DrawToolsControl.Designer.cs">
       <DependentUpon>DrawToolsControl.cs</DependentUpon>
@@ -200,8 +203,11 @@
     <Compile Include="UI\UICheck\OperateManager.cs" />
     <Compile Include="UI\UICheck\OperateObject.cs" />
     <Compile Include="UI\UICheck\OperateType.cs" />
+    <Compile Include="UI\UICheck\PaintPictureBox.cs" />
+    <Compile Include="UI\UICheck\RegionHelper.cs" />
     <Compile Include="UI\UICheck\RoundStyle.cs" />
     <Compile Include="UI\UICheck\SizeGrip.cs" />
+    <Compile Include="UI\UICheck\ToolStripRendererEx.cs" />
     <Compile Include="UI\UICheck\UICheck.cs" />
     <Compile Include="UI\UICheck\UICheck.Designer.cs">
       <DependentUpon>UICheck.cs</DependentUpon>
