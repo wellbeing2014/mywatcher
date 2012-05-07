@@ -27,11 +27,39 @@ namespace WatchCilent.UI.UICheck
         private Point _endPoint;
         private bool _mouseDown;
         private OperateManager _operateManager;
+        private DrawStyle _drawStyle;
+        private Color _selectColor;
+        private List<Point> _linePointList;
+        private static readonly object EventTextBoxShow = new object();
         
-         private DrawStyle DrawStyle
+        public event EventHandler TextBoxShow
         {
-            get { return DrawStyle.Ellipse; }
+            add { base.Events.AddHandler(EventTextBoxShow, value); }
+            remove { base.Events.RemoveHandler(EventTextBoxShow, value); }
         }
+        
+		public Color SelectColor {
+			get { return _selectColor; }
+			set { _selectColor = value; }
+		}
+        
+		public DrawStyle DrawStyle {
+			get { return _drawStyle; }
+			set { _drawStyle = value; }
+		}
+        
+        private List<Point> LinePointList
+        {
+            get
+            {
+                if (_linePointList == null)
+                {
+                    _linePointList = new List<Point>(100);
+                }
+                return _linePointList;
+            }
+        }
+
          
          internal OperateManager OperateManager
         {
@@ -43,6 +71,7 @@ namespace WatchCilent.UI.UICheck
                 }
                 return _operateManager;
             }
+            
         }
 
 		
@@ -55,15 +84,18 @@ namespace WatchCilent.UI.UICheck
 		{
 			base.OnPaint(e);
 			
+			
 			 Graphics g = e.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.SmoothingMode = SmoothingMode.HighQuality;
 			
 			DrawOperate(g);
-
-            if (DrawStyle != DrawStyle.None)
-            {
-                DrawTools(g, _endPoint);
-            }
+			if(_mouseDown)
+			{
+		        if (DrawStyle != DrawStyle.None)
+		        {
+		            DrawTools(g, _endPoint);
+		        }
+			}
 			
 		}
 		
@@ -73,16 +105,27 @@ namespace WatchCilent.UI.UICheck
 			
             if (e.Button == MouseButtons.Left)
             {
-                    _mouseDown = true;
-                    _mouseDownPoint = e.Location;
+                 _mouseDown = true;
+                 _mouseDownPoint = e.Location;
             }
+            
+          
 		}
 		
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			base.OnMouseMove(e);
 			_endPoint = e.Location;
+			if(_mouseDown)
+			{
+				if (DrawStyle == DrawStyle.Line)
+	            {
+	                LinePointList.Add(_endPoint);
+	            }
+				
+			}
 			base.Invalidate();
+			
 		}
 		
 		
@@ -103,7 +146,6 @@ namespace WatchCilent.UI.UICheck
 	                    AddOperate(e.Location);
 	                }
                 }
-               
                 _mouseDown = false;
                 _mouseDownPoint = Point.Empty;
             }
@@ -111,9 +153,7 @@ namespace WatchCilent.UI.UICheck
 		
 		private void AddOperate(Point point)
         {
-            
-
-            Color color = Color.Red;
+            Color color = this.SelectColor ;
             switch (DrawStyle)
             {
                 case DrawStyle.Rectangle:
@@ -142,6 +182,39 @@ namespace WatchCilent.UI.UICheck
                         OperateType.DrawArrow,
                         color,
                         points);
+                    break;
+                    
+                case DrawStyle.Line:
+                    if (LinePointList.Count < 2)
+                    {
+                        return;
+                    }
+                    OperateManager.AddOperate(
+                        OperateType.DrawLine, 
+                        color, 
+                        LinePointList.ToArray());
+                    LinePointList.Clear();
+                    break;
+                 case DrawStyle.Text:
+                   EventHandler handler = base.Events[EventTextBoxShow] as EventHandler;
+		            if (handler != null)
+		            {
+		            	handler(this,new EventArgs());
+		            }
+                    Rectangle textRect = Rectangle.FromLTRB(
+                       _mouseDownPoint.X,
+                       _mouseDownPoint.Y,
+                       point.X,
+                       point.Y);
+                    DrawTextData textData = new DrawTextData(
+                        "fasdfasdf",
+                        base.Font,
+                        textRect);
+
+                    OperateManager.AddOperate(
+                        OperateType.DrawText,
+                        color,
+                        textData);
                     break;
                 
             }
@@ -192,6 +265,34 @@ namespace WatchCilent.UI.UICheck
                             g.DrawLines(pen, obj.Data as Point[]);
                         }
                         break;
+                        
+                    case OperateType.DrawText:
+                        DrawTextData textdata = obj.Data as DrawTextData;
+
+                        if (string.IsNullOrEmpty(textdata.Text))
+                        {
+                            using (Pen pen = new Pen(obj.Color))
+                            {
+                                pen.DashStyle = DashStyle.DashDot;
+                                pen.DashCap = DashCap.Round;
+                                pen.DashPattern = new float[] { 9f, 3f, 3f, 3f };
+                                g.DrawRectangle(
+                                    pen,
+                                    textdata.TextRect);
+                            }
+                        }
+                        else
+                        {
+                            using (SolidBrush brush = new SolidBrush(obj.Color))
+                            {
+                                g.DrawString(
+                                    textdata.Text,
+                                    textdata.Font,
+                                    brush,
+                                    textdata.TextRect);
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -202,7 +303,7 @@ namespace WatchCilent.UI.UICheck
             switch (DrawStyle)
             {
                 case DrawStyle.Rectangle:
-                    using (Pen pen = new Pen(Color.Red))
+                    using (Pen pen = new Pen(this.SelectColor))
                     {
                         g.DrawRectangle(
                             pen,
@@ -214,7 +315,7 @@ namespace WatchCilent.UI.UICheck
                     }
                     break;
                 case DrawStyle.Ellipse:
-                    using (Pen pen = new Pen(Color.Red))
+                    using (Pen pen = new Pen(this.SelectColor))
                     {
                         g.DrawEllipse(
                             pen,
@@ -226,7 +327,7 @@ namespace WatchCilent.UI.UICheck
                     }
                     break;
                 case DrawStyle.Arrow:
-                    using (Pen pen = new Pen(Color.Red))
+                    using (Pen pen = new Pen(this.SelectColor))
                     {
                         pen.EndCap = LineCap.ArrowAnchor;
                         pen.EndCap = LineCap.Custom;
@@ -235,7 +336,7 @@ namespace WatchCilent.UI.UICheck
                     }
                     break;
                 case DrawStyle.Text:
-                    using (Pen pen = new Pen(Color.Red))
+                    using (Pen pen = new Pen(this.SelectColor))
                     {
                         pen.DashStyle = DashStyle.DashDot;
                         pen.DashCap = DashCap.Round;
@@ -250,7 +351,33 @@ namespace WatchCilent.UI.UICheck
                             point.Y));
                     }
                     break;
+                case DrawStyle.Line:
+                    if (LinePointList.Count < 2)
+                    {
+                        return;
+                    }
+
+                    Point[] points = LinePointList.ToArray();
+
+                    using (Pen pen = new Pen(this.SelectColor))
+                    {
+                        g.DrawLines(
+                           pen,
+                           points);
+                    }
+                    break;
             }
         }
+		 
+		public Rectangle ShowTextBox()
+        {
+            Rectangle bounds = 
+                Rectangle.FromLTRB(
+                _mouseDownPoint.X,
+                _mouseDownPoint.Y,
+                _endPoint.X,
+                _endPoint.Y);
+            return bounds;
+		}
 	}
 }

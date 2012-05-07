@@ -24,6 +24,20 @@ namespace WatchCilent.UI.UICheck
 	public partial class UICheck : Form
 	{
 		
+		 public DrawStyle DrawStyle
+        {
+            get { return drawToolsControl.DrawStyle; }
+        }
+		 
+		private Color SelectedColor
+        {
+            get { return colorSelector.SelectedColor;}
+        }
+		
+		private int FontSize
+        {
+            get { return colorSelector.FontSize; }
+        }
 		public UICheck()
 		{
 			//
@@ -31,8 +45,21 @@ namespace WatchCilent.UI.UICheck
 			//
 			InitializeComponent();
 			 
-            Bitmap b = new Bitmap(@"E:\1.jpg");
+            Bitmap b = new Bitmap(@"QQ截图20120504102314.jpg");
             this.pictureBox1.Image=b;
+            
+            this.pictureBox1.SelectColor = Color.Red;
+            this.textBox.Visible = false;
+            this.colorSelector.Visible = false;
+//             drawToolsControl.ButtonAcceptClick += new EventHandler(
+//                DrawToolsControlButtonAcceptClick);
+//            drawToolsControl.ButtonSaveClick += new EventHandler(
+//                DrawToolsControlButtonSaveClick);
+            drawToolsControl.ButtonRedoClick += new EventHandler(
+                DrawToolsControlButtonRedoClick);
+            drawToolsControl.ButtonDrawStyleClick += new EventHandler(
+                DrawToolsControlButtonDrawStyleClick);
+             colorSelector.ColorChanged += new EventHandler(colorSelector_ColorChanged);
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -45,5 +72,82 @@ namespace WatchCilent.UI.UICheck
 			Bitmap b = this.pictureBox1.GetImg();
 			b.Save("E:\\1.jpg", System.Drawing.Imaging.ImageFormat.Jpeg); 
 		}
+		
+		
+		private void colorSelector_ColorChanged(object sender, EventArgs e)
+		{
+			this.pictureBox1.SelectColor = SelectedColor;
+		}
+		
+		private void DrawToolsControlButtonRedoClick(object sender, EventArgs e)
+        {
+            if (this.pictureBox1.OperateManager.OperateCount > 0)
+            {
+                this.pictureBox1.OperateManager.RedoOperate();
+                this.pictureBox1.Invalidate();
+            }
+        }
+		private void DrawToolsControlButtonDrawStyleClick(object sender, EventArgs e)
+        {
+			this.pictureBox1.DrawStyle = DrawStyle;
+			this.pictureBox1.SelectColor = Color.Red;
+			switch (DrawStyle)
+            {
+                case DrawStyle.Rectangle:
+                case DrawStyle.Ellipse:
+                case DrawStyle.Arrow:
+                case DrawStyle.Line:
+                    colorSelector.Reset();
+                    ShowColorSelector();
+                   
+                    break;
+                case DrawStyle.Text:
+                    colorSelector.ChangeToFontStyle();
+                    ShowColorSelector();
+                   
+                    break;
+                case DrawStyle.None:
+                    HideColorSelector();
+                    break;
+            }
+        }
+		
+		private void ShowColorSelector()
+        {
+            if (!colorSelector.Visible)
+            {
+            	this.pictureBox1.SelectColor = Color.Red;
+                colorSelector.Visible = true;
+            }
+        }
+		
+		 private void HideColorSelector()
+        {
+            if (colorSelector.Visible)
+            {
+                colorSelector.Visible = false;
+                colorSelector.Reset();
+            }
+        }
+		 
+		  private void HideTextBox()
+        {
+            textBox.Visible = false;
+            textBox.Text = string.Empty;
+        }
+		  
+		private void ShowTextBox()
+        {
+			Rectangle  bounds = this.pictureBox1.ShowTextBox();
+            bounds.Inflate(-1, -1);
+            textBox.Bounds = bounds;
+            textBox.Text = "";
+            textBox.ForeColor = SelectedColor;
+            textBox.Font = new Font(
+               textBox.Font.FontFamily,
+               (float)FontSize);
+            textBox.Visible = true;
+            textBox.Focus();
+        }
 	}
 }
