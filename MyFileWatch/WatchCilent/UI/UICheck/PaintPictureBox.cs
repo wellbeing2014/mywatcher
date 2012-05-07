@@ -29,6 +29,8 @@ namespace WatchCilent.UI.UICheck
         private OperateManager _operateManager;
         private DrawStyle _drawStyle;
         private Color _selectColor;
+        private Font _textFont;
+        
         private List<Point> _linePointList;
         private static readonly object EventTextBoxShow = new object();
         
@@ -37,6 +39,11 @@ namespace WatchCilent.UI.UICheck
             add { base.Events.AddHandler(EventTextBoxShow, value); }
             remove { base.Events.RemoveHandler(EventTextBoxShow, value); }
         }
+        
+        public Font TextFont {
+			get { return _textFont; }
+			set { _textFont = value; }
+		}
         
 		public Color SelectColor {
 			get { return _selectColor; }
