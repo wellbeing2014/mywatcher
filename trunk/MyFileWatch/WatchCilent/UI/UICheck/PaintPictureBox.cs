@@ -29,20 +29,26 @@ namespace WatchCilent.UI.UICheck
         private OperateManager _operateManager;
         private DrawStyle _drawStyle;
         private Color _selectColor;
-        private Font _textFont;
+        private int _textFontSize;
         
         private List<Point> _linePointList;
         private static readonly object EventTextBoxShow = new object();
+        private static readonly object EventTextBoxHide = new object();
         
+        public event EventHandler TextBoxHide
+        {
+            add { base.Events.AddHandler(EventTextBoxHide, value); }
+            remove { base.Events.RemoveHandler(EventTextBoxHide, value); }
+        }
         public event EventHandler TextBoxShow
         {
             add { base.Events.AddHandler(EventTextBoxShow, value); }
             remove { base.Events.RemoveHandler(EventTextBoxShow, value); }
         }
         
-        public Font TextFont {
-			get { return _textFont; }
-			set { _textFont = value; }
+        public int TextFontSize {
+			get { return _textFontSize; }
+			set { _textFontSize = value; }
 		}
         
 		public Color SelectColor {
@@ -112,6 +118,15 @@ namespace WatchCilent.UI.UICheck
 			
             if (e.Button == MouseButtons.Left)
             {
+            	if(DrawStyle == DrawStyle.Text)
+            	{
+            		
+            		Rectangle rec = new Rectangle(_mouseDownPoint.X,_mouseDownPoint.Y,_endPoint.X,_endPoint.Y);
+            		if(!rec.Contains(e.Location))
+            		{
+            			OnTextBoxHide();
+            		}
+            	}
                  _mouseDown = true;
                  _mouseDownPoint = e.Location;
             }
@@ -214,7 +229,7 @@ namespace WatchCilent.UI.UICheck
                        point.X,
                        point.Y);
                     DrawTextData textData = new DrawTextData(
-                        "fasdfasdf",
+                        string.Empty,
                         base.Font,
                         textRect);
 
@@ -226,6 +241,15 @@ namespace WatchCilent.UI.UICheck
                 
             }
         }
+		
+		private void OnTextBoxHide()
+		{
+			EventHandler handler = base.Events[EventTextBoxHide] as EventHandler;
+            if (handler != null)
+            {
+            	handler(this,new EventArgs());
+            }
+		}
 		
 		public Bitmap GetImg()
 		{

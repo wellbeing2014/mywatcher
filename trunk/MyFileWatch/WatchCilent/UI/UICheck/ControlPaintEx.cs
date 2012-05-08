@@ -1,8 +1,8 @@
 ﻿/*
  * 由SharpDevelop创建。
- * 用户： wellbeing
- * 日期: 2012/5/7
- * 时间: 19:04
+ * 用户： ZhuXinpei
+ * 日期: 2012/5/4
+ * 时间: 10:00
  * 
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
@@ -19,7 +19,7 @@ namespace WatchCilent.UI.UICheck
 	/// <summary>
 	/// Description of ControlPaintEx.
 	/// </summary>
-	 public sealed class ControlPaintEx
+	public sealed class ControlPaintEx
     {
         public static void DrawCheckedFlag(Graphics graphics, Rectangle rect, Color color)
         {
@@ -266,6 +266,6 @@ namespace WatchCilent.UI.UICheck
                 }
             }
             return rectangle;
-          }
-       }
+        }
+    }
 }
