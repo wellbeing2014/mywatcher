@@ -76,9 +76,9 @@ namespace WatchCilent.UI.UICheck
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.panel2.AutoScroll = true;
 			this.panel2.Controls.Add(this.pictureBox1);
-			this.panel2.Location = new System.Drawing.Point(3, 3);
+			this.panel2.Location = new System.Drawing.Point(0, 0);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(635, 313);
+			this.panel2.Size = new System.Drawing.Size(638, 313);
 			this.panel2.TabIndex = 5;
 			// 
 			// pictureBox1
