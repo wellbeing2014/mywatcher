@@ -50,6 +50,37 @@ namespace WatchCilent.UI.UICheck
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			//System.Diagnostics.Trace.WriteLine("aaaaaa");
+            Bitmap b = new Bitmap(@"QQ截图20120504102314.jpg");
+            this.pictureBox1.Image=b;
+//            
+//            this.pictureBox1.SelectColor = Color.Red;
+//            this.textBox.Visible = false;
+//            this.colorSelector.Visible = false;  
+//            drawToolsControl.ButtonRedoClick += new EventHandler(
+//                DrawToolsControlButtonRedoClick);
+//            drawToolsControl.ButtonDrawStyleClick += new EventHandler(
+//                DrawToolsControlButtonDrawStyleClick);
+//            colorSelector.ColorChanged += new EventHandler(colorSelector_ColorChanged);
+//            colorSelector.FontSizeChanged += new EventHandler(colorSelector_FontSizeChanged);
+//             
+//            this.pictureBox1.TextBoxHide += new EventHandler(TextBoxExLostFocus);
+//            this.pictureBox1.TextBoxShow +=new EventHandler(pictureBox1_TextBoxShow);
+			this.drawToolsControl.Visible = false;
+			this.colorSelector.Visible = false; 
+            this.textBox.Visible = false;
+            this.CenterToParent();
+			//
+			// TODO: Add constructor code after the InitializeComponent() call.
+			//
+		}
+		
+		public UICheck(string id)
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
 			 System.Diagnostics.Trace.WriteLine("aaaaaa");
             Bitmap b = new Bitmap(@"QQ截图20120504102314.jpg");
             this.pictureBox1.Image=b;
@@ -66,6 +97,8 @@ namespace WatchCilent.UI.UICheck
              
             this.pictureBox1.TextBoxHide += new EventHandler(TextBoxExLostFocus);
             this.pictureBox1.TextBoxShow +=new EventHandler(pictureBox1_TextBoxShow);
+            
+            this.CenterToParent();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//

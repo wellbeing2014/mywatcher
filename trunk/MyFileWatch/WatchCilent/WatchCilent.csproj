@@ -212,6 +212,10 @@
     <Compile Include="UI\UICheck\UICheck.Designer.cs">
       <DependentUpon>UICheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UICheck\UICheckList.cs" />
+    <Compile Include="UI\UICheck\UICheckList.Designer.cs">
+      <DependentUpon>UICheckList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Web References\WimsToTest\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UICheck\UICheck.resx">
       <DependentUpon>UICheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UICheck\UICheckList.resx">
+      <DependentUpon>UICheckList.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Icons\Accept.ico" />

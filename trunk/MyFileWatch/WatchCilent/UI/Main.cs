@@ -291,6 +291,10 @@ namespace WatchCilent.UI
 		{
 			changeForm(this.themelistUI1);
 		}
+		void 界面检查ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			changeForm(this.uichecklist1);
+		}
 		
 	}
 }
