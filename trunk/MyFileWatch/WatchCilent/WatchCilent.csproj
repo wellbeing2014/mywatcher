@@ -313,6 +313,7 @@
     <None Include="Icons\Save.ico" />
     <None Include="Icons\Text.ico" />
     <None Include="releasenote.txt" />
+    <None Include="UICheckInfo.sql" />
     <None Include="Web References\WimsToTest\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
