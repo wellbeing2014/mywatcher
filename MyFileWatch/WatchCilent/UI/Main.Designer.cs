@@ -45,11 +45,13 @@ namespace WatchCilent.UI
 			this.publishUI1 = new WatchCilent.UI.Pub.PublishUI();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.themelistUI1 = new WatchCilent.UI.Theme.ThemeListUI();
+			this.uichecklist1 = new WatchCilent.UI.UICheck.UICheckList();
 			this.更新包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.发布ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.主题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.界面检查ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +63,7 @@ namespace WatchCilent.UI
 			this.新建缺陷单元ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.接收自动处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.接收不自动处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			
 			this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -84,6 +87,7 @@ namespace WatchCilent.UI
 			this.panel2.Controls.Add(this.publishUI1);
 			this.panel2.Controls.Add(this.testlistUI1);
 			this.panel2.Controls.Add(this.themelistUI1);
+			this.panel2.Controls.Add(this.uichecklist1);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(0, 24);
 			this.panel2.Name = "panel2";
@@ -116,12 +120,18 @@ namespace WatchCilent.UI
 			this.themelistUI1.Location = new System.Drawing.Point(0, 0);
 			this.themelistUI1.Name = "themelistUI1";
 			this.themelistUI1.Visible = false;
+			
+			this.uichecklist1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.uichecklist1.Location = new System.Drawing.Point(0, 0);
+			this.uichecklist1.Name = "uichecklist1";
+			this.uichecklist1.Visible = false;
 			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.更新包ToolStripMenuItem,
 									this.toolStripMenuItem1,
+									this.界面检查ToolStripMenuItem,
 									this.发布ToolStripMenuItem,
 									this.配置ToolStripMenuItem,
 									this.主题ToolStripMenuItem,
@@ -159,7 +169,13 @@ namespace WatchCilent.UI
 			this.主题ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
 			this.主题ToolStripMenuItem.Text = "主题";
 			this.主题ToolStripMenuItem.Click += new System.EventHandler(this.主题ToolStripMenuItemClick);
-			
+			// 
+			// 界面检查ToolStripMenuItem
+			// 
+			this.界面检查ToolStripMenuItem.Name = "界面检查ToolStripMenuItem";
+			this.界面检查ToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+			this.界面检查ToolStripMenuItem.Text = "界面检查";
+			this.界面检查ToolStripMenuItem.Click += new System.EventHandler(this.界面检查ToolStripMenuItemClick);
 			// 
 			// 配置ToolStripMenuItem
 			// 
@@ -287,6 +303,7 @@ namespace WatchCilent.UI
 		private System.Windows.Forms.ToolStripMenuItem 配置ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 主题ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 更新包ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 界面检查ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.Panel panel1;
@@ -294,6 +311,8 @@ namespace WatchCilent.UI
 		private WatchCilent.UI.Pub.PublishUI  publishUI1;
 		private WatchCilent.UI.Test.TestListUI testlistUI1;
 		private WatchCilent.UI.Theme.ThemeListUI themelistUI1;
+		private WatchCilent.UI.UICheck.UICheckList uichecklist1;
+		
 		//private WatchCilent.PackageUI packageUI1;
 		
 		

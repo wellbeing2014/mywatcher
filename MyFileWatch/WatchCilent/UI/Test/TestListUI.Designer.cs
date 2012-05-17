@@ -307,9 +307,9 @@ namespace WatchCilent.UI.Test
 			// 
 			this.checkBox2.Checked = true;
 			this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBox2.Location = new System.Drawing.Point(138, 15);
+			this.checkBox2.Location = new System.Drawing.Point(138, 18);
 			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(61, 24);
+			this.checkBox2.Size = new System.Drawing.Size(61, 17);
 			this.checkBox2.TabIndex = 28;
 			this.checkBox2.Text = "时间段";
 			this.checkBox2.UseVisualStyleBackColor = true;
@@ -317,14 +317,14 @@ namespace WatchCilent.UI.Test
 			// 
 			// dateTimePicker1
 			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(221, 17);
+			this.dateTimePicker1.Location = new System.Drawing.Point(221, 15);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(106, 21);
 			this.dateTimePicker1.TabIndex = 38;
 			// 
 			// dateTimePicker2
 			// 
-			this.dateTimePicker2.Location = new System.Drawing.Point(356, 17);
+			this.dateTimePicker2.Location = new System.Drawing.Point(356, 15);
 			this.dateTimePicker2.Name = "dateTimePicker2";
 			this.dateTimePicker2.Size = new System.Drawing.Size(107, 21);
 			this.dateTimePicker2.TabIndex = 39;
@@ -333,7 +333,7 @@ namespace WatchCilent.UI.Test
 			// 
 			this.label1.Location = new System.Drawing.Point(196, 20);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(19, 18);
+			this.label1.Size = new System.Drawing.Size(19, 17);
 			this.label1.TabIndex = 40;
 			this.label1.Text = "起";
 			// 
@@ -341,7 +341,7 @@ namespace WatchCilent.UI.Test
 			// 
 			this.label2.Location = new System.Drawing.Point(333, 20);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(17, 18);
+			this.label2.Size = new System.Drawing.Size(17, 17);
 			this.label2.TabIndex = 41;
 			this.label2.Text = "止";
 			// 
