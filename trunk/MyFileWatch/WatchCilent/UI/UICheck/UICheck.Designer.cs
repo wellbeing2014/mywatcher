@@ -38,6 +38,8 @@ namespace WatchCilent.UI.UICheck
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel3 = new System.Windows.Forms.Panel();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.multiColumnFilterComboBox1 = new MFCComboBox.MultiColumnFilterComboBox();
 			this.comboBox3 = new System.Windows.Forms.ComboBox();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -56,6 +58,7 @@ namespace WatchCilent.UI.UICheck
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -64,6 +67,7 @@ namespace WatchCilent.UI.UICheck
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.label4);
 			this.panel1.Controls.Add(this.panel3);
 			this.panel1.Controls.Add(this.panel2);
 			this.panel1.Controls.Add(this.drawToolsControl);
@@ -83,6 +87,8 @@ namespace WatchCilent.UI.UICheck
 			// 
 			this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
+			this.panel3.Controls.Add(this.textBox2);
+			this.panel3.Controls.Add(this.label1);
 			this.panel3.Controls.Add(this.multiColumnFilterComboBox1);
 			this.panel3.Controls.Add(this.comboBox3);
 			this.panel3.Controls.Add(this.comboBox2);
@@ -96,13 +102,30 @@ namespace WatchCilent.UI.UICheck
 			this.panel3.Size = new System.Drawing.Size(621, 67);
 			this.panel3.TabIndex = 25;
 			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(64, 6);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.ReadOnly = true;
+			this.textBox2.Size = new System.Drawing.Size(108, 21);
+			this.textBox2.TabIndex = 22;
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(3, 9);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(58, 18);
+			this.label1.TabIndex = 21;
+			this.label1.Text = "检查编号";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// multiColumnFilterComboBox1
 			// 
 			this.multiColumnFilterComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.multiColumnFilterComboBox1.FormattingEnabled = true;
-			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(64, 9);
+			this.multiColumnFilterComboBox1.Location = new System.Drawing.Point(250, 9);
 			this.multiColumnFilterComboBox1.Name = "multiColumnFilterComboBox1";
-			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(548, 22);
+			this.multiColumnFilterComboBox1.Size = new System.Drawing.Size(362, 22);
 			this.multiColumnFilterComboBox1.TabIndex = 1;
 			// 
 			// comboBox3
@@ -131,7 +154,7 @@ namespace WatchCilent.UI.UICheck
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(3, 12);
+			this.label3.Location = new System.Drawing.Point(190, 13);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(58, 18);
 			this.label3.TabIndex = 5;
@@ -264,6 +287,16 @@ namespace WatchCilent.UI.UICheck
 			this.textBox.Size = new System.Drawing.Size(100, 21);
 			this.textBox.TabIndex = 0;
 			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label4.Location = new System.Drawing.Point(440, 298);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(56, 23);
+			this.label4.TabIndex = 26;
+			this.label4.Text = "(0/0)";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// UICheck
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -276,12 +309,16 @@ namespace WatchCilent.UI.UICheck
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel3.ResumeLayout(false);
+			this.panel3.PerformLayout();
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label2;
