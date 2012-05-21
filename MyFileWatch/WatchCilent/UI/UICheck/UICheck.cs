@@ -17,6 +17,10 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
+using WatchCore.dao;
+using WatchCore.pojo;
+using WatchCore.Common;
+using MFCComboBox;
 namespace WatchCilent.UI.UICheck
 {
 	/// <summary>
@@ -25,6 +29,7 @@ namespace WatchCilent.UI.UICheck
 	
 	public partial class UICheck : Form
 	{
+		
 		[DllImport("user32.dll", EntryPoint="GetScrollPos")]
 		public static extern int GetScrollPos (
 		 int hwnd,
@@ -44,28 +49,63 @@ namespace WatchCilent.UI.UICheck
         {
             get { return colorSelector.FontSize; }
         }
+		
+		
+		DataTable Source_Person = PersonDao.getPersonTable();
+		DataTable Source_Module = ModuleDao.getAllModuleTable();
+		DataTable Source_Project = ProjectInfoDao.getAllProjectTable();
+		
+		List<string> imagelist = new List<string>();
+		
+		//新建
 		public UICheck()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.KeyPreview = true;
+			
+			this.comboBox1.DataSource = Source_Person;
+			this.comboBox1.DisplayMember = "fullname";
+			this.comboBox1.ValueMember = "id";
+			this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			this.textBox2.Text =UICheckDao.getNewCheckNO();
+			
+			this.comboBox2.DataSource = Source_Module;
+			this.comboBox2.DisplayMember = "fullname";
+			this.comboBox2.ValueMember = "id";
+			this.comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;		
+
+			this.comboBox3.DataSource =Source_Project;
+			this.comboBox3.DisplayMember = "projectname";
+			this.comboBox3.ValueMember = "id";
+			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			this.multiColumnFilterComboBox1.DataSource = PackageDao.getAllUnTestPack();
+			
+			this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packagename",200,true));
+            this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("packtime", 60, true));
+            this.multiColumnFilterComboBox1.ViewColList.Add(new MComboColumn("code", 60, true));
+            this.multiColumnFilterComboBox1.DisplayMember = "packagename";
+            this.multiColumnFilterComboBox1.ValueMember = "id";
+            this.multiColumnFilterComboBox1.Validated+= new EventHandler(Package_SelectedValueChanged);
+			
+			
+			
+			
 			//System.Diagnostics.Trace.WriteLine("aaaaaa");
-            Bitmap b = new Bitmap(@"QQ截图20120504102314.jpg");
-            this.pictureBox1.Image=b;
-//            
-//            this.pictureBox1.SelectColor = Color.Red;
-//            this.textBox.Visible = false;
-//            this.colorSelector.Visible = false;  
-//            drawToolsControl.ButtonRedoClick += new EventHandler(
-//                DrawToolsControlButtonRedoClick);
-//            drawToolsControl.ButtonDrawStyleClick += new EventHandler(
-//                DrawToolsControlButtonDrawStyleClick);
-//            colorSelector.ColorChanged += new EventHandler(colorSelector_ColorChanged);
-//            colorSelector.FontSizeChanged += new EventHandler(colorSelector_FontSizeChanged);
-//             
-//            this.pictureBox1.TextBoxHide += new EventHandler(TextBoxExLostFocus);
-//            this.pictureBox1.TextBoxShow +=new EventHandler(pictureBox1_TextBoxShow);
+//            Bitmap b = new Bitmap(@"QQ截图20120504102314.jpg");
+//            this.pictureBox1.Image=b;
+			
+			this.KeyDown += new KeyEventHandler(pictureBox1_KeyDown);
+			//this.pictureBox1.Select();
+			
+			this.pictureBox1.Click += new EventHandler(pictureBox1_Click);
+
 			this.drawToolsControl.Visible = false;
 			this.colorSelector.Visible = false; 
             this.textBox.Visible = false;
@@ -75,6 +115,7 @@ namespace WatchCilent.UI.UICheck
 			//
 		}
 		
+		//修改查看
 		public UICheck(string id)
 		{
 			//
@@ -84,6 +125,7 @@ namespace WatchCilent.UI.UICheck
 			 System.Diagnostics.Trace.WriteLine("aaaaaa");
             Bitmap b = new Bitmap(@"QQ截图20120504102314.jpg");
             this.pictureBox1.Image=b;
+            
             
             this.pictureBox1.SelectColor = Color.Red;
             this.textBox.Visible = false;
@@ -104,6 +146,8 @@ namespace WatchCilent.UI.UICheck
 			//
 		}
 		
+		
+		#region 画图方法
 		void Button4Click(object sender, System.EventArgs e)
 		{
 			//this.pictureBox1.Image.Save(@"C:\Users\wellbeing.wellbeing-PC\Desktop\aa.jpg");
@@ -238,6 +282,98 @@ namespace WatchCilent.UI.UICheck
             textBox.Focus();
         }
 		
+		#endregion
+		//---------------------------------------------------------------------------------------------
 		
+		
+		/// <summary>
+		/// 选择更新包时自动绑定其他信息
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Package_SelectedValueChanged(object sender, EventArgs e)
+		{
+			if(this.multiColumnFilterComboBox1.SelectedItem==null)
+			{
+				return ;
+			}
+			DataRowView package =(DataRowView) this.multiColumnFilterComboBox1.SelectedItem;
+			string  moduleid =  package["realmoduleid"].ToString();
+			string  managerid =  package["managerid"].ToString();
+			//绑定主管
+			foreach (DataRow element in this.Source_Person.Rows) {
+				string tempid = element["id"].ToString();
+				if(tempid.Equals(managerid))
+				{
+					int sel = this.Source_Person.Rows.IndexOf(element);
+					this.comboBox1.SelectedIndex = sel;
+					break;
+				}
+			}
+			
+			//绑定模块（平台）
+			foreach (DataRow element in this.Source_Module.Rows) {
+				string tempid = element["id"].ToString();
+				if(tempid.Equals(moduleid))
+				{
+					int sel = this.Source_Module.Rows.IndexOf(element);
+					this.comboBox2.SelectedIndex = sel;
+					break;
+				}
+			}
+		}
+		
+		
+		void pictureBox1_Click(object sender, EventArgs e)
+		{
+			//System.Diagnostics.Trace.WriteLine("选中了");
+			this.pictureBox1.Select();
+		}
+		
+		
+		void pictureBox1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode==Keys.Delete)
+			{
+				this.pictureBox1.Image =null;
+			}
+			 if (e.Control==true && e.KeyCode == Keys.V)
+			 {
+				System.Windows.Forms.IDataObject   iData   =   System.Windows.Forms.Clipboard.GetDataObject(); 
+				System.Drawing.Image   retImage   =   null; 
+				if(   iData   !=     null   )   
+				{ 
+					if(   iData.GetDataPresent(   System.Windows.Forms.DataFormats.Bitmap   )   ) 
+					{ 
+						retImage   =   (System.Drawing.Image)iData.GetData(   System.Windows.Forms.DataFormats.Bitmap   ); 
+					}   
+					else   if(   iData.GetDataPresent(   System.Windows.Forms.DataFormats.Dib     )   ) 
+					{ 
+						retImage   =   (System.Drawing.Image)iData.GetData(   System.Windows.Forms.DataFormats.Dib   ); 
+					}
+					string imageurl = "Z:\\测试文档\\IMAGE\\"+this.textBox2.Text+"_"+((imagelist.Count+1)<10?("0"+(imagelist.Count+1).ToString()):(imagelist.Count+1).ToString())+".jpg";
+					imagelist.Add(imageurl);
+					retImage.Save(imageurl,ImageFormat.Jpeg);
+										
+					this.pictureBox1.Image = new Bitmap(imageurl);
+				}
+				else
+					MessageBox.Show("剪贴板中没有图片文件","提示");
+			 }
+		}
+		
+		private void AddImage(Image img)
+		{
+			string imageurl = "Z:\\测试文档\\IMAGE\\"+this.textBox2.Text+"_"+((imagelist.Count+1)<10?("0"+(imagelist.Count+1).ToString()):(imagelist.Count+1).ToString())+".jpg";
+			img.Save(imageurl,ImageFormat.Jpeg);
+			imagelist.Add(imageurl);
+		}
+	
+		private void AddImage(Image img)
+		{
+			string imageurl = "Z:\\测试文档\\IMAGE\\"+this.textBox2.Text+"_"+((imagelist.Count+1)<10?("0"+(imagelist.Count+1).ToString()):(imagelist.Count+1).ToString())+".jpg";
+			img.Save(imageurl,ImageFormat.Jpeg);
+			imagelist.Add(imageurl);
+		}
 	}
 }

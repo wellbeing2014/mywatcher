@@ -71,6 +71,7 @@
     <Compile Include="dao\TestThemeDao.cs" />
     <Compile Include="dao\TestUnitDao.cs" />
     <Compile Include="dao\TestunitthemeDao.cs" />
+    <Compile Include="dao\UICheckDao.cs" />
     <Compile Include="pojo\ModuleInfo.cs" />
     <Compile Include="pojo\ModuleProject.cs" />
     <Compile Include="pojo\PackageInfo.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="pojo\TestTheme.cs" />
     <Compile Include="pojo\TestUnit.cs" />
     <Compile Include="pojo\Testunittheme.cs" />
+    <Compile Include="pojo\UIcheckinfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
