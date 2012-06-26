@@ -84,6 +84,11 @@ namespace WatchCilent.UI.UICheck
                 }
                 return _operateManager;
             }
+            set
+            {
+            	_operateManager = value;
+            }
+            	
             
         }
 

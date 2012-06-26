@@ -131,11 +131,6 @@ namespace WatchCore.pojo
 			set { state = value; }
 		}
 		
-		private string shotimage;
 		
-		public string Shotimage {
-			get { return shotimage; }
-			set { shotimage = value; }
-		}
 	}
 }

@@ -25,11 +25,11 @@ namespace WatchCilent.UI.Test
 	public partial class SaveView : Form
 	{
 		//缺陷列表的HTML路径
-		string unitHTMLpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"]);
+		string unitHTMLpath = GlobalParams.UnitHTMLpath;
 		//缺陷列表的DOC路径
-		string unitDOCpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"]);
+		string unitDOCpath = GlobalParams.UnitDOCpath;
 		//默认路径
-		string defaultpath =System.Environment.CurrentDirectory;
+		string defaultpath = GlobalParams.Defaultpath;
 		public SaveView()
 		{
 			//

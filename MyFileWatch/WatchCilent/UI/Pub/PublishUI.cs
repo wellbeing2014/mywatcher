@@ -24,12 +24,12 @@ namespace WatchCilent.UI.Pub
 	/// <summary>
 	/// Description of PublishUI.
 	/// </summary>
-	public partial class PublishUI : UserControl
+	public partial class PublishUI : UserControl,UI.MainPlug
 	{
-		private string ftphost = System.Configuration.ConfigurationManager.AppSettings["FTPHOST"];
-		private string username = System.Configuration.ConfigurationManager.AppSettings["FTPID"];
-		private string password = System.Configuration.ConfigurationManager.AppSettings["FTPPWD"];
-		string WisofServiceHost = System.Configuration.ConfigurationManager.AppSettings["WisofServiceHost"];
+		private string ftphost = GlobalParams.FTPHOST;
+		private string username = GlobalParams.FTPID;
+		private string password = GlobalParams.FTPPWD;
+		string WisofServiceHost = GlobalParams.WisofServiceHost;
 		private int currentpage=0;
 		private int count = 0;
 		private int pagesize = 20;
@@ -37,6 +37,21 @@ namespace WatchCilent.UI.Pub
 		private string currentstr = "当前第{0}页";
 		private string countstr ="共{0}页/共{1}条";
 		private string pagestr ="每页{0}条";
+		
+		
+		public CommonConst.UIShowSytle getSytle()
+		{
+			return CommonConst.UIShowSytle.UserControl;
+		}
+		public string getAuthorCode()
+		{
+			return "3,4,5";
+		}
+		
+		public string[] getPlugName()
+		{
+			return new string[]{"更新包","更新包发布"};
+		}
 		
 		public PublishUI()
 		{

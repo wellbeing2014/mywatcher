@@ -19,7 +19,7 @@ namespace WatchCilent
 	/// <summary>
 	/// Description of PackageUI.
 	/// </summary>
-	public partial class PackageUI : UserControl
+	public partial class PackageUI : UserControl,UI.MainPlug
 	{
 		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 		private System.Windows.Forms.DateTimePicker dateTimePicker2;
@@ -33,6 +33,21 @@ namespace WatchCilent
 		private string currentstr = "当前第{0}页";
 		private string countstr ="共{0}页/共{1}条";
 		private string pagestr ="每页{0}条";
+		
+		
+		public CommonConst.UIShowSytle getSytle()
+		{
+			return CommonConst.UIShowSytle.UserControl;
+		}
+		public string getAuthorCode()
+		{
+			return "3,4,5";
+		}
+		
+		public string[] getPlugName()
+		{
+			return new string[]{"更新包","更新包列表"};
+		}
 		
 		public PackageUI()
 		{
@@ -166,6 +181,13 @@ namespace WatchCilent
 			lvi.SubItems.Add(pack.Testtime);
 			lvi.SubItems.Add(pack.Publishtime);
 			lvi.SubItems.Add(pack.State);
+			UIcheckinfo ui = UICheckDao.getUIcheckInfoByPackId(pack.Id);
+			if(ui.State==null)
+			{
+				lvi.SubItems.Add("未生成检查");
+			}
+			else
+				lvi.SubItems.Add(ui.State);
 			lvi.SubItems.Add(pack.Moduleid.ToString());
 			lvi.SubItems.Add(pack.Managerid.ToString());
 			lvi.SubItems.Add(pack.Id.ToString());
@@ -182,10 +204,10 @@ namespace WatchCilent
 			pack.Publishtime = lvi.SubItems[4].Text;
 			pack.Testtime = lvi.SubItems[3].Text;
 			pack.State = lvi.SubItems[5].Text;
-			pack.Moduleid = Int32.Parse(lvi.SubItems[6].Text);
-			pack.Managerid =Int32.Parse(lvi.SubItems[7].Text);
-			pack.Id = Int32.Parse(lvi.SubItems[8].Text);
-			pack.TestRate = Int32.Parse(lvi.SubItems[9].Text);
+			pack.Moduleid = Int32.Parse(lvi.SubItems[7].Text);
+			pack.Managerid =Int32.Parse(lvi.SubItems[8].Text);
+			pack.Id = Int32.Parse(lvi.SubItems[9].Text);
+			pack.TestRate = Int32.Parse(lvi.SubItems[10].Text);
 			return pack;
 		}
 		

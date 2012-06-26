@@ -28,9 +28,9 @@ namespace WatchCilent.UI.Pub
 	{
 		
 		
-		private string ftphost = System.Configuration.ConfigurationManager.AppSettings["FTPHOST"];
-		private string username = System.Configuration.ConfigurationManager.AppSettings["FTPID"];
-		private string password = System.Configuration.ConfigurationManager.AppSettings["FTPPWD"];
+		private string ftphost = GlobalParams.FTPHOST;
+		private string username = GlobalParams.FTPID;
+		private string password = GlobalParams.FTPPWD;
 		
 		public UploadFTP()
 		{

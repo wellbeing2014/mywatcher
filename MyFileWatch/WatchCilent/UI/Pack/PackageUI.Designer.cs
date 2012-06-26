@@ -41,6 +41,8 @@ namespace WatchCilent
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel3 = new System.Windows.Forms.LinkLabel();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -58,6 +60,7 @@ namespace WatchCilent
 			this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
 			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.button4 = new System.Windows.Forms.Button();
@@ -65,8 +68,6 @@ namespace WatchCilent
 			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-			this.linkLabel4 = new System.Windows.Forms.LinkLabel();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -121,6 +122,30 @@ namespace WatchCilent
 			this.linkLabel2.Text = "下一页";
 			this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel2LinkClicked);
+			// 
+			// linkLabel4
+			// 
+			this.linkLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel4.Location = new System.Drawing.Point(724, 401);
+			this.linkLabel4.Name = "linkLabel4";
+			this.linkLabel4.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel4.TabIndex = 56;
+			this.linkLabel4.TabStop = true;
+			this.linkLabel4.Text = "末页";
+			this.linkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel4LinkClicked);
+			// 
+			// linkLabel3
+			// 
+			this.linkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.linkLabel3.Location = new System.Drawing.Point(594, 401);
+			this.linkLabel3.Name = "linkLabel3";
+			this.linkLabel3.Size = new System.Drawing.Size(49, 20);
+			this.linkLabel3.TabIndex = 56;
+			this.linkLabel3.TabStop = true;
+			this.linkLabel3.Text = "首页";
+			this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3LinkClicked);
 			// 
 			// linkLabel1
 			// 
@@ -241,12 +266,13 @@ namespace WatchCilent
 									this.columnHeader3,
 									this.columnHeader4,
 									this.columnHeader5,
-									this.columnHeader6});
+									this.columnHeader6,
+									this.columnHeader7});
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
-			this.listView1.Location = new System.Drawing.Point(174, 39);
+			this.listView1.Location = new System.Drawing.Point(174, 37);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(599, 354);
+			this.listView1.Size = new System.Drawing.Size(608, 355);
 			this.listView1.TabIndex = 14;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -278,8 +304,14 @@ namespace WatchCilent
 			// 
 			// columnHeader6
 			// 
+			this.columnHeader6.DisplayIndex = 6;
 			this.columnHeader6.Text = "状态";
 			this.columnHeader6.Width = 55;
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.DisplayIndex = 5;
+			this.columnHeader7.Text = "界面检查状态";
 			// 
 			// comboBox2
 			// 
@@ -341,30 +373,6 @@ namespace WatchCilent
 			this.label2.TabIndex = 10;
 			this.label2.Text = "至";
 			// 
-			// linkLabel3
-			// 
-			this.linkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.linkLabel3.Location = new System.Drawing.Point(594, 401);
-			this.linkLabel3.Name = "linkLabel3";
-			this.linkLabel3.Size = new System.Drawing.Size(49, 20);
-			this.linkLabel3.TabIndex = 56;
-			this.linkLabel3.TabStop = true;
-			this.linkLabel3.Text = "首页";
-			this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3LinkClicked);
-			// 
-			// linkLabel4
-			// 
-			this.linkLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.linkLabel4.Location = new System.Drawing.Point(724, 401);
-			this.linkLabel4.Name = "linkLabel4";
-			this.linkLabel4.Size = new System.Drawing.Size(49, 20);
-			this.linkLabel4.TabIndex = 56;
-			this.linkLabel4.TabStop = true;
-			this.linkLabel4.Text = "末页";
-			this.linkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel4LinkClicked);
-			// 
 			// PackageUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -375,6 +383,7 @@ namespace WatchCilent
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.LinkLabel linkLabel3;
 		private System.Windows.Forms.LinkLabel linkLabel4;
 		private System.Windows.Forms.CheckBox checkBox1;

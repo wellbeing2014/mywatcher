@@ -79,7 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModuleSetting.cs" />
+    <Compile Include="GlobalParams.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource1.Designer.cs">
@@ -93,18 +93,15 @@
     <Compile Include="UI\Dbconfig.Designer.cs">
       <DependentUpon>Dbconfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Form1.cs" />
-    <Compile Include="UI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="UI\Help\HelpWnd.cs" />
+    <Compile Include="UI\Help\HelpWnd.Designer.cs">
+      <DependentUpon>HelpWnd.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Main.cs" />
     <Compile Include="UI\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MainCustomer.cs" />
-    <Compile Include="UI\MainCustomer.Designer.cs">
-      <DependentUpon>MainCustomer.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UI\MainPlug.cs" />
     <Compile Include="UI\MsgForm.cs" />
     <Compile Include="UI\MsgForm.Designer.cs">
       <DependentUpon>MsgForm.cs</DependentUpon>
@@ -143,6 +140,10 @@
     <Compile Include="UI\Pub\UploadFTP.cs" />
     <Compile Include="UI\Pub\UploadFTP.Designer.cs">
       <DependentUpon>UploadFTP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Test1.cs" />
+    <Compile Include="UI\Test1.Designer.cs">
+      <DependentUpon>Test1.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Test\EditFeiQnote.cs" />
     <Compile Include="UI\Test\EditFeiQnote.Designer.cs">
@@ -216,11 +217,31 @@
     <Compile Include="UI\UICheck\UICheckList.Designer.cs">
       <DependentUpon>UICheckList.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\WIMS\FeiQPublish.cs" />
+    <Compile Include="UI\WIMS\FeiQPublish.Designer.cs">
+      <DependentUpon>FeiQPublish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WIMS\PackGuide.cs" />
+    <Compile Include="UI\WIMS\PackGuide.Designer.cs">
+      <DependentUpon>PackGuide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WIMS\TaskInfo.cs" />
+    <Compile Include="UI\WIMS\TaskInfo.Designer.cs">
+      <DependentUpon>TaskInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\WimsManager\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\WimsToTest\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="WimsProInfoCollection.cs" />
+    <Compile Include="WimsProInfoElement.cs" />
+    <Compile Include="WimsProInfoSectionSettings.cs" />
     <EmbeddedResource Include="Properties\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -230,14 +251,11 @@
     <EmbeddedResource Include="UI\Dbconfig.resx">
       <DependentUpon>Dbconfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Help\HelpWnd.resx">
+      <DependentUpon>HelpWnd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\MainCustomer.resx">
-      <DependentUpon>MainCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MsgForm.resx">
       <DependentUpon>MsgForm.cs</DependentUpon>
@@ -265,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Pub\UploadFTP.resx">
       <DependentUpon>UploadFTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Test1.resx">
+      <DependentUpon>Test1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Test\EditFeiQnote.resx">
       <DependentUpon>EditFeiQnote.cs</DependentUpon>
@@ -302,6 +323,15 @@
     <EmbeddedResource Include="UI\UICheck\UICheckList.resx">
       <DependentUpon>UICheckList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\WIMS\FeiQPublish.resx">
+      <DependentUpon>FeiQPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WIMS\PackGuide.resx">
+      <DependentUpon>PackGuide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WIMS\TaskInfo.resx">
+      <DependentUpon>TaskInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Icons\Accept.ico" />
     <None Include="Icons\Arrow.ico" />
@@ -314,6 +344,11 @@
     <None Include="Icons\Text.ico" />
     <None Include="releasenote.txt" />
     <None Include="UICheckInfo.sql" />
+    <None Include="Web References\WimsManager\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WimsManager\TrankingManager.wsdl" />
     <None Include="Web References\WimsToTest\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -329,6 +364,8 @@
     <Folder Include="UI\Theme" />
     <Folder Include="UI\UICheck" />
     <Folder Include="Icons" />
+    <Folder Include="UI\WIMS" />
+    <Folder Include="UI\Help" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WatchCore\WatchCore.csproj">
@@ -345,6 +382,12 @@
       <UpdateFromURL>http://192.10.110.49:8080/wisoftintegrateframe/services/WimsToTest%3fwsdl</UpdateFromURL>
       <RelPath>Web References\WimsToTest</RelPath>
       <Namespace>WatchCilent.WimsToTest</Namespace>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://58.214.246.37:8120/wisoftintegrateframe/services/WimsManager%3fwsdl">
+      <UrlBehavior>Static</UrlBehavior>
+      <UpdateFromURL>http://58.214.246.37:8120/wisoftintegrateframe/services/WimsManager%3fwsdl</UpdateFromURL>
+      <RelPath>Web References\WimsManager</RelPath>
+      <Namespace>WatchCilent.WimsManager</Namespace>
     </WebReferenceUrl>
   </ItemGroup>
 </Project>

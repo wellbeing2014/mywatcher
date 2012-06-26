@@ -99,7 +99,26 @@ namespace WatchCore.dao
 			person.Fullname = row["fullname"].ToString();
 			person.Ip = row["ip"].ToString();
 			person.Password =row["password"].ToString();
+			person.Role = row["role"].ToString();
 			return person;
+		}
+		
+		
+		/// <summary>
+		/// 根据role值获取人员列表，0普通用户1主管2美工3配置4经理5测试
+		/// </summary>
+		/// <param name="role"></param>
+		/// <returns></returns>
+		static public List<PersonInfo> getPersonByRole(int role)
+		{
+			string sql = "select * from PersonInfo where role like '%"+role.ToString()+"%'";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
+			List<PersonInfo> ls = new List<PersonInfo>();
+			foreach(DataRow row in data.Tables["ds"].Rows)
+			{
+				ls.Add(Row2PersonInfo(row));
+			}
+			return ls;
 		}
 	}
 }
