@@ -66,6 +66,7 @@ namespace WatchCilent.UI.UICheck
 			this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+			this.button4 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -74,6 +75,7 @@ namespace WatchCilent.UI.UICheck
 			this.panel1.Controls.Add(this.button3);
 			this.panel1.Controls.Add(this.button2);
 			this.panel1.Controls.Add(this.button1);
+			this.panel1.Controls.Add(this.button4);
 			this.panel1.Controls.Add(this.button8);
 			this.panel1.Controls.Add(this.button6);
 			this.panel1.Controls.Add(this.button5);
@@ -109,6 +111,7 @@ namespace WatchCilent.UI.UICheck
 			this.button3.TabIndex = 89;
 			this.button3.Text = "删除";
 			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
 			// button2
 			// 
@@ -119,6 +122,7 @@ namespace WatchCilent.UI.UICheck
 			this.button2.TabIndex = 88;
 			this.button2.Text = "修改";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// button1
 			// 
@@ -134,12 +138,13 @@ namespace WatchCilent.UI.UICheck
 			// button8
 			// 
 			this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button8.Location = new System.Drawing.Point(546, 336);
+			this.button8.Location = new System.Drawing.Point(453, 336);
 			this.button8.Name = "button8";
 			this.button8.Size = new System.Drawing.Size(52, 23);
 			this.button8.TabIndex = 86;
 			this.button8.Text = "未通过";
 			this.button8.UseVisualStyleBackColor = true;
+			this.button8.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// button6
 			// 
@@ -150,16 +155,18 @@ namespace WatchCilent.UI.UICheck
 			this.button6.TabIndex = 85;
 			this.button6.Text = "已通过";
 			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(488, 336);
+			this.button5.Location = new System.Drawing.Point(395, 336);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(52, 23);
 			this.button5.TabIndex = 84;
 			this.button5.Text = "待检查";
 			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// checkBox1
 			// 
@@ -169,6 +176,7 @@ namespace WatchCilent.UI.UICheck
 			this.checkBox1.Size = new System.Drawing.Size(17, 24);
 			this.checkBox1.TabIndex = 83;
 			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
 			// 
 			// linkLabel2
 			// 
@@ -180,6 +188,7 @@ namespace WatchCilent.UI.UICheck
 			this.linkLabel2.TabStop = true;
 			this.linkLabel2.Text = "下一页";
 			this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel2LinkClicked);
 			// 
 			// linkLabel4
 			// 
@@ -191,6 +200,7 @@ namespace WatchCilent.UI.UICheck
 			this.linkLabel4.TabStop = true;
 			this.linkLabel4.Text = "末页";
 			this.linkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel4LinkClicked);
 			// 
 			// linkLabel3
 			// 
@@ -202,6 +212,7 @@ namespace WatchCilent.UI.UICheck
 			this.linkLabel3.TabStop = true;
 			this.linkLabel3.Text = "首页";
 			this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel3LinkClicked);
 			// 
 			// linkLabel1
 			// 
@@ -213,6 +224,7 @@ namespace WatchCilent.UI.UICheck
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "上一页";
 			this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1LinkClicked);
 			// 
 			// label3
 			// 
@@ -335,32 +347,43 @@ namespace WatchCilent.UI.UICheck
 			// columnHeader1
 			// 
 			this.columnHeader1.Text = "检查编号";
-			this.columnHeader1.Width = 120;
+			this.columnHeader1.Width = 129;
 			// 
 			// columnHeader2
 			// 
 			this.columnHeader2.Text = "测试对象";
-			this.columnHeader2.Width = 200;
+			this.columnHeader2.Width = 219;
 			// 
 			// columnHeader4
 			// 
 			this.columnHeader4.Text = "创建时间";
-			this.columnHeader4.Width = 100;
+			this.columnHeader4.Width = 124;
 			// 
 			// columnHeader8
 			// 
 			this.columnHeader8.Text = "检查时间";
-			this.columnHeader8.Width = 100;
+			this.columnHeader8.Width = 112;
 			// 
 			// columnHeader5
 			// 
 			this.columnHeader5.Text = "检查人";
-			this.columnHeader5.Width = 50;
+			this.columnHeader5.Width = 71;
 			// 
 			// columnHeader7
 			// 
 			this.columnHeader7.Text = "状态";
-			this.columnHeader7.Width = 50;
+			this.columnHeader7.Width = 58;
+			// 
+			// button4
+			// 
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Location = new System.Drawing.Point(514, 336);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(84, 23);
+			this.button4.TabIndex = 86;
+			this.button4.Text = "选择性通过";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// UICheckList
 			// 
@@ -372,6 +395,7 @@ namespace WatchCilent.UI.UICheck
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button3;

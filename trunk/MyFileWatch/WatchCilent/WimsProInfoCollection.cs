@@ -1,0 +1,101 @@
+﻿/*
+ * 由SharpDevelop创建。
+ * 用户： ZhuXinpei
+ * 日期: 2012/6/20
+ * 时间: 11:15
+ * 
+ * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
+ */
+using System;
+using System.Configuration;
+
+
+namespace WatchCilent
+{
+	/// <summary>
+	/// A collection of WimsProInfoElement(s).
+	/// </summary>
+	public sealed class WimsProInfoCollection : ConfigurationElementCollection
+	{
+		#region Properties
+
+		/// <summary>
+		/// Gets the CollectionType of the ConfigurationElementCollection.
+		/// </summary>
+		public override ConfigurationElementCollectionType CollectionType
+		{
+			get { return ConfigurationElementCollectionType.BasicMap; }
+		}
+	   
+
+		/// <summary>
+		/// Gets the Name of Elements of the collection.
+		/// </summary>
+		protected override string ElementName
+		{
+		get { return "WimsProInfo"; }
+		}
+			   
+	   
+		/// <summary>
+		/// Retrieve and item in the collection by index.
+		/// </summary>
+		public WimsProInfoElement this[int index]
+		{
+			get   { return (WimsProInfoElement)BaseGet(index); }
+			set
+			{
+				if (BaseGet(index) != null)
+				{
+					BaseRemoveAt(index);
+				}
+				BaseAdd(index, value);
+			}
+		}
+
+
+		#endregion
+
+		/// <summary>
+		/// Adds a WimsProInfoElement to the configuration file.
+		/// </summary>
+		/// <param name="element">The WimsProInfoElement to add.</param>
+		public void Add(WimsProInfoElement element)
+		{
+			BaseAdd(element);
+		}
+	   
+	   
+		/// <summary>
+		/// Creates a new WimsProInfoElement.
+		/// </summary>
+		/// <returns>A new <c>WimsProInfoElement</c></returns>
+		protected override ConfigurationElement CreateNewElement()
+		{
+			return new WimsProInfoElement();
+		}
+
+	   
+	   
+		/// <summary>
+		/// Gets the key of an element based on it's Id.
+		/// </summary>
+		/// <param name="element">Element to get the key of.</param>
+		/// <returns>The key of <c>element</c>.</returns>
+		protected override object GetElementKey(ConfigurationElement element)
+		{
+			return ((WimsProInfoElement)element).Name;
+		}
+	   
+	   
+		/// <summary>
+		/// Removes a WimsProInfoElement with the given name.
+		/// </summary>
+		/// <param name="name">The name of the WimsProInfoElement to remove.</param>
+		public void Remove (string name) {
+			base.BaseRemove(name);
+		}
+
+	}
+}
+

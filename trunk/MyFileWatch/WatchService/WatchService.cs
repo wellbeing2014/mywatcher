@@ -18,6 +18,9 @@ using System.Threading;
 using WatchCore.pojo;
 using System.Text.RegularExpressions;
 using WatchCore.Common;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Reflection;
 
 namespace WatchService
 {
@@ -30,7 +33,9 @@ namespace WatchService
 		static private string	Dicpwd = null;
 		static private string[]  msgip ;
 		static private string[]  watchpaths ;
+		private List<FileSystemWatcher> watcherlist= new List<FileSystemWatcher>();
 		static System.Timers.Timer tt ;
+		Thread netwatchTr = null;
 		private Communication.TCPManage tcp;
 		static private FeiQIM feiq = new FeiQIM(2426);
 		
@@ -81,47 +86,15 @@ namespace WatchService
 			}
 			catch(Exception e)
 			{
-				//Console.WriteLine("读取配置文件错误");
-				//Console.WriteLine(e.ToString());
 				WriteToLog("读取配置文件错误");
 				WriteToLog(e.ToString());
 			}
-			//Console.WriteLine("开始监控...");
-			//Console.WriteLine("记录XLS位置："+logfile);
-			//Console.Write("监控文件夹位置：");
-			
+		
+			netwatchTr = new Thread(new ThreadStart(this.checknet));
+			netwatchTr.Start();
 			WriteToLog("开始监控...");
 			// TODO: Implement Functionality Here
-			int pathcount=0;
-			while(pathcount<watchpaths.Length)
-			{
-				
-				//Console.WriteLine(watchpaths[pathcount]);
-				WriteToLog(watchpaths[pathcount]);
-			
-				try
-				{
-				FileSystemWatcher curWatcher = new FileSystemWatcher();
-				curWatcher.BeginInit();
-				curWatcher.IncludeSubdirectories = true;
-				curWatcher.Path = @watchpaths[pathcount];
-				curWatcher.Filter ="*.rar";
-				//curWatcher.Changed += new FileSystemEventHandler(OnFileChanged);
-				curWatcher.Created += new FileSystemEventHandler(OnFileCreated);
-				//curWatcher.Deleted += new FileSystemEventHandler(OnFileDeleted);
-				//curWatcher.Renamed += new RenamedEventHandler(OnFileRenamed);
-				curWatcher.EnableRaisingEvents = true;
-				curWatcher.EndInit();
-				pathcount++;
-				}
-				catch(Exception e)
-				{
-					//Console.WriteLine("监控路径失败！");
-					WriteToLog("监控路径失败！"+e.ToString());
-					msgToFQ("您好，管理员，小月月在监控"+@watchpaths[pathcount]+@"时发生错误：\n"+e.ToString());
-					pathcount++;
-				}
-			}
+			watchFunc();
 			
 			tcp  = new Communication.TCPManage();
 			tcp.StartListen(listenhandler);
@@ -140,6 +113,52 @@ namespace WatchService
 			tt.Elapsed += new System.Timers.ElapsedEventHandler(theout1);//到达时间的时候执行事件； 
 			tt.AutoReset = false;//设置是执行一次（false）还是一直执行(true)； 
 			tt.Start();
+		}
+		
+		public void watchFunc()
+		{
+			WriteToLog("开始卸载原来的监控……");
+			try {
+				for (int i = 0; i < watchpaths.Length; i++) {
+					watcherlist[i].Dispose();
+					watcherlist.RemoveAt(i);
+				}
+			} catch (Exception e) {
+				WriteToLog("卸载出现问题:"+e.ToString());
+			}
+			WriteToLog("卸载完成。");
+			
+			int pathcount=0;
+			while(pathcount<watchpaths.Length)
+			{
+				
+				//Console.WriteLine(watchpaths[pathcount]);
+				WriteToLog(watchpaths[pathcount]);
+			
+				try
+				{
+					FileSystemWatcher curWatcher = new FileSystemWatcher();
+					curWatcher.BeginInit();
+					curWatcher.IncludeSubdirectories = true;
+					curWatcher.Path = @watchpaths[pathcount];
+					curWatcher.Filter ="*.rar";
+					//curWatcher.Changed += new FileSystemEventHandler(OnFileChanged);
+					curWatcher.Created += new FileSystemEventHandler(OnFileCreated);
+					//curWatcher.Deleted += new FileSystemEventHandler(OnFileDeleted);
+					//curWatcher.Renamed += new RenamedEventHandler(OnFileRenamed);
+					curWatcher.EnableRaisingEvents = true;
+					curWatcher.EndInit();
+					watcherlist.Add(curWatcher);
+					pathcount++;
+				}
+				catch(Exception e)
+				{
+					//Console.WriteLine("监控路径失败！");
+					WriteToLog("监控路径失败！"+e.ToString());
+					msgToFQ("您好，管理员，小月月在监控"+@watchpaths[pathcount]+@"时发生错误：\n"+e.ToString());
+					pathcount++;
+				}
+			}
 		}
 		
 		private void LISTENED_SRCEENSHAKE(string ip)
@@ -164,6 +183,7 @@ namespace WatchService
 			// TODO: Add tear-down code here (if required) to stop your service.
 			tcp.StopListen();
 			feiq.StopListen();
+			_netwatchStat = false;
 			Thread.Sleep(10000);
 			WriteToLog(System.DateTime.Now.ToLocalTime()+":系统关闭");
 			msgToFQ("您好，管理员，小月月在"+System.DateTime.Now.ToLocalTime()+"被关闭");
@@ -311,5 +331,70 @@ namespace WatchService
                 sr.Close();  
             }  
 		}
+		
+		
+		
+		
+		private bool _netwatchStat = true;
+		private bool _netAbnormal = false;
+		//监控网络线程
+		public void checknet()
+		{
+			while(this._netwatchStat)
+			{
+				Thread.Sleep(30000);
+				bool res = PingIpOrDomainName("192.10.110.205");
+				//首次网络异常
+				if(!res&!_netAbnormal)
+				{
+					_netAbnormal = true;
+					WriteToLog(System.DateTime.Now.ToLocalTime()+" 发现网络异常！");
+				}
+				//网络恢复
+				if(res&_netAbnormal)
+				{
+					_netAbnormal = false;
+					WriteToLog(System.DateTime.Now.ToLocalTime()+" 网络异常恢复！");
+					WriteToLog(System.DateTime.Now.ToLocalTime()+" 重新监控更新包路径！");
+					watchFunc();
+				}
+			}
+		}
+		
+		
+		
+		/// <summary>
+        /// 用于检查IP地址或域名是否可以使用TCP/IP协议访问(使用Ping命令),true表示Ping成功,false表示Ping失败 
+        /// </summary>
+        /// <param name="strIpOrDName">输入参数,表示IP地址或域名</param>
+        /// <returns></returns>
+        public static bool PingIpOrDomainName(string strIpOrDName)
+        {
+            try
+            {
+                Ping objPingSender = new Ping();
+                PingOptions objPinOptions = new PingOptions();
+                objPinOptions.DontFragment = true;
+                string data = "";
+                byte[] buffer = Encoding.UTF8.GetBytes(data);
+                int intTimeout = 120;
+                PingReply objPinReply = objPingSender.Send(strIpOrDName, intTimeout, buffer, objPinOptions);
+                string strInfo = objPinReply.Status.ToString();
+                if (strInfo == "Success")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 	}
+	
+	
 }

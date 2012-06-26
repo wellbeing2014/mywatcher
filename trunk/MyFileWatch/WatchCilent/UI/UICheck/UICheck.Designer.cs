@@ -37,6 +37,8 @@ namespace WatchCilent.UI.UICheck
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
@@ -55,10 +57,11 @@ namespace WatchCilent.UI.UICheck
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.button6 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
 			this.panel1.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -67,6 +70,7 @@ namespace WatchCilent.UI.UICheck
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.checkBox1);
 			this.panel1.Controls.Add(this.label4);
 			this.panel1.Controls.Add(this.panel3);
 			this.panel1.Controls.Add(this.panel2);
@@ -75,13 +79,36 @@ namespace WatchCilent.UI.UICheck
 			this.panel1.Controls.Add(this.button5);
 			this.panel1.Controls.Add(this.button4);
 			this.panel1.Controls.Add(this.textBox1);
+			this.panel1.Controls.Add(this.button6);
+			this.panel1.Controls.Add(this.button3);
 			this.panel1.Controls.Add(this.button2);
 			this.panel1.Controls.Add(this.button1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(627, 452);
+			this.panel1.Size = new System.Drawing.Size(756, 500);
 			this.panel1.TabIndex = 0;
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.checkBox1.Location = new System.Drawing.Point(6, 473);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(104, 24);
+			this.checkBox1.TabIndex = 27;
+			this.checkBox1.Text = "锁定";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label4.Location = new System.Drawing.Point(569, 346);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(56, 23);
+			this.label4.TabIndex = 26;
+			this.label4.Text = "(0/0)";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// panel3
 			// 
@@ -99,7 +126,7 @@ namespace WatchCilent.UI.UICheck
 			this.panel3.Controls.Add(this.label7);
 			this.panel3.Location = new System.Drawing.Point(3, 3);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(621, 67);
+			this.panel3.Size = new System.Drawing.Size(750, 67);
 			this.panel3.TabIndex = 25;
 			// 
 			// textBox2
@@ -193,16 +220,16 @@ namespace WatchCilent.UI.UICheck
 			this.panel2.Controls.Add(this.pictureBox1);
 			this.panel2.Location = new System.Drawing.Point(0, 76);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(627, 216);
+			this.panel2.Size = new System.Drawing.Size(756, 264);
 			this.panel2.TabIndex = 5;
 			// 
 			// pictureBox1
 			// 
 			this.pictureBox1.DrawStyle = WatchCilent.UI.UICheck.DrawStyle.None;
-			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			//this.pictureBox1.Location = new System.Drawing.Point(-9, 6);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.SelectColor = System.Drawing.Color.Empty;
-			this.pictureBox1.Size = new System.Drawing.Size(627, 216);
+			//this.pictureBox1.Size = new System.Drawing.Size(756, 264);
 			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBox1.TabIndex = 0;
 			this.pictureBox1.TabStop = false;
@@ -211,7 +238,7 @@ namespace WatchCilent.UI.UICheck
 			// drawToolsControl
 			// 
 			this.drawToolsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.drawToolsControl.Location = new System.Drawing.Point(2, 298);
+			this.drawToolsControl.Location = new System.Drawing.Point(2, 346);
 			this.drawToolsControl.Name = "drawToolsControl";
 			this.drawToolsControl.Padding = new System.Windows.Forms.Padding(2);
 			this.drawToolsControl.Size = new System.Drawing.Size(224, 29);
@@ -220,7 +247,7 @@ namespace WatchCilent.UI.UICheck
 			// colorSelector
 			// 
 			this.colorSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.colorSelector.Location = new System.Drawing.Point(228, 298);
+			this.colorSelector.Location = new System.Drawing.Point(228, 346);
 			this.colorSelector.Name = "colorSelector";
 			this.colorSelector.Padding = new System.Windows.Forms.Padding(2);
 			this.colorSelector.Size = new System.Drawing.Size(189, 38);
@@ -229,17 +256,18 @@ namespace WatchCilent.UI.UICheck
 			// button5
 			// 
 			this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button5.Location = new System.Drawing.Point(566, 426);
+			this.button5.Location = new System.Drawing.Point(695, 474);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(58, 23);
 			this.button5.TabIndex = 4;
 			this.button5.Text = "关闭";
 			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(502, 426);
+			this.button4.Location = new System.Drawing.Point(631, 474);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(58, 23);
 			this.button4.TabIndex = 4;
@@ -251,31 +279,55 @@ namespace WatchCilent.UI.UICheck
 			// 
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.Location = new System.Drawing.Point(3, 343);
+			this.textBox1.Location = new System.Drawing.Point(3, 391);
 			this.textBox1.Multiline = true;
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(621, 77);
+			this.textBox1.Size = new System.Drawing.Size(750, 77);
 			this.textBox1.TabIndex = 3;
+			// 
+			// button6
+			// 
+			this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button6.Location = new System.Drawing.Point(423, 346);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(61, 23);
+			this.button6.TabIndex = 1;
+			this.button6.Text = "重做全部";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button6Click);
+			// 
+			// button3
+			// 
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button3.Location = new System.Drawing.Point(490, 346);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(69, 23);
+			this.button3.TabIndex = 1;
+			this.button3.Text = "重做当前";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
 			// 
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(502, 298);
+			this.button2.Location = new System.Drawing.Point(631, 346);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(58, 23);
 			this.button2.TabIndex = 1;
 			this.button2.Text = "上一张";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(566, 298);
+			this.button1.Location = new System.Drawing.Point(695, 346);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(58, 23);
 			this.button1.TabIndex = 1;
 			this.button1.Text = "下一张";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// textBox
 			// 
@@ -287,21 +339,11 @@ namespace WatchCilent.UI.UICheck
 			this.textBox.Size = new System.Drawing.Size(100, 21);
 			this.textBox.TabIndex = 0;
 			// 
-			// label4
-			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label4.Location = new System.Drawing.Point(440, 298);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(56, 23);
-			this.label4.TabIndex = 26;
-			this.label4.Text = "(0/0)";
-			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// UICheck
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(627, 452);
+			this.ClientSize = new System.Drawing.Size(756, 500);
 			this.Controls.Add(this.textBox);
 			this.Controls.Add(this.panel1);
 			this.Name = "UICheck";
@@ -316,6 +358,9 @@ namespace WatchCilent.UI.UICheck
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.Label label1;

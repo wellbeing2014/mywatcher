@@ -19,7 +19,7 @@ namespace WatchCilent.UI.Test
 	/// <summary>
 	/// Description of TestListUI.
 	/// </summary>
-	public partial class TestListUI : UserControl
+	public partial class TestListUI : UserControl,MainPlug
 	{
 		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 		private System.Windows.Forms.DateTimePicker dateTimePicker2;
@@ -33,6 +33,20 @@ namespace WatchCilent.UI.Test
 		private string countstr ="共{0}页/共{1}条";
 		private string pagestr ="每页{0}条";
 		
+		
+		public CommonConst.UIShowSytle getSytle()
+		{
+			return CommonConst.UIShowSytle.UserControl;
+		}
+		public string getAuthorCode()
+		{
+			return "3,4,5";
+		}
+		
+		public string[] getPlugName()
+		{
+			return new string[]{"测试","缺陷列表"};
+		}
 		public TestListUI()
 		{
 			//

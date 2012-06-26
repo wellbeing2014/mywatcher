@@ -81,6 +81,7 @@
     <Compile Include="pojo\TestUnit.cs" />
     <Compile Include="pojo\Testunittheme.cs" />
     <Compile Include="pojo\UIcheckinfo.cs" />
+    <Compile Include="pojo\UICheckView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

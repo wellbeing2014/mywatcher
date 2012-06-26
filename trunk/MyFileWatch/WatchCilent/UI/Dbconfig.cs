@@ -30,11 +30,11 @@ namespace WatchCilent
 			InitializeComponent();
 			this.CenterToScreen();
 			
-			this.textBox1.Text = System.Configuration.ConfigurationManager.AppSettings["SqlDB"];
-			this.textBox2.Text = System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"];
-			this.textBox3.Text = System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"];
-			this.textBox4.Text = System.Configuration.ConfigurationManager.AppSettings["HtmlUrl"];
-			this.textBox5.Text = System.Configuration.ConfigurationManager.AppSettings["WisofServiceHost"];
+			this.textBox1.Text = GlobalParams.SqlDB;
+			this.textBox2.Text = GlobalParams.UnitDOCpath;
+			this.textBox3.Text = GlobalParams.UnitHTMLpath;
+			this.textBox4.Text = GlobalParams.HtmlUrl;
+			this.textBox5.Text = GlobalParams.WisofServiceHost;
 			this.textBox1.Enabled = false;
 			this.textBox2.Enabled = false;
 			this.textBox3.Enabled = false;
@@ -73,6 +73,7 @@ namespace WatchCilent
    				ps.Fullname = username;
    				password = MD5Common.GetMd5Hash(password);
    				ps.Password = password;
+   				GlobalParams.User = ps;
 				reg.SetValue("Username", username);
 				reg.SetValue("Password", password);	
 				reg.SetValue("UserId", ps.Id);				

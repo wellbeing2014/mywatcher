@@ -21,9 +21,25 @@ namespace WatchCilent.UI.Theme
 	/// <summary>
 	/// Description of ThemeListUI.
 	/// </summary>
-	public partial class ThemeListUI : UserControl
+	public partial class ThemeListUI : UserControl,UI.MainPlug
 	{
 		private TreeNode themeTree = new TreeNode("默认主题");
+		
+		
+		public CommonConst.UIShowSytle getSytle()
+		{
+			return CommonConst.UIShowSytle.UserControl;
+		}
+		public string getAuthorCode()
+		{
+			return "3,4,5";
+		}
+		
+		public string[] getPlugName()
+		{
+			return new string[]{"测试","缺陷监控"};
+		}
+		
 		public ThemeListUI()
 		{
 			//
@@ -82,9 +98,9 @@ namespace WatchCilent.UI.Theme
 			TreeNode tmp =new TreeNode("默认主题");
 			TestTheme default_tt = new TestTheme();
 			default_tt.Id=99999;
-			string personid = System.Configuration.ConfigurationManager.AppSettings["UserId"];
+			string personid = GlobalParams.UserId;
 			default_tt.Personid=((personid==null)?0:Int32.Parse(personid));
-			default_tt.Personname=System.Configuration.ConfigurationManager.AppSettings["Username"];
+			default_tt.Personname=GlobalParams.Username;
 			tmp.Tag = default_tt;
 			main.Nodes.Add(tmp);
             

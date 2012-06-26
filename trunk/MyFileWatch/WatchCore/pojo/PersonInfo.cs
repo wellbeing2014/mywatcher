@@ -47,6 +47,13 @@ namespace WatchCore.pojo
 			get { return password; }
 			set { password = value; }
 		}
+		
+		private string role;
+		
+		public string Role {
+			get { return role; }
+			set { role = value; }
+		}
 		public PersonInfo()
 		{
 		}

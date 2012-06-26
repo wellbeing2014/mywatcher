@@ -65,7 +65,23 @@ namespace WatchCore.Common
 			已修订
 		}
 		
-	
+		
+		public enum CheckState
+		{
+			未检查,
+			未通过,
+			已通过,
+			选择性通过
+		}
+		
+		
+		
+		public enum UIShowSytle
+		{
+			Form,
+			UserControl,
+			MessageBox
+		}
 		
 		
 		

@@ -32,17 +32,17 @@ namespace WatchCilent.UI.Test
 		}
 		private TestUnit tu = new TestUnit();
 		//缺陷列表的HTML路径
-		string unitHTMLpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitHtmlPath"]);
+		string unitHTMLpath = GlobalParams.UnitHTMLpath;
 		//浏览缺陷地址
-		string HtmlUrl = System.Configuration.ConfigurationManager.AppSettings["HtmlUrl"];
+		string HtmlUrl = GlobalParams.HtmlUrl;
 		//监控系统主机IP
-		string WisofServiceHost = System.Configuration.ConfigurationManager.AppSettings["WisofServiceHost"];
+		string WisofServiceHost = GlobalParams.WisofServiceHost;
 		//缺陷列表的DOC路径
-		string unitDOCpath = FunctionUtils.AutoCreateFolder(System.Configuration.ConfigurationManager.AppSettings["UnitDocPath"]);
+		string unitDOCpath = GlobalParams.UnitDOCpath;
 		//默认路径
-		string defaultpath =System.Environment.CurrentDirectory;
+		string defaultpath = GlobalParams.Defaultpath;
 		//临时文件路径
-		string temppath =System.IO.Path.GetTempPath();
+		string temppath = GlobalParams.Temppath;
 		
 		DataTable Source_Person = PersonDao.getPersonTable();
 		DataTable Source_Module = ModuleDao.getAllModuleTable();
@@ -298,7 +298,7 @@ namespace WatchCilent.UI.Test
 			}
 			else
 			{
-				MessageBox.Show("请选择责任人","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				MessageBox.Show("请选择模块","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
 				return false;
 			}
 					
@@ -328,6 +328,7 @@ namespace WatchCilent.UI.Test
 			tu.Testtitle =this.textBox9.Text ;
 			return true;
 		}
+		
 		/// <summary>
 		/// 给主管发送飞秋消息。
 		/// </summary>

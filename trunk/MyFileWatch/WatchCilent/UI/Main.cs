@@ -20,6 +20,7 @@ using WatchCore.pojo;
 using WatchCore.Common;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 
 namespace WatchCilent.UI
@@ -95,10 +96,10 @@ namespace WatchCilent.UI
 				}
 				else
 				{
-					if(dbc.GetValue("Version").ToString()!="0.4.0")
+					if(dbc.GetValue("Version").ToString()!="0.4.1")
 		        	{
 		        		System.Diagnostics.Process.Start("notepad.exe",System.Environment.CurrentDirectory+"\\releasenote.txt");
-		        		dbc.SetValue("Version","0.4.0");
+		        		dbc.SetValue("Version","0.4.1");
 		        	}
 					InitializeComponent();
 					username=ConfigurationManager.AppSettings["Username"];
@@ -120,6 +121,7 @@ namespace WatchCilent.UI
 					this.Close();
 					System.Windows.Forms.Application.Exit();
 				}
+				GlobalParams.User = PersonDao.getAllPersonInfo(username,password)[0];
 				InitializeComponent();
 				this.Text = this.Text+"--"+username;
 			}
@@ -128,7 +130,7 @@ namespace WatchCilent.UI
 			this.notifyIcon1.MouseClick+= new MouseEventHandler(notifyIcon1_Click);
 			this.SizeChanged+= new EventHandler(Main_MinimumSizeChanged);
 			this.Closing+= new CancelEventHandler(Main_Closing);
-			//LoadModules();
+			LoadModules();
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -138,12 +140,116 @@ namespace WatchCilent.UI
 		
 		void LoadModules()
 		{
-			IDictionary IDTest2 = (IDictionary)ConfigurationSettings.GetConfig("modules"); 
-			string[] keys=new string[IDTest2.Keys.Count]; 
-			string[] values=new string[IDTest2.Keys.Count]; 
-			IDTest2.Keys.CopyTo(keys,0); 
-			IDTest2.Values.CopyTo(values,0);
-			MessageBox.Show(keys[0]+" "+values[0]);;
+			Assembly asm = Assembly.GetExecutingAssembly(); 
+			Type[] moudules = asm.GetTypes();
+			for (int i = 0; i < moudules.Length; i++) {
+				Type mymoudle = moudules[i];
+				if(mymoudle.GetInterface("MainPlug")!=null)
+				{
+					object obj = Activator.CreateInstance(mymoudle);
+					//获取权限信息
+					MethodInfo   getauthor   =   mymoudle.GetMethod("getAuthorCode");
+					string   authorlist   =   (string)getauthor.Invoke(obj,null);
+					string[] author = GlobalParams.User.Role.Split(';');
+					bool isAuthor = false;
+					for (int b = 0; b < author.Length; b++) {
+						if(authorlist.Contains(author[b]))
+						{
+							isAuthor = true;
+							break;
+						}
+					}
+					if(!isAuthor)
+						continue;
+					
+					
+					//获取菜单注册信息
+					MethodInfo   method   =   mymoudle.GetMethod("getPlugName");
+					string[]   menuinfo   =   (string[])method.Invoke(obj,null);
+					int len = menuinfo.Length;
+					//定义一个根菜单、
+					ToolStripMenuItem tempitem = null;
+					//目前只是写死 菜单 为两级菜单 所以 menuinfo 长度为2
+					//从根菜单中查找
+					ToolStripItemCollection findoutitem =this.menuStrip1.Items;
+					bool isnew =true;
+					for (int a = 0; a < findoutitem.Count; a++) {
+						if(menuinfo[0].Equals(findoutitem[a].Text))
+						{
+							//如果找到，就用定义的取代掉，并先从根菜单中删除，等结束时重新加根菜单
+							tempitem = (ToolStripMenuItem)(findoutitem[a]);
+							this.menuStrip1.Items.Remove(findoutitem[a]);
+							isnew = false;
+						}
+					}
+					if(isnew)
+					{
+						//如果没有，就创建一个新的
+						tempitem = new ToolStripMenuItem();
+						tempitem.Text = menuinfo[0];
+					}
+					//定义子菜单
+					ToolStripMenuItem realmenu = new ToolStripMenuItem();
+					realmenu.Text = menuinfo[1];
+					realmenu.Click += new EventHandler(MenuItemClick);
+					
+					//根据不同的展示方式，转换成不同类
+					MethodInfo   getsytle   =   mymoudle.GetMethod("getSytle");
+					CommonConst.UIShowSytle  _sytle = (CommonConst.UIShowSytle)getsytle.Invoke(obj,null);
+					switch (_sytle) {
+						case CommonConst.UIShowSytle.Form:
+							Form obj2 = (Form)Activator.CreateInstance(mymoudle);
+							realmenu.Tag = obj2;
+							break;
+						case CommonConst.UIShowSytle.UserControl:
+							UserControl obj1 = (UserControl)obj;
+							obj1.Dock = System.Windows.Forms.DockStyle.Fill;
+							this.panel2.Controls.Add(obj1);
+							realmenu.Tag = obj1;
+							break;
+						case CommonConst.UIShowSytle.MessageBox:
+							
+							break;
+						default:
+							throw new Exception("Invalid value for UIShowSytle");
+					}
+					
+					tempitem.DropDownItems.Add(realmenu);
+					this.menuStrip1.Items.Add(tempitem);
+				}
+			}
+			
+			//this.menuStrip1.Items.Add(this.配置ToolStripMenuItem);
+		}
+		
+		
+		private void MenuItemClick(object sender, EventArgs e)
+		{
+			Object obj =((ToolStripMenuItem)sender).Tag;
+			//获取权限信息
+			MethodInfo   getsytle   =   obj.GetType().GetMethod("getSytle");
+			CommonConst.UIShowSytle   _sytle   =   (CommonConst.UIShowSytle)getsytle.Invoke(obj,null);
+			
+			
+			switch (_sytle) {
+						case CommonConst.UIShowSytle.Form:
+							Form objform = obj as Form;
+							objform.StartPosition = FormStartPosition.CenterParent;
+							objform.ShowDialog();
+							if(this.panel2.Controls.Count>0)
+								this.panel2.Controls[0].Refresh();
+							break;
+						case CommonConst.UIShowSytle.UserControl:
+							Control a = obj as Control;
+								changeForm(a);
+							break;
+						case CommonConst.UIShowSytle.MessageBox:
+							
+							break;
+						default:
+							throw new Exception("Invalid value for UIShowSytle");
+					}
+			
 		}
 		
 		private void main_Load(object sender, EventArgs e)
@@ -264,15 +370,7 @@ namespace WatchCilent.UI
 			tr.ShowDialog();
 		}
 		
-		void 发布ToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			changeForm(this.publishUI1);
-		}
 		
-		void 更新包ToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			changeForm(this.packageUI1);
-		}
 		
 		void 配置ToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -281,20 +379,7 @@ namespace WatchCilent.UI
 			cm.ShowDialog();
 			this.panel2.Controls[0].Refresh();
 		}
-		//测试
-		void ToolStripMenuItem1Click(object sender, EventArgs e)
-		{
-			changeForm(this.testlistUI1);
-		}
 		
-		void 主题ToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			changeForm(this.themelistUI1);
-		}
-		void 界面检查ToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			changeForm(this.uichecklist1);
-		}
 		
 	}
 }

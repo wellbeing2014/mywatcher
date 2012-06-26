@@ -40,12 +40,17 @@ namespace WatchCilent.UI
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.packageUI1 = new WatchCilent.PackageUI();
-			this.testlistUI1 = new WatchCilent.UI.Test.TestListUI();
-			this.publishUI1 = new WatchCilent.UI.Pub.PublishUI();
+			
+//			this.packageUI1 = new WatchCilent.PackageUI();
+//			this.testlistUI1 = new WatchCilent.UI.Test.TestListUI();
+//			this.themelistUI1 = new WatchCilent.UI.Theme.ThemeListUI();
+//			this.uichecklist1 = new WatchCilent.UI.UICheck.UICheckList();
+//			this.publishUI1 = new WatchCilent.UI.Pub.PublishUI();
+			
+			
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.themelistUI1 = new WatchCilent.UI.Theme.ThemeListUI();
-			this.uichecklist1 = new WatchCilent.UI.UICheck.UICheckList();
+			
+			
 			this.更新包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.发布ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,102 +88,103 @@ namespace WatchCilent.UI
 			// 
 			// panel2
 			// 
-			this.panel2.Controls.Add(this.packageUI1);
-			this.panel2.Controls.Add(this.publishUI1);
-			this.panel2.Controls.Add(this.testlistUI1);
-			this.panel2.Controls.Add(this.themelistUI1);
-			this.panel2.Controls.Add(this.uichecklist1);
+//			this.panel2.Controls.Add(this.packageUI1);
+//			this.panel2.Controls.Add(this.publishUI1);
+//			this.panel2.Controls.Add(this.testlistUI1);
+//			this.panel2.Controls.Add(this.themelistUI1);
+//			this.panel2.Controls.Add(this.uichecklist1);
+//			
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(0, 24);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(909, 463);
 			this.panel2.TabIndex = 2;
-			// 
-			// packageUI1
-			// 
-			this.packageUI1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.packageUI1.Location = new System.Drawing.Point(0, 0);
-			this.packageUI1.Name = "packageUI1";
-			this.packageUI1.Size = new System.Drawing.Size(909, 463);
-			this.packageUI1.TabIndex = 0;
-			
-			/// <summary>
-			/// zengjia 
-			/// </summary>
-			this.testlistUI1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.testlistUI1.Location = new System.Drawing.Point(0, 0);
-			this.testlistUI1.Name = "testlistUI1";
-			this.testlistUI1.Visible = false;
-			
-			
-			this.publishUI1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.publishUI1.Location = new System.Drawing.Point(0, 0);
-			this.publishUI1.Name = "publishUI1";
-			this.publishUI1.Visible = false;
-			
-			this.themelistUI1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.themelistUI1.Location = new System.Drawing.Point(0, 0);
-			this.themelistUI1.Name = "themelistUI1";
-			this.themelistUI1.Visible = false;
-			
-			this.uichecklist1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.uichecklist1.Location = new System.Drawing.Point(0, 0);
-			this.uichecklist1.Name = "uichecklist1";
-			this.uichecklist1.Visible = false;
+//			// 
+//			// packageUI1
+//			// 
+//			this.packageUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+//			this.packageUI1.Location = new System.Drawing.Point(0, 0);
+//			this.packageUI1.Name = "packageUI1";
+//			this.packageUI1.Size = new System.Drawing.Size(909, 463);
+//			this.packageUI1.TabIndex = 0;
+//			
+//			/// <summary>
+//			/// zengjia 
+//			/// </summary>
+//			this.testlistUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+//			this.testlistUI1.Location = new System.Drawing.Point(0, 0);
+//			this.testlistUI1.Name = "testlistUI1";
+//			this.testlistUI1.Visible = false;
+//			
+//			
+//			this.publishUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+//			this.publishUI1.Location = new System.Drawing.Point(0, 0);
+//			this.publishUI1.Name = "publishUI1";
+//			this.publishUI1.Visible = false;
+//			
+//			this.themelistUI1.Dock = System.Windows.Forms.DockStyle.Fill;
+//			this.themelistUI1.Location = new System.Drawing.Point(0, 0);
+//			this.themelistUI1.Name = "themelistUI1";
+//			this.themelistUI1.Visible = false;
+//			
+//			this.uichecklist1.Dock = System.Windows.Forms.DockStyle.Fill;
+//			this.uichecklist1.Location = new System.Drawing.Point(0, 0);
+//			this.uichecklist1.Name = "uichecklist1";
+//			this.uichecklist1.Visible = false;
 			// 
 			// menuStrip1
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.更新包ToolStripMenuItem,
-									this.toolStripMenuItem1,
-									this.界面检查ToolStripMenuItem,
-									this.发布ToolStripMenuItem,
-									this.配置ToolStripMenuItem,
-									this.主题ToolStripMenuItem,
-									this.helpToolStripMenuItem});
+//			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+//									this.更新包ToolStripMenuItem,
+//									this.toolStripMenuItem1,
+//									this.界面检查ToolStripMenuItem,
+//									this.发布ToolStripMenuItem,
+//									this.配置ToolStripMenuItem,
+//									this.主题ToolStripMenuItem,
+//									this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(909, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
-			// 
-			// 更新包ToolStripMenuItem
-			// 
-			this.更新包ToolStripMenuItem.Name = "更新包ToolStripMenuItem";
-			this.更新包ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-			this.更新包ToolStripMenuItem.Text = "更新包";
-			this.更新包ToolStripMenuItem.Click += new System.EventHandler(this.更新包ToolStripMenuItemClick);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(41, 20);
-			this.toolStripMenuItem1.Text = "测试";
-			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
-			// 
-			// 发布ToolStripMenuItem
-			// 
-			this.发布ToolStripMenuItem.Name = "发布ToolStripMenuItem";
-			this.发布ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-			this.发布ToolStripMenuItem.Text = "发布";
-			this.发布ToolStripMenuItem.Click += new System.EventHandler(this.发布ToolStripMenuItemClick);
-			// 
-			// 主题ToolStripMenuItem
-			// 
-			this.主题ToolStripMenuItem.Name = "主题ToolStripMenuItem";
-			this.主题ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-			this.主题ToolStripMenuItem.Text = "主题";
-			this.主题ToolStripMenuItem.Click += new System.EventHandler(this.主题ToolStripMenuItemClick);
-			// 
-			// 界面检查ToolStripMenuItem
-			// 
-			this.界面检查ToolStripMenuItem.Name = "界面检查ToolStripMenuItem";
-			this.界面检查ToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-			this.界面检查ToolStripMenuItem.Text = "界面检查";
-			this.界面检查ToolStripMenuItem.Click += new System.EventHandler(this.界面检查ToolStripMenuItemClick);
-			// 
-			// 配置ToolStripMenuItem
-			// 
+//			// 
+//			// 更新包ToolStripMenuItem
+//			// 
+//			this.更新包ToolStripMenuItem.Name = "更新包ToolStripMenuItem";
+//			this.更新包ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+//			this.更新包ToolStripMenuItem.Text = "更新包";
+//			this.更新包ToolStripMenuItem.Click += new System.EventHandler(this.更新包ToolStripMenuItemClick);
+//			// 
+//			// toolStripMenuItem1
+//			// 
+//			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+//			this.toolStripMenuItem1.Size = new System.Drawing.Size(41, 20);
+//			this.toolStripMenuItem1.Text = "测试";
+//			this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1Click);
+//			// 
+//			// 发布ToolStripMenuItem
+//			// 
+//			this.发布ToolStripMenuItem.Name = "发布ToolStripMenuItem";
+//			this.发布ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+//			this.发布ToolStripMenuItem.Text = "发布";
+//			this.发布ToolStripMenuItem.Click += new System.EventHandler(this.发布ToolStripMenuItemClick);
+//			// 
+//			// 主题ToolStripMenuItem
+//			// 
+//			this.主题ToolStripMenuItem.Name = "主题ToolStripMenuItem";
+//			this.主题ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+//			this.主题ToolStripMenuItem.Text = "主题";
+//			this.主题ToolStripMenuItem.Click += new System.EventHandler(this.主题ToolStripMenuItemClick);
+//			// 
+//			// 界面检查ToolStripMenuItem
+//			// 
+//			this.界面检查ToolStripMenuItem.Name = "界面检查ToolStripMenuItem";
+//			this.界面检查ToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+//			this.界面检查ToolStripMenuItem.Text = "界面检查";
+//			this.界面检查ToolStripMenuItem.Click += new System.EventHandler(this.界面检查ToolStripMenuItemClick);
+//			// 
+//			// 配置ToolStripMenuItem
+//			// 
 			this.配置ToolStripMenuItem.Name = "配置ToolStripMenuItem";
 			this.配置ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
 			this.配置ToolStripMenuItem.Text = "配置";
@@ -307,11 +313,11 @@ namespace WatchCilent.UI
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.Panel panel1;
-		private WatchCilent.PackageUI packageUI1;
-		private WatchCilent.UI.Pub.PublishUI  publishUI1;
-		private WatchCilent.UI.Test.TestListUI testlistUI1;
-		private WatchCilent.UI.Theme.ThemeListUI themelistUI1;
-		private WatchCilent.UI.UICheck.UICheckList uichecklist1;
+//		private WatchCilent.PackageUI packageUI1;
+//		private WatchCilent.UI.Pub.PublishUI  publishUI1;
+//		private WatchCilent.UI.Test.TestListUI testlistUI1;
+//		private WatchCilent.UI.Theme.ThemeListUI themelistUI1;
+//		private WatchCilent.UI.UICheck.UICheckList uichecklist1;
 		
 		//private WatchCilent.PackageUI packageUI1;
 		

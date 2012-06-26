@@ -19,8 +19,24 @@ namespace WatchCilent
 	/// <summary>
 	/// Description of ConfigForm.
 	/// </summary>
-	public partial class ConfigForm : Form
+	public partial class ConfigForm : Form,UI.MainPlug
 	{
+		public CommonConst.UIShowSytle getSytle()
+		{
+			return CommonConst.UIShowSytle.Form;
+		}
+		
+		public string getAuthorCode()
+		{
+			//配置、经理、测试
+			return "3,4,5";
+		}
+		
+		public string[] getPlugName()
+		{
+			return new string[]{"工具","配置"};
+		}
+		
 		public ConfigForm()
 		{
 			//

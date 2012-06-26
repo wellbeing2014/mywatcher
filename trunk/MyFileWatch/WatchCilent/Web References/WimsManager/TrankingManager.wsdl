@@ -1,0 +1,3025 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.springframework.org/schema/beans" xmlns:ns1="http://cxf.apache.org/bindings/xformat" name="TrankingManager" targetNamespace="http://www.springframework.org/schema/beans" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.springframework.org/schema/beans" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xs:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xs:complexType name="taskServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="proinfo_id" type="xs:string" />
+          <xs:element minOccurs="0" name="search_keyword" type="xs:string" />
+          <xs:element minOccurs="0" name="search_state" type="xs:string" />
+          <xs:element minOccurs="0" name="task_begin_time_from" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_begin_time_to" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_create_person" type="xs:string" />
+          <xs:element minOccurs="0" name="task_create_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_difficulty" type="xs:string" />
+          <xs:element minOccurs="0" name="task_end_time_from" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_end_time_to" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_name" type="xs:string" />
+          <xs:element minOccurs="0" name="task_number" type="xs:string" />
+          <xs:element minOccurs="0" name="task_origin" type="xs:string" />
+          <xs:element minOccurs="0" name="task_owner" type="xs:string" />
+          <xs:element minOccurs="0" name="task_priority" type="xs:string" />
+          <xs:element minOccurs="0" name="task_remark" type="xs:string" />
+          <xs:element minOccurs="0" name="task_state" type="xs:string" />
+          <xs:element name="task_workload" type="xs:float" />
+          <xs:element minOccurs="0" name="track_id" type="xs:string" />
+          <xs:element minOccurs="0" name="xmjd" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="baseReturn">
+        <xs:sequence>
+          <xs:element name="isSuccued" type="xs:boolean" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultReturnByArray">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="arrayobj" nillable="true" type="xs:anyType" />
+              <xs:element name="counts" type="xs:int" />
+              <xs:element name="pageCount" type="xs:int" />
+              <xs:element name="pageno" type="xs:int" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="taskReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="tns:wimsTaskmgr" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="wimsTaskmgr">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="milestone_id" type="xs:string" />
+          <xs:element minOccurs="0" name="proinfo_id" type="xs:string" />
+          <xs:element minOccurs="0" name="proinfo_name" type="xs:string" />
+          <xs:element minOccurs="0" name="task_begin_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_create_person" type="xs:string" />
+          <xs:element minOccurs="0" name="task_create_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_difficulty" type="xs:string" />
+          <xs:element minOccurs="0" name="task_end_time" type="xs:dateTime" />
+          <xs:element name="task_gjys" type="xs:float" />
+          <xs:element minOccurs="0" name="task_id" type="xs:string" />
+          <xs:element name="task_isdelete" type="xs:int" />
+          <xs:element minOccurs="0" name="task_name" type="xs:string" />
+          <xs:element minOccurs="0" name="task_number" type="xs:string" />
+          <xs:element minOccurs="0" name="task_origin" type="xs:string" />
+          <xs:element minOccurs="0" name="task_owner" type="xs:string" />
+          <xs:element minOccurs="0" name="task_plan_begin_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_plan_end_date" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_plan_end_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_priority" type="xs:string" />
+          <xs:element minOccurs="0" name="task_remark" type="xs:string" />
+          <xs:element minOccurs="0" name="task_state" type="xs:string" />
+          <xs:element name="task_workload" type="xs:float" />
+          <xs:element minOccurs="0" name="track_id" type="xs:string" />
+          <xs:element minOccurs="0" name="xmjd" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultOwnerListReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="ownerlist" nillable="true" type="tns:personGroup" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="personGroup">
+        <xs:sequence>
+          <xs:element name="allCheck" type="xs:boolean" />
+          <xs:element name="checkedCount" type="xs:int" />
+          <xs:element name="groupIndex" type="xs:int" />
+          <xs:element minOccurs="0" name="groupName" type="xs:string" />
+          <xs:element name="personCount" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="personList" nillable="true" type="tns:ownerServicesIn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ownerServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="certify" type="xs:long" />
+          <xs:element minOccurs="0" name="depid" type="xs:string" />
+          <xs:element name="groupIndex" type="xs:int" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element name="ischeck" type="xs:boolean" />
+          <xs:element name="leader" type="xs:boolean" />
+          <xs:element minOccurs="0" name="positionname" type="xs:string" />
+          <xs:element minOccurs="0" name="realname" type="xs:string" />
+          <xs:element minOccurs="0" name="sex" type="xs:long" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="wimsSingleIssueTracking">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="content" type="xs:string" />
+          <xs:element minOccurs="0" name="contenttype" type="xs:string" />
+          <xs:element minOccurs="0" name="finishtime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="fpqk" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="isdelete" type="xs:string" />
+          <xs:element minOccurs="0" name="level" type="xs:string" />
+          <xs:element minOccurs="0" name="lsh" type="xs:string" />
+          <xs:element minOccurs="0" name="notes" type="xs:string" />
+          <xs:element minOccurs="0" name="plantime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="proid" type="xs:string" />
+          <xs:element minOccurs="0" name="proinfo_id" type="xs:string" />
+          <xs:element minOccurs="0" name="prono" type="xs:string" />
+          <xs:element minOccurs="0" name="sqdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="sqpersonid" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+          <xs:element minOccurs="0" name="tcz" type="xs:string" />
+          <xs:element minOccurs="0" name="ver" type="xs:string" />
+          <xs:element minOccurs="0" name="zrpersonid" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element name="counts" type="xs:int" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="lst" nillable="true" type="xs:anyType" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="wimsProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="bbkwz" type="xs:string" />
+          <xs:element minOccurs="0" name="bz" type="xs:string" />
+          <xs:element minOccurs="0" name="cilent_id" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="isdelete" type="xs:string" />
+          <xs:element minOccurs="0" name="kffzr" type="xs:string" />
+          <xs:element name="ordernum" type="xs:int" />
+          <xs:element minOccurs="0" name="proname" type="xs:string" />
+          <xs:element minOccurs="0" name="prosmpname" type="xs:string" />
+          <xs:element minOccurs="0" name="prousernameid" type="xs:string" />
+          <xs:element minOccurs="0" name="sfht" type="xs:string" />
+          <xs:element minOccurs="0" name="sfys" type="xs:string" />
+          <xs:element minOccurs="0" name="swfzr" type="xs:string" />
+          <xs:element minOccurs="0" name="xmbh" type="xs:string" />
+          <xs:element minOccurs="0" name="xmfl" type="xs:string" />
+          <xs:element minOccurs="0" name="xmfzr" type="xs:string" />
+          <xs:element minOccurs="0" name="xmjd" type="xs:string" />
+          <xs:element minOccurs="0" name="xmlrr" type="xs:string" />
+          <xs:element minOccurs="0" name="xmlrrq" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmsxrq" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmysrq" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmzt" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultListReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="lst" nillable="true" type="tns:wimsLogComp" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="wimsLogComp">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="newcontent" type="xs:string" />
+          <xs:element minOccurs="0" name="oldcontent" type="xs:string" />
+          <xs:element minOccurs="0" name="oppersonid" type="xs:string" />
+          <xs:element minOccurs="0" name="optime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="propname" type="xs:string" />
+          <xs:element minOccurs="0" name="trackid" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="wimsStepInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="content" type="xs:string" />
+          <xs:element minOccurs="0" name="contenttype" type="xs:string" />
+          <xs:element minOccurs="0" name="finishtime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="fpqk" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="level" type="xs:string" />
+          <xs:element minOccurs="0" name="lsh" type="xs:string" />
+          <xs:element minOccurs="0" name="notes" type="xs:string" />
+          <xs:element minOccurs="0" name="oppersonid" type="xs:string" />
+          <xs:element minOccurs="0" name="optime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="plantime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="proid" type="xs:string" />
+          <xs:element minOccurs="0" name="proinfo_id" type="xs:string" />
+          <xs:element minOccurs="0" name="prono" type="xs:string" />
+          <xs:element minOccurs="0" name="sqdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="sqpersonid" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+          <xs:element minOccurs="0" name="tcz" type="xs:string" />
+          <xs:element minOccurs="0" name="ver" type="xs:string" />
+          <xs:element minOccurs="0" name="wsitid" type="xs:string" />
+          <xs:element minOccurs="0" name="zrpersonid" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultPersonByGroupReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="person" nillable="true" type="tns:omsPersonArray" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="omsPerson">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="birthday" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="business" type="xs:string" />
+          <xs:element minOccurs="0" name="certify" type="xs:long" />
+          <xs:element minOccurs="0" name="depid" type="xs:string" />
+          <xs:element minOccurs="0" name="education" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="isvalide" type="xs:long" />
+          <xs:element minOccurs="0" name="kqcode" type="xs:string" />
+          <xs:element minOccurs="0" name="ldapid" type="xs:string" />
+          <xs:element minOccurs="0" name="linkemail" type="xs:string" />
+          <xs:element minOccurs="0" name="linkmobile" type="xs:string" />
+          <xs:element minOccurs="0" name="linktel" type="xs:string" />
+          <xs:element minOccurs="0" name="loginname" type="xs:string" />
+          <xs:element minOccurs="0" name="modifytime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="nation" type="xs:string" />
+          <xs:element minOccurs="0" name="ouid" type="xs:string" />
+          <xs:element minOccurs="0" name="partytime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="password" type="xs:string" />
+          <xs:element minOccurs="0" name="pictureid" type="xs:string" />
+          <xs:element minOccurs="0" name="positionname" type="xs:string" />
+          <xs:element minOccurs="0" name="realname" type="xs:string" />
+          <xs:element minOccurs="0" name="sex" type="xs:long" />
+          <xs:element minOccurs="0" name="workaddressid" type="xs:string" />
+          <xs:element minOccurs="0" name="worktime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="zbpy" type="xs:long" />
+          <xs:element minOccurs="0" name="zzmm" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="wimsMilestone">
+        <xs:sequence>
+          <xs:element name="glrwzs" type="xs:int" />
+          <xs:element minOccurs="0" name="milestone_id" type="xs:string" />
+          <xs:element minOccurs="0" name="milestone_name" type="xs:string" />
+          <xs:element minOccurs="0" name="milestone_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="proid" type="xs:string" />
+          <xs:element minOccurs="0" name="proname" type="xs:string" />
+          <xs:element name="wcrws" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="milestoneServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="proid" type="xs:string" />
+          <xs:element minOccurs="0" name="proname" type="xs:string" />
+          <xs:element minOccurs="0" name="search" type="xs:string" />
+          <xs:element minOccurs="0" name="sqdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="sqdate1" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="wimsAttachMent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="fileid" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="trackid" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="systemZdlist">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="mc" type="xs:string" />
+          <xs:element minOccurs="0" name="sxh" type="xs:long" />
+          <xs:element minOccurs="0" name="value" type="xs:string" />
+          <xs:element minOccurs="0" name="zdcode" type="xs:string" />
+          <xs:element minOccurs="0" name="zdid" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultPersonListByProInfoReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="kffzrList" nillable="true" type="tns:omsPerson" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="swfzrList" nillable="true" type="tns:omsPerson" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="xmfzrList" nillable="true" type="tns:omsPerson" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="personArrayReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="omsPerson" nillable="true" type="tns:omsPerson" />
+              <xs:element minOccurs="0" name="teamid" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="wimsCilentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="mobile" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="phone" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="trackReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="tns:wimsSingleIssueTracking" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="proInfoServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cilent_id" type="xs:string" />
+          <xs:element minOccurs="0" name="keyword" type="xs:string" />
+          <xs:element minOccurs="0" name="kffzr" type="xs:string" />
+          <xs:element minOccurs="0" name="proname" type="xs:string" />
+          <xs:element minOccurs="0" name="prosmpname" type="xs:string" />
+          <xs:element minOccurs="0" name="prousernameid" type="xs:string" />
+          <xs:element minOccurs="0" name="sfht" type="xs:string" />
+          <xs:element minOccurs="0" name="sfys" type="xs:string" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+          <xs:element minOccurs="0" name="swfzr" type="xs:string" />
+          <xs:element minOccurs="0" name="xmbh" type="xs:string" />
+          <xs:element minOccurs="0" name="xmfl" type="xs:string" />
+          <xs:element minOccurs="0" name="xmfzr" type="xs:string" />
+          <xs:element minOccurs="0" name="xmjd" type="xs:string" />
+          <xs:element minOccurs="0" name="xmsxrq_begin" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmsxrq_end" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmysrq_begin" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmysrq_end" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="xmzt" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="proInfoReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element name="counts" type="xs:int" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="projectArr" nillable="true" type="tns:returnProject" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="returnProject">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="begin_time" type="xs:dateTime" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="children" nillable="true" type="tns:returnMilestone" />
+              <xs:element minOccurs="0" name="end_time" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="id" type="xs:string" />
+              <xs:element name="is_task" type="xs:boolean" />
+              <xs:element minOccurs="0" name="name" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="returnMilestone">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="begin_time" type="xs:dateTime" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="children" nillable="true" type="tns:returnTask" />
+              <xs:element minOccurs="0" name="end_time" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="id" type="xs:string" />
+              <xs:element name="is_task" type="xs:boolean" />
+              <xs:element minOccurs="0" name="name" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="returnTask">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="begin_time" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="end_time" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="id" type="xs:string" />
+              <xs:element name="is_task" type="xs:boolean" />
+              <xs:element minOccurs="0" name="name" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="personListByTaskAndTrackIdReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="personArray" nillable="true" type="tns:personListByTask" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="personListByTask">
+        <xs:sequence>
+          <xs:element name="checked" type="xs:boolean" />
+          <xs:element minOccurs="0" name="personId" type="xs:string" />
+          <xs:element minOccurs="0" name="personName" type="xs:string" />
+          <xs:element minOccurs="0" name="task" type="tns:wimsTaskmgr" />
+          <xs:element minOccurs="0" name="taskId" type="xs:string" />
+          <xs:element minOccurs="0" name="trackId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="taskHistoryReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="history" nillable="true" type="tns:wimsTaskmgrHistory" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="wimsTaskmgrHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="change_column" type="xs:string" />
+          <xs:element minOccurs="0" name="change_person" type="xs:string" />
+          <xs:element minOccurs="0" name="change_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="content_new" type="xs:string" />
+          <xs:element minOccurs="0" name="content_old" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="task_id" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="trackServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="contype" type="xs:string" />
+          <xs:element minOccurs="0" name="fact_date_begin" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="fact_date_end" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="fpqk" type="xs:string" />
+          <xs:element minOccurs="0" name="level" type="xs:string" />
+          <xs:element minOccurs="0" name="plan_date_begin" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="plan_date_end" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="proid" type="xs:string" />
+          <xs:element minOccurs="0" name="prono" type="xs:string" />
+          <xs:element minOccurs="0" name="search" type="xs:string" />
+          <xs:element minOccurs="0" name="sqdate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="sqdate1" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="sqpersonid" type="xs:string" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+          <xs:element minOccurs="0" name="zrpersonid" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="workLoadStatisticsBySearchParamesServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="proinfo_id" type="xs:string" />
+          <xs:element minOccurs="0" name="search_keyword" type="xs:string" />
+          <xs:element minOccurs="0" name="search_state" type="xs:string" />
+          <xs:element minOccurs="0" name="task_end_time_from" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_end_time_to" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="task_origin" type="xs:string" />
+          <xs:element minOccurs="0" name="task_owner" type="xs:string" />
+          <xs:element minOccurs="0" name="task_state" type="xs:string" />
+          <xs:element minOccurs="0" name="xmjd" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="resultWorkLoadStatisticsListReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element name="counts" type="xs:int" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="workLoadStatistics" nillable="true" type="tns:workLoadStatisticsServicesIn" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="workLoadStatisticsServicesIn">
+        <xs:sequence>
+          <xs:element name="highTaskCount" type="xs:long" />
+          <xs:element name="highTaskWorkLoad" type="xs:float" />
+          <xs:element name="ischeck" type="xs:boolean" />
+          <xs:element name="lowTaskCount" type="xs:long" />
+          <xs:element name="lowTaskWorkLoad" type="xs:float" />
+          <xs:element name="mediumTaskCount" type="xs:long" />
+          <xs:element name="mediumTaskWorkLoad" type="xs:float" />
+          <xs:element minOccurs="0" name="realname" type="xs:string" />
+          <xs:element name="taskCount" type="xs:long" />
+          <xs:element name="taskWorkLoad" type="xs:float" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="fileinfArrayReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="tns:nfmFileinf" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="nfmFileinf">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="filename" type="xs:string" />
+          <xs:element minOccurs="0" name="filesize" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="isdelete" type="xs:string" />
+          <xs:element minOccurs="0" name="nfmFileamountId" type="xs:string" />
+          <xs:element minOccurs="0" name="uploadtime" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="proChangeServicesIn">
+        <xs:sequence>
+          <xs:element name="kffzr" type="xs:boolean" />
+          <xs:element name="proName" type="xs:boolean" />
+          <xs:element name="swfzr" type="xs:boolean" />
+          <xs:element name="xmbh" type="xs:boolean" />
+          <xs:element name="xmfzr" type="xs:boolean" />
+          <xs:element name="xmjd" type="xs:boolean" />
+          <xs:element name="xmzt" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="workLoadStatisticsByProListReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element name="benqiheji" type="xs:double" />
+              <xs:element name="cehuaheji" type="xs:double" />
+              <xs:element name="ceshiheji" type="xs:double" />
+              <xs:element name="diaoyanheji" type="xs:double" />
+              <xs:element name="guanliheji" type="xs:double" />
+              <xs:element name="kaifaheji" type="xs:double" />
+              <xs:element name="qitaheji" type="xs:double" />
+              <xs:element name="shangqiheji" type="xs:double" />
+              <xs:element name="shishiheji" type="xs:double" />
+              <xs:element name="weihuheji" type="xs:double" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="workLoadArray" nillable="true" type="tns:workLoadStatisticsByPro" />
+              <xs:element name="zhichiheji" type="xs:double" />
+              <xs:element name="zongheji" type="xs:double" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="workLoadStatisticsByPro">
+        <xs:sequence>
+          <xs:element name="cehuaWorkLoad" type="xs:double" />
+          <xs:element name="ceshiWorkLoad" type="xs:double" />
+          <xs:element name="diaoyanWorkLoad" type="xs:double" />
+          <xs:element name="guanliWorkLoad" type="xs:double" />
+          <xs:element name="kaifaWorkLoad" type="xs:double" />
+          <xs:element name="newTotalByD" type="xs:double" />
+          <xs:element name="newTotalByH" type="xs:double" />
+          <xs:element name="oldTotal" type="xs:double" />
+          <xs:element minOccurs="0" name="proId" type="xs:string" />
+          <xs:element minOccurs="0" name="proName" type="xs:string" />
+          <xs:element name="qitaWorkLoad" type="xs:double" />
+          <xs:element name="shishiWorkLoad" type="xs:double" />
+          <xs:element name="totalByD" type="xs:double" />
+          <xs:element name="totalByM" type="xs:double" />
+          <xs:element name="weihuWorkLoad" type="xs:double" />
+          <xs:element name="zhichiWorkLoad" type="xs:double" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="proInfoHistoryReturn">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseReturn">
+            <xs:sequence>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="history" nillable="true" type="tns:wimsProInfoHistory" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="wimsProInfoHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="change_column" type="xs:string" />
+          <xs:element minOccurs="0" name="change_column_name" type="xs:string" />
+          <xs:element minOccurs="0" name="change_person" type="xs:string" />
+          <xs:element minOccurs="0" name="change_person_name" type="xs:string" />
+          <xs:element minOccurs="0" name="change_time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="new_content" type="xs:string" />
+          <xs:element minOccurs="0" name="old_content" type="xs:string" />
+          <xs:element minOccurs="0" name="proinfo_id" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cilentInfoServicesIn">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="mobile" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="phone" type="xs:string" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="omsPersonArray" final="#all">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="tns:omsPerson" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByServicesInParames" type="tns:findTaskByServicesInParames" />
+      <xs:complexType name="findTaskByServicesInParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:taskServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByServicesInParamesResponse" type="tns:findTaskByServicesInParamesResponse" />
+      <xs:complexType name="findTaskByServicesInParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByMilestone1" type="tns:findTaskByMilestone1" />
+      <xs:complexType name="findTaskByMilestone1">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element name="arg2" type="xs:int" />
+          <xs:element name="arg3" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByMilestone1Response" type="tns:findTaskByMilestone1Response" />
+      <xs:complexType name="findTaskByMilestone1Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneIdByTask" type="tns:updateMilestoneIdByTask" />
+      <xs:complexType name="updateMilestoneIdByTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element minOccurs="0" name="arg2" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneIdByTaskResponse" type="tns:updateMilestoneIdByTaskResponse" />
+      <xs:complexType name="updateMilestoneIdByTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonListByDepCode" type="tns:findPersonListByDepCode" />
+      <xs:complexType name="findPersonListByDepCode">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonListByDepCodeResponse" type="tns:findPersonListByDepCodeResponse" />
+      <xs:complexType name="findPersonListByDepCodeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultOwnerListReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteTrack" type="tns:deleteTrack" />
+      <xs:complexType name="deleteTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsSingleIssueTracking" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteTrackResponse" type="tns:deleteTrackResponse" />
+      <xs:complexType name="deleteTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByTaskId" type="tns:findTaskByTaskId" />
+      <xs:complexType name="findTaskByTaskId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByTaskIdResponse" type="tns:findTaskByTaskIdResponse" />
+      <xs:complexType name="findTaskByTaskIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="mohuSearch" type="tns:mohuSearch" />
+      <xs:complexType name="mohuSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="mohuSearchResponse" type="tns:mohuSearchResponse" />
+      <xs:complexType name="mohuSearchResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneIdByTasks" type="tns:updateMilestoneIdByTasks" />
+      <xs:complexType name="updateMilestoneIdByTasks">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsTaskmgr" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element minOccurs="0" name="arg2" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneIdByTasksResponse" type="tns:updateMilestoneIdByTasksResponse" />
+      <xs:complexType name="updateMilestoneIdByTasksResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamNameIsLeader" type="tns:findPersonByTeamNameIsLeader" />
+      <xs:complexType name="findPersonByTeamNameIsLeader">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamNameIsLeaderResponse" type="tns:findPersonByTeamNameIsLeaderResponse" />
+      <xs:complexType name="findPersonByTeamNameIsLeaderResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultOwnerListReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveProInfo" type="tns:saveProInfo" />
+      <xs:complexType name="saveProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsProInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveProInfoResponse" type="tns:saveProInfoResponse" />
+      <xs:complexType name="saveProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findLogsByTrackingId" type="tns:findLogsByTrackingId" />
+      <xs:complexType name="findLogsByTrackingId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findLogsByTrackingIdResponse" type="tns:findLogsByTrackingIdResponse" />
+      <xs:complexType name="findLogsByTrackingIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultListReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteTask" type="tns:deleteTask" />
+      <xs:complexType name="deleteTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteTaskResponse" type="tns:deleteTaskResponse" />
+      <xs:complexType name="deleteTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="cloTrack" type="tns:cloTrack" />
+      <xs:complexType name="cloTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsSingleIssueTracking" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg1" type="tns:wimsStepInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="cloTrackResponse" type="tns:cloTrackResponse" />
+      <xs:complexType name="cloTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTeamByLeaderTeamName" type="tns:findTeamByLeaderTeamName" />
+      <xs:complexType name="findTeamByLeaderTeamName">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTeamByLeaderTeamNameResponse" type="tns:findTeamByLeaderTeamNameResponse" />
+      <xs:complexType name="findTeamByLeaderTeamNameResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultPersonByGroupReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamNameIsLeaderAndDep" type="tns:findPersonByTeamNameIsLeaderAndDep" />
+      <xs:complexType name="findPersonByTeamNameIsLeaderAndDep">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamNameIsLeaderAndDepResponse" type="tns:findPersonByTeamNameIsLeaderAndDepResponse" />
+      <xs:complexType name="findPersonByTeamNameIsLeaderAndDepResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultOwnerListReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="finishTask" type="tns:finishTask" />
+      <xs:complexType name="finishTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="finishTaskResponse" type="tns:finishTaskResponse" />
+      <xs:complexType name="finishTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestone" type="tns:updateMilestone" />
+      <xs:complexType name="updateMilestone">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsMilestone" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg1" type="tns:omsPerson" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneResponse" type="tns:updateMilestoneResponse" />
+      <xs:complexType name="updateMilestoneResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllProInfo" type="tns:findAllProInfo" />
+      <xs:complexType name="findAllProInfo">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findAllProInfoResponse" type="tns:findAllProInfoResponse" />
+      <xs:complexType name="findAllProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneByTask" type="tns:updateMilestoneByTask" />
+      <xs:complexType name="updateMilestoneByTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsTaskmgr" />
+          <xs:element minOccurs="0" name="arg1" type="tns:wimsMilestone" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateMilestoneByTaskResponse" type="tns:updateMilestoneByTaskResponse" />
+      <xs:complexType name="updateMilestoneByTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findNewTaskNumber" type="tns:findNewTaskNumber" />
+      <xs:complexType name="findNewTaskNumber">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findNewTaskNumberResponse" type="tns:findNewTaskNumberResponse" />
+      <xs:complexType name="findNewTaskNumberResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findMilestoneByServicesInParames" type="tns:findMilestoneByServicesInParames" />
+      <xs:complexType name="findMilestoneByServicesInParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:milestoneServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findMilestoneByServicesInParamesResponse" type="tns:findMilestoneByServicesInParamesResponse" />
+      <xs:complexType name="findMilestoneByServicesInParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteProInfo" type="tns:deleteProInfo" />
+      <xs:complexType name="deleteProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsProInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteProInfoResponse" type="tns:deleteProInfoResponse" />
+      <xs:complexType name="deleteProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="finishTasks" type="tns:finishTasks" />
+      <xs:complexType name="finishTasks">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsTaskmgr" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="finishTasksResponse" type="tns:finishTasksResponse" />
+      <xs:complexType name="finishTasksResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByProInfo" type="tns:findTaskByProInfo" />
+      <xs:complexType name="findTaskByProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element name="arg2" type="xs:int" />
+          <xs:element name="arg3" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByProInfoResponse" type="tns:findTaskByProInfoResponse" />
+      <xs:complexType name="findTaskByProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findMilestoneByProInfo" type="tns:findMilestoneByProInfo" />
+      <xs:complexType name="findMilestoneByProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findMilestoneByProInfoResponse" type="tns:findMilestoneByProInfoResponse" />
+      <xs:complexType name="findMilestoneByProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveAttachment" type="tns:saveAttachment" />
+      <xs:complexType name="saveAttachment">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsAttachMent" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveAttachmentResponse" type="tns:saveAttachmentResponse" />
+      <xs:complexType name="saveAttachmentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateBatchTrack" type="tns:updateBatchTrack" />
+      <xs:complexType name="updateBatchTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsSingleIssueTracking" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg1" type="tns:wimsSingleIssueTracking" />
+          <xs:element minOccurs="0" name="arg2" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateBatchTrackResponse" type="tns:updateBatchTrackResponse" />
+      <xs:complexType name="updateBatchTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonListByProInfo" type="tns:findPersonListByProInfo" />
+      <xs:complexType name="findPersonListByProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:systemZdlist" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonListByProInfoResponse" type="tns:findPersonListByProInfoResponse" />
+      <xs:complexType name="findPersonListByProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultPersonListByProInfoReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllPerson" type="tns:findAllPerson" />
+      <xs:complexType name="findAllPerson">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findAllPersonResponse" type="tns:findAllPersonResponse" />
+      <xs:complexType name="findAllPersonResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:personArrayReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateCilentInfo" type="tns:updateCilentInfo" />
+      <xs:complexType name="updateCilentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsCilentInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateCilentInfoResponse" type="tns:updateCilentInfoResponse" />
+      <xs:complexType name="updateCilentInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTrackByTrackId" type="tns:findTrackByTrackId" />
+      <xs:complexType name="findTrackByTrackId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTrackByTrackIdResponse" type="tns:findTrackByTrackIdResponse" />
+      <xs:complexType name="findTrackByTrackIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:trackReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findProInfoByServicesInParamesAndAdvanced" type="tns:findProInfoByServicesInParamesAndAdvanced" />
+      <xs:complexType name="findProInfoByServicesInParamesAndAdvanced">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:proInfoServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findProInfoByServicesInParamesAndAdvancedResponse" type="tns:findProInfoByServicesInParamesAndAdvancedResponse" />
+      <xs:complexType name="findProInfoByServicesInParamesAndAdvancedResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:proInfoReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="startTask" type="tns:startTask" />
+      <xs:complexType name="startTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="startTaskResponse" type="tns:startTaskResponse" />
+      <xs:complexType name="startTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTrack" type="tns:updateTrack" />
+      <xs:complexType name="updateTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsSingleIssueTracking" />
+          <xs:element minOccurs="0" name="arg1" type="tns:wimsStepInfo" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg2" type="tns:omsPerson" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTrackResponse" type="tns:updateTrackResponse" />
+      <xs:complexType name="updateTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskPersonInfoByTrackId" type="tns:findTaskPersonInfoByTrackId" />
+      <xs:complexType name="findTaskPersonInfoByTrackId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskPersonInfoByTrackIdResponse" type="tns:findTaskPersonInfoByTrackIdResponse" />
+      <xs:complexType name="findTaskPersonInfoByTrackIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:personListByTaskAndTrackIdReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllWimsProInfo" type="tns:findAllWimsProInfo" />
+      <xs:complexType name="findAllWimsProInfo">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findAllWimsProInfoResponse" type="tns:findAllWimsProInfoResponse" />
+      <xs:complexType name="findAllWimsProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="sendWimsTaskMgrMailByTimer" type="tns:sendWimsTaskMgrMailByTimer" />
+      <xs:complexType name="sendWimsTaskMgrMailByTimer">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="sendWimsTaskMgrMailByTimerResponse" type="tns:sendWimsTaskMgrMailByTimerResponse" />
+      <xs:complexType name="sendWimsTaskMgrMailByTimerResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="saveTrack" type="tns:saveTrack" />
+      <xs:complexType name="saveTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsSingleIssueTracking" />
+          <xs:element minOccurs="0" name="arg1" type="tns:wimsStepInfo" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg2" type="tns:omsPerson" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg3" type="tns:wimsAttachMent" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveTrackResponse" type="tns:saveTrackResponse" />
+      <xs:complexType name="saveTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findFinishWimsTrackByVer" type="tns:findFinishWimsTrackByVer" />
+      <xs:complexType name="findFinishWimsTrackByVer">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findFinishWimsTrackByVerResponse" type="tns:findFinishWimsTrackByVerResponse" />
+      <xs:complexType name="findFinishWimsTrackByVerResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:trackReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskHistoryByTaskId" type="tns:findTaskHistoryByTaskId" />
+      <xs:complexType name="findTaskHistoryByTaskId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskHistoryByTaskIdResponse" type="tns:findTaskHistoryByTaskIdResponse" />
+      <xs:complexType name="findTaskHistoryByTaskIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskHistoryReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findSNByPno" type="tns:findSNByPno" />
+      <xs:complexType name="findSNByPno">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findSNByPnoResponse" type="tns:findSNByPnoResponse" />
+      <xs:complexType name="findSNByPnoResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveCilentInfo" type="tns:saveCilentInfo" />
+      <xs:complexType name="saveCilentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsCilentInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveCilentInfoResponse" type="tns:saveCilentInfoResponse" />
+      <xs:complexType name="saveCilentInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTrackByServicesInParames" type="tns:findTrackByServicesInParames" />
+      <xs:complexType name="findTrackByServicesInParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:trackServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTrackByServicesInParamesResponse" type="tns:findTrackByServicesInParamesResponse" />
+      <xs:complexType name="findTrackByServicesInParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findMilestoneByProInfo1" type="tns:findMilestoneByProInfo1" />
+      <xs:complexType name="findMilestoneByProInfo1">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element name="arg2" type="xs:int" />
+          <xs:element name="arg3" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findMilestoneByProInfo1Response" type="tns:findMilestoneByProInfo1Response" />
+      <xs:complexType name="findMilestoneByProInfo1Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveTaskHistory" type="tns:saveTaskHistory" />
+      <xs:complexType name="saveTaskHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="tns:wimsTaskmgr" />
+          <xs:element minOccurs="0" name="arg2" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveTaskHistoryResponse" type="tns:saveTaskHistoryResponse" />
+      <xs:complexType name="saveTaskHistoryResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findTrackStepsByTrackingId" type="tns:findTrackStepsByTrackingId" />
+      <xs:complexType name="findTrackStepsByTrackingId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTrackStepsByTrackingIdResponse" type="tns:findTrackStepsByTrackingIdResponse" />
+      <xs:complexType name="findTrackStepsByTrackingIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamId" type="tns:findPersonByTeamId" />
+      <xs:complexType name="findPersonByTeamId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamIdResponse" type="tns:findPersonByTeamIdResponse" />
+      <xs:complexType name="findPersonByTeamIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:personArrayReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskWorkLoadStatisticsByParames" type="tns:findTaskWorkLoadStatisticsByParames" />
+      <xs:complexType name="findTaskWorkLoadStatisticsByParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:workLoadStatisticsBySearchParamesServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskWorkLoadStatisticsByParamesResponse" type="tns:findTaskWorkLoadStatisticsByParamesResponse" />
+      <xs:complexType name="findTaskWorkLoadStatisticsByParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultWorkLoadStatisticsListReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAttachmentByTrackId" type="tns:findAttachmentByTrackId" />
+      <xs:complexType name="findAttachmentByTrackId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAttachmentByTrackIdResponse" type="tns:findAttachmentByTrackIdResponse" />
+      <xs:complexType name="findAttachmentByTrackIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:fileinfArrayReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByGroupIndexParames" type="tns:findTaskByGroupIndexParames" />
+      <xs:complexType name="findTaskByGroupIndexParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:taskServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByGroupIndexParamesResponse" type="tns:findTaskByGroupIndexParamesResponse" />
+      <xs:complexType name="findTaskByGroupIndexParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateProInfo" type="tns:updateProInfo" />
+      <xs:complexType name="updateProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsProInfo" />
+          <xs:element minOccurs="0" name="arg1" type="tns:wimsProInfo" />
+          <xs:element minOccurs="0" name="arg2" type="tns:proChangeServicesIn" />
+          <xs:element minOccurs="0" name="arg3" type="xs:string" />
+          <xs:element minOccurs="0" name="arg4" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateProInfoResponse" type="tns:updateProInfoResponse" />
+      <xs:complexType name="updateProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamName" type="tns:findPersonByTeamName" />
+      <xs:complexType name="findPersonByTeamName">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findPersonByTeamNameResponse" type="tns:findPersonByTeamNameResponse" />
+      <xs:complexType name="findPersonByTeamNameResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:personArrayReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateWimsTrackStatus" type="tns:updateWimsTrackStatus" />
+      <xs:complexType name="updateWimsTrackStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element minOccurs="0" name="arg2" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateWimsTrackStatusResponse" type="tns:updateWimsTrackStatusResponse" />
+      <xs:complexType name="updateWimsTrackStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteTasks" type="tns:deleteTasks" />
+      <xs:complexType name="deleteTasks">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteTasksResponse" type="tns:deleteTasksResponse" />
+      <xs:complexType name="deleteTasksResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findWimsAttByTrackId" type="tns:findWimsAttByTrackId" />
+      <xs:complexType name="findWimsAttByTrackId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findWimsAttByTrackIdResponse" type="tns:findWimsAttByTrackIdResponse" />
+      <xs:complexType name="findWimsAttByTrackIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTask" type="tns:updateTask" />
+      <xs:complexType name="updateTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:omsPerson" />
+          <xs:element minOccurs="0" name="arg1" type="tns:wimsTaskmgr" />
+          <xs:element minOccurs="0" name="arg2" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTaskResponse" type="tns:updateTaskResponse" />
+      <xs:complexType name="updateTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByTrackId" type="tns:findTaskByTrackId" />
+      <xs:complexType name="findTaskByTrackId">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByTrackIdResponse" type="tns:findTaskByTrackIdResponse" />
+      <xs:complexType name="findTaskByTrackIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="delMilestone" type="tns:delMilestone" />
+      <xs:complexType name="delMilestone">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsMilestone" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="delMilestoneResponse" type="tns:delMilestoneResponse" />
+      <xs:complexType name="delMilestoneResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByMilestone" type="tns:findTaskByMilestone" />
+      <xs:complexType name="findTaskByMilestone">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskByMilestoneResponse" type="tns:findTaskByMilestoneResponse" />
+      <xs:complexType name="findTaskByMilestoneResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskWorkLoadStatisticsByPro" type="tns:findTaskWorkLoadStatisticsByPro" />
+      <xs:complexType name="findTaskWorkLoadStatisticsByPro">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="arg1" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findTaskWorkLoadStatisticsByProResponse" type="tns:findTaskWorkLoadStatisticsByProResponse" />
+      <xs:complexType name="findTaskWorkLoadStatisticsByProResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:workLoadStatisticsByProListReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTaskByIds_gl" type="tns:updateTaskByIds_gl" />
+      <xs:complexType name="updateTaskByIds_gl">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element minOccurs="0" name="arg2" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTaskByIds_glResponse" type="tns:updateTaskByIds_glResponse" />
+      <xs:complexType name="updateTaskByIds_glResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="delAttachments" type="tns:delAttachments" />
+      <xs:complexType name="delAttachments">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:nfmFileinf" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="delAttachmentsResponse" type="tns:delAttachmentsResponse" />
+      <xs:complexType name="delAttachmentsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="delTrack" type="tns:delTrack" />
+      <xs:complexType name="delTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsSingleIssueTracking" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="delTrackResponse" type="tns:delTrackResponse" />
+      <xs:complexType name="delTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveTask" type="tns:saveTask" />
+      <xs:complexType name="saveTask">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveTaskResponse" type="tns:saveTaskResponse" />
+      <xs:complexType name="saveTaskResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="printCilentInfo" type="tns:printCilentInfo" />
+      <xs:complexType name="printCilentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="printCilentInfoResponse" type="tns:printCilentInfoResponse" />
+      <xs:complexType name="printCilentInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTaskByIds" type="tns:updateTaskByIds" />
+      <xs:complexType name="updateTaskByIds">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+          <xs:element minOccurs="0" name="arg2" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="updateTaskByIdsResponse" type="tns:updateTaskByIdsResponse" />
+      <xs:complexType name="updateTaskByIdsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:taskReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="printTrack" type="tns:printTrack" />
+      <xs:complexType name="printTrack">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="printTrackResponse" type="tns:printTrackResponse" />
+      <xs:complexType name="printTrackResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteCilentInfo" type="tns:deleteCilentInfo" />
+      <xs:complexType name="deleteCilentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsCilentInfo" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="deleteCilentInfoResponse" type="tns:deleteCilentInfoResponse" />
+      <xs:complexType name="deleteCilentInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveMilestone" type="tns:saveMilestone" />
+      <xs:complexType name="saveMilestone">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:wimsMilestone" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg1" type="tns:omsPerson" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="saveMilestoneResponse" type="tns:saveMilestoneResponse" />
+      <xs:complexType name="saveMilestoneResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllProInfoHistory" type="tns:findAllProInfoHistory" />
+      <xs:complexType name="findAllProInfoHistory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllProInfoHistoryResponse" type="tns:findAllProInfoHistoryResponse" />
+      <xs:complexType name="findAllProInfoHistoryResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:proInfoHistoryReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findCilentInfoByServicesInParames" type="tns:findCilentInfoByServicesInParames" />
+      <xs:complexType name="findCilentInfoByServicesInParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:cilentInfoServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findCilentInfoByServicesInParamesResponse" type="tns:findCilentInfoByServicesInParamesResponse" />
+      <xs:complexType name="findCilentInfoByServicesInParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findProInfoByServicesInParames" type="tns:findProInfoByServicesInParames" />
+      <xs:complexType name="findProInfoByServicesInParames">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:proInfoServicesIn" />
+          <xs:element name="arg1" type="xs:int" />
+          <xs:element name="arg2" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findProInfoByServicesInParamesResponse" type="tns:findProInfoByServicesInParamesResponse" />
+      <xs:complexType name="findProInfoByServicesInParamesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllCilentInfo" type="tns:findAllCilentInfo" />
+      <xs:complexType name="findAllCilentInfo">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findAllCilentInfoResponse" type="tns:findAllCilentInfoResponse" />
+      <xs:complexType name="findAllCilentInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:resultReturnByArray" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="startTasks" type="tns:startTasks" />
+      <xs:complexType name="startTasks">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="tns:wimsTaskmgr" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="startTasksResponse" type="tns:startTasksResponse" />
+      <xs:complexType name="startTasksResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="findAllTrackCounts" type="tns:findAllTrackCounts" />
+      <xs:complexType name="findAllTrackCounts">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="findAllTrackCountsResponse" type="tns:findAllTrackCountsResponse" />
+      <xs:complexType name="findAllTrackCountsResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="printProInfo" type="tns:printProInfo" />
+      <xs:complexType name="printProInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="printProInfoResponse" type="tns:printProInfoResponse" />
+      <xs:complexType name="printProInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:baseReturn" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="findLogsByTrackingId">
+    <wsdl:part name="parameters" element="tns:findLogsByTrackingId" />
+  </wsdl:message>
+  <wsdl:message name="findAllTrackCounts">
+    <wsdl:part name="parameters" element="tns:findAllTrackCounts" />
+  </wsdl:message>
+  <wsdl:message name="updateProInfoResponse">
+    <wsdl:part name="parameters" element="tns:updateProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneIdByTaskResponse">
+    <wsdl:part name="parameters" element="tns:updateMilestoneIdByTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="delTrackResponse">
+    <wsdl:part name="parameters" element="tns:delTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteCilentInfo">
+    <wsdl:part name="parameters" element="tns:deleteCilentInfo" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByProInfoResponse">
+    <wsdl:part name="parameters" element="tns:findTaskByProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByTaskIdResponse">
+    <wsdl:part name="parameters" element="tns:findTaskByTaskIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveTask">
+    <wsdl:part name="parameters" element="tns:saveTask" />
+  </wsdl:message>
+  <wsdl:message name="printCilentInfoResponse">
+    <wsdl:part name="parameters" element="tns:printCilentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByGroupIndexParames">
+    <wsdl:part name="parameters" element="tns:findTaskByGroupIndexParames" />
+  </wsdl:message>
+  <wsdl:message name="findTaskWorkLoadStatisticsByParamesResponse">
+    <wsdl:part name="parameters" element="tns:findTaskWorkLoadStatisticsByParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateWimsTrackStatusResponse">
+    <wsdl:part name="parameters" element="tns:updateWimsTrackStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveTaskResponse">
+    <wsdl:part name="parameters" element="tns:saveTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="printProInfo">
+    <wsdl:part name="parameters" element="tns:printProInfo" />
+  </wsdl:message>
+  <wsdl:message name="updateTask">
+    <wsdl:part name="parameters" element="tns:updateTask" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneIdByTasks">
+    <wsdl:part name="parameters" element="tns:updateMilestoneIdByTasks" />
+  </wsdl:message>
+  <wsdl:message name="findTaskWorkLoadStatisticsByPro">
+    <wsdl:part name="parameters" element="tns:findTaskWorkLoadStatisticsByPro" />
+  </wsdl:message>
+  <wsdl:message name="findTaskPersonInfoByTrackId">
+    <wsdl:part name="parameters" element="tns:findTaskPersonInfoByTrackId" />
+  </wsdl:message>
+  <wsdl:message name="findNewTaskNumber">
+    <wsdl:part name="parameters" element="tns:findNewTaskNumber" />
+  </wsdl:message>
+  <wsdl:message name="findMilestoneByProInfo1Response">
+    <wsdl:part name="parameters" element="tns:findMilestoneByProInfo1Response" />
+  </wsdl:message>
+  <wsdl:message name="findAllProInfoHistoryResponse">
+    <wsdl:part name="parameters" element="tns:findAllProInfoHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByMilestone1Response">
+    <wsdl:part name="parameters" element="tns:findTaskByMilestone1Response" />
+  </wsdl:message>
+  <wsdl:message name="updateTaskByIds">
+    <wsdl:part name="parameters" element="tns:updateTaskByIds" />
+  </wsdl:message>
+  <wsdl:message name="updateCilentInfo">
+    <wsdl:part name="parameters" element="tns:updateCilentInfo" />
+  </wsdl:message>
+  <wsdl:message name="deleteTrackResponse">
+    <wsdl:part name="parameters" element="tns:deleteTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="findCilentInfoByServicesInParamesResponse">
+    <wsdl:part name="parameters" element="tns:findCilentInfoByServicesInParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTrackByTrackId">
+    <wsdl:part name="parameters" element="tns:findTrackByTrackId" />
+  </wsdl:message>
+  <wsdl:message name="findAllWimsProInfo">
+    <wsdl:part name="parameters" element="tns:findAllWimsProInfo" />
+  </wsdl:message>
+  <wsdl:message name="findTaskPersonInfoByTrackIdResponse">
+    <wsdl:part name="parameters" element="tns:findTaskPersonInfoByTrackIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateBatchTrackResponse">
+    <wsdl:part name="parameters" element="tns:updateBatchTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskWorkLoadStatisticsByParames">
+    <wsdl:part name="parameters" element="tns:findTaskWorkLoadStatisticsByParames" />
+  </wsdl:message>
+  <wsdl:message name="findMilestoneByServicesInParamesResponse">
+    <wsdl:part name="parameters" element="tns:findMilestoneByServicesInParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="findNewTaskNumberResponse">
+    <wsdl:part name="parameters" element="tns:findNewTaskNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="findAllProInfoResponse">
+    <wsdl:part name="parameters" element="tns:findAllProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveAttachment">
+    <wsdl:part name="parameters" element="tns:saveAttachment" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByServicesInParamesResponse">
+    <wsdl:part name="parameters" element="tns:findTaskByServicesInParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateBatchTrack">
+    <wsdl:part name="parameters" element="tns:updateBatchTrack" />
+  </wsdl:message>
+  <wsdl:message name="findAllTrackCountsResponse">
+    <wsdl:part name="parameters" element="tns:findAllTrackCountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="delTrack">
+    <wsdl:part name="parameters" element="tns:delTrack" />
+  </wsdl:message>
+  <wsdl:message name="findAllProInfo">
+    <wsdl:part name="parameters" element="tns:findAllProInfo" />
+  </wsdl:message>
+  <wsdl:message name="finishTaskResponse">
+    <wsdl:part name="parameters" element="tns:finishTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTrackByServicesInParamesResponse">
+    <wsdl:part name="parameters" element="tns:findTrackByServicesInParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByTaskId">
+    <wsdl:part name="parameters" element="tns:findTaskByTaskId" />
+  </wsdl:message>
+  <wsdl:message name="cloTrack">
+    <wsdl:part name="parameters" element="tns:cloTrack" />
+  </wsdl:message>
+  <wsdl:message name="deleteTask">
+    <wsdl:part name="parameters" element="tns:deleteTask" />
+  </wsdl:message>
+  <wsdl:message name="updateTrackResponse">
+    <wsdl:part name="parameters" element="tns:updateTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateTaskByIds_gl">
+    <wsdl:part name="parameters" element="tns:updateTaskByIds_gl" />
+  </wsdl:message>
+  <wsdl:message name="startTasksResponse">
+    <wsdl:part name="parameters" element="tns:startTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="findAllCilentInfoResponse">
+    <wsdl:part name="parameters" element="tns:findAllCilentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamNameIsLeaderResponse">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamNameIsLeaderResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTeamByLeaderTeamNameResponse">
+    <wsdl:part name="parameters" element="tns:findTeamByLeaderTeamNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="findAllProInfoHistory">
+    <wsdl:part name="parameters" element="tns:findAllProInfoHistory" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestone">
+    <wsdl:part name="parameters" element="tns:updateMilestone" />
+  </wsdl:message>
+  <wsdl:message name="deleteTaskResponse">
+    <wsdl:part name="parameters" element="tns:deleteTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskWorkLoadStatisticsByProResponse">
+    <wsdl:part name="parameters" element="tns:findTaskWorkLoadStatisticsByProResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTeamByLeaderTeamName">
+    <wsdl:part name="parameters" element="tns:findTeamByLeaderTeamName" />
+  </wsdl:message>
+  <wsdl:message name="findMilestoneByProInfo1">
+    <wsdl:part name="parameters" element="tns:findMilestoneByProInfo1" />
+  </wsdl:message>
+  <wsdl:message name="printTrackResponse">
+    <wsdl:part name="parameters" element="tns:printTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveMilestoneResponse">
+    <wsdl:part name="parameters" element="tns:saveMilestoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneIdByTasksResponse">
+    <wsdl:part name="parameters" element="tns:updateMilestoneIdByTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTrackByTrackIdResponse">
+    <wsdl:part name="parameters" element="tns:findTrackByTrackIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamName">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamName" />
+  </wsdl:message>
+  <wsdl:message name="deleteProInfoResponse">
+    <wsdl:part name="parameters" element="tns:deleteProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteTrack">
+    <wsdl:part name="parameters" element="tns:deleteTrack" />
+  </wsdl:message>
+  <wsdl:message name="findAllPersonResponse">
+    <wsdl:part name="parameters" element="tns:findAllPersonResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveCilentInfo">
+    <wsdl:part name="parameters" element="tns:saveCilentInfo" />
+  </wsdl:message>
+  <wsdl:message name="findTaskHistoryByTaskId">
+    <wsdl:part name="parameters" element="tns:findTaskHistoryByTaskId" />
+  </wsdl:message>
+  <wsdl:message name="findTrackStepsByTrackingIdResponse">
+    <wsdl:part name="parameters" element="tns:findTrackStepsByTrackingIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneIdByTask">
+    <wsdl:part name="parameters" element="tns:updateMilestoneIdByTask" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByTrackIdResponse">
+    <wsdl:part name="parameters" element="tns:findTaskByTrackIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveTaskHistoryResponse">
+    <wsdl:part name="parameters" element="tns:saveTaskHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveAttachmentResponse">
+    <wsdl:part name="parameters" element="tns:saveAttachmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="findAllWimsProInfoResponse">
+    <wsdl:part name="parameters" element="tns:findAllWimsProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveProInfoResponse">
+    <wsdl:part name="parameters" element="tns:saveProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCilentInfoResponse">
+    <wsdl:part name="parameters" element="tns:updateCilentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByGroupIndexParamesResponse">
+    <wsdl:part name="parameters" element="tns:findTaskByGroupIndexParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="findFinishWimsTrackByVerResponse">
+    <wsdl:part name="parameters" element="tns:findFinishWimsTrackByVerResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveTaskHistory">
+    <wsdl:part name="parameters" element="tns:saveTaskHistory" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamId">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamId" />
+  </wsdl:message>
+  <wsdl:message name="deleteCilentInfoResponse">
+    <wsdl:part name="parameters" element="tns:deleteCilentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamIdResponse">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskHistoryByTaskIdResponse">
+    <wsdl:part name="parameters" element="tns:findTaskHistoryByTaskIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="finishTasksResponse">
+    <wsdl:part name="parameters" element="tns:finishTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="findAttachmentByTrackIdResponse">
+    <wsdl:part name="parameters" element="tns:findAttachmentByTrackIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonListByProInfoResponse">
+    <wsdl:part name="parameters" element="tns:findPersonListByProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findSNByPno">
+    <wsdl:part name="parameters" element="tns:findSNByPno" />
+  </wsdl:message>
+  <wsdl:message name="findWimsAttByTrackIdResponse">
+    <wsdl:part name="parameters" element="tns:findWimsAttByTrackIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateProInfo">
+    <wsdl:part name="parameters" element="tns:updateProInfo" />
+  </wsdl:message>
+  <wsdl:message name="startTask">
+    <wsdl:part name="parameters" element="tns:startTask" />
+  </wsdl:message>
+  <wsdl:message name="findFinishWimsTrackByVer">
+    <wsdl:part name="parameters" element="tns:findFinishWimsTrackByVer" />
+  </wsdl:message>
+  <wsdl:message name="startTaskResponse">
+    <wsdl:part name="parameters" element="tns:startTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteTasks">
+    <wsdl:part name="parameters" element="tns:deleteTasks" />
+  </wsdl:message>
+  <wsdl:message name="sendWimsTaskMgrMailByTimerResponse">
+    <wsdl:part name="parameters" element="tns:sendWimsTaskMgrMailByTimerResponse" />
+  </wsdl:message>
+  <wsdl:message name="startTasks">
+    <wsdl:part name="parameters" element="tns:startTasks" />
+  </wsdl:message>
+  <wsdl:message name="mohuSearch">
+    <wsdl:part name="parameters" element="tns:mohuSearch" />
+  </wsdl:message>
+  <wsdl:message name="printTrack">
+    <wsdl:part name="parameters" element="tns:printTrack" />
+  </wsdl:message>
+  <wsdl:message name="deleteTasksResponse">
+    <wsdl:part name="parameters" element="tns:deleteTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="findProInfoByServicesInParamesAndAdvancedResponse">
+    <wsdl:part name="parameters" element="tns:findProInfoByServicesInParamesAndAdvancedResponse" />
+  </wsdl:message>
+  <wsdl:message name="findMilestoneByProInfo">
+    <wsdl:part name="parameters" element="tns:findMilestoneByProInfo" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamNameIsLeaderAndDep">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamNameIsLeaderAndDep" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByMilestone1">
+    <wsdl:part name="parameters" element="tns:findTaskByMilestone1" />
+  </wsdl:message>
+  <wsdl:message name="findWimsAttByTrackId">
+    <wsdl:part name="parameters" element="tns:findWimsAttByTrackId" />
+  </wsdl:message>
+  <wsdl:message name="saveTrackResponse">
+    <wsdl:part name="parameters" element="tns:saveTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="findMilestoneByProInfoResponse">
+    <wsdl:part name="parameters" element="tns:findMilestoneByProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findLogsByTrackingIdResponse">
+    <wsdl:part name="parameters" element="tns:findLogsByTrackingIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTrackByServicesInParames">
+    <wsdl:part name="parameters" element="tns:findTrackByServicesInParames" />
+  </wsdl:message>
+  <wsdl:message name="updateWimsTrackStatus">
+    <wsdl:part name="parameters" element="tns:updateWimsTrackStatus" />
+  </wsdl:message>
+  <wsdl:message name="sendWimsTaskMgrMailByTimer">
+    <wsdl:part name="parameters" element="tns:sendWimsTaskMgrMailByTimer" />
+  </wsdl:message>
+  <wsdl:message name="printCilentInfo">
+    <wsdl:part name="parameters" element="tns:printCilentInfo" />
+  </wsdl:message>
+  <wsdl:message name="findSNByPnoResponse">
+    <wsdl:part name="parameters" element="tns:findSNByPnoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamNameResponse">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="findProInfoByServicesInParames">
+    <wsdl:part name="parameters" element="tns:findProInfoByServicesInParames" />
+  </wsdl:message>
+  <wsdl:message name="delMilestoneResponse">
+    <wsdl:part name="parameters" element="tns:delMilestoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneResponse">
+    <wsdl:part name="parameters" element="tns:updateMilestoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateTaskByIds_glResponse">
+    <wsdl:part name="parameters" element="tns:updateTaskByIds_glResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonListByDepCodeResponse">
+    <wsdl:part name="parameters" element="tns:findPersonListByDepCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="findProInfoByServicesInParamesResponse">
+    <wsdl:part name="parameters" element="tns:findProInfoByServicesInParamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveTrack">
+    <wsdl:part name="parameters" element="tns:saveTrack" />
+  </wsdl:message>
+  <wsdl:message name="findPersonListByProInfo">
+    <wsdl:part name="parameters" element="tns:findPersonListByProInfo" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneByTask">
+    <wsdl:part name="parameters" element="tns:updateMilestoneByTask" />
+  </wsdl:message>
+  <wsdl:message name="updateTaskByIdsResponse">
+    <wsdl:part name="parameters" element="tns:updateTaskByIdsResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteProInfo">
+    <wsdl:part name="parameters" element="tns:deleteProInfo" />
+  </wsdl:message>
+  <wsdl:message name="saveMilestone">
+    <wsdl:part name="parameters" element="tns:saveMilestone" />
+  </wsdl:message>
+  <wsdl:message name="delAttachments">
+    <wsdl:part name="parameters" element="tns:delAttachments" />
+  </wsdl:message>
+  <wsdl:message name="saveProInfo">
+    <wsdl:part name="parameters" element="tns:saveProInfo" />
+  </wsdl:message>
+  <wsdl:message name="findPersonListByDepCode">
+    <wsdl:part name="parameters" element="tns:findPersonListByDepCode" />
+  </wsdl:message>
+  <wsdl:message name="saveCilentInfoResponse">
+    <wsdl:part name="parameters" element="tns:saveCilentInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="delAttachmentsResponse">
+    <wsdl:part name="parameters" element="tns:delAttachmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamNameIsLeaderAndDepResponse">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamNameIsLeaderAndDepResponse" />
+  </wsdl:message>
+  <wsdl:message name="delMilestone">
+    <wsdl:part name="parameters" element="tns:delMilestone" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByTrackId">
+    <wsdl:part name="parameters" element="tns:findTaskByTrackId" />
+  </wsdl:message>
+  <wsdl:message name="findAttachmentByTrackId">
+    <wsdl:part name="parameters" element="tns:findAttachmentByTrackId" />
+  </wsdl:message>
+  <wsdl:message name="findMilestoneByServicesInParames">
+    <wsdl:part name="parameters" element="tns:findMilestoneByServicesInParames" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByMilestoneResponse">
+    <wsdl:part name="parameters" element="tns:findTaskByMilestoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="finishTasks">
+    <wsdl:part name="parameters" element="tns:finishTasks" />
+  </wsdl:message>
+  <wsdl:message name="findProInfoByServicesInParamesAndAdvanced">
+    <wsdl:part name="parameters" element="tns:findProInfoByServicesInParamesAndAdvanced" />
+  </wsdl:message>
+  <wsdl:message name="updateTaskResponse">
+    <wsdl:part name="parameters" element="tns:updateTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="findAllPerson">
+    <wsdl:part name="parameters" element="tns:findAllPerson" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByMilestone">
+    <wsdl:part name="parameters" element="tns:findTaskByMilestone" />
+  </wsdl:message>
+  <wsdl:message name="cloTrackResponse">
+    <wsdl:part name="parameters" element="tns:cloTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByServicesInParames">
+    <wsdl:part name="parameters" element="tns:findTaskByServicesInParames" />
+  </wsdl:message>
+  <wsdl:message name="mohuSearchResponse">
+    <wsdl:part name="parameters" element="tns:mohuSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTaskByProInfo">
+    <wsdl:part name="parameters" element="tns:findTaskByProInfo" />
+  </wsdl:message>
+  <wsdl:message name="findPersonByTeamNameIsLeader">
+    <wsdl:part name="parameters" element="tns:findPersonByTeamNameIsLeader" />
+  </wsdl:message>
+  <wsdl:message name="findCilentInfoByServicesInParames">
+    <wsdl:part name="parameters" element="tns:findCilentInfoByServicesInParames" />
+  </wsdl:message>
+  <wsdl:message name="printProInfoResponse">
+    <wsdl:part name="parameters" element="tns:printProInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="findTrackStepsByTrackingId">
+    <wsdl:part name="parameters" element="tns:findTrackStepsByTrackingId" />
+  </wsdl:message>
+  <wsdl:message name="findAllCilentInfo">
+    <wsdl:part name="parameters" element="tns:findAllCilentInfo" />
+  </wsdl:message>
+  <wsdl:message name="updateTrack">
+    <wsdl:part name="parameters" element="tns:updateTrack" />
+  </wsdl:message>
+  <wsdl:message name="updateMilestoneByTaskResponse">
+    <wsdl:part name="parameters" element="tns:updateMilestoneByTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="finishTask">
+    <wsdl:part name="parameters" element="tns:finishTask" />
+  </wsdl:message>
+  <wsdl:portType name="IWimsManagerWSPortType">
+    <wsdl:operation name="findTaskByServicesInParames">
+      <wsdl:input name="findTaskByServicesInParames" message="tns:findTaskByServicesInParames" />
+      <wsdl:output name="findTaskByServicesInParamesResponse" message="tns:findTaskByServicesInParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByMilestone1">
+      <wsdl:input name="findTaskByMilestone1" message="tns:findTaskByMilestone1" />
+      <wsdl:output name="findTaskByMilestone1Response" message="tns:findTaskByMilestone1Response" />
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestoneIdByTask">
+      <wsdl:input name="updateMilestoneIdByTask" message="tns:updateMilestoneIdByTask" />
+      <wsdl:output name="updateMilestoneIdByTaskResponse" message="tns:updateMilestoneIdByTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findPersonListByDepCode">
+      <wsdl:input name="findPersonListByDepCode" message="tns:findPersonListByDepCode" />
+      <wsdl:output name="findPersonListByDepCodeResponse" message="tns:findPersonListByDepCodeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteTrack">
+      <wsdl:input name="deleteTrack" message="tns:deleteTrack" />
+      <wsdl:output name="deleteTrackResponse" message="tns:deleteTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByTaskId">
+      <wsdl:input name="findTaskByTaskId" message="tns:findTaskByTaskId" />
+      <wsdl:output name="findTaskByTaskIdResponse" message="tns:findTaskByTaskIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="mohuSearch">
+      <wsdl:input name="mohuSearch" message="tns:mohuSearch" />
+      <wsdl:output name="mohuSearchResponse" message="tns:mohuSearchResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestoneIdByTasks">
+      <wsdl:input name="updateMilestoneIdByTasks" message="tns:updateMilestoneIdByTasks" />
+      <wsdl:output name="updateMilestoneIdByTasksResponse" message="tns:updateMilestoneIdByTasksResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamNameIsLeader">
+      <wsdl:input name="findPersonByTeamNameIsLeader" message="tns:findPersonByTeamNameIsLeader" />
+      <wsdl:output name="findPersonByTeamNameIsLeaderResponse" message="tns:findPersonByTeamNameIsLeaderResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="saveProInfo">
+      <wsdl:input name="saveProInfo" message="tns:saveProInfo" />
+      <wsdl:output name="saveProInfoResponse" message="tns:saveProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findLogsByTrackingId">
+      <wsdl:input name="findLogsByTrackingId" message="tns:findLogsByTrackingId" />
+      <wsdl:output name="findLogsByTrackingIdResponse" message="tns:findLogsByTrackingIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteTask">
+      <wsdl:input name="deleteTask" message="tns:deleteTask" />
+      <wsdl:output name="deleteTaskResponse" message="tns:deleteTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="cloTrack">
+      <wsdl:input name="cloTrack" message="tns:cloTrack" />
+      <wsdl:output name="cloTrackResponse" message="tns:cloTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTeamByLeaderTeamName">
+      <wsdl:input name="findTeamByLeaderTeamName" message="tns:findTeamByLeaderTeamName" />
+      <wsdl:output name="findTeamByLeaderTeamNameResponse" message="tns:findTeamByLeaderTeamNameResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamNameIsLeaderAndDep">
+      <wsdl:input name="findPersonByTeamNameIsLeaderAndDep" message="tns:findPersonByTeamNameIsLeaderAndDep" />
+      <wsdl:output name="findPersonByTeamNameIsLeaderAndDepResponse" message="tns:findPersonByTeamNameIsLeaderAndDepResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="finishTask">
+      <wsdl:input name="finishTask" message="tns:finishTask" />
+      <wsdl:output name="finishTaskResponse" message="tns:finishTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestone">
+      <wsdl:input name="updateMilestone" message="tns:updateMilestone" />
+      <wsdl:output name="updateMilestoneResponse" message="tns:updateMilestoneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAllProInfo">
+      <wsdl:input name="findAllProInfo" message="tns:findAllProInfo" />
+      <wsdl:output name="findAllProInfoResponse" message="tns:findAllProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestoneByTask">
+      <wsdl:input name="updateMilestoneByTask" message="tns:updateMilestoneByTask" />
+      <wsdl:output name="updateMilestoneByTaskResponse" message="tns:updateMilestoneByTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findNewTaskNumber">
+      <wsdl:input name="findNewTaskNumber" message="tns:findNewTaskNumber" />
+      <wsdl:output name="findNewTaskNumberResponse" message="tns:findNewTaskNumberResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findMilestoneByServicesInParames">
+      <wsdl:input name="findMilestoneByServicesInParames" message="tns:findMilestoneByServicesInParames" />
+      <wsdl:output name="findMilestoneByServicesInParamesResponse" message="tns:findMilestoneByServicesInParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteProInfo">
+      <wsdl:input name="deleteProInfo" message="tns:deleteProInfo" />
+      <wsdl:output name="deleteProInfoResponse" message="tns:deleteProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="finishTasks">
+      <wsdl:input name="finishTasks" message="tns:finishTasks" />
+      <wsdl:output name="finishTasksResponse" message="tns:finishTasksResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByProInfo">
+      <wsdl:input name="findTaskByProInfo" message="tns:findTaskByProInfo" />
+      <wsdl:output name="findTaskByProInfoResponse" message="tns:findTaskByProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findMilestoneByProInfo">
+      <wsdl:input name="findMilestoneByProInfo" message="tns:findMilestoneByProInfo" />
+      <wsdl:output name="findMilestoneByProInfoResponse" message="tns:findMilestoneByProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="saveAttachment">
+      <wsdl:input name="saveAttachment" message="tns:saveAttachment" />
+      <wsdl:output name="saveAttachmentResponse" message="tns:saveAttachmentResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateBatchTrack">
+      <wsdl:input name="updateBatchTrack" message="tns:updateBatchTrack" />
+      <wsdl:output name="updateBatchTrackResponse" message="tns:updateBatchTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findPersonListByProInfo">
+      <wsdl:input name="findPersonListByProInfo" message="tns:findPersonListByProInfo" />
+      <wsdl:output name="findPersonListByProInfoResponse" message="tns:findPersonListByProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAllPerson">
+      <wsdl:input name="findAllPerson" message="tns:findAllPerson" />
+      <wsdl:output name="findAllPersonResponse" message="tns:findAllPersonResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCilentInfo">
+      <wsdl:input name="updateCilentInfo" message="tns:updateCilentInfo" />
+      <wsdl:output name="updateCilentInfoResponse" message="tns:updateCilentInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTrackByTrackId">
+      <wsdl:input name="findTrackByTrackId" message="tns:findTrackByTrackId" />
+      <wsdl:output name="findTrackByTrackIdResponse" message="tns:findTrackByTrackIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findProInfoByServicesInParamesAndAdvanced">
+      <wsdl:input name="findProInfoByServicesInParamesAndAdvanced" message="tns:findProInfoByServicesInParamesAndAdvanced" />
+      <wsdl:output name="findProInfoByServicesInParamesAndAdvancedResponse" message="tns:findProInfoByServicesInParamesAndAdvancedResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="startTask">
+      <wsdl:input name="startTask" message="tns:startTask" />
+      <wsdl:output name="startTaskResponse" message="tns:startTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateTrack">
+      <wsdl:input name="updateTrack" message="tns:updateTrack" />
+      <wsdl:output name="updateTrackResponse" message="tns:updateTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskPersonInfoByTrackId">
+      <wsdl:input name="findTaskPersonInfoByTrackId" message="tns:findTaskPersonInfoByTrackId" />
+      <wsdl:output name="findTaskPersonInfoByTrackIdResponse" message="tns:findTaskPersonInfoByTrackIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAllWimsProInfo">
+      <wsdl:input name="findAllWimsProInfo" message="tns:findAllWimsProInfo" />
+      <wsdl:output name="findAllWimsProInfoResponse" message="tns:findAllWimsProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sendWimsTaskMgrMailByTimer">
+      <wsdl:input name="sendWimsTaskMgrMailByTimer" message="tns:sendWimsTaskMgrMailByTimer" />
+      <wsdl:output name="sendWimsTaskMgrMailByTimerResponse" message="tns:sendWimsTaskMgrMailByTimerResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="saveTrack">
+      <wsdl:input name="saveTrack" message="tns:saveTrack" />
+      <wsdl:output name="saveTrackResponse" message="tns:saveTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findFinishWimsTrackByVer">
+      <wsdl:input name="findFinishWimsTrackByVer" message="tns:findFinishWimsTrackByVer" />
+      <wsdl:output name="findFinishWimsTrackByVerResponse" message="tns:findFinishWimsTrackByVerResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskHistoryByTaskId">
+      <wsdl:input name="findTaskHistoryByTaskId" message="tns:findTaskHistoryByTaskId" />
+      <wsdl:output name="findTaskHistoryByTaskIdResponse" message="tns:findTaskHistoryByTaskIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findSNByPno">
+      <wsdl:input name="findSNByPno" message="tns:findSNByPno" />
+      <wsdl:output name="findSNByPnoResponse" message="tns:findSNByPnoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="saveCilentInfo">
+      <wsdl:input name="saveCilentInfo" message="tns:saveCilentInfo" />
+      <wsdl:output name="saveCilentInfoResponse" message="tns:saveCilentInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTrackByServicesInParames">
+      <wsdl:input name="findTrackByServicesInParames" message="tns:findTrackByServicesInParames" />
+      <wsdl:output name="findTrackByServicesInParamesResponse" message="tns:findTrackByServicesInParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findMilestoneByProInfo1">
+      <wsdl:input name="findMilestoneByProInfo1" message="tns:findMilestoneByProInfo1" />
+      <wsdl:output name="findMilestoneByProInfo1Response" message="tns:findMilestoneByProInfo1Response" />
+    </wsdl:operation>
+    <wsdl:operation name="saveTaskHistory">
+      <wsdl:input name="saveTaskHistory" message="tns:saveTaskHistory" />
+      <wsdl:output name="saveTaskHistoryResponse" message="tns:saveTaskHistoryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTrackStepsByTrackingId">
+      <wsdl:input name="findTrackStepsByTrackingId" message="tns:findTrackStepsByTrackingId" />
+      <wsdl:output name="findTrackStepsByTrackingIdResponse" message="tns:findTrackStepsByTrackingIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamId">
+      <wsdl:input name="findPersonByTeamId" message="tns:findPersonByTeamId" />
+      <wsdl:output name="findPersonByTeamIdResponse" message="tns:findPersonByTeamIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskWorkLoadStatisticsByParames">
+      <wsdl:input name="findTaskWorkLoadStatisticsByParames" message="tns:findTaskWorkLoadStatisticsByParames" />
+      <wsdl:output name="findTaskWorkLoadStatisticsByParamesResponse" message="tns:findTaskWorkLoadStatisticsByParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAttachmentByTrackId">
+      <wsdl:input name="findAttachmentByTrackId" message="tns:findAttachmentByTrackId" />
+      <wsdl:output name="findAttachmentByTrackIdResponse" message="tns:findAttachmentByTrackIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByGroupIndexParames">
+      <wsdl:input name="findTaskByGroupIndexParames" message="tns:findTaskByGroupIndexParames" />
+      <wsdl:output name="findTaskByGroupIndexParamesResponse" message="tns:findTaskByGroupIndexParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateProInfo">
+      <wsdl:input name="updateProInfo" message="tns:updateProInfo" />
+      <wsdl:output name="updateProInfoResponse" message="tns:updateProInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamName">
+      <wsdl:input name="findPersonByTeamName" message="tns:findPersonByTeamName" />
+      <wsdl:output name="findPersonByTeamNameResponse" message="tns:findPersonByTeamNameResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateWimsTrackStatus">
+      <wsdl:input name="updateWimsTrackStatus" message="tns:updateWimsTrackStatus" />
+      <wsdl:output name="updateWimsTrackStatusResponse" message="tns:updateWimsTrackStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteTasks">
+      <wsdl:input name="deleteTasks" message="tns:deleteTasks" />
+      <wsdl:output name="deleteTasksResponse" message="tns:deleteTasksResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findWimsAttByTrackId">
+      <wsdl:input name="findWimsAttByTrackId" message="tns:findWimsAttByTrackId" />
+      <wsdl:output name="findWimsAttByTrackIdResponse" message="tns:findWimsAttByTrackIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateTask">
+      <wsdl:input name="updateTask" message="tns:updateTask" />
+      <wsdl:output name="updateTaskResponse" message="tns:updateTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByTrackId">
+      <wsdl:input name="findTaskByTrackId" message="tns:findTaskByTrackId" />
+      <wsdl:output name="findTaskByTrackIdResponse" message="tns:findTaskByTrackIdResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="delMilestone">
+      <wsdl:input name="delMilestone" message="tns:delMilestone" />
+      <wsdl:output name="delMilestoneResponse" message="tns:delMilestoneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByMilestone">
+      <wsdl:input name="findTaskByMilestone" message="tns:findTaskByMilestone" />
+      <wsdl:output name="findTaskByMilestoneResponse" message="tns:findTaskByMilestoneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findTaskWorkLoadStatisticsByPro">
+      <wsdl:input name="findTaskWorkLoadStatisticsByPro" message="tns:findTaskWorkLoadStatisticsByPro" />
+      <wsdl:output name="findTaskWorkLoadStatisticsByProResponse" message="tns:findTaskWorkLoadStatisticsByProResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateTaskByIds_gl">
+      <wsdl:input name="updateTaskByIds_gl" message="tns:updateTaskByIds_gl" />
+      <wsdl:output name="updateTaskByIds_glResponse" message="tns:updateTaskByIds_glResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="delAttachments">
+      <wsdl:input name="delAttachments" message="tns:delAttachments" />
+      <wsdl:output name="delAttachmentsResponse" message="tns:delAttachmentsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="delTrack">
+      <wsdl:input name="delTrack" message="tns:delTrack" />
+      <wsdl:output name="delTrackResponse" message="tns:delTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="saveTask">
+      <wsdl:input name="saveTask" message="tns:saveTask" />
+      <wsdl:output name="saveTaskResponse" message="tns:saveTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="printCilentInfo">
+      <wsdl:input name="printCilentInfo" message="tns:printCilentInfo" />
+      <wsdl:output name="printCilentInfoResponse" message="tns:printCilentInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateTaskByIds">
+      <wsdl:input name="updateTaskByIds" message="tns:updateTaskByIds" />
+      <wsdl:output name="updateTaskByIdsResponse" message="tns:updateTaskByIdsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="printTrack">
+      <wsdl:input name="printTrack" message="tns:printTrack" />
+      <wsdl:output name="printTrackResponse" message="tns:printTrackResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteCilentInfo">
+      <wsdl:input name="deleteCilentInfo" message="tns:deleteCilentInfo" />
+      <wsdl:output name="deleteCilentInfoResponse" message="tns:deleteCilentInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="saveMilestone">
+      <wsdl:input name="saveMilestone" message="tns:saveMilestone" />
+      <wsdl:output name="saveMilestoneResponse" message="tns:saveMilestoneResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAllProInfoHistory">
+      <wsdl:input name="findAllProInfoHistory" message="tns:findAllProInfoHistory" />
+      <wsdl:output name="findAllProInfoHistoryResponse" message="tns:findAllProInfoHistoryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findCilentInfoByServicesInParames">
+      <wsdl:input name="findCilentInfoByServicesInParames" message="tns:findCilentInfoByServicesInParames" />
+      <wsdl:output name="findCilentInfoByServicesInParamesResponse" message="tns:findCilentInfoByServicesInParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findProInfoByServicesInParames">
+      <wsdl:input name="findProInfoByServicesInParames" message="tns:findProInfoByServicesInParames" />
+      <wsdl:output name="findProInfoByServicesInParamesResponse" message="tns:findProInfoByServicesInParamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAllCilentInfo">
+      <wsdl:input name="findAllCilentInfo" message="tns:findAllCilentInfo" />
+      <wsdl:output name="findAllCilentInfoResponse" message="tns:findAllCilentInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="startTasks">
+      <wsdl:input name="startTasks" message="tns:startTasks" />
+      <wsdl:output name="startTasksResponse" message="tns:startTasksResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findAllTrackCounts">
+      <wsdl:input name="findAllTrackCounts" message="tns:findAllTrackCounts" />
+      <wsdl:output name="findAllTrackCountsResponse" message="tns:findAllTrackCountsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="printProInfo">
+      <wsdl:input name="printProInfo" message="tns:printProInfo" />
+      <wsdl:output name="printProInfoResponse" message="tns:printProInfoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TrankingManagerSoapBinding" type="tns:IWimsManagerWSPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="findTaskByServicesInParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByServicesInParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByServicesInParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByMilestone1">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByMilestone1">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByMilestone1Response">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findPersonListByDepCode">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findPersonListByDepCode">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findPersonListByDepCodeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestoneIdByTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateMilestoneIdByTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateMilestoneIdByTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByTaskId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByTaskId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByTaskIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="mohuSearch">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="mohuSearch">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="mohuSearchResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestoneIdByTasks">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateMilestoneIdByTasks">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateMilestoneIdByTasksResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamNameIsLeader">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findPersonByTeamNameIsLeader">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findPersonByTeamNameIsLeaderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findLogsByTrackingId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findLogsByTrackingId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findLogsByTrackingIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cloTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="cloTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="cloTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamNameIsLeaderAndDep">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findPersonByTeamNameIsLeaderAndDep">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findPersonByTeamNameIsLeaderAndDepResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTeamByLeaderTeamName">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTeamByLeaderTeamName">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTeamByLeaderTeamNameResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="finishTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="finishTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="finishTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestone">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateMilestone">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateMilestoneResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAllProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAllProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findMilestoneByServicesInParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findMilestoneByServicesInParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findMilestoneByServicesInParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findNewTaskNumber">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findNewTaskNumber">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findNewTaskNumberResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateMilestoneByTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateMilestoneByTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateMilestoneByTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findMilestoneByProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findMilestoneByProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findMilestoneByProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="finishTasks">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="finishTasks">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="finishTasksResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveAttachment">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveAttachment">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveAttachmentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateBatchTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateBatchTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateBatchTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllPerson">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAllPerson">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAllPersonResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findPersonListByProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findPersonListByProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findPersonListByProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCilentInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateCilentInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateCilentInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findProInfoByServicesInParamesAndAdvanced">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findProInfoByServicesInParamesAndAdvanced">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findProInfoByServicesInParamesAndAdvancedResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTrackByTrackId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTrackByTrackId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTrackByTrackIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="startTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="startTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="startTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllWimsProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAllWimsProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAllWimsProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskPersonInfoByTrackId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskPersonInfoByTrackId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskPersonInfoByTrackIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendWimsTaskMgrMailByTimer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sendWimsTaskMgrMailByTimer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendWimsTaskMgrMailByTimerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findFinishWimsTrackByVer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findFinishWimsTrackByVer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findFinishWimsTrackByVerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskHistoryByTaskId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskHistoryByTaskId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskHistoryByTaskIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findSNByPno">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findSNByPno">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findSNByPnoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTrackByServicesInParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTrackByServicesInParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTrackByServicesInParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveCilentInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveCilentInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveCilentInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findMilestoneByProInfo1">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findMilestoneByProInfo1">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findMilestoneByProInfo1Response">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveTaskHistory">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveTaskHistory">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveTaskHistoryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findPersonByTeamId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findPersonByTeamIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTrackStepsByTrackingId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTrackStepsByTrackingId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTrackStepsByTrackingIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskWorkLoadStatisticsByParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskWorkLoadStatisticsByParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskWorkLoadStatisticsByParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAttachmentByTrackId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAttachmentByTrackId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAttachmentByTrackIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByGroupIndexParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByGroupIndexParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByGroupIndexParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findPersonByTeamName">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findPersonByTeamName">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findPersonByTeamNameResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTasks">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteTasks">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteTasksResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateWimsTrackStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateWimsTrackStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateWimsTrackStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findWimsAttByTrackId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findWimsAttByTrackId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findWimsAttByTrackIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByTrackId">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByTrackId">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByTrackIdResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delMilestone">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="delMilestone">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="delMilestoneResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskByMilestone">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskByMilestone">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskByMilestoneResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findTaskWorkLoadStatisticsByPro">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findTaskWorkLoadStatisticsByPro">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findTaskWorkLoadStatisticsByProResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delAttachments">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="delAttachments">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="delAttachmentsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTaskByIds_gl">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTaskByIds_gl">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTaskByIds_glResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="delTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="delTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveTask">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveTask">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveTaskResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printCilentInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="printCilentInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="printCilentInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTaskByIds">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTaskByIds">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTaskByIdsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCilentInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteCilentInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteCilentInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printTrack">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="printTrack">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="printTrackResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saveMilestone">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="saveMilestone">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="saveMilestoneResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllProInfoHistory">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAllProInfoHistory">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAllProInfoHistoryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findCilentInfoByServicesInParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findCilentInfoByServicesInParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findCilentInfoByServicesInParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findProInfoByServicesInParames">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findProInfoByServicesInParames">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findProInfoByServicesInParamesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllCilentInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAllCilentInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAllCilentInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="startTasks">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="startTasks">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="startTasksResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllTrackCounts">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findAllTrackCounts">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findAllTrackCountsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printProInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="printProInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="printProInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TrankingManager">
+    <wsdl:port name="TrackingManager" binding="tns:TrankingManagerSoapBinding">
+      <soap:address location="http://58.214.246.37:8120/wisoftintegrateframe/services/WimsManager" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

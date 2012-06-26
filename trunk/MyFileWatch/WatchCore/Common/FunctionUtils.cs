@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Xml;
 using System.Configuration;
+using WatchCore;
 
 using Microsoft.Win32;
 //using Word;
