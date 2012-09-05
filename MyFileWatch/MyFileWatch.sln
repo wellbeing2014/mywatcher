@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.0.0.7070
+# SharpDevelop 4.2.1.8805
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchCilent", "WatchCilent\WatchCilent.csproj", "{AB7A7B2C-BDBD-4863-91B4-511817E8F959}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchServer", "WatchServer\WatchServer.csproj", "{58F1AE2E-18C7-4368-AC7A-B125C8BD4987}"

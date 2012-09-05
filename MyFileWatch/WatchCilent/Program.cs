@@ -43,14 +43,15 @@ namespace WatchCilent
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				
-				//Application.Run(new UI.Main());
+				Application.Run(new UI.Main());
+				//Application.Run(new WatchCilent.UI.Tool.FileEdit());
 				//检查列表
 				//Application.Run(new UI.UICheck.UICheckList());
 				//查看界面检查
 				//Application.Run(new UI.UICheck.UICheck(11,false));
 				//Application.Run(new Dbconfig());
 				//Application.Run(new Main());
-				Application.Run(new UI.WIMS.TaskInfo());
+				//Application.Run(new UI.WIMS.TaskInfo());
 				//Application.Run(new UI.Theme.ChoseThemeDialog(null));
 				//Application.Run(new UpdateWims());
 				//Application.Run(new SelectUnit());
