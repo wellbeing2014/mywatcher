@@ -47,7 +47,7 @@ namespace WatchCilent.UI
 	       
 		public Main()
 		{
-			//MessageBox.Show("数据库异常");
+			
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
