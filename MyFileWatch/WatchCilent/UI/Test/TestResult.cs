@@ -32,7 +32,7 @@ namespace WatchCilent.UI.Test
 		}
 		private TestUnit tu = new TestUnit();
 		//缺陷列表的HTML路径
-		string unitHTMLpath = GlobalParams.UnitHTMLpath;
+		//string unitHTMLpath = GlobalParams.UnitHTMLpath;
 		//浏览缺陷地址
 		string HtmlUrl = GlobalParams.HtmlUrl;
 		//监控系统主机IP
@@ -378,12 +378,12 @@ namespace WatchCilent.UI.Test
 					}
 					this.richTextBox1.SaveFile(temppath+@"\"+tu.Unitno+".doc");
 					CreateTestUnit(defaultpath+@"\temp\TestUnit.doc",temppath+@"\"+tu.Unitno+".doc",unitDOCpath+@"\"+tu.Unitno+".doc");
-					//创建HTML
-					if(unitHTMLpath!=null)
-					{
-						var fullHtmlPath =unitHTMLpath+@"\"+tu.Unitno+".html";
-						WordDocumentMerger.WordToHtmlFile(unitDOCpath+@"\"+tu.Unitno+".doc",fullHtmlPath);
-					}
+//					//创建HTML
+//					if(unitHTMLpath!=null)
+//					{
+//						var fullHtmlPath =unitHTMLpath+@"\"+tu.Unitno+".html";
+//						WordDocumentMerger.WordToHtmlFile(unitDOCpath+@"\"+tu.Unitno+".doc",fullHtmlPath);
+//					}
 					//勾选自动发送
 					if(this.checkBox1.Checked)
 					{
