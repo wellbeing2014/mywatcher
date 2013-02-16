@@ -76,10 +76,10 @@ namespace WatchCilent.UI
         		checkpass = false;
         		errorstr = "您的用户名密码好像不正确，请设置用户名密码";
         	}
-        	else if(dbc.GetValue("Version").ToString()!="0.4.0")
+        	else if(dbc.GetValue("Version").ToString()!="0.4.3")
         	{
         		System.Diagnostics.Process.Start("notepad.exe",System.Environment.CurrentDirectory+"\\releasenote.txt");
-        		dbc.SetValue("Version","0.4.0");
+        		dbc.SetValue("Version","0.4.3");
         	}
         	
         	if(!checkpass)
@@ -96,10 +96,10 @@ namespace WatchCilent.UI
 				}
 				else
 				{
-					if(dbc.GetValue("Version").ToString()!="0.4.1")
+					if(dbc.GetValue("Version").ToString()!="0.4.3")
 		        	{
 		        		System.Diagnostics.Process.Start("notepad.exe",System.Environment.CurrentDirectory+"\\releasenote.txt");
-		        		dbc.SetValue("Version","0.4.1");
+		        		dbc.SetValue("Version","0.4.3");
 		        	}
 					InitializeComponent();
 					username=ConfigurationManager.AppSettings["Username"];
@@ -146,10 +146,18 @@ namespace WatchCilent.UI
 				Type mymoudle = moudules[i];
 				if(mymoudle.GetInterface("MainPlug")!=null)
 				{
-					object obj = Activator.CreateInstance(mymoudle);
+					object obj = null;
+					string   authorlist="";
 					//获取权限信息
 					MethodInfo   getauthor   =   mymoudle.GetMethod("getAuthorCode");
-					string   authorlist   =   (string)getauthor.Invoke(obj,null);
+					
+					try {
+						 obj = Activator.CreateInstance(mymoudle);
+						 authorlist   =   (string)getauthor.Invoke(obj,null);
+					} catch (Exception e) {
+						
+						MessageBox.Show("有菜单装载错误：\n"+e.ToString(),"提示");
+					}   
 					string[] author = GlobalParams.User.Role.Split(';');
 					bool isAuthor = false;
 					for (int b = 0; b < author.Length; b++) {

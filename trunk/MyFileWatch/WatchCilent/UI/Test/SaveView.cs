@@ -25,7 +25,7 @@ namespace WatchCilent.UI.Test
 	public partial class SaveView : Form
 	{
 		//缺陷列表的HTML路径
-		string unitHTMLpath = GlobalParams.UnitHTMLpath;
+		//string unitHTMLpath = GlobalParams.UnitHTMLpath;
 		//缺陷列表的DOC路径
 		string unitDOCpath = GlobalParams.UnitDOCpath;
 		//默认路径

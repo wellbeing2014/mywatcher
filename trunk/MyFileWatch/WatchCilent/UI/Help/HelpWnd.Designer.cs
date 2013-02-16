@@ -75,7 +75,7 @@ namespace WatchCilent.UI.Help
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(204, 54);
 			this.label2.TabIndex = 3;
-			this.label2.Text = "中科惠软测试管理系统 V0.4.1";
+			this.label2.Text = "中科惠软测试管理系统 V0.4.2";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label1
