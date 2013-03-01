@@ -24,9 +24,21 @@ namespace WatchCore.dao
 		public PersonDao()
 		{
 		}
+		
+		static public DataTable getTestorTable()
+		{
+			string sql = "select * from PersonInfo where role like '%5;%' or role like '%5'";
+			DataSet data = SqlDBUtil.ExecuteQuery(sql);
+			DataRow dr = data.Tables["ds"].NewRow();
+			dr["fullname"] = "未知人员";
+			dr["id"] = 0;
+			data.Tables["ds"].Rows.InsertAt(dr,0);
+			return	data.Tables["ds"];
+		}
+		
 		static public DataTable getPersonTable()
 		{
-			string sql = "select * from PersonInfo";
+			string sql = "select * from PersonInfo where role like '%1;%' or role like '%1'";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql);
 			DataRow dr = data.Tables["ds"].NewRow();
 			dr["fullname"] = "全部责任人";

@@ -47,6 +47,8 @@ namespace WatchCilent.UI.Test
 		DataTable Source_Person = PersonDao.getPersonTable();
 		DataTable Source_Module = ModuleDao.getAllModuleTable();
 		DataTable Source_Project = ProjectInfoDao.getAllProjectTable();
+		DataTable Source_testor =  PersonDao.getTestorTable();
+		
 		bool isSaved = false;
 		
 		/// <summary>
@@ -81,6 +83,12 @@ namespace WatchCilent.UI.Test
 			this.comboBox3.ValueMember = "id";
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			this.comboBox4.DataSource = Source_testor;
+			this.comboBox4.DisplayMember = "fullname";
+			this.comboBox4.ValueMember = "id";
+			this.comboBox4.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			
 			this.comboBox5.DataSource = CommonConst.BUGLEVEL;
 			this.comboBox5.DropDownStyle= ComboBoxStyle.DropDownList;
@@ -123,6 +131,8 @@ namespace WatchCilent.UI.Test
 				this.button5.Dispose();
 				this.button6.Dispose();
 				this.linkLabel1.Dispose();
+				TestUnitBingDS();
+				TestUnitBingData_Edit();
 			}
 			else
 			{
@@ -137,6 +147,14 @@ namespace WatchCilent.UI.Test
 				this.button3.Dispose();
 				this.button4.Dispose();
 				this.checkBox1.Dispose();
+				
+				this.comboBox1.DropDownStyle = ComboBoxStyle.Simple;
+				this.comboBox2.DropDownStyle = ComboBoxStyle.Simple;
+				this.comboBox3.DropDownStyle = ComboBoxStyle.Simple;
+				this.comboBox4.DropDownStyle = ComboBoxStyle.Simple;
+				this.comboBox5.DropDownStyle = ComboBoxStyle.Simple;
+				this.comboBox6.DropDownStyle = ComboBoxStyle.Simple;
+			
 				int sumtu = TestUnitDao.QueryTestUnitCount(tp.Moduleid,tp.Manageid,tp.Level,tp.State,
 				                                    tp.Begintime,tp.Endtime);
 				if(tp.Startindex-1 < 0 )
@@ -148,15 +166,10 @@ namespace WatchCilent.UI.Test
 					this.button6.Enabled = false;
 				else 
 					this.button6.Enabled = true;
+				
+				TestUnitBingData();
 			}
-		
-			TestUnitBingDS();
-			TestUnitBingData();
-			
 			this.CenterToParent();
-			
-			
-			
 		}
 		
 		/// <summary>
@@ -182,6 +195,14 @@ namespace WatchCilent.UI.Test
 			this.comboBox3.ValueMember = "id";
 			this.comboBox3.AutoCompleteSource = AutoCompleteSource.ListItems;
 			this.comboBox3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+			
+			
+				
+			this.comboBox4.DataSource = this.Source_testor;
+			this.comboBox4.DisplayMember = "fullname";
+			this.comboBox4.ValueMember = "id";
+			this.comboBox4.AutoCompleteSource = AutoCompleteSource.ListItems;
+			this.comboBox4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 			
 			//绑定BUG等级
 			if(!this.comboBox5.IsDisposed)
@@ -209,6 +230,45 @@ namespace WatchCilent.UI.Test
 			this.multiColumnFilterComboBox1.SelectedIndex = 0;
 			this.multiColumnFilterComboBox1.Enabled = false;
 			
+			
+			this.comboBox1.Text = tu.Adminname;
+			this.comboBox2.Text = tu.Modulename;
+			this.comboBox3.Text = tu.Projectname;
+			this.comboBox4.Text = tu.Testorname;
+			this.comboBox5.Text = tu.Buglevel;
+			this.comboBox6.Text = tu.Bugtype;
+			
+			
+			this.textBox9.Text = tu.Testtitle;
+			this.textBox1.Text = tu.Unitno;
+			this.textBox1.ReadOnly = true;
+
+			MemoryStream stream = new MemoryStream(tu.Testcontent);
+			this.richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+			
+			if(!this.linkLabel1.IsDisposed)
+			{
+				if(TestThemeDao.getTestThemeByUnitid(tu.Id.ToString()).Count>0)
+					this.linkLabel1.Text = "已被关注";
+				else
+					this.linkLabel1.Text = "未被关注";
+			}
+		}
+		
+		
+		
+		/// <summary>
+		/// 绑定数据到控件_新建编辑
+		/// </summary>
+		void TestUnitBingData_Edit()
+		{
+			this.multiColumnFilterComboBox1.Items.Clear();
+			this.multiColumnFilterComboBox1.Items.Add(this.tu);
+			this.multiColumnFilterComboBox1.DisplayMember = "Packagename";
+            this.multiColumnFilterComboBox1.ValueMember = "Packageid";
+			this.multiColumnFilterComboBox1.SelectedIndex = 0;
+			this.multiColumnFilterComboBox1.Enabled = false;
+			
 			//绑定主管
 			foreach (DataRow element in this.Source_Person.Rows) {
 				string tempid = element["id"].ToString();
@@ -220,8 +280,8 @@ namespace WatchCilent.UI.Test
 				}
 			}
 			
-			//绑定模块（平台）
 			
+			//绑定模块（平台）
 			foreach (DataRow element in this.Source_Module.Rows) {
 				string tempid = element["id"].ToString();
 				if(Int32.Parse(tempid)== tu.Moduleid)
@@ -242,6 +302,18 @@ namespace WatchCilent.UI.Test
 					break;
 				}
 			}
+			
+			//绑定测试者
+			foreach (DataRow element in this.Source_testor.Rows) {
+				string tempid = element["id"].ToString();
+				if(Int32.Parse(tempid)== tu.Testorid)
+				{
+					int sel = this.Source_Project.Rows.IndexOf(element);
+					this.comboBox4.SelectedIndex = sel;
+					break;
+				}
+			}
+			
 			//绑定BUG等级
 			foreach (var element in CommonConst.BUGLEVEL) {
 				if(element.Equals(tu.Buglevel))
@@ -336,7 +408,7 @@ namespace WatchCilent.UI.Test
 		{
 			try {
 				string content ="您好："+tu.Adminname+"!\n  您提交测试组测试的《"+tu.Packagename+
-					"》有一项内容为『"+tu.Testtitle+"』、类型为『"+tu.Bugtype+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+tu.Unitno+".html"+"查看详细并确认。";
+					"》有一项内容为『"+tu.Testtitle+"』、类型为『"+tu.Bugtype+"』的缺陷,被列为『"+tu.Buglevel+"』等级。\n请访问:"+HtmlUrl+tu.Unitno+"查看详细并确认。";
 				if(adminip)
 				{
 					PersonInfo person =PersonDao.getPersonInfoByid(tu.Adminid);
@@ -488,6 +560,8 @@ namespace WatchCilent.UI.Test
 			DataRowView package =(DataRowView) this.multiColumnFilterComboBox1.SelectedItem;
 			string  moduleid =  package["realmoduleid"].ToString();
 			string  managerid =  package["managerid"].ToString();
+			
+			
 			//绑定主管
 			foreach (DataRow element in this.Source_Person.Rows) {
 				string tempid = element["id"].ToString();
@@ -498,6 +572,7 @@ namespace WatchCilent.UI.Test
 					break;
 				}
 			}
+		
 			
 			//绑定模块（平台）
 			foreach (DataRow element in this.Source_Module.Rows) {
