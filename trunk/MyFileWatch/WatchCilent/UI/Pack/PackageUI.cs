@@ -241,6 +241,11 @@ namespace WatchCilent
 				{
 					PackageInfo pack = new PackageInfo();
 					pack = ListViewSelect(lt);
+					if(pack.State==CommonConst.PACKSTATE_YiJieShou)
+					{
+						MessageBox.Show(pack.Packagename+"尚未处理，不能标记为已测试","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+						continue;
+					}
 					pack.State=CommonConst.PACKSTATE_YiCeShi;
 					pack.Testtime=System.DateTime.Now.ToLocalTime().ToString();
 					SqlDBUtil.update(pack);
@@ -258,6 +263,11 @@ namespace WatchCilent
 				{
 					PackageInfo pack = new PackageInfo();
 					pack = ListViewSelect(lt);
+					if(pack.State==CommonConst.PACKSTATE_YiJieShou)
+					{
+						MessageBox.Show(pack.Packagename+"尚未处理，不能标记为已废止","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+						continue;
+					}
 					pack.State=CommonConst.PACKSTATE_YiFeiZhi;
 					//pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
 					SqlDBUtil.update(pack);
@@ -275,6 +285,11 @@ namespace WatchCilent
 				{
 					PackageInfo pack = new PackageInfo();
 					pack = ListViewSelect(lt);
+					if(pack.State==CommonConst.PACKSTATE_YiJieShou)
+					{
+						MessageBox.Show(pack.Packagename+"尚未处理，不能标记为已发布","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+						continue;
+					}
 					pack.State=CommonConst.PACKSTATE_YiFaBu;
 					pack.Publishtime=System.DateTime.Now.ToLocalTime().ToString();
 					SqlDBUtil.update(pack);

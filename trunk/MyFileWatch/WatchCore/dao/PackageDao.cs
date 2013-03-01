@@ -172,33 +172,52 @@ namespace WatchCore.dao
 			{
 				pubpath="";
 				sql+=" and a.state ='已发布'";
+				if(begintime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+				}
+				if(endtime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
+				}
 			}
 			else if(pubpath.Equals("未发布"))
 			{
 				sql+=" and a.state ='已测试'";
+				if(begintime!=null)
+				{
+					sql+=" and  cast(a.testtime as datetime)>=cast('"+begintime+"' as datetime)";
+				}
+				if(endtime!=null)
+				{
+					sql+=" and  cast(a.testtime as datetime)<=cast('"+endtime+"' as datetime)";
+				}	
 			}
 			else if(pubpath.Equals("今日发布"))
 			{
 				begintime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 00:00:00";
 				endtime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 23:59:59";
+				sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+				sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
 			}
 			else
 			{
 				sql+=" and a.state ='已发布'";
 				sql+=" and (d.ftppath + a.pubpath LIKE '"+pubpath+"%')";
+				if(begintime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+				}
+				if(endtime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
+				}	
 			}
 			if(null!=keyword&&"".Equals(keyword))
 			{
 				sql+=" and a.packagename like '%"+keyword+"%'";
 			}
-			if(begintime!=null)
-			{
-				sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
-			}
-			if(endtime!=null)
-			{
-				sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
-			}	
+
 			
 			return SqlDBUtil.ExecuteScalar(sql);
 		}
@@ -218,35 +237,51 @@ namespace WatchCore.dao
 			{
 				pubpath="";
 				sql+=" and a.state ='已发布'";
+				if(begintime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+				}
+				if(endtime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
+				}
 			}
 			else if(pubpath.Equals("未发布"))
 			{
 				sql+=" and a.state ='已测试'";
-				begintime = null;
-				endtime = null;
+				if(begintime!=null)
+				{
+					sql+=" and  cast(a.testtime as datetime)>=cast('"+begintime+"' as datetime)";
+				}
+				if(endtime!=null)
+				{
+					sql+=" and  cast(a.testtime as datetime)<=cast('"+endtime+"' as datetime)";
+				}
 			}
 			else if(pubpath.Equals("今日发布"))
 			{
 				begintime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 00:00:00";
 				endtime = System.DateTime.Now.ToString("yyyy-MM-dd")+" 23:59:59";
+				sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+				sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
 			}
 			else
 			{
 				sql+=" and a.state ='已发布'";
 				sql+=" and (d.ftppath + a.pubpath LIKE '"+pubpath+"%')";
+				if(begintime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
+				}
+				if(endtime!=null)
+				{
+					sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
+				}
 			}
 			if(null!=keyword&&"".Equals(keyword))
 			{
 				sql+=" and a.packagename like '%"+keyword+"%'";
 			}
-			if(begintime!=null)
-			{
-				sql+=" and  cast(a.publishtime as datetime)>=cast('"+begintime+"' as datetime)";
-			}
-			if(endtime!=null)
-			{
-				sql+=" and  cast(a.publishtime as datetime)<=cast('"+endtime+"' as datetime)";
-			}	
 			sql+=" order by publishtime  desc";
 			DataSet data = SqlDBUtil.ExecuteQuery(sql,startnum,pagesize);
 			List<PackageInfo> ls = new List<PackageInfo>();

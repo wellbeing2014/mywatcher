@@ -83,8 +83,8 @@ namespace WatchCilent
 			lvi.Text=module.Fullname;
 			lvi.SubItems.Add(module.Code);
 			lvi.SubItems.Add(module.Managername);
-			lvi.SubItems.Add(module.Managerid.ToString());
 			lvi.SubItems.Add(module.Lastversion);
+			lvi.SubItems.Add(module.Managerid.ToString());
 			lvi.SubItems.Add(module.Createtime);
 			lvi.SubItems.Add(module.Id.ToString());
 			//lvi.SubItems.Add();
@@ -102,6 +102,7 @@ namespace WatchCilent
 				newmodule.Fullname = textBox1.Text;
 				newmodule.Managerid = Int32.Parse(comboBox1.SelectedValue.ToString());
 				newmodule.Managername=comboBox1.Text;
+				newmodule.Lastversion=textBox9.Text;
 				newmodule.Id=0;
 				if(ModuleDao.getModuleByCode(newmodule.Code))
 				{
@@ -121,6 +122,7 @@ namespace WatchCilent
 			ModuleInfo selectmodule=ListView1_Select(this.listView1.SelectedItems[0]);
 			this.textBox1.Text = selectmodule.Fullname;
 			this.textBox2.Text = selectmodule.Code;
+			this.textBox9.Text = selectmodule.Lastversion;
 			if(selectmodule.Managerid>0)
 			{
 				int index_manager;
@@ -141,8 +143,8 @@ namespace WatchCilent
 			module.Fullname = lvi.SubItems[0].Text;
 			module.Code = lvi.SubItems[1].Text;
 			module.Managername = lvi.SubItems[2].Text;
-			module.Managerid = Int32.Parse(lvi.SubItems[3].Text);
-			module.Lastversion = lvi.SubItems[4].Text;
+			module.Lastversion = lvi.SubItems[3].Text;
+			module.Managerid = Int32.Parse(lvi.SubItems[4].Text);
 			module.Createtime = lvi.SubItems[5].Text;
 			module.Id = Int32.Parse(lvi.SubItems[6].Text);
 			return module;
@@ -163,6 +165,7 @@ namespace WatchCilent
 				module.Code = this.textBox2.Text;
 				module.Managerid=Int32.Parse(this.comboBox1.SelectedValue.ToString());
 				module.Managername=this.comboBox1.Text;
+				module.Lastversion = this.textBox9.Text ;
 				SqlDBUtil.update(module);
 				this.getAllModuleInfo();
 			}
@@ -186,6 +189,11 @@ namespace WatchCilent
 			{
 				isvalidated = false;
 				message += "责任人,";
+			}
+			if(textBox9.Text.Trim()=="")
+			{
+				isvalidated = false;
+				message += "最新版本,";
 			}
 			if(!isvalidated)
 			{
@@ -343,6 +351,8 @@ namespace WatchCilent
 			
 			this.textBox6.Text =null;
 			this.textBox5.Text=null;
+			this.textBox10.Text =null;
+			this.textBox11.Text=null;
 			List<PersonInfo> personlist=PersonDao.getAllPersonInfo();
 			this.listView3.Items.Clear();
 			foreach(PersonInfo person in personlist)
@@ -355,8 +365,10 @@ namespace WatchCilent
 			ListViewItem lvi = new ListViewItem();
 			lvi.Text=person.Fullname;
 			lvi.SubItems.Add(person.Ip);
-			lvi.SubItems.Add(person.Id.ToString());
+			lvi.SubItems.Add(person.Password);
+			lvi.SubItems.Add(person.Role);
 			//lvi.SubItems.Add();
+			lvi.SubItems.Add(person.Id.ToString());
 			this.listView3.Items.Add(lvi);
 		}
 
@@ -366,7 +378,9 @@ namespace WatchCilent
 			PersonInfo person = new PersonInfo();
 			person.Fullname = lvi.SubItems[0].Text;
 			person.Ip = lvi.SubItems[1].Text;
-			person.Id = Int32.Parse(lvi.SubItems[2].Text);
+			person.Password = lvi.SubItems[2].Text ;
+			person.Role = lvi.SubItems[3].Text ;
+			person.Id = Int32.Parse(lvi.SubItems[4].Text);
 			return person;
 		}
 		//新增
@@ -377,6 +391,8 @@ namespace WatchCilent
 				PersonInfo person= new PersonInfo();
 				person.Fullname=textBox6.Text;
 				person.Ip=textBox5.Text;
+				person.Password = textBox10.Text ;
+				person.Role = string.IsNullOrEmpty(textBox11.Text.Trim())?"0":textBox11.Text.Trim() ;
 				SqlDBUtil.insert(person);
 				getAllPersonInfo();
 			}
@@ -410,6 +426,8 @@ namespace WatchCilent
 			PersonInfo selectperson=ListView3_Select(this.listView3.SelectedItems[0]);
 			this.textBox6.Text = selectperson.Fullname;
 			this.textBox5.Text = selectperson.Ip;
+			this.textBox10.Text = selectperson.Password;
+			this.textBox11.Text = selectperson.Role;
 			
 		}
 		
@@ -425,6 +443,8 @@ namespace WatchCilent
 				PersonInfo person=ListView3_Select(this.listView3.SelectedItems[0]);
 				person.Fullname = this.textBox6.Text;
 				person.Ip = this.textBox5.Text;
+				person.Password = textBox10.Text ;
+				person.Role = textBox11.Text ;
 				SqlDBUtil.update(person);
 				this.getAllPersonInfo();
 			}

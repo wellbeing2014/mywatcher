@@ -98,9 +98,9 @@ namespace WatchCore.Common
                rows = Cmd.ExecuteNonQuery();
                
             }
-            catch
+            catch(Exception e)
             {
-                throw new Exception(SQL);
+                throw new Exception(e.Message+""+SQL);
                 
             }
             Dispose(Conn);
@@ -654,6 +654,11 @@ namespace WatchCore.Common
             return result;
 		}
 		
+		public static DataSet queryObjById(int id,string classname)
+		{
+			DataSet ds = ExecuteQuery("select * from "+classname+" where id='"+id.ToString()+"'");	
+			return ds;			
+		}
     }    
 }
  

@@ -111,6 +111,7 @@ namespace WatchCilent
 					string name = fi[0];
 					string[] fi1 = fi[1].Split(')');
 					string code = fi1[0];
+					string version = fi1[1];
 					List<ModuleInfo> list =ModuleDao.getAllModuleInfoLikename(name,code);
 					if (list.Count!=0)
 					{
@@ -138,6 +139,11 @@ namespace WatchCilent
 							}
 						}
 						//SavePackage();//自动绑定成功。。
+						
+						if(string.IsNullOrEmpty(right_module.Lastversion))
+						{
+							
+						}
 						isChange=true;
 						
 					}
@@ -394,7 +400,6 @@ namespace WatchCilent
 			isChange=false;
 			
 			SavePackage();
-			MessageBox.Show("已保存","提示");
 		}
 		/// <summary>
 		/// 保存方法
@@ -415,6 +420,16 @@ namespace WatchCilent
 			}
 			
 			packageinfo.Packagepath = this.textBox1.Text;
+			
+			if(packageinfo.State==CommonConst.PACKSTATE_YiJieShou)
+			{
+				if(!CheckVersion())
+				{
+					this.Close();
+					this.Dispose();
+					return;
+				}
+			}
 			packageinfo.State=CommonConst.PACKSTATE_YiChuLi;
 			if(packageinfo.Id>0)
 			{
@@ -424,6 +439,7 @@ namespace WatchCilent
 			{
 				SqlDBUtil.insert(packageinfo);
 			}
+			MessageBox.Show("已保存","提示");
 		}
 		void getAllProjectPath()
 		{
@@ -515,7 +531,6 @@ namespace WatchCilent
 					isChange=false;
 			
 					SavePackage();
-					MessageBox.Show("已保存","提示");
 				}
 				
 			}
@@ -531,6 +546,63 @@ namespace WatchCilent
 			}
 			else
 				MessageBox.Show("请选择一个服务项目","提示");
+		}
+		
+		private bool CheckVersion()
+		{
+			//计算是不是大于最新版本，如果大于，更新模块最新版本。
+			try {
+				string[] fi = packageinfo.Packagename.Split('(');	
+				string[] fi1 = fi[1].Split(')');
+				string code = fi1[0];
+				string version = fi1[1];
+				string[] version_groups = version.Split('.');
+				ModuleInfo mi = new ModuleInfo();
+				mi = ModuleDao.getModuleInfobyId(packageinfo.Moduleid);
+				string[] lastversion_groups = mi.Lastversion.Split('.');
+				if( !string.IsNullOrEmpty(mi.Lastversion))//三位检测 5.168.1
+				{
+					if(version_groups.Length<3)
+					{
+						MessageBox.Show("版本号序列小于3位！");
+						return false;
+					}
+					
+					if(version_groups.Length==lastversion_groups.Length)
+					{
+						for (int i = 0; i < version_groups.Length-2; i++) {
+							if(version_groups[i]!=lastversion_groups[i])
+							{
+								DialogResult dr =MessageBox.Show("版本号检测存在异常，是否继续？","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+								if(DialogResult.No == dr)
+									return false;
+							}
+						}
+					}
+					
+					//必须大于 发布版本
+					if(int.Parse(version_groups[version_groups.Length-2]) < int.Parse(lastversion_groups[version_groups.Length-2]))
+					{
+						DialogResult dr=MessageBox.Show("版本号小于发布版本，是否继续？","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+						if(DialogResult.No == dr)
+								return false;
+					}
+					if(version_groups[version_groups.Length-2] == lastversion_groups[version_groups.Length-2])
+					{
+						if(int.Parse(version_groups[version_groups.Length-1]) > int.Parse(lastversion_groups[version_groups.Length-1]))
+						{
+							DialogResult dr=MessageBox.Show("较低的测试位，请注意该版本已发布，如要发布此版本，请重新发布，是否继续？","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+							if(DialogResult.No == dr)
+								return false;
+						}
+					}
+				}
+				return true;
+				
+			} catch (Exception) {
+				MessageBox.Show("版本号序列不正确。");
+				return false;
+			}
 		}
 	}
 }

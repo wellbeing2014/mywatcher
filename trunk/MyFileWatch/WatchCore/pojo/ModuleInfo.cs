@@ -67,6 +67,7 @@ namespace WatchCore.pojo
 			get { return managername; }
 			set { managername = value; }
 		}
+		
 		public override  bool Equals(object o)
 		{
 			ModuleInfo gb =(ModuleInfo)o;

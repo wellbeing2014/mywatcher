@@ -87,6 +87,16 @@ namespace WatchCore.dao
 				return false;
 		}
 		
+		public static ModuleInfo getModuleInfobyId(int id)
+		{
+			 DataSet ds = SqlDBUtil.queryObjById(id,"ModuleInfo");
+			 DataRowCollection drs  = ds.Tables["ds"].Rows;
+			 if(drs.Count==1)
+			 	return Row2ModuleInfo(drs[0]);
+			 else
+			 	return null; 
+		}
+		
 		private static ModuleInfo Row2ModuleInfo(DataRow row)
 		{
 			ModuleInfo module = new ModuleInfo();
