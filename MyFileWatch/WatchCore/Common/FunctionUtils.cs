@@ -224,7 +224,7 @@ namespace WatchCore.Common
 					beginInt =1;
 				}
 				
-                string tempFolderPath =null;
+                string tempFolderPath =root;
 		        for (int fArrItem = beginInt; fArrItem < fArr.Length; fArrItem++)  
 		        {  
 		            //如果此项不为空且不包含“.”符号（即非文件名称）则判断文件目录是否存在  
@@ -233,11 +233,11 @@ namespace WatchCore.Common
 		            	if(fArr[fArrItem].Contains("$datetime$"))
 		            	{
 		            		String temptime =fArr[fArrItem].Replace("$datetime$",DateTime.Now.ToShortDateString().Replace("/",""));
-		            		tempFolderPath = filePath.Substring(0, filePath.IndexOf(fArr[fArrItem]))+temptime; 
+		            		tempFolderPath = tempFolderPath+@"\"+temptime; 
 		            	}
             	     	// MessageBox.Show("已进入循环体，Item:" + fArrItem + "===fArrItem:" + fArr[fArrItem] + "===fArrLength:" + fArr.Length);   
 		                //截取文件路径中至此项的字符串+文件夹根目录，判断此目录是否存在   
-		               	else  tempFolderPath = filePath.Substring(0, filePath.IndexOf(fArr[fArrItem]) + fArr[fArrItem].Length);   
+		               	else  tempFolderPath = tempFolderPath = tempFolderPath+@"\"+fArr[fArrItem];
 		                //tempFolderPath = root + "\\" + tempFolderPath;  
 		                //  MessageBox.Show("需要创建的目录地址：" + folderRoot+"\\"+tempFolderPath);  
 		                //检测当前目录是否存在，如果不存在则创建  
